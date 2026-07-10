@@ -1,0 +1,8 @@
+# Core runtime dependencies for the norm_cards package.
+litellm>=1.40            # LLM calls (classification, query-gen, extraction) — OpenAI/Anthropic via one API
+requests>=2.31           # all HTTP (OpenAlex, arXiv, Unpaywall, Semantic Scholar, SerpAPI)
+pdfplumber>=0.11         # PDF -> text for full-text norm-card extraction
+
+# Notes:
+# - arXiv parsing uses the stdlib (xml.etree); no extra dep.
+# - No API keys are needed to install; they are read at runtime (see .env.example).
