@@ -1,0 +1,3165 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "claim_type": "empirical",
+  "problem_id": "21",
+  "claim": "A Hidden Markov Model (HMM) constructed as surrogate model of a large language model (LLM) can be used to generate outputs that are guaranteed to adhere to precisely formalized logical constraints, such that the HMM approximation enables computing a constrained conditional probability distribution under which generation is restricted to sequences accepted by a formal constraint representation (for example, a deterministic finite automaton (DFA)), ensuring constraint satisfaction by construction, which leads to a guarantee that holds independent of the surrogate model\u2019s fidelity, while the extent to which the resulting outputs reflect the original large language model depends on how accurately the surrogate model represents it.",
+  "subfields": [
+    "Constrained Decoding and Controlled Generation",
+    "Neuro-symbolic Constraint Satisfaction",
+    "Language Modeling"
+  ],
+  "provenance": {
+    "n_papers_bundle": 25,
+    "n_papers_deduped": 25,
+    "n_fulltext": 16,
+    "pdf_sources": {
+      "cache": 1,
+      "pdf_url": 9,
+      "none": 9,
+      "unpaywall": 2,
+      "arxiv": 4
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5.5",
+    "recipe_model": "gpt-5.5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Constrained Decoding and Controlled Generation",
+      "menu": {
+        "datasets": [
+          {
+            "name": "CommonGen",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Yelp Reviews",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CzEng",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Giga French-English parallel corpus",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PPDB 2.0",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARANMT-50M",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARABANK",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Abductive Commonsense Reasoning (\u03b1NLG)",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "TimeTravel",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "ContextualizedCommonGen (C2GEN)",
+            "role": "eval",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "One-Billion-Word",
+            "role": "eval",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "GYAFC",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "OpenSubtitles French-English subset",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CoLA",
+            "role": "train",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CNN/DailyMail",
+            "role": "eval",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "DUC-2004",
+            "role": "eval",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "English Gigaword",
+            "role": "train",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Jigsaw Unintended Bias in Toxicity",
+            "role": "train",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts",
+            "role": "eval",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "OpenWebText",
+            "role": "eval",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Non-toxic OpenWebText subset",
+            "role": "train",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Stanford Sentiment Treebank (SST-5)",
+            "role": "train",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "IMDB",
+            "role": "train",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Recipe1M+",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Hotel and restaurant dialogues corpus",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "WinoMT",
+            "role": "robustness_eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-2",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BERT",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BART",
+            "role": "backbone",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "NeuroLogic Decoding",
+            "role": "method_under_test",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "PPLM",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "POINTER",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Marian Transformer",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Sockeye",
+            "role": "method_under_test",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "LSTM encoder-decoder NMT",
+            "role": "backbone",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARANMT baseline model",
+            "role": "baseline",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "DELOREAN",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Mix-and-Match",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "TSMH",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "LEFT-ONLY",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "NRP",
+            "role": "method_under_test",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "NRP+Keyword2Text",
+            "role": "method_under_test",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Keyword2Text",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "KG-BART",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "CBART",
+            "role": "method_under_test",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "CGMH",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "X-MCMC-C",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "XLNet",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "STRAP",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "RoBERTa-based classifier",
+            "role": "backbone",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Multilingual encoder for XSIM",
+            "role": "backbone",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Inverse-paraphrase model",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Fairseq convolutional sequence-to-sequence model",
+            "role": "method_under_test",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Pointer-generator",
+            "role": "baseline",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Lead-3",
+            "role": "baseline",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "GPT-2 experts and anti-experts",
+            "role": "method_under_test",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "GPT-3 Ada",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "GeDi",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "CTRL",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "DAPT",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "T5",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "UniLM",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "RecipeGPT",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Human evaluation score or preference",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Fluency",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Constraint or keyword coverage",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "ROUGE-L",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Latency or decoding time",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BERTScore",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CIDEr",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "METEOR",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Self-BLEU",
+            "direction": "lower_better",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Distinct-n",
+            "direction": "higher_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Inter-annotator agreement",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Semantic similarity",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Modified BLEU without brevity penalty for lexical diversity",
+            "direction": "lower_better",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Spearman correlation",
+            "direction": "higher_better",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "MinimalEdit",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "CommonSense human score",
+            "direction": "higher_better",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Contextual relevancy human score",
+            "direction": "higher_better",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "NIST",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Negative log-likelihood",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Repetition percentage",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Speedup",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Formality transfer",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Word Mover's Distance",
+            "direction": "lower_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "XSIM cross-lingual similarity",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "ROUGE-1",
+            "direction": "higher_better",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "ROUGE-2",
+            "direction": "higher_better",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Validation perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Average maximum toxicity",
+            "direction": "lower_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Probability of at least one toxic continuation",
+            "direction": "lower_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Percentage of positive generations",
+            "direction": "higher_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "SPICE",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Extra hallucinated ingredient ratio",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Gender translation accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Stereotypical vs non-stereotypical Delta F1 gap",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Multi-annotator human evaluation",
+            "detail": "Use human ratings or pairwise comparisons with multiple independent annotators, often via AMT, to assess semantic similarity, coherence, fluency, informativeness, toxicity, formality, or preference.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Beam-search decoding baseline",
+            "detail": "Report beam-search baselines with specified beam sizes, including beam size 4 or 5 in several controlled-generation setups and an illustrative NeuroLogic beam k=3.",
+            "evidence": [
+              "Controllable Abstractive Summarization",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Top-k, top-p, or nucleus decoding",
+            "detail": "Evaluate sampling/decoding variants such as top-k, top-p, nucleus sampling, or greedy decoding under constraints or control objectives.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Lexical or keyword constraint enforcement",
+            "detail": "Use positive/negative lexical constraints, keyword inclusion, or concept coverage constraints during decoding or generation.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Candidate selection after generation",
+            "detail": "Generate or optimize multiple candidates and select by lowest NLL, best constraint satisfaction, or task-specific criteria.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Zero-shot constrained decoding",
+            "detail": "Decode from pretrained language models without task-specific fine-tuning for constrained or controlled generation.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Byte-pair encoding tokenization",
+            "detail": "Apply BPE tokenization in constrained paraphrase generation or controllable summarization pipelines.",
+            "evidence": [
+              "Controllable Abstractive Summarization",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Grammar-constrained decoding",
+            "detail": "Constrain generated outputs with a grammar so that decoded structures satisfy the required formal output schema.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "PPDB lexical-constraint protocol",
+            "detail": "Look up PPDB lexical paraphrases, select up to three POS-matched paraphrases, add a negative constraint on the original token and a positive constraint on the paraphrase, and apply one pair per decoding.",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Positional negative constraints",
+            "detail": "Apply negative constraints to the first one to three beginning-of-sentence tokens to encourage paraphrase diversity.",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "COLD Langevin optimization",
+            "detail": "Run Langevin dynamics for N=2000 steps with step size 0.1, scheduled noise reduction, greedy-logit initialization, top-k discretization, and sample-and-select decoding.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Fixed-length prompted generation",
+            "detail": "In the free-text setting, generate exactly 32 tokens and tune inference parameters such as beam size on a held-out validation set.",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Frozen causal LM with trainable prompt model",
+            "detail": "Train with teacher-forced causal language modeling while freezing the causal LM and training the prompt model or positional transformation.",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Synthetic keyword-constrained training instances",
+            "detail": "Create synthetic constrained-generation instances by replacing 15% of tokens, extracting 1-6 keywords, and constructing test sets by number of constraints.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Parallel refinement termination",
+            "detail": "Iteratively refine outputs and stop when the decoder output is identical to the previous refinement step.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "MCMC refinement baseline",
+            "detail": "Run CGMH or X-MCMC-C for 200 refinement steps and select the candidate with lowest negative log-likelihood.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Continuous constrained optimization",
+            "detail": "Use exponentiated gradient descent over token-simplex variables and Lagrange multipliers, with straight-through estimation and annealed constraint thresholds.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Unknown target-length sweep",
+            "detail": "Greedily decode to estimate length, optimize over lengths in a local window around that estimate, and select the best output by constraints and primary objective.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Controllable summarization marker tokens",
+            "detail": "Prepend control markers for length, entities, source style, or remainder summarization to condition abstractive summaries.",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "Trigram repetition blocking",
+            "detail": "Prevent generating the same trigram more than once during summarization decoding.",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "DExperts top-p expert combination",
+            "detail": "Generate 25 continuations per prompt with nucleus sampling p=0.9, truncate base-LM logits to the top-p candidate set, and combine expert and anti-expert logits with a control-strength alpha.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "PerspectiveAPI toxicity thresholding",
+            "detail": "Score generations with PerspectiveAPI and treat toxicity score at least 0.5 as toxic.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "NeuroLogic concept-coverage evaluation",
+            "detail": "Measure coverage as the average percentage of input concepts present in lemmatized outputs and compare decoding methods before and after constrained decoding.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Gender-bias constrained decoding",
+            "detail": "Provide gender markers inferred by a coreference model or ground-truth gender labels during constrained decoding and evaluate on WinoMT.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 4
+      }
+    },
+    {
+      "subfield": "Neuro-symbolic Constraint Satisfaction",
+      "menu": {
+        "datasets": [
+          {
+            "name": "CommonGen",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Yelp Reviews",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CzEng",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Giga French-English parallel corpus",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PPDB 2.0",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARANMT-50M",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARABANK",
+            "role": "train",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Abductive Commonsense Reasoning (\u03b1NLG)",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "TimeTravel",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "ContextualizedCommonGen (C2GEN)",
+            "role": "eval",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "One-Billion-Word",
+            "role": "train",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "GYAFC",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "OpenSubtitles French-English subset",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CoLA",
+            "role": "train",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "SQuAD v1.1",
+            "role": "eval",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "SNLI",
+            "role": "eval",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "CoNLL2000",
+            "role": "eval",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "ConceptNet",
+            "role": "train",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "Recipe1M+",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Hotel and restaurant dialogues corpus",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "WinoMT",
+            "role": "robustness_eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-2",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BERT",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BART",
+            "role": "backbone",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "NeuroLogic",
+            "role": "method_under_test",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "POINTER",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Sockeye",
+            "role": "backbone",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "6-layer LSTM encoder-decoder NMT",
+            "role": "backbone",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Monolingual English-to-English NMT rewriter",
+            "role": "method_under_test",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "PARANMT baseline model",
+            "role": "baseline",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "DELOREAN",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Mix-and-Match",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "TSMH",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "LEFT-ONLY",
+            "role": "baseline",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "NRP",
+            "role": "method_under_test",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Keyword2Text",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "PPLM",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "KG-BART",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "CBART",
+            "role": "method_under_test",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "GBS",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "CGMH",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "X-MCMC-C",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "XLNet",
+            "role": "backbone",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "STRAP",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Marian Transformer",
+            "role": "backbone",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "RoBERTa-based classifier",
+            "role": "method_under_test",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Multilingual encoder for XSIM",
+            "role": "method_under_test",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Inverse-paraphrase model",
+            "role": "method_under_test",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "BiDAF",
+            "role": "backbone",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "ELMo-augmented BiDAF",
+            "role": "backbone",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "Decomposable Attention",
+            "role": "backbone",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "L-DAtt",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "BiLSTM tagger",
+            "role": "backbone",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "BiLSTM-CRF",
+            "role": "backbone",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "CRF",
+            "role": "baseline",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "BERT-Gen",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "UniLM",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "UniLM-v2",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "T5",
+            "role": "backbone",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "RecipeGPT",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Google Translate",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Microsoft Translator",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Junczys-Dowmunt et al. Marian system",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "BLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Human evaluation score or preference",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Constraint or keyword coverage",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Perplexity / negative log-likelihood",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Latency / runtime",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "ROUGE-L",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "METEOR",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "CIDEr",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "BERTScore",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Self-BLEU",
+            "direction": "lower_better",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Inter-annotator agreement",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "NIST",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Distinct-2 / Distinct-4",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Repetition percentage",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Average number of refinements",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Speedup",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Fluency classifier accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Formality transfer classifier score",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "WSIM",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "USIM",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "WMD",
+            "direction": "lower_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "XSIM",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Span F",
+            "direction": "higher_better",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "SPICE",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Extra hallucinated ingredient ratio",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Delta F1 bias gap",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "MinimalEdit",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Spearman's rho",
+            "direction": "higher_better",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Percentage grammatical and meaningful",
+            "direction": "higher_better",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Human evaluation for constrained generation",
+            "detail": "Use independent human judgments or pairwise comparisons to assess fluency, coherence, semantic similarity, informativeness, faithfulness, or constraint satisfaction.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Decoding-strategy comparisons",
+            "detail": "Compare constrained methods against greedy, top-k, top-p, beam-search, and prior constrained decoding baselines.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Top-k / top-p constrained candidate filtering",
+            "detail": "Restrict decoding to top-k or top-p token candidates while expanding or reranking candidates to satisfy constraints.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Beam search baseline",
+            "detail": "Use beam search as a core decoding baseline; beam size 5 is reported for several constrained-generation comparisons.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Off-the-shelf pretrained LM constrained decoding",
+            "detail": "Apply constraints at decoding time using pretrained language models without task-specific fine-tuning.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Training-data fraction sweep",
+            "detail": "Evaluate how constraint-based augmentation or constrained decoding changes performance as supervised training data varies.",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Byte-pair encoding tokenization",
+            "detail": "Apply BPE tokenization in neural generation pipelines before constrained decoding or training.",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Lexical positive/negative constraints",
+            "detail": "Select lexical paraphrase constraints from PPDB and apply positive constraints on replacements and negative constraints on original tokens during decoding.",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Positional lexical constraints",
+            "detail": "Apply negative constraints to initial tokens to encourage diverse constrained paraphrase generation.",
+            "evidence": [
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Langevin dynamics constrained optimization",
+            "detail": "Run Langevin dynamics for constrained text generation with scheduled noise reduction and soft-sequence initialization from greedy LM logits.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Sample-and-select constrained generation",
+            "detail": "Draw multiple samples from an energy-based constrained model and select the best sample by constraint-aware criteria.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Fixed-length controlled generation",
+            "detail": "Generate exactly 32 tokens in the free-text setting or a single sentence in the single-sentence setting.",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Synthetic constraint-instance construction",
+            "detail": "Create synthetic constrained training instances by replacing tokens and extracting 1-6 keywords per sentence for test sets.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Iterative refinement termination",
+            "detail": "Stop refinement when the decoder output is identical to the previous refinement step.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "MCMC refinement baseline",
+            "detail": "Run CGMH and X-MCMC-C for 200 refinement steps and select the candidate with the lowest NLL.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Continuous optimization with Lagrange multipliers",
+            "detail": "Use exponentiated gradient descent over token simplices and Lagrange multipliers to optimize text under multiple constraints.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Annealed constraint thresholds",
+            "detail": "Linearly decrease constraint thresholds during optimization and keep final thresholds fixed after annealing.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Straight-through estimator for discrete tokens",
+            "detail": "Use a straight-through one-hot argmax estimator to connect continuous token optimization with discrete output constraints.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "Unknown target-length search",
+            "detail": "Greedily decode a length estimate, optimize over a small range around that length, and select the best constraint-satisfying output.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "First-order logic augmentation data sweep",
+            "detail": "Train neural models with first-order logic constraints across dataset percentages from 1% to 100% and average over random runs.",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "Constraint-strength scaling factors",
+            "detail": "Set task-specific scaling factors for logical rules when augmenting neural models with first-order logic.",
+            "evidence": [
+              "Augmenting Neural Networks with First-order Logic"
+            ]
+          },
+          {
+            "name": "Grammar-constrained decoding",
+            "detail": "Constrain generated outputs with a formal grammar during decoding.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "Zero-shot constrained decoding",
+            "detail": "Decode from a pretrained LM without supervised fine-tuning while enforcing symbolic constraints.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Language-domain adaptation before constrained decoding",
+            "detail": "Fine-tune a pretrained LM on domain language only while ignoring concept labels, then apply constrained decoding.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Lemmatized coverage evaluation",
+            "detail": "Measure coverage as the average percentage of input concepts present in lemmatized outputs.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Gender-bias constrained translation",
+            "detail": "Provide gender markers inferred by a coreference model or ground truth during constrained decoding and evaluate stereotypical versus non-stereotypical cases.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 2
+      }
+    },
+    {
+      "subfield": "Language Modeling",
+      "menu": {
+        "datasets": [
+          {
+            "name": "CommonGen",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "CNN/DailyMail",
+            "role": "eval",
+            "evidence": [
+              "Controllable Abstractive Summarization",
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "Yelp Reviews",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "The Pile",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "OpenWebText",
+            "role": "train",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts",
+            "role": "robustness_eval",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "Jigsaw Unintended Bias in Toxicity",
+            "role": "robustness_eval",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "WinoMT",
+            "role": "robustness_eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "GYAFC",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "CoLA",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "OpenSubtitles",
+            "role": "eval",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "One-Billion-Word",
+            "role": "train",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "COMMONGEN",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "TIMETRAVEL",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "Abductive commonsense reasoning (\u03b1NLG)",
+            "role": "eval",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "ContextualizedCommonGen (C2GEN)",
+            "role": "eval",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "Recipe1M+",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "hotel and restaurant dialogues corpus",
+            "role": "eval",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "MT-bench",
+            "role": "eval",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "WMT14 DE-EN",
+            "role": "eval",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "NaturalQuestions",
+            "role": "eval",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "GSM8K",
+            "role": "eval",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "DPR",
+            "role": "eval",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "DUC-2004",
+            "role": "eval",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "English Gigaword",
+            "role": "train",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "CommonCrawl",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "FineWeb",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Books3",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "BookCorpus",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "arXiv",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Stack Exchange",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "GitHub",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-2",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BART",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Large language models for generative information extraction: a survey",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "T5",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Large language models (LLMs): survey, technical frameworks, and future challenges",
+              "Large language models for generative information extraction: a survey",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "BERT",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Large language models (LLMs): survey, technical frameworks, and future challenges",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "GPT-3",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Large language models (LLMs): survey, technical frameworks, and future challenges"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "Large language models (LLMs): survey, technical frameworks, and future challenges",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Large language models (LLMs): survey, technical frameworks, and future challenges",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "LLaMA",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Large language models (LLMs): survey, technical frameworks, and future challenges",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "PaLM",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Large language models (LLMs): survey, technical frameworks, and future challenges"
+            ]
+          },
+          {
+            "name": "Transformer",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "RoBERTa",
+            "role": "backbone",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "Vicuna-7B",
+            "role": "backbone",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "CBART",
+            "role": "method_under_test",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "NEUROLOGIC",
+            "role": "method_under_test",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "DExperts",
+            "role": "method_under_test",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "PPLM",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "FUDGE",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "GeDi",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "CTRL",
+            "role": "baseline",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "POINTER",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "GBS",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "CGMH",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "X-MCMC-C",
+            "role": "baseline",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Mamba",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Mamba-2",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "RetNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "RWKV-4",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Mixtral",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Gemma 2",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Qwen2.5-1M",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Qwen3-Next",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "DeepSeek V3.2",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-4o",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "ChatGPT",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Codex",
+            "role": "backbone",
+            "evidence": [
+              "Large language models (LLMs): survey, technical frameworks, and future challenges"
+            ]
+          },
+          {
+            "name": "Megatron-Turing NLG",
+            "role": "backbone",
+            "evidence": [
+              "Large language models (LLMs): survey, technical frameworks, and future challenges"
+            ]
+          },
+          {
+            "name": "Jurassic-1 Jumbo",
+            "role": "backbone",
+            "evidence": [
+              "Large language models (LLMs): survey, technical frameworks, and future challenges"
+            ]
+          },
+          {
+            "name": "GPT2-XL",
+            "role": "backbone",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "BERT-Gen",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "UniLM",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "UniLM-v2",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "RecipeGPT",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Google Translate",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Microsoft Translator",
+            "role": "baseline",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Marian Transformer",
+            "role": "baseline",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "n-gram language model",
+            "role": "baseline",
+            "evidence": [
+              "Exploiting both local and global constraints for multi-span statistical language modeling"
+            ]
+          },
+          {
+            "name": "multi-span language model",
+            "role": "method_under_test",
+            "evidence": [
+              "Exploiting both local and global constraints for multi-span statistical language modeling"
+            ]
+          },
+          {
+            "name": "integrative multi-span language model combining n-gram and LSA",
+            "role": "method_under_test",
+            "evidence": [
+              "Exploiting both local and global constraints for multi-span statistical language modeling"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "BLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "Generating Phrasal and Sentential Paraphrases: A Survey of Data-Driven Methods",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Exploiting both local and global constraints for multi-span statistical language modeling",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "human preference/judgment score",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "ROUGE-L",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "coverage",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "latency/runtime",
+            "direction": "lower_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "BERTScore",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "METEOR",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "CIDEr",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Distinct-n",
+            "direction": "higher_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Self-BLEU",
+            "direction": "lower_better",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "negative log-likelihood",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "cross-entropy",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "speedup",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART",
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "toxicity score",
+            "direction": "lower_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "probability of toxic continuation",
+            "direction": "lower_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "percentage of positive generations",
+            "direction": "higher_better",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "fluency classifier accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "formality transfer score",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "semantic similarity",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "Word Mover's Distance",
+            "direction": "lower_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "XSIM cross-lingual similarity",
+            "direction": "higher_better",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "SPICE",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "NIST",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "repetition percentage",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "average number of refinements",
+            "direction": "lower_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Fleiss' kappa",
+            "direction": "higher_better",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "Krippendorff alpha",
+            "direction": "higher_better",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "gender-bias Delta F1 gap",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "Extra hallucinated ingredient ratio",
+            "direction": "lower_better",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "byte-pair encoding tokenization",
+            "detail": "Use BPE for LM/NMT tokenization or controlled summarization token types.",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Controllable Abstractive Summarization",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation"
+            ]
+          },
+          {
+            "name": "beam search decoding",
+            "detail": "Decode with beam search; common reported beam size is 5, with constrained variants also reporting smaller beams.",
+            "evidence": [
+              "Controllable Abstractive Summarization",
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "top-k and top-p decoding comparisons",
+            "detail": "Compare greedy, top-k, top-p/nucleus, beam search, and constrained decoding strategies.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "human evaluation with multiple annotators",
+            "detail": "Collect human judgments for fluency, coherence, semantic similarity, toxicity, informativeness, or preference, often with AMT and multiple raters.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Controllable Abstractive Summarization",
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "zero-shot evaluation",
+            "detail": "Evaluate pretrained LMs without task-specific fine-tuning or with zero-shot prompting/decoding.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Large language models for generative information extraction: a survey",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "supervised fine-tuning",
+            "detail": "Fine-tune pretrained language models or experts on task/domain data before evaluation.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+              "Large language models for generative information extraction: a survey",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "constrained decoding",
+            "detail": "Apply grammar-, lexical-, predicate-logic-, or energy-based constraints during generation.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+              "Large language models for generative information extraction: a survey",
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "few-shot/in-context learning",
+            "detail": "Use few-shot demonstrations or in-context learning to condition LLM generation.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "retrieval-augmented generation",
+            "detail": "Use external retrieval or knowledge retrieval to augment generation.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "chain-of-thought prompting",
+            "detail": "Use CoT prompting for multi-step generative reasoning.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "multi-turn QA prompting",
+            "detail": "Cast extraction/generation as multi-turn question answering prompts.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "training-free self-improvement",
+            "detail": "Predict on unlabeled data, select reliable outputs, and reuse them as demonstrations.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "targeted distillation",
+            "detail": "Distill behavior from an LLM teacher into a smaller student model.",
+            "evidence": [
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "data curation and de-duplication",
+            "detail": "Filter corpora for quality, toxicity, and PII and de-duplicate at URL, document, or sentence level, including MinHash-style procedures.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "large-scale pretraining corpus sizing",
+            "detail": "Report pretraining scales on the order of tens of trillions of tokens for leading open-source LMs.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "scaling-law modeling",
+            "detail": "Fit power-law scaling relations using cross-entropy in nats as the target metric.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "long-context curriculum",
+            "detail": "Extend context length in stages and mix full-length with shorter sequences per batch.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Mixture-of-Experts routing",
+            "detail": "Activate a small number of experts per token using top-k, top-p, or device-limited routing.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "instruction-data annealing",
+            "detail": "Introduce curated instruction data in final pretraining stages with a decaying learning rate.",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "speculative decoding benchmark protocol",
+            "detail": "Randomly select 80 instances per dataset, run batch size 1 in FP16 on a single RTX 3090, and report mean speedup over 3 runs.",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "sampling temperature sweep",
+            "detail": "Evaluate decoding at temperatures T=0, T=0.5, and T=1.0, with greedy results at T=0.",
+            "evidence": [
+              "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding"
+            ]
+          },
+          {
+            "name": "Langevin dynamics constrained generation",
+            "detail": "Run 2000 Langevin steps with scheduled noise reduction and initialize soft sequences from greedy LM logits.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "sample-and-select decoding",
+            "detail": "Draw multiple samples from the generation model and select the best according to task criteria.",
+            "evidence": [
+              "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics"
+            ]
+          },
+          {
+            "name": "CommonGen controlled-generation length setting",
+            "detail": "Use beam size 4 and generate exactly 32 tokens in the free-text setting or one sentence in the single-sentence setting.",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "teacher-forced causal language modeling",
+            "detail": "Train prompt/control components with a teacher-forced CLM likelihood objective while freezing CLM weights.",
+            "evidence": [
+              "Fine-Grained Controllable Text Generation Using Non-Residual Prompting"
+            ]
+          },
+          {
+            "name": "synthetic constrained-generation data construction",
+            "detail": "Filter sentences by length, create multiple synthetic instances per seed sentence, replace 15% of tokens, and extract 1\u20136 keyword constraints.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "refinement-based decoding termination",
+            "detail": "Stop iterative refinement when decoder output is identical to the previous refinement step.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "MCMC refinement baseline protocol",
+            "detail": "Run CGMH and X-MCMC-C for 200 refinement steps and select the candidate with lowest NLL.",
+            "evidence": [
+              "Parallel Refinements for Lexically Constrained Text Generation with BART"
+            ]
+          },
+          {
+            "name": "continuous optimization for controlled text",
+            "detail": "Optimize token simplexes with exponentiated gradient descent, Lagrange multipliers, annealed thresholds, and straight-through argmax estimates.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "unknown target-length sweep",
+            "detail": "Greedily decode an initial length L, then optimize for target lengths from L-5 to L+5 and select the best feasible output.",
+            "evidence": [
+              "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints"
+            ]
+          },
+          {
+            "name": "summarization decoding controls",
+            "detail": "Use length/entity/source/remainder control markers, beam size 5, and block repeated trigrams.",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "summarization training schedule",
+            "detail": "Train with Nesterov accelerated gradient, momentum 0.99, learning rate 0.2, gradient clipping 0.1, and reduce LR when validation perplexity stalls.",
+            "evidence": [
+              "Controllable Abstractive Summarization"
+            ]
+          },
+          {
+            "name": "DExperts generation protocol",
+            "detail": "Generate 25 continuations per prompt with top-p sampling p=0.9 up to 20 tokens and combine base, expert, and anti-expert logits.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "toxicity thresholding",
+            "detail": "Use PerspectiveAPI with toxicity threshold 0.5 and compute maximum toxicity over multiple generations.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "expert data-size sweep",
+            "detail": "Sweep expert/anti-expert fine-tuning corpus sizes from 40,960 to 10,240,000 tokens.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "control-strength sweep",
+            "detail": "Sweep the decoding control-strength hyperparameter alpha for detoxification or sentiment steering.",
+            "evidence": [
+              "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts"
+            ]
+          },
+          {
+            "name": "NeuroLogic coverage evaluation",
+            "detail": "Measure average percentage of input concepts present in lemmatized outputs and compare before/after constrained decoding.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "training-fraction sweep",
+            "detail": "Evaluate supervised training-data effects by sweeping from 0% to 100% of training data.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          },
+          {
+            "name": "model-capacity sweep",
+            "detail": "Evaluate generation quality as GPT-2 model size varies.",
+            "evidence": [
+              "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 3
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Validate that the formal constraint representation is exact, satisfiable, and non-trivial",
+      "dataset": "CommonGen",
+      "model": "LLM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "Synthetic constraint-instance construction",
+      "metrics": [
+        "constraint satisfaction"
+      ],
+      "pass_condition": "Construct at least 200 satisfiable and 50 deliberately unsatisfiable token-level logical constraint instances from CommonGen concepts using positive keyword, negative keyword, and ordering constraints. Pass iff an independent exhaustive validator and the formal constraint representation agree on acceptance for 100% of all enumerated sequences up to length 8 over the top-64 token vocabulary; every satisfiable instance has at least one accepted witness; every deliberately unsatisfiable instance has zero accepted witnesses; and at least 90% of satisfiable instances have unconstrained LLM sample acceptance strictly between 5% and 95%. Any disagreement, empty satisfiable instance, nonempty unsatisfiable instance, or mostly trivial acceptance rates refutes this prerequisite.",
+      "constraints_not_enforced": [
+        "HMM surrogate quality",
+        "Computation of a constrained conditional probability distribution",
+        "Guaranteed constrained generation from the HMM"
+      ],
+      "depends_on": [],
+      "rationale": "Before testing constrained generation, the verifier must establish that the symbolic constraint object exactly represents the intended logical constraints and that the constraints are neither impossible nor vacuous.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validate that the fitted HMM is a measurable surrogate of the LLM",
+      "dataset": "CommonGen",
+      "model": "LLM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "targeted distillation",
+      "metrics": [
+        "cross-entropy",
+        "perplexity"
+      ],
+      "pass_condition": "Fit the HMM to next-token behavior of the LLM on CommonGen prompts and held-out LLM-sampled continuations using the same tokenizer. Pass iff on a held-out set of at least 10000 tokens, the HMM cross-entropy on LLM-sampled continuations is no more than 1.0 nat/token worse than the LLM's own negative log-likelihood on those same continuations, and HMM perplexity is finite for 100% of held-out continuations. If the gap exceeds 1.0 nat/token or any held-out continuation has zero HMM probability, the HMM is not validated as a surrogate for this claim.",
+      "constraints_not_enforced": [
+        "Logical constraint satisfaction",
+        "Restriction of generation to accepted sequences",
+        "Exact constrained conditional distribution computation"
+      ],
+      "depends_on": [
+        "Validate that the formal constraint representation is exact, satisfiable, and non-trivial"
+      ],
+      "rationale": "The claim presupposes an HMM constructed as a surrogate model of an LLM; this apparatus check verifies that the HMM approximates the LLM distribution before testing constrained generation.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Verify exact computation of the HMM constrained conditional probability distribution",
+      "dataset": "CommonGen",
+      "model": "HMM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "Grammar-constrained decoding",
+      "metrics": [
+        "constraint satisfaction",
+        "negative log-likelihood"
+      ],
+      "pass_condition": "For at least 100 satisfiable constraint instances from the gate, form the product of the HMM and the formal constraint representation and compute the conditional distribution over accepted sequences. For bounded tests with max length 12 and top-64 token vocabulary, also brute-force enumerate all sequences. Pass iff for every instance the product normalizer is positive, total conditional probability over accepted sequences equals 1 within absolute error 1e-10, every sequence assigned nonzero conditional probability is accepted by the validator, every rejected sequence has conditional probability exactly 0, and the maximum absolute probability difference from brute-force enumeration is at most 1e-8. Any violation refutes the claim that the HMM enables computing the constrained conditional distribution.",
+      "constraints_not_enforced": [
+        "Approximation quality to the original LLM beyond the validated HMM surrogate",
+        "Guarantees for unbounded sequence lengths",
+        "Logical constraints not expressible by the tested formal representation"
+      ],
+      "depends_on": [
+        "Validate that the formal constraint representation is exact, satisfiable, and non-trivial",
+        "Validate that the fitted HMM is a measurable surrogate of the LLM"
+      ],
+      "rationale": "The central mathematical assertion is that conditioning the HMM on the formal language yields a computable probability distribution whose support is exactly the accepted set; bounded enumeration gives an exact oracle check.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Verify that generated HMM outputs are guaranteed to satisfy the formal constraints",
+      "dataset": "CommonGen",
+      "model": "HMM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "constrained decoding",
+      "metrics": [
+        "constraint satisfaction"
+      ],
+      "pass_condition": "Using the product HMM from the constrained conditional distribution test, generate at least 10000 continuations across the satisfiable constraint instances. Also statically inspect the product sampler's support graph. Pass iff the support graph contains no path that can emit an end-of-sequence output from a non-accepting constraint state, and 10000 out of 10000 generated continuations are accepted by the independent validator. A single invalid support path or a single invalid generated continuation refutes the claimed guarantee.",
+      "constraints_not_enforced": [
+        "Approximation quality to the original LLM beyond the validated HMM surrogate",
+        "Guarantees for logical constraints outside the tested formal representation"
+      ],
+      "depends_on": [
+        "Verify exact computation of the HMM constrained conditional probability distribution"
+      ],
+      "rationale": "A finite sample alone cannot prove a guarantee, so this combines empirical generation with a structural support check that invalid outputs have zero probability under the constrained HMM.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Ablate the constraint-product mechanism to attribute satisfaction to HMM conditioning on the formal representation",
+      "dataset": "CommonGen",
+      "model": "HMM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "Sample-and-select constrained generation",
+      "metrics": [
+        "constraint satisfaction"
+      ],
+      "pass_condition": "Run a matched-budget ablation using the same fitted HMM but removing the product with the formal constraint representation: sample from the unconstrained HMM, optionally applying only sample-and-select filtering with the same number of HMM next-token evaluations as the constrained sampler. Pass iff the full product-HMM sampler maintains 100% constraint satisfaction, while the ablated sampler produces at least one validator-rejected output in each tested non-trivial constraint family and has overall constraint satisfaction below 99%. If the ablated sampler also achieves 100% satisfaction, the result is not attributable to the claimed HMM-plus-formal-constraint mechanism.",
+      "constraints_not_enforced": [
+        "Exact equivalence to the original LLM distribution",
+        "All possible logical constraint languages"
+      ],
+      "depends_on": [
+        "Verify that generated HMM outputs are guaranteed to satisfy the formal constraints"
+      ],
+      "rationale": "This removes the claim's own mechanism, the formal conditioning/product construction, while keeping the HMM and sampling budget fixed; the comparison tests whether satisfaction is due to the proposed mechanism rather than easy prompts or the HMM prior.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Stress-test robustness across constraint types, strengths, and unsatisfiable cases",
+      "dataset": "CommonGen",
+      "model": "HMM",
+      "method_under_test": "HMM",
+      "attack_or_condition": "Lexical positive/negative constraints",
+      "metrics": [
+        "constraint satisfaction",
+        "latency/runtime"
+      ],
+      "pass_condition": "Evaluate the constrained HMM on a sweep of at least three constraint families: positive keyword inclusion, negative keyword exclusion, and positional/order constraints, with target lengths 8, 16, and 32, plus at least 50 deliberately unsatisfiable instances. Pass iff every satisfiable instance has positive constrained normalizer and 100% validator acceptance among generated outputs, and every unsatisfiable instance has zero constrained normalizer and the sampler refuses to emit a sequence. Any invalid output, false positive on an unsatisfiable constraint, or failure to return a valid sequence for a satisfiable constraint refutes robustness of the guarantee for the tested formal classes.",
+      "constraints_not_enforced": [
+        "Logical constraints outside the tested positive, negative, positional, and grammar-style finite representations",
+        "Unbounded-length generation guarantees"
+      ],
+      "depends_on": [
+        "Verify exact computation of the HMM constrained conditional probability distribution",
+        "Verify that generated HMM outputs are guaranteed to satisfy the formal constraints",
+        "Ablate the constraint-product mechanism to attribute satisfaction to HMM conditioning on the formal representation"
+      ],
+      "rationale": "A robustness sweep checks that the guarantee is not limited to one easy constraint template and that the method fails safely when the formal language is empty.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": true
+      }
+    }
+  ]
+}

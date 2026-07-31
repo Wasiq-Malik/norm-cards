@@ -138,13 +138,17 @@ def _relevance(p: Paper, subfields: List[str]) -> float:
 
 
 def _authority(p: Paper, current_year: int) -> float:
+    """Citation VELOCITY (citations per year), not absolute count: 100 citations
+    in 2 years signals more current impact than 100 over 10. Truly seminal old
+    work still ranks high because its per-year rate stays large; a brand-new
+    paper with few citations doesn't leap up on novelty alone. Log-damped so a
+    handful of mega-cited papers don't dwarf the pool. Unknown/future year ->
+    damped absolute count (partial credit; a rate can't be computed)."""
     cites = p.citations or 0
-    base = math.log1p(cites)
-    if p.year and p.year <= current_year:
-        age = max(1, current_year - p.year + 1)
-        # Reward citations accrued quickly; don't over-penalize seminal old work.
-        base += math.log1p(cites / age)
-    return base
+    if not p.year or p.year > current_year:
+        return 0.5 * math.log1p(cites)
+    age = max(1, current_year - p.year + 1)
+    return math.log1p(cites / age)
 
 
 def _recency(p: Paper, current_year: int) -> float:

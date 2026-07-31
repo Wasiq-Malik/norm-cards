@@ -1,0 +1,1361 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "37",
+  "problem_version": "1.0",
+  "domain": "",
+  "claim": "In SMILES-based molecular VAEs with continuous latent space, constraints such as synthesizability and solubility can be approximated by low-rank linear subspaces to enable constrained latent optimization for improving feasible-hit sample efficiency (hits per oracle query) on constrained molecular design problems from the GuacaMol similarity tasks (e.g., Aripiprazole, Tamoxifen, Celecoxib with additional constraints) relative to black-box Bayesian optimization baselines under matched query budgets.",
+  "analysis": {
+    "subfields": [
+      "Molecular Generation and Optimization",
+      "Drug Discovery",
+      "Biology"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T10211",
+      "T10545",
+      "T10848"
+    ],
+    "openalex_topic_names": [],
+    "claim_type": "empirical",
+    "temporal_mode": "static",
+    "entities": {
+      "models": [
+        "SMILES VAE"
+      ],
+      "datasets": [
+        "GuacaMol"
+      ],
+      "metrics": [
+        "hits per oracle query"
+      ],
+      "thresholds": []
+    },
+    "confidence": 0.0,
+    "method": "hand"
+  },
+  "queries": {
+    "survey": [
+      "survey of molecular generation and optimization with variational autoencoders"
+    ],
+    "benchmark_dataset": [
+      "GuacaMol benchmark goal-directed molecular design",
+      "sample efficiency metrics for constrained molecular optimization"
+    ],
+    "canonical_method": [
+      "constrained latent space optimization in SMILES molecular VAEs",
+      "Bayesian optimization baselines for molecular property optimization"
+    ]
+  },
+  "stats": {
+    "n_queries": 5,
+    "n_candidates": 59,
+    "n_selected": 25,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 12.0
+  },
+  "papers": [
+    {
+      "title": "Molecular representations in AI-driven drug discovery: a review and practical guide",
+      "abstract": "The technological advances of the past century, marked by the computer revolution and the advent of high-throughput screening technologies in drug discovery, opened the path to the computational analysis and visualization of bioactive molecules. For this purpose, it became necessary to represent molecules in a syntax that would be readable by computers and understandable by scientists of various fields. A large number of chemical representations have been developed over the years, their numerosity being due to the fast development of computers and the complexity of producing a representation that encompasses all structural and chemical characteristics. We present here some of the most popular electronic molecular and macromolecular representations used in drug discovery, many of which are based on graph representations. Furthermore, we describe applications of these representations in AI-driven drug discovery. Our aim is to provide a brief guide on structural representations that are essential to the practice of AI in drug discovery. This review serves as a guide for researchers who have little experience with the handling of chemical representations and plan to work on applications at the interface of these fields.",
+      "authors": [
+        "Laurianne David",
+        "Amol Thakkar",
+        "Roc\u00edo Mercado",
+        "Ola Engkvist"
+      ],
+      "year": 2020,
+      "venue": "Journal of Cheminformatics",
+      "citations": 575,
+      "url": "https://openalex.org/W3087318293",
+      "pdf_url": "https://jcheminf.biomedcentral.com/track/pdf/10.1186/s13321-020-00460-5",
+      "doi": "10.1186/s13321-020-00460-5",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Drug discovery",
+        "Computer science",
+        "Data science",
+        "Bioinformatics",
+        "Biology"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T13937"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 200.80182,
+      "paper_type": "survey",
+      "score": 4.0126,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Drug Discovery"
+        ]
+      }
+    },
+    {
+      "title": "MoFlow: An Invertible Flow Model for Generating Molecular Graphs",
+      "abstract": "Generating molecular graphs with desired chemical properties driven by deep graph generative models provides a very promising way to accelerate drug discovery process. Such graph generative models usually consist of two steps: learning latent representations and generation of molecular graphs. However, to generate novel and chemically-valid molecular graphs from latent representations is very challenging because of the chemical constraints and combinatorial complexity of molecular graphs. In this paper, we propose MoFlow, a flow-based graph generative model to learn invertible mappings between molecular graphs and their latent representations. To generate molecular graphs, our MoFlow first generates bonds (edges) through a Glow based model, then generates atoms (nodes) given bonds by a novel graph conditional flow, and finally assembles them into a chemically valid molecular graph with a posthoc validity correction. Our MoFlow has merits including exact and tractable likelihood training, efficient one-pass embedding and generation, chemical validity guarantees, 100% reconstruction of training data, and good generalization ability. We validate our model by four tasks: molecular graph generation and reconstruction, visualization of the continuous latent space, property optimization, and constrained property optimization. Our MoFlow achieves state-of-the-art performance, which implies its potential efficiency and effectiveness to explore large chemical space for drug discovery.",
+      "authors": [
+        "Chengxi Zang",
+        "Fei Wang"
+      ],
+      "year": 2020,
+      "venue": "",
+      "citations": 212,
+      "url": "https://openalex.org/W3036527662",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3394486.3403104",
+      "doi": "10.1145/3394486.3403104",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Chemical space",
+        "Embedding",
+        "Generative model",
+        "Graph",
+        "Invertible matrix",
+        "Molecular graph"
+      ],
+      "topic_ids": [
+        "T10044",
+        "T10211",
+        "T11948"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "constrained latent space optimization in SMILES molecular VAEs",
+        "sample efficiency metrics for constrained molecular optimization",
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 245.517,
+      "paper_type": "method",
+      "score": 3.8587,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Machine Learning Methods for Small Data Challenges in Molecular Science",
+      "abstract": "Small data are often used in scientific and engineering research due to the presence of various constraints, such as time, cost, ethics, privacy, security, and technical limitations in data acquisition. However, big data have been the focus for the past decade, small data and their challenges have received little attention, even though they are technically more severe in machine learning (ML) and deep learning (DL) studies. Overall, the small data challenge is often compounded by issues, such as data diversity, imputation, noise, imbalance, and high-dimensionality. Fortunately, the current big data era is characterized by technological breakthroughs in ML, DL, and artificial intelligence (AI), which enable data-driven scientific discovery, and many advanced ML and DL technologies developed for big data have inadvertently provided solutions for small data problems. As a result, significant progress has been made in ML and DL for small data challenges in the past decade. In this review, we summarize and analyze several emerging potential solutions to small data challenges in molecular science, including chemical and biological sciences. We review both basic machine learning algorithms, such as linear regression, logistic regression (LR), k -nearest neighbor (KNN), support vector machine (SVM), kernel learning (KL), random forest (RF), and gradient boosting trees (GBT), and more advanced techniques, including artificial neural network (ANN), convolutional neural network (CNN), U-Net, graph neural network (GNN), Generative Adversarial Network (GAN), long short-term memory (LSTM), autoencoder, transformer, transfer learning, active learning, graph-based semi-supervised learning, combining deep learning with traditional machine learning, and physical model-based data augmentation. We also briefly discuss the latest advances in these methods. Finally, we conclude the survey with a discussion of promising trends in small data challenges in molecular science.",
+      "authors": [
+        "Bozheng Dou",
+        "Zailiang Zhu",
+        "Ekaterina Merkurjev",
+        "Ke L\u00fc",
+        "Long Chen",
+        "Jiang Jian",
+        "Yueying Zhu",
+        "Jie Liu",
+        "Bengong Zhang",
+        "Guo\u2010Wei Wei"
+      ],
+      "year": 2023,
+      "venue": "Chemical Reviews",
+      "citations": 454,
+      "url": "https://openalex.org/W4382516982",
+      "pdf_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10999174/pdf/nihms-1979743.pdf",
+      "doi": "10.1021/acs.chemrev.3c00189",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Chemistry",
+        "Computer science",
+        "Data science",
+        "Materials science",
+        "Nanotechnology"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T13937"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "constrained latent space optimization in SMILES molecular VAEs",
+        "sample efficiency metrics for constrained molecular optimization",
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 228.07591,
+      "paper_type": "method",
+      "score": 3.5075,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Constrained Bayesian optimization for automatic chemical design using variational autoencoders",
+      "abstract": "Automatic Chemical Design is a framework for generating novel molecules with optimized properties. The original scheme, featuring Bayesian optimization over the latent space of a variational autoencoder, suffers from the pathology that it tends to produce invalid molecular structures. First, we demonstrate empirically that this pathology arises when the Bayesian optimization scheme queries latent space points far away from the data on which the variational autoencoder has been trained. Secondly, by reformulating the search procedure as a constrained Bayesian optimization problem, we show that the effects of this pathology can be mitigated, yielding marked improvements in the validity of the generated molecules. We posit that constrained Bayesian optimization is a good approach for solving this kind of training set mismatch in many generative tasks involving Bayesian optimization over the latent space of a variational autoencoder.",
+      "authors": [
+        "Ryan\u2010Rhys Griffiths",
+        "Jos\u00e9 Miguel Hern\u00e1ndez-Lobato"
+      ],
+      "year": 2019,
+      "venue": "Chemical Science",
+      "citations": 360,
+      "url": "https://openalex.org/W2985931096",
+      "pdf_url": "https://pubs.rsc.org/en/content/articlepdf/2020/sc/c9sc04026a",
+      "doi": "10.1039/c9sc04026a",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Autoencoder",
+        "Bayesian optimization",
+        "Bayesian probability",
+        "Computer science",
+        "Set (abstract data type)",
+        "Space (punctuation)"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T13180"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Bayesian optimization baselines for molecular property optimization",
+        "GuacaMol benchmark goal-directed molecular design",
+        "constrained latent space optimization in SMILES molecular VAEs",
+        "sample efficiency metrics for constrained molecular optimization",
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 494.30887,
+      "paper_type": "method",
+      "score": 3.4014,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Machine learning approaches and databases for prediction of drug\u2013target interaction: a survey paper",
+      "abstract": "The task of predicting the interactions between drugs and targets plays a key role in the process of drug discovery. There is a need to develop novel and efficient prediction approaches in order to avoid costly and laborious yet not-always-deterministic experiments to determine drug-target interactions (DTIs) by experiments alone. These approaches should be capable of identifying the potential DTIs in a timely manner. In this article, we describe the data required for the task of DTI prediction followed by a comprehensive catalog consisting of machine learning methods and databases, which have been proposed and utilized to predict DTIs. The advantages and disadvantages of each set of methods are also briefly discussed. Lastly, the challenges one may face in prediction of DTI using machine learning approaches are highlighted and we conclude by shedding some lights on important future research directions.",
+      "authors": [
+        "Maryam Bagherian",
+        "Elyas Sabeti",
+        "Kai Wang",
+        "Maureen A. Sartor",
+        "Zaneta Nikolovska\u2010Coleska",
+        "Kayvan Najarian"
+      ],
+      "year": 2019,
+      "venue": "Briefings in Bioinformatics",
+      "citations": 427,
+      "url": "https://openalex.org/W3000043291",
+      "pdf_url": "https://academic.oup.com/bib/article-pdf/22/1/247/35935006/bbz157.pdf",
+      "doi": "10.1093/bib/bbz157",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Task (project management)",
+        "Machine learning",
+        "Process (computing)",
+        "Set (abstract data type)",
+        "Key (lock)"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T10375",
+        "T10887"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 151.43138,
+      "paper_type": "survey",
+      "score": 3.3609,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Drug Discovery"
+        ]
+      }
+    },
+    {
+      "title": "Deep generative molecular design reshapes drug discovery",
+      "abstract": "Recent advances and accomplishments of artificial intelligence (AI) and deep generative models have established their usefulness in medicinal applications, especially in drug discovery and development. To correctly apply AI, the developer and user face questions such as which protocols to consider, which factors to scrutinize, and how the deep generative models can integrate the relevant disciplines. This review summarizes classical and newly developed AI approaches, providing an updated and accessible guide to the broad computational drug discovery and development community. We introduce deep generative models from different standpoints and describe the theoretical frameworks for representing chemical and biological structures and their applications. We discuss the data and technical challenges and highlight future directions of multimodal deep generative models for accelerating drug discovery.",
+      "authors": [
+        "Xiangxiang Zeng",
+        "Fei Wang",
+        "Yuan Luo",
+        "Seung-Gu Kang",
+        "Jian Tang",
+        "Felice C. Lightstone",
+        "Evandro Fei Fang",
+        "Wendy D. Cornell",
+        "Ruth Nussinov",
+        "Feixiong Cheng"
+      ],
+      "year": 2022,
+      "venue": "Cell Reports Medicine",
+      "citations": 283,
+      "url": "https://openalex.org/W4307447012",
+      "pdf_url": "http://www.cell.com/article/S2666379122003494/pdf",
+      "doi": "10.1016/j.xcrm.2022.100794",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Generative grammar",
+        "Drug discovery",
+        "Computer science",
+        "Deep learning",
+        "Artificial intelligence",
+        "Data science"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10044"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 162.53038,
+      "paper_type": "method",
+      "score": 3.0306,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization",
+          "Drug Discovery"
+        ]
+      }
+    },
+    {
+      "title": "Efficient multi-objective molecular optimization in a continuous latent space",
+      "abstract": "prediction models, defined desirability ranges and substructure constraints. We demonstrate that our proposed method is able to consistently find more desirable molecules for the studied tasks in relatively short time. We hope that our method can support medicinal chemists in accelerating and improving the lead optimization process.",
+      "authors": [
+        "Robin Winter",
+        "Floriane Montanari",
+        "Andreas Steffen",
+        "Hans Briem",
+        "Frank No\u00e9",
+        "Djork-Arn\u00e9 Clevert"
+      ],
+      "year": 2019,
+      "venue": "Chemical Science",
+      "citations": 279,
+      "url": "https://openalex.org/W2956961449",
+      "pdf_url": "https://pubs.rsc.org/en/content/articlepdf/2019/sc/c9sc01928f",
+      "doi": "10.1039/c9sc01928f",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Biology",
+        "Computational biology",
+        "Computer science",
+        "Operating system",
+        "Space (punctuation)"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11053",
+        "T11407"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Bayesian optimization baselines for molecular property optimization",
+        "GuacaMol benchmark goal-directed molecular design",
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 366.7545,
+      "paper_type": "method",
+      "score": 2.9724,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Thermodynamic Proxies to Compensate for Biases in Drug Discovery Methods",
+      "abstract": "",
+      "authors": [
+        "Sean Ekins",
+        "Nadia K. Litterman",
+        "Christopher A. Lipinski",
+        "Barry A. Bunin"
+      ],
+      "year": 2015,
+      "venue": "Pharmaceutical Research",
+      "citations": 19,
+      "url": "https://openalex.org/W1718256562",
+      "pdf_url": "",
+      "doi": "10.1007/s11095-015-1779-y",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Drug discovery",
+        "Hydrogen bond",
+        "Drug",
+        "Chemistry",
+        "Computational biology",
+        "Combinatorial chemistry"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T10798",
+        "T10044"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 0.9296783053293818,
+      "paper_type": "method",
+      "score": 2.7279,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Drug Discovery"
+        ]
+      }
+    },
+    {
+      "title": "Bayesian Optimization for Adaptive Experimental Design: A Review",
+      "abstract": "Bayesian optimisation is a statistical method that efficiently models and optimises expensive \u201cblack-box\u201d functions. This review considers the application of Bayesian optimisation to experimental design, in comparison to existing Design of Experiments (DOE) methods. Solutions are surveyed for a range of core issues in experimental design including: the incorporation of prior knowledge, high dimensional optimisation, constraints, batch evaluation, multiple objectives, multi-fidelity data, and mixed variable types.",
+      "authors": [
+        "Stewart Greenhill",
+        "Santu Rana",
+        "Sunil Gupta",
+        "Pratibha Vellanki",
+        "Svetha Venkatesh"
+      ],
+      "year": 2020,
+      "venue": "IEEE Access",
+      "citations": 495,
+      "url": "https://openalex.org/W2998788451",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/08957442.pdf",
+      "doi": "10.1109/access.2020.2966228",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Bayesian optimization",
+        "Design of experiments",
+        "Bayesian probability",
+        "Bayesian experimental design",
+        "Range (aeronautics)"
+      ],
+      "topic_ids": [
+        "T10848",
+        "T11798",
+        "T12535"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 199.3937,
+      "paper_type": "survey",
+      "score": 2.6954,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Deep Learning for Deep Chemistry: Optimizing the Prediction of Chemical Patterns",
+      "abstract": "calculations, simulation, machine learning (ML) and optimization strategies for describing, solving and predicting chemical data and related phenomena. These include accelerated literature searches, analysis and prediction of physical and quantum chemical properties, transition states, chemical structures, chemical reactions, and also new catalysts and drug candidates. The generalization of scalability to larger chemical problems, rather than specialization, is now the main principle for transforming chemical tasks in multiple fronts, for which systematic and cost-effective solutions have benefited from ML approaches, including those based on deep learning (e.g. quantum chemistry, molecular screening, synthetic route design, catalysis, drug discovery). The latter class of ML algorithms is capable of combining raw input into layers of intermediate features, enabling bench-to-bytes designs with the potential to transform several chemical domains. In this review, the most exciting developments concerning the use of ML in a range of different chemical scenarios are described. A range of different chemical problems and respective rationalization, that have hitherto been inaccessible due to the lack of suitable analysis tools, is thus detailed, evidencing the breadth of potential applications of these emerging multidimensional approaches. Focus is given to the models, algorithms and methods proposed to facilitate research on compound design and synthesis, materials design, prediction of binding, molecular activity, and soft matter behavior. The information produced by pairing Chemistry and ML, through data-driven analyses, neural network predictions and monitoring of chemical systems, allows (i) prompting the ability to understand the complexity of chemical data, (ii) streamlining and designing experiments, (ii) discovering new molecular targets and materials, and also (iv) planning or rethinking forthcoming chemical challenges. In fact, optimization engulfs all these tasks directly.",
+      "authors": [
+        "T\u00e2nia Cova",
+        "Alberto A. C. C. Pais"
+      ],
+      "year": 2019,
+      "venue": "Frontiers in Chemistry",
+      "citations": 187,
+      "url": "https://openalex.org/W2990351990",
+      "pdf_url": "https://www.frontiersin.org/articles/10.3389/fchem.2019.00809/pdf",
+      "doi": "10.3389/fchem.2019.00809",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Deep learning",
+        "Chemistry",
+        "Environmental chemistry",
+        "Artificial intelligence",
+        "Computer science"
+      ],
+      "topic_ids": [
+        "T11948",
+        "T10211",
+        "T12327"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 135.19026,
+      "paper_type": "method",
+      "score": 2.6271,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Hyperparameter optimization: Foundations, algorithms, best practices, and open challenges",
+      "abstract": "Abstract Most machine learning algorithms are configured by a set of hyperparameters whose values must be carefully chosen and which often considerably impact performance. To avoid a time\u2010consuming and irreproducible manual process of trial\u2010and\u2010error to find well\u2010performing hyperparameter configurations, various automatic hyperparameter optimization (HPO) methods\u2014for example, based on resampling error estimation for supervised machine learning\u2014can be employed. After introducing HPO from a general perspective, this paper reviews important HPO methods, from simple techniques such as grid or random search to more advanced methods like evolution strategies, Bayesian optimization, Hyperband, and racing. This work gives practical recommendations regarding important choices to be made when conducting HPO, including the HPO algorithms themselves, performance evaluation, how to combine HPO with machine learning pipelines, runtime improvements, and parallelization. This article is categorized under: Algorithmic Development &gt; Statistics Technologies &gt; Machine Learning Technologies &gt; Prediction",
+      "authors": [
+        "Bernd Bischl",
+        "Martin Binder",
+        "Michel Lang",
+        "Tobias Pielok",
+        "Jakob Richter",
+        "Stefan Coors",
+        "Janek Thomas",
+        "Theresa Ullmann",
+        "Marc Becker",
+        "Anne\u2010Laure Boulesteix",
+        "Difan Deng",
+        "Marius Lindauer"
+      ],
+      "year": 2023,
+      "venue": "Wiley Interdisciplinary Reviews Data Mining and Knowledge Discovery",
+      "citations": 811,
+      "url": "https://openalex.org/W3179950556",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/widm.1484",
+      "doi": "10.1002/widm.1484",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Bayesian optimization",
+        "Computer science",
+        "Hyperparameter",
+        "Hyperparameter optimization",
+        "Machine learning"
+      ],
+      "topic_ids": [
+        "T10100",
+        "T10848",
+        "T12535"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Bayesian optimization baselines for molecular property optimization",
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 458.1946,
+      "paper_type": "method",
+      "score": 2.5743,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "A comprehensive review of molecular optimization in artificial intelligence\u2010based drug discovery",
+      "abstract": "Drug discovery is aimed to design novel molecules with specific chemical properties for the treatment of targeting diseases. Generally, molecular optimization is one important step in drug discovery, which optimizes the physical and chemical properties of a molecule. Currently, artificial intelligence techniques have shown excellent success in drug discovery, which has emerged as a new strategy to address the challenges of drug design including molecular optimization, and drastically reduce the costs and time for drug discovery. We review the latest advances of molecular optimization in artificial intelligence-based drug discovery, including data resources, molecular properties, optimization methodologies, and assessment criteria for molecular optimization. Specifically, we classify the optimization methodologies into molecular mapping-based, molecular distribution matching-based, and guided search-based methods, respectively, and discuss the principles of these methods as well as their pros and cons. Moreover, we highlight the current challenges in molecular optimization and offer a variety of perspectives, including interpretability, multidimensional optimization, and model generalization, on potential new lines of research to pursue in future. This study provides a comprehensive review of molecular optimization in artificial intelligence-based drug discovery, which points out the challenges as well as the new prospects. This review will guide researchers who are interested in artificial intelligence molecular optimization.",
+      "authors": [
+        "Yuhang Xia",
+        "Yongkang Wang",
+        "Zhiwei Wang",
+        "Wen Zhang"
+      ],
+      "year": 2024,
+      "venue": "Quantitative Biology",
+      "citations": 18,
+      "url": "https://openalex.org/W4391752856",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/qub2.30",
+      "doi": "10.1002/qub2.30",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Drug discovery",
+        "Computer science",
+        "Interpretability",
+        "Artificial intelligence",
+        "Machine learning",
+        "Data science"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10044"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 0.9300051985777182,
+      "paper_type": "method",
+      "score": 2.5725,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Reinvent 4: Modern AI\u2013driven generative molecule design",
+      "abstract": "REINVENT 4 is a modern open-source generative AI framework for the design of small molecules. The software utilizes recurrent neural networks and transformer architectures to drive molecule generation. These generators are seamlessly embedded within the general machine learning optimization algorithms, transfer learning, reinforcement learning and curriculum learning. REINVENT 4 enables and facilitates de novo design, R-group replacement, library design, linker design, scaffold hopping and molecule optimization. This contribution gives an overview of the software and describes its design. Algorithms and their applications are discussed in detail. REINVENT 4 is a command line tool which reads a user configuration in either TOML or JSON format. The aim of this release is to provide reference implementations for some of the most common algorithms in AI based molecule generation. An additional goal with the release is to create a framework for education and future innovation in AI based molecular design. The software is available from https://github.com/MolecularAI/REINVENT4 and released under the permissive Apache 2.0 license. Scientific contribution. The software provides an open-source reference implementation for generative molecular design where the software is also being used in production to support in-house drug discovery projects. The publication of the most common machine learning algorithms in one code and full documentation thereof will increase transparency of AI and foster innovation, collaboration and education.",
+      "authors": [
+        "Hannes H. Loeffler",
+        "Jiazhen He",
+        "Alessandro Tibo",
+        "Jon Paul Janet",
+        "Alexey Voronov",
+        "Lewis Mervin",
+        "Ola Engkvist"
+      ],
+      "year": 2024,
+      "venue": "Journal of Cheminformatics",
+      "citations": 252,
+      "url": "https://openalex.org/W4392015344",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00812-5.pdf",
+      "doi": "10.1186/s13321-024-00812-5",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Software engineering",
+        "Software",
+        "Generative grammar",
+        "Artificial intelligence",
+        "Software design"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 159.92273,
+      "paper_type": "method",
+      "score": 2.5664,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Deep clustering of small molecules at large-scale via variational autoencoder embedding and K-means",
+      "abstract": "BACKGROUND: Converting molecules into computer-interpretable features with rich molecular information is a core problem of data-driven machine learning applications in chemical and drug-related tasks. Generally speaking, there are global and local features to represent a given molecule. As most algorithms have been developed based on one type of feature, a remaining bottleneck is to combine both feature sets for advanced molecule-based machine learning analysis. Here, we explored a novel analytical framework to make embeddings of the molecular features and apply them in the clustering of a large number of small molecules. RESULTS: In this novel framework, we first introduced a principal component analysis method encoding the molecule-specific atom and bond information. We then used a variational autoencoder (AE)-based method to make embeddings of the global chemical properties and the local atom and bond features. Next, using the embeddings from the encoded local and global features, we implemented and compared several unsupervised clustering algorithms to group the molecule-specific embeddings. The number of clusters was treated as a hyper-parameter and determined by the Silhouette method. Finally, we evaluated the corresponding results using three internal indices. Applying the analysis framework to a large chemical library of more than 47,000 molecules, we successfully identified 50 molecular clusters using the K-means method with 32 embeddings based on the AE method. We visualized the clustering result via t-SNE for the overall distribution of molecules and the similarity maps for the structural analysis of randomly selected cluster-specific molecules. CONCLUSIONS: This study developed a novel analytical framework that comprises a feature engineering scheme for molecule-specific atomic and bonding features and a deep learning-based embedding strategy for different molecular features. By applying the identified embeddings, we show their usefulness for clustering a large molecule dataset. Our novel analytic algorithms can be applied to any virtual library of chemical compounds with diverse molecular structures. Hence, these tools have the potential of optimizing drug discovery, as they can decrease the number of compounds to be screened in any drug screening campaign.",
+      "authors": [
+        "Hamid Hadipour",
+        "Chengyou Liu",
+        "Rebecca L. Davis",
+        "Silvia T. Cardona",
+        "Pingzhao Hu"
+      ],
+      "year": 2022,
+      "venue": "BMC Bioinformatics",
+      "citations": 51,
+      "url": "https://openalex.org/W4223988818",
+      "pdf_url": "https://bmcbioinformatics.biomedcentral.com/track/pdf/10.1186/s12859-022-04667-1",
+      "doi": "10.1186/s12859-022-04667-1",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Cluster analysis",
+        "Autoencoder",
+        "Computer science",
+        "Pattern recognition (psychology)",
+        "Artificial intelligence",
+        "Feature (linguistics)"
+      ],
+      "topic_ids": [
+        "T11948",
+        "T10211",
+        "T11273"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 153.90881,
+      "paper_type": "method",
+      "score": 2.5379,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "<i>De Novo</i> Drug Design of Targeted Chemical Libraries Based on Artificial Intelligence and Pair-Based Multiobjective Optimization",
+      "abstract": "Artificial intelligence and multiobjective optimization represent promising solutions to bridge chemical and biological landscapes by addressing the automated de novo design of compounds as a result of a humanlike creative process. In the present study, we conceived a novel pair-based multiobjective approach implemented in an adapted SMILES generative algorithm based on recurrent neural networks for the automated de novo design of new molecules whose overall features are optimized by finding the best trade-offs among relevant physicochemical properties (MW, logP, HBA, HBD) and additional similarity-based constraints biasing specific biological targets. In this respect, we carried out the de novo design of chemical libraries targeting neuraminidase, acetylcholinesterase, and the main protease of severe acute respiratory syndrome coronavirus 2. Several quality metrics were employed to assess drug-likeness, chemical feasibility, diversity content, and validity. Molecular docking was finally carried out to better evaluate the scoring and posing of the de novo generated molecules with respect to X-ray cognate ligands of the corresponding molecular counterparts. Our results indicate that artificial intelligence and multiobjective optimization allow us to capture the latent links joining chemical and biological aspects, thus providing easy-to-use options for customizable design strategies, which are especially effective for both lead generation and lead optimization. The algorithm is freely downloadable at https://github.com/alberdom88/moo-denovo and all of the data are available as Supporting Information.",
+      "authors": [
+        "Domenico Alberga",
+        "Nicola Gambacorta",
+        "Daniela Trisciuzzi",
+        "Fulvio Ciriaco",
+        "Nicola Amoroso",
+        "Orazio Nicolotti"
+      ],
+      "year": 2020,
+      "venue": "Journal of Chemical Information and Modeling",
+      "citations": 90,
+      "url": "https://openalex.org/W3080742388",
+      "pdf_url": "https://hdl.handle.net/11586/321730",
+      "doi": "10.1021/acs.jcim.0c00517",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Artificial intelligence",
+        "Machine learning",
+        "Computational biology",
+        "Biology"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T13180",
+        "T12023"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.047851979579924,
+      "paper_type": "method",
+      "score": 2.4625,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization",
+          "Drug Discovery"
+        ]
+      }
+    },
+    {
+      "title": "A Tutorial On the design, experimentation and application of metaheuristic algorithms to real-World optimization problems",
+      "abstract": "",
+      "authors": [
+        "Eneko Osaba",
+        "Esther Villar-Rodr\u00edguez",
+        "Javier Del Ser",
+        "Antonio J. Nebro",
+        "Daniel Molina",
+        "Antonio LaTorre",
+        "Ponnuthurai Nagaratnam Suganthan",
+        "Carlos A. Coello Coello",
+        "Francisco Herrera"
+      ],
+      "year": 2021,
+      "venue": "Swarm and Evolutionary Computation",
+      "citations": 393,
+      "url": "https://openalex.org/W3159271217",
+      "pdf_url": "https://arxiv.org/pdf/2410.03205",
+      "doi": "10.1016/j.swevo.2021.100888",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Ambiguity",
+        "Computer science",
+        "Management science",
+        "Metaheuristic",
+        "Search-based software engineering",
+        "Software deployment"
+      ],
+      "topic_ids": [
+        "T10100",
+        "T10848",
+        "T12401"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Bayesian optimization baselines for molecular property optimization",
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 272.82465,
+      "paper_type": "method",
+      "score": 2.4478,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Generative models for molecular discovery: Recent advances and challenges",
+      "abstract": "Abstract Development of new products often relies on the discovery of novel molecules. While conventional molecular design involves using human expertise to propose, synthesize, and test new molecules, this process can be cost and time intensive, limiting the number of molecules that can be reasonably tested. Generative modeling provides an alternative approach to molecular discovery by reformulating molecular design as an inverse design problem. Here, we review the recent advances in the state\u2010of\u2010the\u2010art of generative molecular design and discusses the considerations for integrating these models into real molecular discovery campaigns. We first review the model design choices required to develop and train a generative model including common 1D, 2D, and 3D representations of molecules and typical generative modeling neural network architectures. We then describe different problem statements for molecular discovery applications and explore the benchmarks used to evaluate models based on those problem statements. Finally, we discuss the important factors that play a role in integrating generative models into experimental workflows. Our aim is that this review will equip the reader with the information and context necessary to utilize generative modeling within their domain. This article is categorized under: Data Science &gt; Artificial Intelligence/Machine Learning",
+      "authors": [
+        "Camille Bilodeau",
+        "Wengong Jin",
+        "Tommi Jaakkola",
+        "Regina Barzilay",
+        "Klavs F. Jensen"
+      ],
+      "year": 2022,
+      "venue": "Wiley Interdisciplinary Reviews Computational Molecular Science",
+      "citations": 312,
+      "url": "https://openalex.org/W4220798957",
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wcms.1608",
+      "doi": "10.1002/wcms.1608",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Context (archaeology)",
+        "Generative Design",
+        "Generative grammar",
+        "Generative model"
+      ],
+      "topic_ids": [
+        "T10044",
+        "T10211",
+        "T11948"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design",
+        "constrained latent space optimization in SMILES molecular VAEs"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 224.32654,
+      "paper_type": "method",
+      "score": 2.4417,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "SELFIES and the future of molecular string representations",
+      "abstract": "Artificial intelligence (AI) and machine learning (ML) are expanding in popularity for broad applications to challenging tasks in chemistry and materials science. Examples include the prediction of properties, the discovery of new reaction pathways, or the design of new molecules. The machine needs to read and write fluently in a chemical language for each of these tasks. Strings are a common tool to represent molecular graphs, and the most popular molecular string representation, Smiles, has powered cheminformatics since the late 1980s. However, in the context of AI and ML in chemistry, Smiles has several shortcomings-most pertinently, most combinations of symbols lead to invalid results with no valid chemical interpretation. To overcome this issue, a new language for molecules was introduced in 2020 that guarantees 100% robustness: SELF-referencing embedded string (Selfies). Selfies has since simplified and enabled numerous new applications in chemistry. In this perspective, we look to the future and discuss molecular string representations, along with their respective opportunities and challenges. We propose 16 concrete future projects for robust molecular representations. These involve the extension toward new chemical domains, exciting questions at the interface of AI and robust languages, and interpretability for both humans and machines. We hope that these proposals will inspire several follow-up works exploiting the full potential of molecular string representations for the future of AI in chemistry and materials science.",
+      "authors": [
+        "Mario Krenn",
+        "Qianxiang Ai",
+        "Senja Barthel",
+        "Nessa Carson",
+        "Angelo Frei",
+        "Nathan C. Frey",
+        "Pascal Friederich",
+        "Th\u00e9ophile Gaudin",
+        "Alberto Alexander Gayle",
+        "Kevin Maik Jablonka",
+        "Rafael F. Lameiro",
+        "Dominik Lemm",
+        "Alston Lo",
+        "Seyed Mohamad Moosavi",
+        "Jos\u00e9 Manuel N\u00e1poles-Duarte",
+        "AkshatKumar Nigam",
+        "Robert Pollice",
+        "Kohulan Rajan",
+        "Ulrich Schatzschneider",
+        "Philippe Schwaller",
+        "Marta Skreta",
+        "Berend Smit",
+        "Felix Strieth\u2010Kalthoff",
+        "Chong Sun",
+        "Gary Tom"
+      ],
+      "year": 2022,
+      "venue": "Patterns",
+      "citations": 268,
+      "url": "https://openalex.org/W4306179830",
+      "pdf_url": "http://www.cell.com/article/S2666389922002069/pdf",
+      "doi": "10.1016/j.patter.2022.100588",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Cheminformatics",
+        "Computer science",
+        "Context (archaeology)",
+        "Interpretability",
+        "String (physics)"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T12327"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design",
+        "constrained latent space optimization in SMILES molecular VAEs"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 223.79579,
+      "paper_type": "method",
+      "score": 2.4243,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Parallel tempered genetic algorithm guided by deep neural networks for inverse molecular design",
+      "abstract": "population-based metaheuristic optimization algorithms such as evolutionary algorithms. However, often unavoidable expensive property evaluation can limit the widespread use of such approaches as the associated cost can become prohibitive. Herein, we present JANUS, a genetic algorithm inspired by parallel tempering. It propagates two populations, one for exploration and another for exploitation, improving optimization by reducing property evaluations. JANUS is augmented by a deep neural network that approximates molecular properties and relies on active learning for enhanced molecular sampling. It uses the SELFIES representation and the STONED algorithm for the efficient generation of structures, and outperforms other generative models in common inverse molecular design tasks achieving state-of-the-art target metrics across multiple benchmarks. As neither most of the benchmarks nor the structure generator in JANUS account for synthesizability, a significant fraction of the proposed molecules is synthetically infeasible demonstrating that this aspect needs to be considered when evaluating the performance of molecular generative models.",
+      "authors": [
+        "AkshatKumar Nigam",
+        "Robert Pollice",
+        "Al\u00e1n Aspuru\u2010Guzik"
+      ],
+      "year": 2022,
+      "venue": "Digital Discovery",
+      "citations": 95,
+      "url": "https://openalex.org/W4285179478",
+      "pdf_url": "https://pubs.rsc.org/en/content/articlepdf/2022/dd/d2dd00003b",
+      "doi": "10.1039/d2dd00003b",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Inverse",
+        "Computer science",
+        "Artificial neural network",
+        "Janus",
+        "Artificial intelligence",
+        "Genetic algorithm"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10911"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 155.2363,
+      "paper_type": "benchmark",
+      "score": 2.3868,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Computer-aided multi-objective optimization in small molecule discovery",
+      "abstract": "Molecular discovery is a multi-objective optimization problem that requires identifying a molecule or set of molecules that balance multiple, often competing, properties. Multi-objective molecular design is commonly addressed by combining properties of interest into a single objective function using scalarization, which imposes assumptions about relative importance and uncovers little about the trade-offs between objectives. In contrast to scalarization, Pareto optimization does not require knowledge of relative importance and reveals the trade-offs between objectives. However, it introduces additional considerations in algorithm design. In this review, we describe pool-based and de novo generative approaches to multi-objective molecular discovery with a focus on Pareto optimization algorithms. We show how pool-based molecular discovery is a relatively direct extension of multi-objective Bayesian optimization and how the plethora of different generative models extend from single-objective to multi-objective optimization in similar ways using non-dominated sorting in the reward function (reinforcement learning) or to select molecules for retraining (distribution learning) or propagation (genetic algorithms). Finally, we discuss some remaining challenges and opportunities in the field, emphasizing the opportunity to adopt Bayesian optimization techniques into multi-objective de novo design.",
+      "authors": [
+        "Jenna C. Fromer",
+        "Connor W. Coley"
+      ],
+      "year": 2023,
+      "venue": "Patterns",
+      "citations": 120,
+      "url": "https://openalex.org/W4319986489",
+      "pdf_url": "http://www.cell.com/article/S2666389923000016/pdf",
+      "doi": "10.1016/j.patter.2023.100678",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Bayesian optimization",
+        "Computer science",
+        "Multi-objective optimization",
+        "Sorting",
+        "Machine learning",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10848",
+        "T10211",
+        "T11948"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.0732864412648766,
+      "paper_type": "method",
+      "score": 2.3555,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Sample Efficiency Matters: A Benchmark for Practical Molecular Optimization",
+      "abstract": "Molecular optimization is a fundamental goal in the chemical sciences and is of central interest to drug and material design. In recent years, significant progress has been made in solving challenging problems across various aspects of computational molecular optimizations, emphasizing high validity, diversity, and, most recently, synthesizability. Despite this progress, many papers report results on trivial or self-designed tasks, bringing additional challenges to directly assessing the performance of new methods. Moreover, the sample efficiency of the optimization--the number of molecules evaluated by the oracle--is rarely discussed, despite being an essential consideration for realistic discovery applications. To fill this gap, we have created an open-source benchmark for practical molecular optimization, PMO, to facilitate the transparent and reproducible evaluation of algorithmic advances in molecular optimization. This paper thoroughly investigates the performance of 25 molecular design algorithms on 23 tasks with a particular focus on sample efficiency. Our results show that most \"state-of-the-art\" methods fail to outperform their predecessors under a limited oracle budget allowing 10K queries and that no existing algorithm can efficiently solve certain molecular optimization problems in this setting. We analyze the influence of the optimization algorithm choices, molecular assembly strategies, and oracle landscapes on the optimization performance to inform future algorithm development and benchmarking. PMO provides a standardized experimental setup to comprehensively evaluate and compare new molecule optimization methods with existing ones. All code can be found at https://github.com/wenhao-gao/mol_opt.",
+      "authors": [
+        "Wenhao Gao",
+        "Tianfan Fu",
+        "Jimeng Sun",
+        "Connor W. Coley"
+      ],
+      "year": 2022,
+      "venue": "arXiv (Cornell University)",
+      "citations": 58,
+      "url": "https://openalex.org/W4283697502",
+      "pdf_url": "https://arxiv.org/pdf/2206.12411",
+      "doi": "10.48550/arxiv.2206.12411",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Oracle",
+        "Benchmarking",
+        "Computer science",
+        "Sample (material)",
+        "Optimization problem"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10911"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.035124634825237,
+      "paper_type": "benchmark",
+      "score": 2.332,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Bayesian optimization with known experimental and design constraints for chemistry applications",
+      "abstract": "A Bayesian optimization algorithm that satisfies known constraints has been developed. The usefulness of considering experimental and design constraints are shown in two simulated chemistry applications.",
+      "authors": [
+        "Riley J. Hickman",
+        "Matteo Aldeghi",
+        "Florian H\u00e4se",
+        "Al\u00e1n Aspuru\u2010Guzik"
+      ],
+      "year": 2022,
+      "venue": "Digital Discovery",
+      "citations": 90,
+      "url": "https://openalex.org/W4295736424",
+      "pdf_url": "https://pubs.rsc.org/en/content/articlepdf/2022/dd/d2dd00028h",
+      "doi": "10.1039/d2dd00028h",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "A priori and a posteriori",
+        "Bayesian optimization",
+        "Chemical space",
+        "Computer science",
+        "Flexibility (engineering)",
+        "Robustness (evolution)"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11053",
+        "T11948"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Bayesian optimization baselines for molecular property optimization",
+        "sample efficiency metrics for constrained molecular optimization"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 1.081422574601415,
+      "paper_type": "method",
+      "score": 2.3007,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Transformer-based molecular optimization beyond matched molecular pairs",
+      "abstract": "Molecular optimization aims to improve the drug profile of a starting molecule. It is a fundamental problem in drug discovery but challenging due to (i) the requirement of simultaneous optimization of multiple properties and (ii) the large chemical space to explore. Recently, deep learning methods have been proposed to solve this task by mimicking the chemist's intuition in terms of matched molecular pairs (MMPs). Although MMPs is a widely used strategy by medicinal chemists, it offers limited capability in terms of exploring the space of structural modifications, therefore does not cover the complete space of solutions. Often more general transformations beyond the nature of MMPs are feasible and/or necessary, e.g. simultaneous modifications of the starting molecule at different places including the core scaffold. This study aims to provide a general methodology that offers more general structural modifications beyond MMPs. In particular, the same Transformer architecture is trained on different datasets. These datasets consist of a set of molecular pairs which reflect different types of transformations. Beyond MMP transformation, datasets reflecting general structural changes are constructed from ChEMBL based on two approaches: Tanimoto similarity (allows for multiple modifications) and scaffold matching (allows for multiple modifications but keep the scaffold constant) respectively. We investigate how the model behavior can be altered by tailoring the dataset while using the same model architecture. Our results show that the models trained on differently prepared datasets transform a given starting molecule in a way that it reflects the nature of the dataset used for training the model. These models could complement each other and unlock the capability for the chemists to pursue different options for improving a starting molecule.",
+      "authors": [
+        "Jiazhen He",
+        "Eva Nittinger",
+        "Christian Tyrchan",
+        "Werngard Czechtizky",
+        "Atanas Patronov",
+        "Esben Jannik Bjerrum",
+        "Ola Engkvist"
+      ],
+      "year": 2022,
+      "venue": "Journal of Cheminformatics",
+      "citations": 83,
+      "url": "https://openalex.org/W4220802400",
+      "pdf_url": "https://jcheminf.biomedcentral.com/track/pdf/10.1186/s13321-022-00599-3",
+      "doi": "10.1186/s13321-022-00599-3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Chemical space",
+        "chEMBL",
+        "Computer science",
+        "Virtual screening",
+        "Drug discovery",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10911"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "constrained latent space optimization in SMILES molecular VAEs"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 198.30144,
+      "paper_type": "method",
+      "score": 2.2917,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "A data-driven generative strategy to avoid reward hacking in multi-objective molecular design",
+      "abstract": "Molecular design using data-driven generative models has emerged as a promising technology, impacting various fields such as drug discovery and the development of functional materials. However, this approach is often susceptible to optimization failure due to reward hacking, where prediction models fail to extrapolate, i.e., fail to accurately predict properties for designed molecules that considerably deviate from the training data. While methods for estimating prediction reliability, such as the applicability domain (AD), have been used for mitigating reward hacking, multi-objective optimization makes it challenging. The difficulty arises from the need to determine in advance whether the multiple ADs with some reliability levels overlap in chemical space, and to appropriately adjust the reliability levels for each property prediction. Herein, we propose a reliable design framework to perform multi-objective optimization using generative models while preventing reward hacking. To demonstrate the effectiveness of the proposed framework, we designed candidates for anticancer drugs as a typical example of multi-objective optimization. We successfully designed molecules with high predicted values and reliabilities, including an approved drug. In addition, the reliability levels can be automatically adjusted according to the property prioritization specified by the user without any detailed settings.",
+      "authors": [
+        "Tatsuya Yoshizawa",
+        "Shoichi Ishida",
+        "Tomohiro Sato",
+        "Masateru Ohta",
+        "Teruki Honma",
+        "Kei Terayama"
+      ],
+      "year": 2025,
+      "venue": "Nature Communications",
+      "citations": 14,
+      "url": "https://openalex.org/W4408341773",
+      "pdf_url": "https://www.nature.com/articles/s41467-025-57582-3.pdf",
+      "doi": "10.1038/s41467-025-57582-3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Reliability (semiconductor)",
+        "Chemical space",
+        "Property (philosophy)",
+        "Generative grammar",
+        "Machine learning"
+      ],
+      "topic_ids": [
+        "T10211",
+        "T11948",
+        "T10044"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GuacaMol benchmark goal-directed molecular design"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 0.9227682931407164,
+      "paper_type": "method",
+      "score": 2.2766,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    },
+    {
+      "title": "Re-balancing Variational Autoencoder Loss for Molecule Sequence Generation",
+      "abstract": "Molecule generation is to design new molecules with specific chemical properties and further to optimize the desired chemical properties. Following previous work, we encode molecules into continuous vectors in the latent space and then decode the embedding vectors into molecules under the variational autoencoder (VAE) framework. We investigate the posterior collapse problem of the current widely-used RNN-based VAEs for the molecule sequence generation. For the first time, we point out that the underestimated reconstruction loss of VAEs leads to the posterior collapse, and we also provide both analytical and experimental evidences to support our findings. To fix the problem and avoid the posterior collapse, we propose an effective and efficient solution in this work. Without bells and whistles, our method achieves the state-of-the-art reconstruction accuracy and competitive validity score on the ZINC 250K dataset. When generating 10,000 unique valid molecule sequences from the random prior sampling, it costs the JT-VAE 1450 seconds while our method only needs 9 seconds on a regular desktop machine.",
+      "authors": [
+        "Chaochao Yan",
+        "Sheng Wang",
+        "Jinyu Yang",
+        "Tingyang Xu",
+        "Junzhou Huang"
+      ],
+      "year": 2020,
+      "venue": "",
+      "citations": 33,
+      "url": "https://openalex.org/W3105590657",
+      "pdf_url": "",
+      "doi": "10.1145/3388440.3412458",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Autoencoder",
+        "Computer science",
+        "ENCODE",
+        "Embedding",
+        "Sampling (signal processing)",
+        "Sequence (biology)"
+      ],
+      "topic_ids": [
+        "T11948",
+        "T11970",
+        "T13114"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "constrained latent space optimization in SMILES molecular VAEs",
+        "survey of molecular generation and optimization with variational autoencoders"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1.026281064151738,
+      "paper_type": "method",
+      "score": 2.2544,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Molecular Generation and Optimization"
+        ]
+      }
+    }
+  ]
+}

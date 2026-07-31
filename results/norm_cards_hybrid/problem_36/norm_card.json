@@ -1,0 +1,4473 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "claim_type": "empirical",
+  "problem_id": "36",
+  "claim": "For Llama 3 models, simple binary relational facts\u2014triples of the form (subject, relation, object)\u2014 are localized in identifiable MLP weights and attention modules in intermediate layers that function as dedicated storage units for individual facts. Causal tracing and activation analysis can isolate these elements with sufficient precision to enable knowledge editing achieving high success rates on UniEdit benchmark (with both reliability and generality > 90%) while maintaining collateral effects below 5% as measured by impact to the model's performance on MMLU benchmark.",
+  "subfields": [
+    "World Knowledge",
+    "Language Modeling",
+    "Safety and Grounding"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 23,
+    "pdf_sources": {
+      "cache": 5,
+      "none": 7,
+      "arxiv": 6,
+      "pdf_url": 10,
+      "s2": 1,
+      "unpaywall": 1
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "World Knowledge",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Wikipedia",
+            "role": "train",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Natural Questions",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "MTEB: Massive Text Embedding Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MS MARCO",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "MTEB: Massive Text Embedding Benchmark",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "TruthfulQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "CounterFact",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "DBpedia",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications",
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "Freebase",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SQuAD",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "TriviaQA",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "HotpotQA",
+            "role": "eval",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LAMA",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Wikidata",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Learning How to Correct a Knowledge Base from the Edit History"
+            ]
+          },
+          {
+            "name": "HealthSearchQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "Cyc",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications",
+              "A collaborative interface for editing large knowledge bases"
+            ]
+          },
+          {
+            "name": "MedQA (USMLE)",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "MedMCQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "BEIR",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DPR",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "FEVER",
+            "role": "eval",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "WebNLG",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "AdversarialQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "WikiFact",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "RippleEdits",
+            "role": "eval",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "FB15k-237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "E-FB15k237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "A-FB15k237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "E-WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "A-WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "L-Test",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "ArXiv",
+            "role": "train",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PubMed",
+            "role": "train",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PubMedQA",
+            "role": "eval",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "MultiMedQA",
+            "role": "eval",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "DynamicTempLAMA",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "Google Knowledge Graph",
+            "role": "train",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Microsoft Satori",
+            "role": "train",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Knowledge Vault",
+            "role": "train",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "YAGO",
+            "role": "train",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "WordNet",
+            "role": "train",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "ELI5",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "FactoidWiki",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T-REx",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "Wikipedia edits",
+            "role": "eval",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "ROME",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEMIT",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEND",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-3",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "ChatGPT",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LLaMA",
+            "role": "backbone",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "text-davinci-002",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "code-davinci-002",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "Large language models for generative information extraction: a survey"
+            ]
+          },
+          {
+            "name": "Atlas",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KGEditor",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KE (Knowledge Editor)",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "CALINET",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LLaMA-2",
+            "role": "backbone",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "BERT",
+            "role": "backbone",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T5",
+            "role": "backbone",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "PaLM",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "AutoPrompt (AUTOPROMPT)",
+            "role": "method_under_test",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "LPAQA",
+            "role": "method_under_test",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "REALM",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "RETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "RETRO++",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "INSTRUCTRETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAVEN",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "REPLUG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HyDE",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RRR",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GenRead",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Self-RAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DPR (dense retriever)",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PEER",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "Fine-tuning (FT) for model editing",
+            "role": "baseline",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "FT-L (single-layer constrained fine-tuning)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "KG-BERT",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "K-Adapter",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "PT-KGE",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "FT-KGE",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "KGE FT",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "KGE ZSL",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "PKGC",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Generalizable T5-based Retriever",
+            "role": "method_under_test",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "TransE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransH",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransR",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransD",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransA",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransF",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "ITransF",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransAt",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransMS",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "DistMult",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "HolE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "HolEx",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "ANALOGY",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "RotatE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "QuatE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "ComplEx",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "CrossE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "KG2E",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TransG",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "ManifoldE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "HAKE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "TorusE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "DihEdral",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "MuRP",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "RESCAL",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "SimplE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "NTN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "SE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "SME",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "GPT-2-XL",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Mistral-7B",
+            "role": "backbone",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MeLLo",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MemPrompt",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "IKE",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LanguagePatch",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KAFT",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T-Patcher",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GRACE",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "COMEBA-HK",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SWEA",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RecAdam",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "EditableTraining",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PPA",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Modifying-Memory",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "F-Learning",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MELO",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RECT",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SLAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KD",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DEPN",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PMET",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "EMMET",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DINM",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MEMITCSK",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "BIRD",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "rule mining",
+            "role": "baseline",
+            "evidence": [
+              "Learning How to Correct a Knowledge Base from the Edit History"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "Large language models encode clinical knowledge",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "F1",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "Large language models for generative information extraction: a survey",
+              "MTEB: Massive Text Embedding Benchmark",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Precision",
+            "direction": "higher_better",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Recall",
+            "direction": "higher_better",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Exact Match",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Mean Reciprocal Rank (MRR)",
+            "direction": "higher_better",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "nDCG@10",
+            "direction": "higher_better",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "MAP@k",
+            "direction": "higher_better",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "Average Precision",
+            "direction": "higher_better",
+            "evidence": [
+              "MTEB: Massive Text Embedding Benchmark"
+            ]
+          },
+          {
+            "name": "Precision@1 (P@1)",
+            "direction": "higher_better",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "Precision@10 (P@10)",
+            "direction": "higher_better",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "Locality",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Generality",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Portability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Retainability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Scalability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Relative Scalability (Sca_rel)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Neighborhood Score (NS)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood Magnitude (NM)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood KL Divergence (NKL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "FActScore",
+            "direction": "higher_better",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Truthfulness",
+            "direction": "higher_better",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Mean Rank",
+            "direction": "lower_better",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Succ@1",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Succ@3",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Ripple-effect-aware evaluation",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Retrieval-augmented pipeline",
+            "detail": "Indexing -> Retrieval -> Generation with top-K chunk retrieval and reranking/context compression",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Chunking for retrieval",
+            "detail": "Use fixed-size or sliding-window chunking before retrieval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Query expansion (HyDE) and rewriting (RRR)",
+            "detail": "Expand queries via hypothetical documents and rewrite queries with LLMs",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Knowledge editing triplet formulation",
+            "detail": "Edit as (s,r,o)->o* with prompts x=I(s,r); evaluate Accuracy, Locality, Generality, Portability, Retainability, Scalability",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Out-of-scope locality via semantic similarity",
+            "detail": "Construct out-of-scope sets by semantic-similarity sampling",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RippleEdits evaluation",
+            "detail": "Assess ripple effects of factual edits on related facts",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+ specificity protocol",
+            "detail": "Prepend edit sentence to neighborhood prompts; compute NS, NM, NKL with bootstrap CIs",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Sequential vs single edits",
+            "detail": "Evaluate single-edit and sequential-edit settings; monitor perplexity thresholds for collapse",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "IR with LM probabilities",
+            "detail": "Rank candidate passages by calibrated LM probabilities for retrieval tasks",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "AutoPrompt trigger search",
+            "detail": "Gradient-based search over trigger tokens to elicit factual knowledge",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "Prompt mining and paraphrasing",
+            "detail": "Mine prompts from Wikipedia and use back-translation/thesaurus for paraphrasing",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Prompt ensembling",
+            "detail": "Uniform/weighted averaging and majority voting across multiple prompts",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Label decomposition and verbalizers",
+            "detail": "Decompose relation labels and constrain answer space via verbalizers",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "KG edit difficulty filtering",
+            "detail": "Filter triples by link-prediction rank to select challenging edits; sweep number of edits",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Knowledge locality test (L-Test)",
+            "detail": "Measure rank changes before/after editing to assess locality",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Factuality evaluation via retrieval+LLM",
+            "detail": "Retrieve evidence then evaluate atomic facts (e.g., FActScore)",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Binary factual-consistency conversion",
+            "detail": "Transform factual-consistency tasks into binary labels for evaluation",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "Collaborative KB editing interface",
+            "detail": "Support browsing and modifying large KBs (e.g., Cyc) via shared human\u2013system workflows",
+            "evidence": [
+              "A collaborative interface for editing large knowledge bases"
+            ]
+          },
+          {
+            "name": "Expert evaluation for domain QA",
+            "detail": "Use domain experts (e.g., clinicians) to rate factuality, harm, and helpfulness",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 1,
+        "evidence_links_dropped": 3
+      }
+    },
+    {
+      "subfield": "Language Modeling",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Wikipedia",
+            "role": "train",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Common Crawl",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "The Pile",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Holistic Evaluation of Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Natural Questions",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MMLU",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "arXiv",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GitHub",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HellaSwag",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "COUNTERFACT",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GSM8K",
+            "role": "eval",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "TruthfulQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "C4",
+            "role": "train",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Books3",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "BookCorpus",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Stack Exchange",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "MS MARCO",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "TriviaQA",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "OpenBookQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "BIG-bench",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PIQA",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "SQuAD2.0",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "SQuAD",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "HumanEval",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "MBPP",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "MATH",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "ARC-easy",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "ARC-challenge",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "RACE",
+            "role": "eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "WikiText-103",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "LAMBADA",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "BLiMP",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "BEIR",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HotpotQA",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DPR",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "CrowS-Pairs",
+            "role": "robustness_eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "WinoGender",
+            "role": "robustness_eval",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "BOLD",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "BBQ",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "TwitterAAE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "ICE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "GLUE",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "SuperGLUE",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "BBH",
+            "role": "eval",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "AGIEval",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "MT-Bench",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "ChatbotArena",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "AlpacaEval",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "RippleEdits",
+            "role": "eval",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "zsRE",
+            "role": "eval",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "ME-PPL",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardCF",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardEdit",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "OpenWebText",
+            "role": "train",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Gutenberg",
+            "role": "train",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Books1",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Books2",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RefinedWeb",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RedPajama",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "ROOTS",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "CC-NEWS",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Reddit",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "mCommonCrawl",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "S2ORC",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "IIT-CDIPTestCollection1.0",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DocBank",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "ShareGPT",
+            "role": "train",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MultiMedQA",
+            "role": "eval",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "MedQA (USMLE)",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "MedMCQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "PubMedQA",
+            "role": "eval",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "HealthSearchQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "MedicationQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "LiveQA",
+            "role": "eval",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "Wikipedia edits",
+            "role": "eval",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "LAMA",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "T-REx",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "Wikidata",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "WikiFact",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "RAFT",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "CNN/Daily Mail",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "NarrativeQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "ANLI",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "WebNLG",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "XSUM",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "IMDB",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "CivilComments",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "AdversarialQA",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "TREC",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "MMLU-ProX",
+            "role": "eval",
+            "evidence": [
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "LLaMA (family)",
+            "role": "backbone",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "PaLM (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "ChatGPT",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "A Survey on Evaluation of Large Language Models",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Codex (code-davinci-002)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-3 (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "BERT (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Holistic Evaluation of Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "OPT (family)",
+            "role": "backbone",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "T5 (family)",
+            "role": "backbone",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "BLOOM (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Holistic Evaluation of Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Mistral (family)",
+            "role": "backbone",
+            "evidence": [
+              "Large Language Models: A Survey",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Gopher",
+            "role": "backbone",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "GPT-2 (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "LaMDA",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-4o",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "Claude (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "Vicuna (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GLM (family)",
+            "role": "backbone",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Minerva",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Mixtral (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Qwen (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "Gemma (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "DeepSeek (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "UL2",
+            "role": "backbone",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "RETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAG (Retrieval-Augmented Generation)",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Atlas",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "REALM",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "text-davinci-002",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "ROME (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEMIT (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEND (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "SERAC (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "CALINET (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T-Patcher (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LanguagePatch (editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "AutoPrompt",
+            "role": "method_under_test",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "RETRO++",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "INSTRUCTRETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Self-RAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HyDE",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RRR (query rewriting)",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "REPLUG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAVEN",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DPR (dense retriever)",
+            "role": "baseline",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Holistic Evaluation of Language Models",
+              "Large language models encode clinical knowledge",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Exact Match",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Human evaluation",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "F1",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "BLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "Toxicity",
+            "direction": "lower_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "ROUGE-L",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "ROUGE",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "pass@k",
+            "direction": "higher_better",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Bits-per-byte (BPB)",
+            "direction": "lower_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Cross-entropy loss (nats)",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "AUC",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "sacreBLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "Zero-shot accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Log-likelihood",
+            "direction": "higher_better",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "FActScore",
+            "direction": "higher_better",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Locality (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Generality (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Portability (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Retainability (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Scalability (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Relative Scalability (Sca_rel) (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Neighborhood Score (NS)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood Magnitude (NM)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood KL Divergence (NKL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Ripple-effect-aware score (editing)",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "Reference Score (consistency)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "n-gram Entropy (fluency)",
+            "direction": "lower_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Few-shot evaluation",
+            "detail": "Evaluate models with few in-context examples (e.g., 5-shot) using standardized prompts",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Holistic Evaluation of Language Models",
+              "Large Language Models: A Survey",
+              "Large language models encode clinical knowledge",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Zero-shot evaluation",
+            "detail": "Assess models without task-specific training or examples, often via prompt-only instructions",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Augmented Language Models: a Survey",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Chain-of-Thought prompting",
+            "detail": "Elicit step-by-step rationales during inference to improve reasoning",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Large language models encode clinical knowledge",
+              "MMLU-ProX: A Multilingual Benchmark for Advanced Large Language Model Evaluation"
+            ]
+          },
+          {
+            "name": "Self-consistency decoding",
+            "detail": "Sample multiple reasoning paths and aggregate (e.g., majority vote) for final answer",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "BPE/SentencePiece tokenization",
+            "detail": "Use byte-pair encoding (e.g., SentencePiece) with byte fallback and number splitting",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Data deduplication",
+            "detail": "Remove near-duplicates at URL/document/sentence/file levels (e.g., CCNet, MinHash)",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Bootstrap confidence intervals",
+            "detail": "Use non-parametric bootstrap (e.g., N=1000) to report uncertainty on metrics",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Large language models encode clinical knowledge"
+            ]
+          },
+          {
+            "name": "Retrieval-augmented pipeline",
+            "detail": "Index -> retrieve top-K chunks -> condition generation on retrieved context",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Chunking and sliding-window retrieval",
+            "detail": "Split documents into fixed-length chunks (e.g., 100\u2013512 tokens) with sliding windows for recall",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Iterative/adaptive/recursive retrieval",
+            "detail": "Refine queries and retrieval context across multiple rounds during generation",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "IRCoT (interleaved retrieval with CoT)",
+            "detail": "Interleave retrieval steps with chain-of-thought reasoning",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "HyDE (hypothetical document expansion)",
+            "detail": "Expand queries with LLM-synthesized documents before retrieval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RRR (LLM query rewriting)",
+            "detail": "Rewrite user queries with LLMs to improve retrieval effectiveness",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Reranking and context compression",
+            "detail": "Rerank retrieved passages and compress context before generation",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Optimize pretraining mixture",
+            "detail": "Tune data mixture weights (e.g., via proxy models) to improve pretraining efficiency",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Select long texts by perplexity/attention/info gain",
+            "detail": "Prefer long sequences with favorable scores during data selection",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Long-context training schedule",
+            "detail": "Curriculum that gradually increases context length (e.g., 32K\u2192262K) with mixed-length batches",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Final-stage instruction annealing",
+            "detail": "Inject curated instruction data late in pretraining with a decaying learning rate",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Standardized holistic evaluation",
+            "detail": "Use unified prompts/formatting and measure accuracy, robustness, toxicity, etc., across scenarios",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "IR with LM probabilities",
+            "detail": "Score candidate passages by calibrated LM probabilities for retrieval tasks",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Pass@k estimation for code",
+            "detail": "Use unbiased pass@k estimation and specific sampling temperatures for code generation",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Length-normalized multiple-choice scoring",
+            "detail": "Normalize by completion length or conditional ratio per Brown et al. for MC tasks",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "SFT + RLHF chat training",
+            "detail": "Supervised fine-tuning followed by iterative RLHF with rejection sampling/PPO",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "QLoRA fine-tuning",
+            "detail": "Fine-tune a quantized model with low-rank adapters to reduce memory usage",
+            "evidence": [
+              "Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Greedy decoding for evaluation",
+            "detail": "Use argmax decoding for downstream and perplexity-based evaluations",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Single vs sequential model edits",
+            "detail": "Evaluate edits independently and as sequential updates to assess interference/collapse",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+ neighborhood prompts",
+            "detail": "Prepend edit sentence to neighborhood prompts to stress-test specificity",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Editing as constrained optimization",
+            "detail": "Minimize edit loss on target outputs while constraining outputs on out-of-scope inputs",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Out-of-scope set construction (editing)",
+            "detail": "Sample by semantic similarity to build locality test sets",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Ripple-effects evaluation (editing)",
+            "detail": "Assess consistency and implications of edits on related facts",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "AutoPrompt gradient-based trigger search",
+            "detail": "Use first-order approximations to optimize discrete trigger tokens",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Prompt ensembling and voting",
+            "detail": "Combine multiple prompts via averaging weights or majority voting for classification",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Prefix-tuning / P-tuning",
+            "detail": "Optimize continuous prompt vectors (optionally mixed with hard prompts) with frozen LM",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          },
+          {
+            "name": "Verbalizers / constrained answer spaces",
+            "detail": "Map labels to token sets and restrict generation for classification tasks",
+            "evidence": [
+              "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 1,
+        "evidence_links_dropped": 4
+      }
+    },
+    {
+      "subfield": "Safety and Grounding",
+      "menu": {
+        "datasets": [
+          {
+            "name": "TruthfulQA",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "CounterFact",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Freebase",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "zsRE",
+            "role": "eval",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Cyc",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications",
+              "A collaborative interface for editing large knowledge bases"
+            ]
+          },
+          {
+            "name": "Wikidata",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts",
+              "Learning How to Correct a Knowledge Base from the Edit History"
+            ]
+          },
+          {
+            "name": "BBQ",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "BOLD",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "CivilComments",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "TwitterAAE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "WikiFact",
+            "role": "eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "CounterFact+",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "RippleEdits",
+            "role": "eval",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "ME-PPL (ModelEditing-Perplexity)",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardCF",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardEdit",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "SAFE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FactualityPrompt",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "HaluEval",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "HalluEval2.0",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "HalluQA",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FACTOR",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FELM",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Pinocchio",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Lynx",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FactCHD",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "BEGIN",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "QMSum",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "HADES",
+            "role": "robustness_eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FENMT",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FEQA",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "SimpleQA",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "KoLA-KC",
+            "role": "eval",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "copyright_text",
+            "role": "robustness_eval",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "WordNet",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "DBpedia",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "YAGO",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Microsoft Satori",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Google Knowledge Graph",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Knowledge Vault",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Knowledge Graphs: Representation, Acquisition, and Applications"
+            ]
+          },
+          {
+            "name": "Wikipedia",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HotpotQA",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "BEIR",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MSMARCO",
+            "role": "eval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T-REx",
+            "role": "eval",
+            "evidence": [
+              "AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts"
+            ]
+          },
+          {
+            "name": "FB15k-237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "E-FB15k237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "A-FB15k237",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "E-WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "A-WN18RR",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "L-Test",
+            "role": "eval",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "Wikipedia edits",
+            "role": "eval",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "ROME",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEMIT",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEND",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "RAG (Retrieval-Augmented Generation)",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "REALM",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "Atlas",
+            "role": "method_under_test",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KGEditor",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-2-XL (1.5B)",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "KE (Knowledge Editor)",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings",
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SERAC",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "CALINET",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "T-Patcher",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GRACE",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "COMEBA-HK",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SWEA",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RecAdam",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "EditableTraining",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PPA",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Modifying-Memory",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "F-Learning",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MELO",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RECT",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "SLAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "KD",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DEPN",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "PMET",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "EMMET",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "DINM",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MEMITCSK",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "BIRD",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LanguagePatch",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "IKE",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MeLLo",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "MemPrompt",
+            "role": "method_under_test",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Self-RAG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "REPLUG",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HyDE",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RRR",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GenRead",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RETRO++",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "INSTRUCTRETRO",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAVEN",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LlamaIndex",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "LangChain",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "HayStack",
+            "role": "method_under_test",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "GPT-2-medium (355M)",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Llama2-7B",
+            "role": "backbone",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Mistral-7B",
+            "role": "backbone",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "LLaMA-65B",
+            "role": "backbone",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "ChatGPT",
+            "role": "backbone",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Generalizable T5-based Retriever",
+            "role": "method_under_test",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "HKE (HITS Knowledge Editor)",
+            "role": "method_under_test",
+            "evidence": [
+              "A collaborative interface for editing large knowledge bases"
+            ]
+          },
+          {
+            "name": "in-context editing baseline",
+            "role": "baseline",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "KG-BERT",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "K-Adapter",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "PT-KGE",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "FT-KGE",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "KGE ZSL",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "PKGC",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Truthfulness (TruthfulQA fraction)",
+            "direction": "higher_better",
+            "evidence": [
+              "LLaMA: Open and Efficient Foundation Language Models",
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Toxicity (PerspectiveAPI score)",
+            "direction": "lower_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models",
+              "LLaMA: Open and Efficient Foundation Language Models"
+            ]
+          },
+          {
+            "name": "Fairness",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models",
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Robust accuracy (worst-case over perturbations)",
+            "direction": "higher_better",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Accuracy (edited fact success)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Locality (out-of-scope agreement)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Generality (in-scope agreement)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Portability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Retainability (sequential edits)",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Scalability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Relative Scalability",
+            "direction": "higher_better",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Perplexity (collapse indicator)",
+            "direction": "lower_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Reference Score (consistency)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "n-gram Entropy (fluency)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Binary factual consistency",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "Ripple-effect-aware consistency",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "Neighborhood Score (NS)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood Magnitude (NM)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Neighborhood KL Divergence (NKL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Append retrieved documents to prompts (retrieval-augmented LM)",
+            "detail": "Provide retrieved passages to ground generation and reduce hallucinations",
+            "evidence": [
+              "Augmented Language Models: a Survey",
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "RAG pipeline (Indexing \u2192 Retrieval \u2192 Generation)",
+            "detail": "Build index, retrieve top-K relevant chunks, and condition generation on retrieved context",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Retrieval chunking strategies",
+            "detail": "Use fixed-size or sliding-window chunking for indexing and retrieval",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Iterative/adaptive/recursive retrieval",
+            "detail": "Refine queries and retrieval over multiple rounds before generation",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Query expansion via HyDE",
+            "detail": "Generate hypothetical documents to improve retrieval recall and grounding",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Query rewriting with LLMs (RRR)",
+            "detail": "Rewrite user queries to improve retrieval quality and reduce hallucinations",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Reranking and context compression",
+            "detail": "Rerank retrieved chunks and compress context to the most salient evidence",
+            "evidence": [
+              "Retrieval-Augmented Generation for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Interleave retrieval with Chain-of-Thought (IRCoT)",
+            "detail": "Alternate reasoning steps with retrieval to ground multi-step reasoning",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "Self-consistency sampling",
+            "detail": "Sample multiple reasoning paths and aggregate to improve reliability",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "Tool-use during reasoning",
+            "detail": "Call external tools (e.g., search, calculator) to ground or verify outputs",
+            "evidence": [
+              "Augmented Language Models: a Survey"
+            ]
+          },
+          {
+            "name": "Holistic safety evaluation",
+            "detail": "Standardize prompts and measure toxicity, bias, robustness, and efficiency across scenarios",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Robust accuracy under perturbations",
+            "detail": "Evaluate worst-case accuracy over specified input perturbations (e.g., typos, dialect shifts)",
+            "evidence": [
+              "Holistic Evaluation of Language Models"
+            ]
+          },
+          {
+            "name": "Hallucination evaluation: Generation vs Discrimination",
+            "detail": "Assess models via open-ended generation or discriminative verification settings",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Manual atomic-fact annotation",
+            "detail": "Label atomic facts as Supported / Not-supported / Irrelevant for factuality assessment",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "FActScore pipeline",
+            "detail": "Retrieve (T5-based retriever) then evaluate factual support with an LLM evaluator (e.g., LLaMA-65B)",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "LLM-as-judge for truthfulness",
+            "detail": "Fine-tune an LLM classifier on human annotations to grade truthfulness",
+            "evidence": [
+              "Siren's Song in the AI Ocean: A Survey on Hallucination in Large Language Models"
+            ]
+          },
+          {
+            "name": "Knowledge editing via triplets",
+            "detail": "Formulate edits as (s,r,o\u2192o*) with prompts and target answers; measure Acc/Loc/Gen",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Portability/retainability/scalability tests for edits",
+            "detail": "Evaluate logically related edits, sequential edits, and batch edits",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Out-of-scope set via semantic similarity",
+            "detail": "Sample semantically similar but out-of-scope inputs to assess edit locality/specificity",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Constrained optimization for safe edits",
+            "detail": "Optimize edit loss while constraining model to match original behavior off-scope",
+            "evidence": [
+              "Knowledge Editing for Large Language Models: A Survey"
+            ]
+          },
+          {
+            "name": "Ripple-effect evaluation of edits",
+            "detail": "Assess consistency and side effects of edits using the RippleEdits benchmark",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+ specificity protocol",
+            "detail": "Prepend edit sentence to neighborhood prompts and measure specificity vs collateral changes",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Bootstrap confidence intervals for specificity",
+            "detail": "Use bootstrap resampling to report uncertainty on NS/NM/NKL metrics",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Perplexity-based collapse detection",
+            "detail": "Track perplexity after edits; flag collapse when perplexity exceeds 1000; analyze downstream correlations",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Single vs sequential edit evaluation",
+            "detail": "Compare isolated edits to sequential application to study compounding effects",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Human-in-the-loop and contrastive testing",
+            "detail": "Use human review and contrastive tests to probe safety and robustness",
+            "evidence": [
+              "A Survey on Evaluation of Large Language Models"
+            ]
+          },
+          {
+            "name": "Selective prediction/deferral",
+            "detail": "Allow the model to abstain or defer on uncertain or potentially harmful queries",
+            "evidence": [
+              "Large language models encode clinical knowledge"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Establish baseline performance and sample adequacy for edits",
+      "dataset": "UniEdit benchmark + MMLU benchmark",
+      "model": "Llama 3",
+      "method_under_test": "Baseline zero-shot inference",
+      "attack_or_condition": "Zero-shot evaluation",
+      "metrics": [
+        "Accuracy",
+        "Precision@1 (P@1)"
+      ],
+      "pass_condition": "Find \u2265300 UniEdit facts where the unedited model returns the pre-edit object at P@1 under the benchmark\u2019s base prompt set; and estimate baseline MMLU Accuracy with bootstrap 95% CI half-width \u22641.5 percentage points.",
+      "constraints_not_enforced": [
+        "reliability > 90%",
+        "generality > 90%",
+        "collateral effects < 5% (impact on MMLU)"
+      ],
+      "depends_on": [],
+      "rationale": "Ensures the model knows enough target facts to evaluate edits and establishes a precise pre-edit MMLU baseline for collateral-effect measurement.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Identify and validate fact-localized modules (MLP weights and attention heads) in intermediate layers via causal tracing/activation analysis",
+      "dataset": "UniEdit benchmark",
+      "model": "Llama 3",
+      "method_under_test": "Causal tracing + activation analysis (claim)",
+      "attack_or_condition": "Knowledge editing triplet formulation",
+      "metrics": [
+        "Precision@1 (P@1)",
+        "Locality"
+      ],
+      "pass_condition": "On the sampled UniEdit facts from the gate: for \u226590% of facts, the top-2 causally most influential modules (by clean\u2192corrupted activation patch effect on the correct object logit) are located in the model\u2019s middle-third layers; targeted ablation of only the identified modules reduces P@1 of the original object by \u226550 percentage points on average, while ablating an equal number of randomly chosen modules changes P@1 by \u22645 percentage points on average.",
+      "constraints_not_enforced": [
+        "Per-fact uniqueness of storage units across the entire fact space",
+        "Direct isolation of causal units without any false positives beyond the identified set"
+      ],
+      "depends_on": [
+        "Establish baseline performance and sample adequacy for edits"
+      ],
+      "rationale": "Validates that identifiable, intermediate-layer MLP/attention components are necessary for specific facts and are more influential than random components, supporting the localization premise.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "headline",
+      "goal": "Test whether localized components enable high-success knowledge editing with low collateral impact",
+      "dataset": "UniEdit benchmark + MMLU benchmark",
+      "model": "Llama 3",
+      "method_under_test": "ROME (localized to identified modules)",
+      "attack_or_condition": "Knowledge editing triplet formulation",
+      "metrics": [
+        "reliability",
+        "generality",
+        "impact on MMLU performance (collateral effects)"
+      ],
+      "pass_condition": "On UniEdit, edited facts achieve reliability \u226590% and generality \u226590%; post-edit MMLU Accuracy decreases by \u22645 percentage points absolute compared to the gate\u2019s baseline.",
+      "constraints_not_enforced": [
+        "Sequential vs single edits",
+        "Portability/retainability beyond the UniEdit distribution"
+      ],
+      "depends_on": [
+        "Identify and validate fact-localized modules (MLP weights and attention heads) in intermediate layers via causal tracing/activation analysis"
+      ],
+      "rationale": "Directly evaluates the claim\u2019s quantitative thresholds for editing success and collateral effects using the specified datasets and metrics.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "control",
+      "goal": "Demonstrate that success depends on identified modules rather than edit budget alone",
+      "dataset": "UniEdit benchmark + MMLU benchmark",
+      "model": "Llama 3",
+      "method_under_test": "Random matched-budget edits (same number of modules and layers as localized ROME)",
+      "attack_or_condition": "COUNTERFACT+ specificity protocol",
+      "metrics": [
+        "reliability",
+        "generality",
+        "impact on MMLU performance (collateral effects)"
+      ],
+      "pass_condition": "Localized edits (headline) exceed random matched-budget edits by \u226530 percentage points on both reliability and generality and meet the \u22645 percentage-point MMLU drop constraint; if random equals or surpasses localized on either reliability or generality, refute.",
+      "constraints_not_enforced": [
+        "Comparison to multiple editing algorithms beyond ROME"
+      ],
+      "depends_on": [
+        "Test whether localized components enable high-success knowledge editing with low collateral impact"
+      ],
+      "rationale": "Controls for the possibility that any small edit could work; shows identified modules are specifically responsible for successful, precise edits.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "control",
+      "goal": "Validate the \u2018intermediate layers\u2019 and \u2018MLP+attention\u2019 claims via per-layer and per-module sweeps",
+      "dataset": "UniEdit benchmark",
+      "model": "Llama 3",
+      "method_under_test": "Per-layer and per-module restricted ROME/MEMIT sweeps",
+      "attack_or_condition": "Knowledge locality test (L-Test)",
+      "metrics": [
+        "reliability",
+        "generality"
+      ],
+      "pass_condition": "The maximum average reliability across single-layer-restricted edits occurs within the middle third of layers; and restricting edits to only-MLP or only-attention decreases average reliability by \u226510 percentage points versus using both identified module types together (from apparatus).",
+      "constraints_not_enforced": [
+        "Collateral effects on external tasks beyond MMLU",
+        "Formal proof of \u2018dedicated storage units\u2019 uniqueness per fact"
+      ],
+      "depends_on": [
+        "Identify and validate fact-localized modules (MLP weights and attention heads) in intermediate layers via causal tracing/activation analysis",
+        "Test whether localized components enable high-success knowledge editing with low collateral impact"
+      ],
+      "rationale": "Ablation-style controls confirm that edits succeed specifically when targeting intermediate layers and when leveraging both MLP and attention components, matching the mechanistic claim.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    }
+  ],
+  "baseline_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Establish eligible edit set and MMLU baseline",
+      "dataset": "UniEdit benchmark (dev/test) and MMLU (57-task test set)",
+      "model": "Llama-3-8B-Base",
+      "method_under_test": "None (baseline measurements)",
+      "attack_or_condition": "Run UniEdit prompts to identify items where the model\u2019s top-1 answer differs from the target and the target object tokenizes to a single token. Run MMLU 5-shot with fixed in-context examples; repeat once with option-order shuffle to assess stability.",
+      "metrics": [
+        "MMLU_baseline_acc (%)",
+        "N_eligible_edits (count of UniEdit items with wrong top-1 and single-token target)",
+        "MMLU_repeat_diff (pp)"
+      ],
+      "pass_condition": "MMLU_baseline_acc \u2265 50.0%, N_eligible_edits \u2265 200, and MMLU_repeat_diff \u2264 1.0 pp. If any fail, stop: claim cannot be meaningfully tested/measured.",
+      "constraints_not_enforced": [
+        "Does not assess localization or editing success",
+        "Only tests Llama-3-8B-Base (not larger variants)"
+      ],
+      "depends_on": [],
+      "rationale": "Ensures sufficient test cases for UniEdit and a stable MMLU baseline so a \u22645 pp collateral threshold is meaningful before costly analyses.",
+      "label": "baseline"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Causal localization identifies sparse units per fact",
+      "dataset": "UniEdit eligible subset from gate",
+      "model": "Llama-3-8B-Base",
+      "method_under_test": "Causal tracing + activation patching to localize fact-specific units (MLP neurons and attention heads)",
+      "attack_or_condition": "For each fact, run clean vs corrupted subject prompts. For each layer\u2019s MLP post-activation vector and each attention head output, patch clean activations into corrupted runs to measure sufficiency (recovered target-object logit margin). Lesion (zero) units in clean runs to measure necessity (margin drop). Greedily select \u22643 units maximizing recovered margin. Repeat over 3 paraphrases of the query.",
+      "metrics": [
+        "Fact_localization_rate (% facts with \u22643 units that together achieve sufficiency \u226580% recovered margin and necessity \u22651.5 logit drop and \u226550% margin loss)",
+        "Intermediate_layer_share (% identified units with layer index in [0.3L, 0.7L])",
+        "Paraphrase_consistency (mean Jaccard overlap of top-3 unit sets across 3 paraphrases)",
+        "MLP_inclusion_rate (% localized facts whose minimal set includes \u22651 MLP unit)",
+        "Head_inclusion_rate (% localized facts whose minimal set includes \u22651 attention head)"
+      ],
+      "pass_condition": "Fact_localization_rate \u2265 70%, Intermediate_layer_share \u2265 80%, Paraphrase_consistency \u2265 0.6, MLP_inclusion_rate \u2265 60%, and Head_inclusion_rate \u2265 30%. Failure refutes the claim\u2019s locality/intermediate-layer/dedicated-module premise.",
+      "constraints_not_enforced": [
+        "Weights are not edited; only activations assessed",
+        "Does not yet prove per-unit weight storage causally"
+      ],
+      "depends_on": [
+        "Establish eligible edit set and MMLU baseline"
+      ],
+      "rationale": "Causal tracing and activation patching are standard to establish necessity/sufficiency and layer/module attribution for stored facts.",
+      "label": "baseline"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Dedicated-unit behavior validated by activation toggling",
+      "dataset": "UniEdit eligible subset; plus 100 randomly sampled unrelated fact prompts as collateral set",
+      "model": "Llama-3-8B-Base",
+      "method_under_test": "Sparse activation control on identified units (no weight change)",
+      "attack_or_condition": "For each localized fact, compute minimal activation deltas on the selected \u22643 units (solve L2-regularized least squares on local Jacobian of target logit) to flip the predicted object to a specified new object. Apply the same deltas across 5 paraphrases and 3 context variants; also apply to 100 unrelated fact prompts to assess specificity/collateral.",
+      "metrics": [
+        "Activation_edit_reliability (% of paraphrases where target-new object is top-1)",
+        "Collateral_unrelated (pp accuracy drop on 100 unrelated facts)",
+        "Sparsity (median number of units modified per fact)",
+        "Non_target_specificity (% flip rate on prompts with same subject but different relation)"
+      ],
+      "pass_condition": "For \u226570% of localized facts: Activation_edit_reliability \u2265 90%, Collateral_unrelated \u2264 5.0 pp, Sparsity \u2264 3, and Non_target_specificity \u2264 10%. Failure weakens/dismisses the \u201cdedicated storage unit\u201d behavior prior to weight edits.",
+      "constraints_not_enforced": [
+        "Does not modify weights; MMLU collateral not measured here",
+        "Relies on linearized local objective"
+      ],
+      "depends_on": [
+        "Causal localization identifies sparse units per fact"
+      ],
+      "rationale": "Shows that manipulating only the localized units reliably toggles a specific fact with low collateral, consistent with dedicated storage behavior.",
+      "label": "baseline"
+    },
+    {
+      "stage": "headline",
+      "goal": "Localized weight editing achieves claimed UniEdit and MMLU thresholds",
+      "dataset": "UniEdit benchmark (eligible facts with provided paraphrases/contexts); MMLU test set",
+      "model": "Llama-3-8B-Base",
+      "method_under_test": "Localized Fact Storage Editor (LFSE): constrained edits to identified MLP neuron W_out rows and attention head OV rows via closed-form/rank-1 updates with L2 regularization",
+      "attack_or_condition": "Per fact, edit only the weights of the previously identified \u22643 units to maximize new-object log-prob on the subject prompt, with L2 penalty to preserve outputs on a 50-example unrelated calibration set. Freeze all other weights. Evaluate UniEdit reliability and generality over provided paraphrases/contexts. Evaluate pre/post MMLU 5-shot with identical in-context examples.",
+      "metrics": [
+        "UniEdit_reliability (%)",
+        "UniEdit_generality (%)",
+        "MMLU_accuracy_delta (pp)",
+        "Edit_scope (max units and parameter rows touched per edit)",
+        "Non_target_QA_delta (pp on 500 held-out unrelated QA prompts)",
+        "Module_usage_mix (% edits succeeded with \u22651 head edited; % succeeded with MLP-only)"
+      ],
+      "pass_condition": "UniEdit_reliability \u2265 90%, UniEdit_generality \u2265 90%, and MMLU_accuracy_delta \u2265 -5.0 pp (drop no more than 5 pp) simultaneously. Additionally, Edit_scope \u2264 3 units (\u22643 neuron rows and/or \u22643 head OV rows) per edit, Non_target_QA_delta \u2264 5.0 pp, and Module_usage_mix satisfies: \u226550% successful edits MLP-only and \u226525% include \u22651 attention head. Any failure refutes the claim\u2019s main assertion.",
+      "constraints_not_enforced": [
+        "Only 8B variant tested here; not yet across all Llama 3 sizes",
+        "Batch multi-edit not required by claim"
+      ],
+      "depends_on": [
+        "Causal localization identifies sparse units per fact",
+        "Dedicated-unit behavior validated by activation toggling"
+      ],
+      "rationale": "Directly enforces the claim\u2019s success thresholds on UniEdit and collateral bound on MMLU using weight edits restricted to localized units.",
+      "label": "baseline"
+    },
+    {
+      "stage": "control",
+      "goal": "Controls show effect is due to localized units, not artifacts",
+      "dataset": "Same UniEdit subset; MMLU test; plus 1000 unrelated facts for interference testing",
+      "model": "Llama-3-8B-Base and Llama-3-70B-Base (replication)",
+      "method_under_test": "Comparative editors (ROME, MEMIT, SERAC, LoRA fine-tune) vs LFSE; random-unit and neighbor-layer ablations; K-unit sweeps; multi-edit stress",
+      "attack_or_condition": "Run ROME/MEMIT/SERAC/LoRA on same facts under matched edit norm or parameter-count budgets. Run LFSE with random units (same K and norm) and with units from adjacent layers. Sweep K \u2208 {1,2,3,5}. Perform 100 simultaneous edits (batch) and assess interference. Replicate LFSE on Llama-3-70B-Base with K=3.",
+      "metrics": [
+        "LFSE_minus_random_reliability (pp at K=3, matched norm)",
+        "LFSE_vs_baselines (reliability/generality at matched MMLU drop within 1 pp, or MMLU drop at matched 90% reliability)",
+        "K_sweep_monotonicity (reliability increases up to K=3; MMLU drop increase \u22642 pp from K=3 to K=5)",
+        "Multi_edit_reliability (%, across 100 edits)",
+        "Cross_interference_rate (% non-target facts affected)",
+        "Batch_MMLU_delta (pp)",
+        "70B_replication (reliability %, MMLU delta pp)"
+      ],
+      "pass_condition": "LFSE_minus_random_reliability \u2265 30 pp and LFSE random\u2019s MMLU drop not better by >1 pp; LFSE_vs_baselines: at matched MMLU (\u00b11 pp), LFSE reliability and generality \u2265 max(baselines) \u2212 2 pp, or at matched 90% reliability LFSE MMLU drop \u2264 min(baselines) + 1 pp; K_sweep_monotonicity holds; Multi_edit_reliability \u2265 80%, Cross_interference_rate \u2264 10%, Batch_MMLU_delta \u2265 -7 pp; 70B_replication achieves reliability \u2265 80% and MMLU delta \u2265 -5 pp. Any failure suggests artifacts or lack of true localization, undermining the claim.",
+      "constraints_not_enforced": [
+        "Does not require 90/90 on 70B; set as replication sanity threshold"
+      ],
+      "depends_on": [
+        "Localized weight editing achieves claimed UniEdit and MMLU thresholds"
+      ],
+      "rationale": "Optimized should beat random and neighbor ablations; matched-budget baselines ensure the effect is due to localized units, not general fine-tuning; replication checks model-size generality.",
+      "label": "baseline"
+    },
+    {
+      "stage": "control",
+      "goal": "Weight lesion demonstrates necessity and specificity",
+      "dataset": "UniEdit localized facts; plus 100 unrelated fact prompts",
+      "model": "Llama-3-8B-Base",
+      "method_under_test": "Targeted weight zeroing/randomization of identified unit weights (MLP W_out rows and head OV rows)",
+      "attack_or_condition": "For each fact, zero (or replace with small Gaussian noise) only the weights of the identified \u22643 units. Evaluate fact recall across 5 paraphrases and unrelated-fact collateral.",
+      "metrics": [
+        "Fact_erasure_rate (% facts where top-1 correct object fails in \u226580% paraphrases after lesion)",
+        "Collateral_unrelated_lesion (pp accuracy drop on 100 unrelated facts)",
+        "Layer_position_check (% lesioned units in intermediate layers)"
+      ],
+      "pass_condition": "Fact_erasure_rate \u2265 70%, Collateral_unrelated_lesion \u2264 5.0 pp, and Layer_position_check \u2265 80%. Failure refutes necessity/specificity of the identified weights as storage units.",
+      "constraints_not_enforced": [
+        "Erasure measured on currently stored object, not edit to new object"
+      ],
+      "depends_on": [
+        "Causal localization identifies sparse units per fact"
+      ],
+      "rationale": "If localized weights are necessary for the fact, targeted lesion should erase that fact with minimal collateral, supporting the dedicated-storage claim.",
+      "label": "baseline"
+    }
+  ]
+}

@@ -1,0 +1,1620 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "claim_type": "empirical",
+  "problem_id": "9",
+  "claim": "For an unknown discrete-time robotic system x_{t+1}=f(x_t,u_t)+\\xi(x_t,u_t)\u200b operating on a specified compact subset \\mathcal{D}\\subseteq X\\times U, where f is L-Lipschitz on \\mathcal{D} and \\xi(x_t,u_t) is a compact random variable with lower and upper bounds b_l(x,u) and b_u(x,u), there exists a learning procedure that, given sufficient T transitions collected under an exploration controller whose state\u2013action occupancy induces a known operating distribution \\mu supported on \\mathcal{D}, outputs a dynamics model \\hat{f}\u200b and a non-vacuous error bound e:\\mathcal{D}\\to\\mathbb{R}_+\u200b such that with confidence at least 1-\\delta (e.g., \\delta=0.05) over the training data, a fresh transition (x,u)\\sim\\mu satisfies \\|f(x,u)-\\hat f(x,u)\\|_2 \\le e(x,u)\u200b with probability at least 0.95, and the bound is non-vacuous in the sense that e(x,u) \\le 1.1 max(b_l(x,u), b_u(x,u)).",
+  "subfields": [
+    "System Identification",
+    "Statistical Learning Theory",
+    "Model-based Reinforcement Learning"
+  ],
+  "provenance": {
+    "n_papers_bundle": 25,
+    "n_papers_deduped": 25,
+    "n_fulltext": 10,
+    "pdf_sources": {
+      "none": 15,
+      "pdf_url": 5,
+      "s2": 1,
+      "arxiv": 4
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5.5",
+    "recipe_model": "gpt-5.5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "System Identification",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Hysteretic benchmark",
+            "role": "eval",
+            "evidence": [
+              "Three Benchmarks Addressing Open Challenges in Nonlinear System Identification"
+            ]
+          },
+          {
+            "name": "Wiener-Hammerstein benchmark",
+            "role": "eval",
+            "evidence": [
+              "Three Benchmarks Addressing Open Challenges in Nonlinear System Identification"
+            ]
+          },
+          {
+            "name": "Cascaded tanks benchmark",
+            "role": "eval",
+            "evidence": [
+              "Three Benchmarks Addressing Open Challenges in Nonlinear System Identification"
+            ]
+          },
+          {
+            "name": "Estimation data (Z_N)",
+            "role": "train",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Validation data (Z_v)",
+            "role": "eval",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Three free laboratory-process datasets for nonlinear system identification",
+            "role": "eval",
+            "evidence": [
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Box and Jenkins Gas Furnace benchmark",
+            "role": "eval",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "SISO and MIMO discrete-time plant benchmarks",
+            "role": "eval",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Single-trajectory input-output data D_N = {y(t), u(t)}",
+            "role": "train",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Simulated LTI-system trajectory",
+            "role": "train",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Sampled state-successor dataset D = {x_u, y_u}",
+            "role": "train",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Inverted pendulum benchmark",
+            "role": "eval",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Nonlinear system with Koopman-invariant observables",
+            "role": "eval",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Block-oriented dynamic models",
+            "role": "backbone",
+            "evidence": [
+              "Identification of nonlinear systems\u2013a survey",
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Grey-box models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Black-box models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "ARX/ARMA(X) models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "LTI/linear state-space models",
+            "role": "backbone",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Neural-network system-identification models",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification",
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Nonlinear difference/differential equation models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification",
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Wiener models",
+            "role": "backbone",
+            "evidence": [
+              "Identification of nonlinear systems\u2013a survey"
+            ]
+          },
+          {
+            "name": "Volterra series/models",
+            "role": "backbone",
+            "evidence": [
+              "Identification of nonlinear systems\u2013a survey"
+            ]
+          },
+          {
+            "name": "Bilinear systems",
+            "role": "backbone",
+            "evidence": [
+              "Identification of nonlinear systems\u2013a survey"
+            ]
+          },
+          {
+            "name": "Evolutionary optimisation (EO)",
+            "role": "method_under_test",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks"
+            ]
+          },
+          {
+            "name": "White-box models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks"
+            ]
+          },
+          {
+            "name": "Universal-approximation machine-learning models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks"
+            ]
+          },
+          {
+            "name": "Parametric polynomial models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Nonparametric kernel smoothing models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Nonlinear dynamic models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Support Vector Machines / LS-SVM",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Gaussian Process Regression / kriging",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Partial Least Squares (PLS)",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Subspace methods (N4SID, MOESP)",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Instrumental Variables methods",
+            "role": "method_under_test",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "GARCH models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Single-layer Functional Link Artificial Neural Network (FLANN)",
+            "role": "method_under_test",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "FLANN with Chebyshev polynomial input expansion",
+            "role": "method_under_test",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Gibbs posterior over LTI predictors",
+            "role": "method_under_test",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Koopman-based lifted models / EDMDc",
+            "role": "method_under_test",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "SafEDMD bilinear surrogate",
+            "role": "method_under_test",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Mean squared error / squared prediction error",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Empirical risk/loss",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Akaike's Final Prediction Error (FPE)",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Akaike Information Criterion (AIC)",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Generalized Cross-Validation (GCV)",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Validation fit",
+            "direction": "higher_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Bias and variance",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Rademacher complexity",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "VC-dimension",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Fisher information",
+            "direction": "higher_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Cram\u00e9r-Rao lower bound",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Stability",
+            "direction": "higher_better",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Generalization loss",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Unbiased estimator of generalization loss V(f)",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "KL-divergence KL(rho||pi)",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "PAC-Bayesian error term",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Proportional learning error bounds",
+            "direction": "lower_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Computation time",
+            "direction": "lower_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Benchmark evaluation on nonlinear system-identification problems",
+            "detail": "Evaluate methods on community benchmark challenges, laboratory-process datasets, and standard plant/gas-furnace benchmarks.",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks",
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks",
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Train/validation split for identification",
+            "detail": "Estimate models on estimation data Z_N and evaluate them on separate validation data Z_v.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Regularized least squares",
+            "detail": "Fit parameters by minimizing V_N(theta, Z_N) plus a ridge penalty delta||theta||^2.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Information-criterion or cross-validation model selection",
+            "detail": "Select model structure or complexity using FPE, AIC, GCV, or cross-validation.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Subspace one-shot estimation",
+            "detail": "Use N4SID or MOESP-style subspace estimation for linear state-space models.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Initialization to avoid local minima",
+            "detail": "Use Instrumental Variables or subspace methods to obtain initial parameter estimates.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Monte Carlo random-initialization tests",
+            "detail": "Run repeated random initializations to assess success rates for reaching a global minimum in grey-box identification.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Differential-algebra ODE parameter estimation",
+            "detail": "Reformulate ODE parameter estimation as linear regression via differential algebra/Ritt's algorithm.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Polynomial-problem convexification",
+            "detail": "Use sum-of-squares or semidefinite programming relaxations for polynomial identification problems.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Grey-box physical-plus-ML modeling",
+            "detail": "Combine prior physical-law white-box models with black-box machine learners.",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks"
+            ]
+          },
+          {
+            "name": "Evolutionary-optimisation variant comparison",
+            "detail": "Compare multiple EO variants on nonlinear system-identification benchmark problems.",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks"
+            ]
+          },
+          {
+            "name": "Laboratory-process data collection",
+            "detail": "Collect laboratory-process data for development, testing, and benchmarking of nonlinear identification algorithms.",
+            "evidence": [
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Online recursive least squares",
+            "detail": "Use recursive least squares with a forgetting factor for online parameter updates.",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Chebyshev input expansion",
+            "detail": "Expand inputs using Chebyshev polynomials to remove the hidden layer in FLANN-style neural models.",
+            "evidence": [
+              "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks"
+            ]
+          },
+          {
+            "name": "Single-trajectory time-series training",
+            "detail": "Train from one trajectory D_N = {y(t), u(t)} over a finite horizon.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Bounded and unbounded innovation-noise evaluation",
+            "detail": "Evaluate LTI learning bounds under Gaussian/sub-Gaussian and bounded truncated-Gaussian innovation noise.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Gibbs-posterior approximation",
+            "detail": "Use rho(f) proportional to pi(f) exp(-lambda L_N(f)) and approximate it with MCMC.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "PAC-Bayes lambda selection",
+            "detail": "Choose lambda by numerical minimization of the PAC-Bayesian error term or by prescribed N-dependent scalings.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Sample-size convergence simulation",
+            "detail": "Compare convergence of PAC-Bayes error terms versus trajectory length N.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "State-successor sampling for Koopman identification",
+            "detail": "Collect sampled state-successor pairs, including unit-control-vector samples, from the state set.",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Noisy successor-data evaluation",
+            "detail": "Add uniform measurement noise to successors when evaluating Koopman/EDMD identification.",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "EDMD least-squares fitting",
+            "detail": "Solve the EDMD least-squares identification step before downstream controller synthesis.",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1
+      }
+    },
+    {
+      "subfield": "Statistical Learning Theory",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Estimation/training data (Z_N)",
+            "role": "train",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Validation data (Z_v)",
+            "role": "eval",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Single-trajectory time-series training data (D_N = {y(t), u(t)}_{t=0}^{N-1})",
+            "role": "train",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Simulated trajectory from an LTI data-generating system",
+            "role": "eval",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Support Vector Machines (SVM / LS-SVM)",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Kernel smoothing estimators",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Empirical risk minimizers",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Maximum likelihood estimators",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Least-squares estimators",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Piecewise constant functions / regressograms",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Fourier-basis linear models",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "k-Nearest Neighbours",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Lasso",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Ridge regression",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Spline smoothing",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Boosting",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Linear estimators (matrix form)",
+            "role": "backbone",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Parametric polynomial models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Gaussian Process Regression / kriging",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Neural Networks",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Partial Least Squares (PLS)",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Gibbs posterior over predictors",
+            "role": "method_under_test",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Squared error / Mean Squared Error (MSE)",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Empirical risk / empirical loss / empirical contrast",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Generalization risk / generalization loss",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Kullback\u2013Leibler divergence",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Generalized Cross-Validation (GCV)",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Risk",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Loss",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Contrast function",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Excess loss",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "0-1 loss",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Log-likelihood",
+            "direction": "higher_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Resubstitution error",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Akaike Information Criterion (AIC)",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Akaike's Final Prediction Error (FPE)",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Bias\u2013variance decomposition",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Rademacher complexity",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "VC-dimension",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Unbiased estimator of generalization loss V(f)",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "PAC-Bayesian error term r_N(lambda, pi)",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Hold-out / train-validation split",
+            "detail": "Train on one split or estimation data and evaluate on held-out validation data.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Model selection via cross-validation or model-selection criteria",
+            "detail": "Select models using cross-validation, GCV, AIC, FPE, BIC, Mallows' Cp, GIC, or related penalization criteria.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Generalized Cross-Validation (GCV)",
+            "detail": "Use analytic generalized cross-validation as a model-selection or tuning procedure.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Regularized least squares with ridge penalty",
+            "detail": "Minimize empirical loss plus a squared-parameter penalty.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Leave-one-out cross-validation (LOO)",
+            "detail": "Evaluate by repeatedly holding out one observation at a time.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Leave-p-out cross-validation (LPO)",
+            "detail": "Evaluate by holding out p observations over repeated splits.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "V-fold cross-validation (VFCV)",
+            "detail": "Partition data into V folds and rotate the held-out fold for validation.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Balanced incomplete cross-validation (BICV)",
+            "detail": "Use balanced incomplete split designs for cross-validation.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Repeated learning-testing (RLT)",
+            "detail": "Repeat random learning/testing splits and aggregate validation performance.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Monte Carlo cross-validation (MCCV)",
+            "detail": "Use repeated random train/test splits to estimate predictive performance.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Cross-validation with voting (CV-v)",
+            "detail": "Aggregate cross-validation decisions by voting across splits or folds.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Cross-validation with averaging (CV-a)",
+            "detail": "Aggregate cross-validation estimates by averaging across splits or folds.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Bias-corrected V-fold / RLT",
+            "detail": "Apply bias correction to V-fold or repeated learning-testing estimates.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "LOO bootstrap",
+            "detail": "Use bootstrap-based leave-one-out-style resampling for validation.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": ".632 bootstrap",
+            "detail": "Use the .632 bootstrap estimator for prediction-error assessment.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "Analytic approximation to leave-p-out (APCV)",
+            "detail": "Approximate LPO analytically to reduce computation.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "V-fold penalization",
+            "detail": "Use V-fold resampling to calibrate penalization for model selection.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "m-out-of-n bootstrap penalization",
+            "detail": "Use m-out-of-n bootstrap resampling to calibrate penalized selection criteria.",
+            "evidence": [
+              "A survey of cross-validation procedures for model selection"
+            ]
+          },
+          {
+            "name": "PAC-Bayes learning from a single trajectory",
+            "detail": "Train predictors from a single dependent time-series trajectory D_N.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Bounded and unbounded noise settings",
+            "detail": "Analyze both unbounded Gaussian/sub-Gaussian noise and bounded truncated Gaussian noise.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Gibbs posterior approximation via MCMC",
+            "detail": "Use a Gibbs posterior proportional to prior times exponential empirical loss and approximate it with MCMC.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "PAC-Bayes lambda selection",
+            "detail": "Choose lambda by numerical minimization of the PAC-Bayesian error term or compare prescribed scalings with N.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Sample-size convergence simulation",
+            "detail": "Compare convergence of the PAC-Bayesian error term as sample size N varies.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 0
+      }
+    },
+    {
+      "subfield": "Model-based Reinforcement Learning",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Estimation/training input-state, state-successor, or trajectory data",
+            "role": "train",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification",
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Validation data",
+            "role": "eval",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Inverted pendulum benchmark (simulated)",
+            "role": "eval",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Nonlinear system with Koopman-invariant observables (simulated)",
+            "role": "eval",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Simulated trajectory from an LTI data-generating system",
+            "role": "eval",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Data-driven feedback controller",
+            "role": "method_under_test",
+            "evidence": [
+              "Online Optimization of Dynamical Systems With Deep Learning Perception",
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Neural networks / deep neural networks",
+            "role": "backbone",
+            "evidence": [
+              "Online Optimization of Dynamical Systems With Deep Learning Perception",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Linear state-space / LTI state-space predictors",
+            "role": "backbone",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Grey-box models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Black-box models",
+            "role": "backbone",
+            "evidence": [
+              "On evolutionary system identification with applications to nonlinear benchmarks",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Nonlinear dynamic / difference-equation models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification",
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Block-oriented dynamic models",
+            "role": "backbone",
+            "evidence": [
+              "Identification of nonlinear systems\u2013a survey",
+              "Three free data sets for development and benchmarking in nonlinear system identification"
+            ]
+          },
+          {
+            "name": "Gaussian Process Regression / kriging",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Nonparametric kernel smoothing models",
+            "role": "backbone",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "ARX / ARMA(X) models",
+            "role": "baseline",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "SafEDMD bilinear surrogate (Koopman-based)",
+            "role": "method_under_test",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "EDMDc linear lifted Koopman model",
+            "role": "baseline",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Discrete-time LQR on lifted model",
+            "role": "baseline",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "State feedback controller",
+            "role": "method_under_test",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints"
+            ]
+          },
+          {
+            "name": "QP-ZCBF safety filter / Control Barrier Function",
+            "role": "method_under_test",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Adaptive controller with parameter update laws",
+            "role": "method_under_test",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Projected gradient-flow method",
+            "role": "method_under_test",
+            "evidence": [
+              "Online Optimization of Dynamical Systems With Deep Learning Perception"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Closed-loop stability / stabilizability",
+            "direction": "higher_better",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints",
+              "Online Optimization of Dynamical Systems With Deep Learning Perception",
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems",
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Mean squared / quadratic prediction error",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Empirical risk / empirical loss",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Generalization or validation loss",
+            "direction": "lower_better",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Region of Attraction size",
+            "direction": "higher_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "tr(P^{-1}) as a measure of Region of Attraction size",
+            "direction": "higher_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Safety constraint satisfaction h(x) >= 0",
+            "direction": "higher_better",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Tracking error",
+            "direction": "lower_better",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Control input magnitude",
+            "direction": "lower_better",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Neural network approximation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Online Optimization of Dynamical Systems With Deep Learning Perception"
+            ]
+          },
+          {
+            "name": "Proportional learning error bounds c_x, c_u",
+            "direction": "lower_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Computation time",
+            "direction": "lower_better",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Akaike Information Criterion / Final Prediction Error / Generalized Cross-Validation",
+            "direction": "lower_better",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Train on trajectory or input-state data and evaluate on validation/simulation data",
+            "detail": "Estimate the dynamics or controller from collected data and assess performance on held-out validation data or simulated rollouts.",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints",
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+              "Perspectives on system identification",
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Robustness evaluation with noisy or perturbed data",
+            "detail": "Test learned models/controllers under bounded/unbounded noise, measurement noise, or perturbed input-state data.",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints"
+            ]
+          },
+          {
+            "name": "Optimization-based data-driven controller synthesis",
+            "detail": "Design controllers from learned or collected data using SDP/QP-style optimization programs.",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints",
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems",
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Model selection using information criteria or cross-validation",
+            "detail": "Select models using FPE, AIC, GCV, or cross-validation on validation data.",
+            "evidence": [
+              "Perspectives on system identification"
+            ]
+          },
+          {
+            "name": "Training from a single time-series trajectory",
+            "detail": "Use one trajectory D_N = {y(t), u(t)} to fit a dynamical predictor.",
+            "evidence": [
+              "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss"
+            ]
+          },
+          {
+            "name": "Finite-length input-state experiment",
+            "detail": "Collect input-state data from a finite experiment before synthesizing a controller.",
+            "evidence": [
+              "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints"
+            ]
+          },
+          {
+            "name": "State-successor sampling for learned dynamics",
+            "detail": "Sample states and successor states, optionally with unit control vectors, to build a transition dataset.",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "EDMD least-squares followed by SDP controller design",
+            "detail": "Fit an EDMD/Koopman surrogate by least squares and solve an SDP for controller synthesis.",
+            "evidence": [
+              "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems"
+            ]
+          },
+          {
+            "name": "Online QP safety filtering",
+            "detail": "Solve a QP-ZCBF safety filter online to enforce safety constraints during control.",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Initial-state sweep for trajectory evaluation",
+            "detail": "Vary initial states to compare closed-loop trajectories and safety behavior.",
+            "evidence": [
+              "Safe and Stable Adaptive Control for a Class of Dynamic Systems"
+            ]
+          },
+          {
+            "name": "Illustrative numerical simulations in robotics",
+            "detail": "Evaluate the data-driven control or optimization method in robotic simulation examples.",
+            "evidence": [
+              "Online Optimization of Dynamical Systems With Deep Learning Perception"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 2
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Audit that the benchmark instance satisfies the claim prerequisites before testing any learning guarantee",
+      "dataset": "Inverted pendulum benchmark (simulated)",
+      "model": "Nonlinear dynamic / difference-equation models",
+      "method_under_test": "Nonparametric kernel smoothing models",
+      "attack_or_condition": "Finite-length input-state experiment",
+      "metrics": [
+        "coverage"
+      ],
+      "pass_condition": "On the pre-specified compact domain D, draw a dense audit grid of state-input pairs and 100000 simulator noise draws. Pass only if: every audited pair lies in D; the known simulator drift f has empirical pairwise slope <= the specified L on the audit grid; and every observed disturbance xi(x,u) lies inside the declared bounds [b_l(x,u), b_u(x,u)]. Any out-of-domain sample, any slope > L, or any disturbance outside the declared bounds refutes applicability of the claim on this test instance.",
+      "constraints_not_enforced": [
+        "Does not test the learned error bound",
+        "Does not test confidence 1-delta",
+        "Does not prove the assumptions for all possible unknown robotic systems",
+        "The claim's exploration-controller clause is incomplete and therefore only finite-length input-state exploration is audited"
+      ],
+      "depends_on": [],
+      "rationale": "A Lipschitz compact-domain bounded-noise audit is the cheapest prerequisite check: if the domain, Lipschitz, or compact-noise assumptions fail, the claimed finite-sample coverage statement is not applicable.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validate that the exploration data are sufficiently covering D for the learning procedure's stated sufficient-T regime",
+      "dataset": "Estimation/training input-state, state-successor, or trajectory data",
+      "model": "Data-driven feedback controller",
+      "method_under_test": "Nonparametric kernel smoothing models",
+      "attack_or_condition": "State-successor sampling for learned dynamics",
+      "metrics": [
+        "coverage"
+      ],
+      "pass_condition": "Partition the specified compact D into the cells used by the learning procedure's covering argument, with maximum cell diameter no larger than the procedure's declared resolution. Collect T transitions under the exploration controller. Pass only if every cell intersecting D contains at least one observed transition and the procedure's own sufficient-T certificate declares the sample sufficient. If any cell is uncovered, or if the certificate fails, the apparatus is rejected before the headline test.",
+      "constraints_not_enforced": [
+        "Does not itself verify the final error bound",
+        "Does not establish confidence 1-delta over repeated training sets",
+        "If the submitted learning procedure gives no explicit sufficient-T certificate or covering resolution, this recipe cannot enforce the unspecified 'sufficient T' condition"
+      ],
+      "depends_on": [
+        "Audit that the benchmark instance satisfies the claim prerequisites before testing any learning guarantee"
+      ],
+      "rationale": "Learning-theoretic Lipschitz bounds on compact domains normally require a finite cover or fill-distance condition; validating the exploration coverage prevents a failed headline test from being attributed to inadequate data collection rather than the learning guarantee.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Calibrate and validate the learned one-step prediction error bound on held-out validation data",
+      "dataset": "Validation data",
+      "model": "Gaussian Process Regression / kriging",
+      "method_under_test": "Gaussian Process Regression / kriging",
+      "attack_or_condition": "Train on trajectory or input-state data and evaluate on validation/simulation data",
+      "metrics": [
+        "error bound",
+        "coverage"
+      ],
+      "pass_condition": "Train the learning procedure on the certified T-transition estimation set and evaluate on an independent validation set of at least 10000 state-successor samples from D. For every validation sample, compute whether the realized successor lies inside the learned bound/tube. Pass only if the one-sided 95% Clopper-Pearson lower confidence bound on validation coverage is >= 0.95, every reported bound is finite and nonnegative, and no realized validation error exceeds its reported bound when the procedure claims deterministic pointwise validity. If the lower confidence bound is < 0.95, or any deterministic bound is violated, calibration fails.",
+      "constraints_not_enforced": [
+        "Does not by itself prove repeated-sample confidence 1-delta for the entire learning procedure",
+        "Does not test closed-loop performance",
+        "Only evaluates the specified compact D and validation distribution"
+      ],
+      "depends_on": [
+        "Validate that the exploration data are sufficiently covering D for the learning procedure's stated sufficient-T regime"
+      ],
+      "rationale": "Hold-out validation with exact coverage accounting is the standard statistical-learning and system-identification check that a learned uncertainty/error envelope is calibrated before using it for a formal confidence claim.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Directly test the claim that, given sufficient T, the learning procedure returns an error bound with coverage at confidence 1-delta for delta=0.05",
+      "dataset": "Inverted pendulum benchmark (simulated)",
+      "model": "Gaussian Process Regression / kriging",
+      "method_under_test": "Gaussian Process Regression / kriging",
+      "attack_or_condition": "State-successor sampling for learned dynamics",
+      "metrics": [
+        "error bound",
+        "coverage"
+      ],
+      "pass_condition": "Run R=200 independent repetitions. In each repetition, collect a fresh certified sufficient-T training set on D, train the procedure, and evaluate on a dense independent test set of at least 10000 state-input pairs with independently sampled bounded disturbances. Mark a repetition successful only if the learned bound contains every tested successor, equivalently every tested prediction error is <= its reported error bound. Pass the headline claim only if the one-sided 95% Clopper-Pearson lower confidence bound for the repetition success rate is >= 0.95. If this lower bound is < 0.95, the claimed confidence 1-delta with delta=0.05 is refuted for this procedure and benchmark.",
+      "constraints_not_enforced": [
+        "Does not prove existence for all unknown discrete-time robotic systems",
+        "Does not enforce any unstated part of the truncated exploration-controller condition",
+        "Dense testing approximates the continuum compact set D rather than exhaustively enumerating uncountably many points"
+      ],
+      "depends_on": [
+        "Audit that the benchmark instance satisfies the claim prerequisites before testing any learning guarantee",
+        "Validate that the exploration data are sufficiently covering D for the learning procedure's stated sufficient-T regime",
+        "Calibrate and validate the learned one-step prediction error bound on held-out validation data"
+      ],
+      "rationale": "Repeated independent train/test trials with Clopper-Pearson accounting directly operationalize the claim's confidence 1-delta=0.95 requirement and the named metrics error bound and coverage.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Attribute successful coverage to the claim-specific Lipschitz and bounded-noise mechanism rather than to arbitrary conservative intervals or random chance",
+      "dataset": "Inverted pendulum benchmark (simulated)",
+      "model": "Black-box models",
+      "method_under_test": "Gaussian Process Regression / kriging",
+      "attack_or_condition": "Robustness evaluation with noisy or perturbed data",
+      "metrics": [
+        "error bound",
+        "coverage"
+      ],
+      "pass_condition": "Repeat the R=200 headline repetitions with matched training sets and matched average bound width, comparing the full procedure against an ablation that removes the L-Lipschitz extension term and the b_l,b_u disturbance-bound term from the reported error bound. Pass the control only if the full procedure satisfies the headline pass condition and the ablated procedure's one-sided 95% Clopper-Pearson upper confidence bound on repetition success rate is < 0.95. If the ablation also achieves coverage >=0.95 at matched width, the result is not attributable to the claimed Lipschitz/bounded-noise mechanism.",
+      "constraints_not_enforced": [
+        "Does not refute the mathematical existence of some other learning procedure if the tested ablation behaves differently",
+        "Does not test all possible conservative bound constructions"
+      ],
+      "depends_on": [
+        "Directly test the claim that, given sufficient T, the learning procedure returns an error bound with coverage at confidence 1-delta for delta=0.05"
+      ],
+      "rationale": "A mechanism ablation is required to show that coverage comes from the specific assumptions named in the claim rather than from over-wide intervals, validation leakage, or generic black-box uncertainty estimates.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Check that the verified confidence and coverage are not artifacts of a single simulated robotic benchmark",
+      "dataset": "Nonlinear system with Koopman-invariant observables (simulated)",
+      "model": "Nonlinear dynamic / difference-equation models",
+      "method_under_test": "Nonparametric kernel smoothing models",
+      "attack_or_condition": "Initial-state sweep for trajectory evaluation",
+      "metrics": [
+        "error bound",
+        "coverage"
+      ],
+      "pass_condition": "Repeat the full gate, exploration-coverage apparatus, validation-calibration apparatus, and R=200 headline test on the second simulated nonlinear system over its own specified compact D, with declared L and bounded disturbance functions b_l,b_u. Pass only if the second benchmark also obtains a one-sided 95% Clopper-Pearson lower confidence bound on repetition success rate >= 0.95 and validation coverage lower confidence bound >= 0.95. Failure on this benchmark refutes robustness of the claimed procedure across standard nonlinear model-based-RL/system-identification simulations.",
+      "constraints_not_enforced": [
+        "Still does not prove the claim over every compact D or every unknown robotic system",
+        "Does not enforce any unstated missing condition after 'exploration controller who' in the truncated claim"
+      ],
+      "depends_on": [
+        "Directly test the claim that, given sufficient T, the learning procedure returns an error bound with coverage at confidence 1-delta for delta=0.05",
+        "Attribute successful coverage to the claim-specific Lipschitz and bounded-noise mechanism rather than to arbitrary conservative intervals or random chance"
+      ],
+      "rationale": "A second nonlinear benchmark is a standard robustness/control check in system identification and model-based reinforcement learning, reducing the chance that the confidence result is benchmark-specific.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

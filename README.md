@@ -1,22 +1,28 @@
 # norm-cards
 
-Generate **scientific norm cards** for the AI subfield(s) a claim belongs to: a
+Generate **scientific norm cards** for the AI subfield(s) a claim belongs to — a
 structured, evidence-grounded summary of how researchers in that subfield *run
-experiments* (standard datasets, models, metrics, and protocols), plus concrete
-**experiment recipes** a downstream agent can run to verify or refute a claim.
+experiments* (standard datasets, models, metrics, protocols) — and use that card
+to help an agent design **better experiments** to verify or refute a claim.
 
-Two stages:
+This repo has three stages:
 
-1. **Search** — a claim is classified into subfield(s) and OpenAlex topics, turned
-   into norm-defining queries, searched across sources, deduped, and ranked into a
-   **paper bundle**.
-2. **Norm-card generation** — the bundle's papers are read in full text and
-   map-reduced into one **menu per subfield** (datasets / models / metrics /
-   protocols, each item carrying its supporting papers as evidence), then a
-   **claim-level recipe** set is composed across those menus.
+1. **Search** (`run.py`) — a claim is classified into subfield(s) and OpenAlex
+   topics, turned into norm-defining queries, searched across sources, deduped,
+   and ranked into a **paper bundle**.
+2. **Norm-card generation** (`normcard.py`) — the bundle's papers are read in full
+   text and map-reduced into one **menu per subfield** (datasets / models /
+   metrics / protocols, each item carrying its supporting papers as evidence).
+3. **Evaluation harness** (`scify_proposer.py`) — the ablation that answers *does
+   the card actually help?* It runs SciFy's real experiment-proposer flow twice on
+   the same claim — **baseline** (no card) vs **method** (card injected) — with the
+   norm card as the only variable, and lets us compare the proposed experiments.
 
-Norm-card generation currently targets **empirical claims** (which have clear
-datasets/benchmarks/metrics); theoretical claims are classified but skipped.
+Norm-card generation targets **empirical claims** (which have clear
+datasets/benchmarks/metrics). Theoretical claims are classified and can be run by
+overriding the empirical guard (see below), but the card's value is thinnest there.
+
+---
 
 ## Install
 
@@ -25,6 +31,12 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env      # then fill in OPENAI_API_KEY (others optional)
 ```
+
+`OPENAI_API_KEY` is the only required key. OpenAlex/arXiv/Semantic Scholar work
+keyless (keys just raise limits). Nothing is read at import time; a missing
+optional key only disables that one source.
+
+---
 
 ## Usage
 
@@ -42,17 +54,52 @@ python -m norm_cards.run \
     --claim_file claims.jsonl \
     --output_folder results/run1 \
     --model gpt-5-mini --per_query 8 --top_k 30
-# -> results/run1/paper_bundles.jsonl (one bundle per claim)
+# -> results/run1/problem_<id>/bundle.json (+ papers.md) per claim
 ```
 
 ### 2. Generate a norm card from a bundle
 
 ```bash
-python -m norm_cards.normcard --bundle results/run1/problem_12/bundle.json
+python -m norm_cards.normcard --bundle results/norm_cards_hybrid/problem_12/bundle.json
 # -> writes norm_card.json next to the bundle
+# models: --map_model gpt-5-mini  --reduce_model gpt-5  --recipe_model gpt-5
 ```
 
-See `examples/` for a sample bundle and the norm card it produces.
+A worked pair to inspect: `results/norm_cards_hybrid/problem_12/bundle.json` and the
+`norm_card.json` it produces.
+
+### 3. Run the evaluation harness (baseline vs card)
+
+```bash
+python -m norm_cards.scify_proposer \
+    --card results/norm_cards_hybrid/problem_9/norm_card.json \
+    --model gpt-5.5 \
+    --out results/norm_cards_hybrid/problem_9/scify_proposer.json
+```
+
+This decomposes the claim into subclaims (SciFy's decomposition prompt), then runs
+the proposer twice — `current_evidence={}` (baseline) and `current_evidence={norm
+card menu}` (method) — and writes `{baseline_experiments, method_experiments,
+subclaims, ...}`. **The card is the only difference between the two arms**, so any
+change in the proposed experiments is attributable to it.
+
+---
+
+## Design decisions (read before extending the harness)
+
+- **Faithful to SciFy, self-contained.** `scify_proposer.py` copies SciFy's
+  `SYSTEM_PROPOSER` and `DECOMPOSITION_PROMPT` **verbatim** and imports nothing
+  from the SciFy (`dryrun`) codebase — so the harness stays runnable standalone and
+  the only thing that ever differs between arms is the injected card.
+- **Resource constraints removed.** SciFy's proposer caps experiments at an
+  8GB/30-min compute budget; we strip that block on purpose — we're testing whether
+  the card helps design the *ideal* experiment set, not a resource-limited one.
+- **Model: `gpt-5.5`** for the proposer/decomposer (temp forced to 1.0, the
+  provider default reasoning effort — *medium* — for the gpt-5 series). Card
+  generation uses `gpt-5-mini` (map) + `gpt-5` (reduce/recipes).
+- **Same subclaims fed to both arms**, so the decomposer can't bias the comparison.
+
+---
 
 ## Output schema (norm card, `format_version` 0.2)
 
@@ -74,49 +121,75 @@ See `examples/` for a sample bundle and the norm card it produces.
         "protocols": [ { "name": "poison rate swept 1-10%", "detail": "...",
                          "evidence": [...] } ] },
       "guard": { "items_dropped": 0, "evidence_links_dropped": 2 } }
-  ],
-
-  "experiment_recipes": [              // claim-level, composed across the menus above
-    { "goal": "...", "dataset": "CIFAR-10", "model": "WideResNet",
-      "method_under_test": "...", "attack_or_condition": "...",
-      "metrics": ["Attack Success Rate", "..."],
-      "pass_condition": "ASR <= 10% and clean Top-1 >= 85% at 1% poison",
-      "rationale": "..." }
   ]
 }
 ```
 
 Two invariants: **every menu item carries `evidence`** (the papers it came from —
-the grounding guard drops anything unfaithful or unsupported), and **recipes may
-only use items that appear in the menus**.
+the grounding guard drops anything unfaithful or unsupported), and the card only
+ever contains what the gathered literature supports.
 
-## How it works
+---
 
-- **Sources** (`norm_cards/sources/`): default is **OpenAlex** (semantic search
-  unioned with topic-filtered lexical search). arXiv, Semantic Scholar, and
-  Google Scholar (SerpAPI) are opt-in via `--sources`.
-- **Vocabularies**: PwC tasks (`data/pwc_tasks_seed.json`) for the human-readable
-  subfield label; OpenAlex topics are resolved per claim at runtime via the
-  `text/topics` endpoint (full ~4,516-topic taxonomy).
-- **Full text** (`norm_cards/fulltext.py`): resolver chain arXiv → the record's
-  pdf_url → Unpaywall → Semantic Scholar; ~15/25 papers per bundle typically
-  resolve, the rest fall back to their abstract.
-- **Generation** (`norm_cards/normcard.py`): per-paper extraction on a cheap model
-  (parallel), per-subfield reduce on a strong model (canonicalize + subfield-filter
-  + attach evidence), then a separate recipe call over the finished menus.
+## Results & findings so far
 
-## Keys
+`results/norm_cards_hybrid/` holds the shared experiment artifacts — one folder per
+claim (`bundle.json`, `papers.md`, `norm_card.json`, `scify_proposer.json`) plus:
 
-Only `OPENAI_API_KEY` is required. OpenAlex/arXiv/Semantic Scholar work keyless
-(keys raise limits). The OpenAlex `text/topics` classification endpoint is metered
-(~$0.01/call) — see `.env.example`. Nothing is read at import time; missing
-optional keys just disable that source.
+- **`GRAND_REPORT_10claims.md`** — the headline baseline-vs-method comparison across
+  10 claims (6, 7, 9, 10, 11, 12, 21, 33, 36, 37) at gpt-5.5.
+- **`showcase_card_wins.md`** — the two clearest card-attributable wins (#9
+  system-ID error bounds, #21 HMM + DFA-constrained decoding), with menu provenance.
+- **`ground_truth_recipes.md`** — an independent expert decomposition of each claim
+  into the experiment set required to verify/refute it, to be used as the scoring
+  reference for the evaluation harness.
+
+**Headline result (n=1, temp=1):** at gpt-5.5 with SciFy's real flow, the card does
+**not** improve experiment *coverage or correctness* — the baseline is strong and
+never fabricates. The card's consistent effect is **methodological
+concreteness/grounding** (naming the subfield's specific, current tooling), and it
+is largest in **obscure fields** where parametric knowledge is thinnest (#9, #21).
+See the report for caveats; a higher-n re-run of #9/#21 is the recommended next step
+before any of this goes in a deck.
+
+---
+
+## Repo layout
+
+```
+norm_cards/
+  run.py            # stage 1: claim -> paper bundle  (CLI: python -m norm_cards.run)
+  classifier.py     #   claim -> subfields + claim_type
+  query_gen.py      #   subfields -> norm-defining search queries
+  collect.py        #   search + dedup + citation-velocity ranking
+  fulltext.py       #   PDF/full-text resolver chain (arXiv -> pdf_url -> Unpaywall -> S2)
+  sources/          #   OpenAlex (default), arXiv, Semantic Scholar, SerpAPI adapters
+  normcard.py       # stage 2: bundle -> norm_card.json  (map/reduce/recipe)
+  scify_proposer.py # stage 3: evaluation harness (baseline vs card ablation)
+  llm.py            #   litellm wrapper (temp/model handling)
+  config.py         #   defaults + key loading
+  data/             #   PwC task seeds, OpenAlex topic seeds
+  test_gather.py    #   keyless smoke test for the search/rank stages
+results/norm_cards_hybrid/  # shared bundles, cards, proposer outputs, reports
+```
+
+---
 
 ## Keyless smoke test
 
-`norm_cards/test_gather.py` exercises the search/rank stages with hand-authored
-classifications (no LLM key) on three sample claims:
+`test_gather.py` exercises the search/rank stages with hand-authored
+classifications (no LLM key) on sample claims:
 
 ```bash
 python -m norm_cards.test_gather --case 11   # empirical: detection robustness
 ```
+
+---
+
+## Next: automated evaluation harness (in progress)
+
+The current `scify_proposer.py` produces the baseline/method experiment sets; the
+next step is scoring them automatically against `ground_truth_recipes.md`
+(coverage, correctness, groundedness) so we can evaluate overall pipeline
+correctness at scale — letting the proposer generate more than 3 experiments and
+without the compute cap.

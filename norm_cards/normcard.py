@@ -181,22 +181,65 @@ def _reduce(per_paper: Dict[str, Dict], subfield: str, claim: str, model: str) -
 # --------------------------------------------------------------------------- #
 # recipes: compose runnable experiments from claim + finished menu
 # --------------------------------------------------------------------------- #
-_RECIPE_PROMPT = """You are composing the EXECUTABLE part of a scientific norm card. Using ONLY the
-menu below (introduce no datasets/models/metrics not in it), design 2-4 concrete
-experiment recipes a verification agent could RUN to test claims in subfield(s)
-{subfields}. Keep them representative of the subfield's standard tests, but the
-CLAIM shows the kind of assertion they must be able to check.
+_RECIPE_DISCIPLINE = """How to design the recipe SET (applies to every recipe):
+1. DECOMPOSE the claim into its dependency chain and cover every stage that
+   applies, in order:
+   - "gate": cheap prerequisite checks that can refute the claim outright
+     (e.g. if the claim needs adversarial metric >= X, clean performance >= X is
+     a prerequisite — attacks only degrade). Run these FIRST.
+   - "apparatus": anything the claim PRESUPPOSES but that must be BUILT and
+     VALIDATED before the headline test (a trained generator, a fitted
+     surrogate, a constructed poison set). Validation needs its own measurable
+     pass_condition: the apparatus must demonstrably be what the claim says it
+     is (e.g. an "illumination-consistent" generator must produce
+     illumination-like, structure-preserving perturbations — not arbitrary
+     noise).
+   - "headline": the direct test of the claim's assertion, enforcing EVERY
+     constraint the claim states (norm bounds, budgets, rates, splits,
+     resolutions). If a stated constraint is not enforced by the design, list
+     it in "constraints_not_enforced" rather than silently dropping it.
+   - "control": checks that the result is not an artifact AND attribute it to the
+     claim's specific mechanism: strength/robustness sweeps, random/weak-baseline
+     comparisons (the method must beat random), matched-budget comparisons, and —
+     crucially — an ABLATION that removes the claim's OWN mechanism (not merely a
+     comparison to a trivial alternative), so the effect is attributable to it.
+2. Every pass_condition must be a REAL, decisive gate tied to the claim's own
+   numeric thresholds — never "record/log the value". State the comparison,
+   the threshold, and what refutes.
+3. Order recipes so the cheapest potential refutation comes first; note
+   dependencies between recipes in "depends_on" (list of recipe goals).
+"""
+
+_RECIPE_PROMPT = """You are composing the EXECUTABLE part of a scientific norm card: design 3-6
+concrete experiment recipes a verification agent could RUN to verify or refute
+the CLAIM, for subfield(s) {subfields}.
 
 CLAIM: {claim}
 
-MENU (the only allowed building blocks):
+CLAIM ENTITIES (the specific models/datasets/metrics/thresholds the CLAIM names).
+Use these for the EXACT artifact under test — the model/dataset/metric the claim
+is actually about — even if it is newer than the literature and not in the menu:
+{entities}
+
+MENU (the field's standard datasets/models/metrics/protocols, grounded in the
+gathered papers). Use these for the standard BASELINES, benchmarks, metrics, and
+experimental protocol the field expects:
 {menu}
 
+""" + _RECIPE_DISCIPLINE + """
+Grounding rules:
+- When the CLAIM names a specific model/dataset/metric, use it (from CLAIM
+  ENTITIES) rather than a menu substitute.
+- Introduce nothing that is in NEITHER the claim entities NOR the menu.
+
 Return JSON {{"recipes":[
-  {{"goal":"what this establishes",
-    "dataset":"<from menu>","model":"<backbone from menu>",
-    "method_under_test":"<from menu>","attack_or_condition":"<from menu protocols>",
-    "metrics":["<from menu>"],"pass_condition":"concrete, measurable",
+  {{"stage":"gate|apparatus|headline|control",
+    "goal":"what this establishes",
+    "dataset":"<claim entity or menu>","model":"<claim entity or menu>",
+    "method_under_test":"<claim entity or menu>","attack_or_condition":"<from menu protocols>",
+    "metrics":["<claim entity or menu>"],"pass_condition":"concrete, decisive",
+    "constraints_not_enforced":["claim-stated constraints this recipe does not enforce"],
+    "depends_on":["goals of prerequisite recipes"],
     "rationale":"why this is the standard test"}}]}}"""
 
 
@@ -210,12 +253,25 @@ def _cards_text(cards: List[Dict]) -> str:
                        for c in cards)
 
 
-def _recipes(cards: List[Dict], subfields, claim: str, model: str) -> List[Dict]:
-    """Claim-level recipes composed across ALL the claim's per-subfield menus."""
+def _entities_text(entities: Dict) -> str:
+    entities = entities or {}
+    return "\n".join(f"{k}: {entities.get(k) or []}"
+                     for k in ("models", "datasets", "metrics", "thresholds"))
+
+
+def _recipes(cards: List[Dict], subfields, claim: str, entities: Dict,
+             model: str) -> List[Dict]:
+    """Claim-level recipes composed across the per-subfield menus AND the claim's
+    own extracted entities (so the exact model/dataset/metric the claim names is
+    used for the artifact under test, while the menu supplies field-standard
+    baselines/protocol/metrics)."""
     out = llm.complete_json(_RECIPE_PROMPT.format(
-        subfields=subfields, claim=claim[:400], menu=_cards_text(cards)), model=model)
-    # grounding name set = union of every item across every subfield card
+        subfields=subfields, claim=claim[:400], entities=_entities_text(entities),
+        menu=_cards_text(cards)), model=model)
+    # grounding set = every menu item across every card, PLUS the claim entities
     names = {_norm(it["name"]) for c in cards for k in MENU_KEYS for it in c["menu"][k]}
+    for k in ("models", "datasets", "metrics", "thresholds"):
+        names |= {_norm(str(e)) for e in ((entities or {}).get(k) or []) if _norm(str(e))}
 
     def grounded(v):
         x = _norm(v)
@@ -271,8 +327,9 @@ def generate_card(bundle: Dict, cache_dir: str, map_model: str = "gpt-5-mini",
             print(f"  [{sf}] " + ", ".join(f"{k}={len(menu[k])}" for k in MENU_KEYS)
                   + f"  guard={menu.get('_guard', {})}")
 
-    # Claim-level recipes composed across ALL the per-subfield menus.
-    recipes = _recipes(norm_cards, subfields, claim, recipe_model)
+    # Claim-level recipes composed across ALL the per-subfield menus + entities.
+    recipes = _recipes(norm_cards, subfields, claim, analysis.get("entities") or {},
+                       recipe_model)
     if progress:
         print(f"  recipes={len(recipes)}")
 
@@ -287,6 +344,36 @@ def generate_card(bundle: Dict, cache_dir: str, map_model: str = "gpt-5-mini",
         "norm_cards": norm_cards,
         "experiment_recipes": recipes,
     }
+
+
+_BASELINE_PROMPT = """Design 3-6 concrete experiment recipes a verification agent could RUN to verify
+or refute the CLAIM below. Use your own knowledge of standard practice for this
+kind of claim; NO papers or norm card are provided.
+
+CLAIM: {claim}
+
+CLAIM ENTITIES (models/datasets/metrics/thresholds named in the claim):
+{entities}
+
+""" + _RECIPE_DISCIPLINE + """
+Return JSON {{"recipes":[
+  {{"stage":"gate|apparatus|headline|control",
+    "goal":"what this establishes",
+    "dataset":"...","model":"...","method_under_test":"...",
+    "attack_or_condition":"...","metrics":["..."],
+    "pass_condition":"concrete, decisive",
+    "constraints_not_enforced":["claim-stated constraints this recipe does not enforce"],
+    "depends_on":["goals of prerequisite recipes"],
+    "rationale":"why this is the standard test"}}]}}"""
+
+
+def baseline_recipes(claim: str, entities: Dict, model: str = "gpt-5") -> List[Dict]:
+    """ABLATION: recipes from the claim + its entities ALONE, with no gathered
+    papers and no norm-card menu — the naive 'just ask the LLM' approach, to
+    measure what the full search + norm-card pipeline actually adds."""
+    out = llm.complete_json(_BASELINE_PROMPT.format(
+        claim=claim[:600], entities=_entities_text(entities)), model=model)
+    return out.get("recipes", [])
 
 
 def _main():

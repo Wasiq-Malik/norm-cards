@@ -1,0 +1,1423 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "6",
+  "problem_version": "1.0",
+  "domain": "",
+  "claim": "A transformer LM can be augmented with a \u201crisk\u2011attention\u201d module consisting of K additional attention heads and a learned risk summary token r that produces a bounded gating signal gt \\in [0,1] used to re-weight next\u2011token logits away from tokens predicted to increase policy\u2011violation risk, and for at least three model families this architectural change will reduce the measured per\u2011response policy\u2011violation rate by \u226550% while keeping aggregate capability metrics within 2% relative of the baseline on a specified benchmark suite (e.g., MMLU, GSM8K, and MT\u2011Bench) under the same decoding policy.",
+  "analysis": {
+    "subfields": [
+      "Safety and Grounding",
+      "Language Modeling",
+      "Mechanistic Interpretability"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T12026",
+      "T10181",
+      "T11689"
+    ],
+    "openalex_topic_names": [],
+    "claim_type": "empirical",
+    "temporal_mode": "static",
+    "entities": {
+      "models": [
+        "transformer LM"
+      ],
+      "datasets": [
+        "MMLU",
+        "GSM8K",
+        "MT-Bench"
+      ],
+      "metrics": [
+        "policy violation rate"
+      ],
+      "thresholds": [
+        "50% reduction",
+        "within 2%"
+      ]
+    },
+    "confidence": 0.0,
+    "method": "hand"
+  },
+  "queries": {
+    "survey": [
+      "survey of LLM safety guardrails preserving capability"
+    ],
+    "benchmark_dataset": [
+      "evaluating LLM capability with MMLU GSM8K MT-Bench",
+      "per-response policy violation rate benchmarks for LLMs"
+    ],
+    "canonical_method": [
+      "gating or extra attention heads to reweight next-token logits for safety",
+      "risk-aware decoding reducing unsafe outputs while preserving capability"
+    ],
+    "intersection": [
+      "architectural modification reducing policy violations without capability loss"
+    ]
+  },
+  "stats": {
+    "n_queries": 6,
+    "n_candidates": 89,
+    "n_selected": 25,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 16.1
+  },
+  "papers": [
+    {
+      "title": "A Survey of Large Language Models",
+      "abstract": "Abstract The rapid evolution of large language models (LLMs) has driven a transformative shift in artificial intelligence (AI), reshaping both research paradigms and practical applications. Distinguished from their predecessors by unprecedented scale and advanced capabilities, LLMs necessitate new frameworks for understanding their development, behavior, and societal impact. This survey systematically reviews recent advancements in LLM techniques across four key dimensions: (1) pre-training methodologies, which establish core model capabilities through large-scale self-supervised training, architectural innovations, and data curation strategies; (2) post-training techniques, including supervised fine-tuning and reinforcement learning, which adapt foundational models to downstream tasks and enhance their alignment and safety; (3) utilization strategies, such as in-context learning, prompt engineering, and agentic reasoning, that optimize real-world deployment and enable effective interaction with external environments; and (4) evaluation methods, encompassing benchmarks for key ability dimensions such as core language capabilities, reasoning, and safety, which support comprehensive and reliable assessment of model performance. Additionally, we identify critical research issues, including those concerning theoretical foundations, efficient scaling, alignment, and agentic capability, and highlight the open challenges they present. By synthesizing state-of-the-art insights and emerging trends, this survey aims to provide a systematic and comprehensive framework for understanding the trajectory, current limitations, and future directions of LLM progress.",
+      "authors": [
+        "Wayne Xin Zhao",
+        "Kun Zhou",
+        "Junyi Li",
+        "Tianyi Tang",
+        "Xiaolei Wang",
+        "Yupeng Hou",
+        "Yingqian Min",
+        "Beichen Zhang",
+        "Junjie Zhang",
+        "Zican Dong",
+        "Yifan Du",
+        "Yang Chen",
+        "Yushuo Chen",
+        "Zhipeng Chen",
+        "Jinhao Jiang",
+        "Ruiyang Ren",
+        "Yifan Li",
+        "Xinyu Tang",
+        "Zikang Liu",
+        "Peiyu Liu",
+        "Jian\u2010Yun Nie",
+        "Ji-Rong Wen",
+        "Ji-Rong Wen"
+      ],
+      "year": 2026,
+      "venue": "Frontiers of Computer Science",
+      "citations": 1410,
+      "url": "https://openalex.org/W4362515116",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11704-026-60308-3.pdf",
+      "doi": "10.1007/s11704-026-60308-3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Language model",
+        "Mainstream",
+        "Scale (ratio)",
+        "Scaling"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "architectural modification reducing policy violations without capability loss",
+        "per-response policy violation rate benchmarks for LLMs"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 241.73645,
+      "paper_type": "survey",
+      "score": 3.2688,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "A survey of safety and trustworthiness of large language models through the lens of verification and validation",
+      "abstract": "Abstract Large language models (LLMs) have exploded a new heatwave of AI for their ability to engage end-users in human-level conversations with detailed and articulate answers across many knowledge domains. In response to their fast adoption in many industrial applications, this survey concerns their safety and trustworthiness. First, we review known vulnerabilities and limitations of the LLMs, categorising them into inherent issues, attacks, and unintended bugs. Then, we consider if and how the Verification and Validation (V&amp;V) techniques, which have been widely developed for traditional software and deep learning models such as convolutional neural networks as independent processes to check the alignment of their implementations against the specifications, can be integrated and further extended throughout the lifecycle of the LLMs to provide rigorous analysis to the safety and trustworthiness of LLMs and their applications. Specifically, we consider four complementary techniques: falsification and evaluation, verification, runtime monitoring, and regulations and ethical use. In total, 370+ references are considered to support the quick understanding of the safety and trustworthiness issues from the perspective of V&amp;V. While intensive research has been conducted to identify the safety and trustworthiness issues, rigorous yet practical methods are called for to ensure the alignment of LLMs with safety and trustworthiness requirements.",
+      "authors": [
+        "Xiaowei Huang",
+        "Wenjie Ruan",
+        "Wei Huang",
+        "Gaojie Jin",
+        "Yi Dong",
+        "Changshun Wu",
+        "Saddek Bensalem",
+        "Ronghui Mu",
+        "Qi Yi",
+        "Xingyu Zhao",
+        "Kaiwen Cai",
+        "Yanghao Zhang",
+        "Sihao Wu",
+        "Peipei Xu",
+        "Dengyu Wu",
+        "Andr\u00e9 Freitas",
+        "Mustafa Mustafa"
+      ],
+      "year": 2024,
+      "venue": "Artificial Intelligence Review",
+      "citations": 112,
+      "url": "https://openalex.org/W4399750638",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10462-024-10824-0.pdf",
+      "doi": "10.1007/s10462-024-10824-0",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Trustworthiness",
+        "Risk analysis (engineering)",
+        "Implementation",
+        "Computer security",
+        "Unintended consequences"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10260",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 204.02803,
+      "paper_type": "survey",
+      "score": 3.145,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Survey of Vulnerabilities in Large Language Models Revealed by Adversarial Attacks",
+      "abstract": "Large Language Models (LLMs) are swiftly advancing in architecture and capability, and as they integrate more deeply into complex systems, the urgency to scrutinize their security properties grows. This paper surveys research in the emerging interdisciplinary field of adversarial attacks on LLMs, a subfield of trustworthy ML, combining the perspectives of Natural Language Processing and Security. Prior work has shown that even safety-aligned LLMs (via instruction tuning and reinforcement learning through human feedback) can be susceptible to adversarial attacks, which exploit weaknesses and mislead AI systems, as evidenced by the prevalence of `jailbreak' attacks on models like ChatGPT and Bard. In this survey, we first provide an overview of large language models, describe their safety alignment, and categorize existing research based on various learning structures: textual-only attacks, multi-modal attacks, and additional attack methods specifically targeting complex systems, such as federated learning or multi-agent systems. We also offer comprehensive remarks on works that focus on the fundamental sources of vulnerabilities and potential defenses. To make this field more accessible to newcomers, we present a systematic review of existing works, a structured typology of adversarial attack concepts, and additional resources, including slides for presentations on related topics at the 62nd Annual Meeting of the Association for Computational Linguistics (ACL'24).",
+      "authors": [
+        "Erfan Shayegani",
+        "Md Abdullah Al Mamun",
+        "Yu Fu",
+        "Pedram Zaree",
+        "Yue Dong",
+        "Nael Abu\u2010Ghazaleh"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 37,
+      "url": "https://openalex.org/W4387806231",
+      "pdf_url": "https://arxiv.org/pdf/2310.10844",
+      "doi": "10.48550/arxiv.2310.10844",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Exploit",
+        "Computer science",
+        "Typology",
+        "Field (mathematics)",
+        "Categorization"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10028",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 96.64297,
+      "paper_type": "survey",
+      "score": 3.0156,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Can Large Language Models Be an Alternative to Human Evaluations?",
+      "abstract": "Human evaluation is indispensable and inevitable for assessing the quality of texts generated by machine learning models or written by humans. However, human evaluation is very difficult to reproduce and its quality is notoriously unstable, hindering fair comparisons among different natural language processing (NLP) models and algorithms.Recently, large language models (LLMs) have demonstrated exceptional performance on unseen tasks when only the task instructions are provided.In this paper, we explore if such an ability of the LLMs can be used as an alternative to human evaluation.We present the LLMs with the exact same instructions, samples to be evaluated, and questions used to conduct human evaluation, and then ask the LLMs to generate responses to those questions; we dub this LLM evaluation.We use human evaluation and LLM evaluation to evaluate the texts in two NLP tasks: open-ended story generation and adversarial attacks.We show that the result of LLM evaluation is consistent with the results obtained by expert human evaluation: the texts rated higher by human experts are also rated higher by the LLMs.We also find that the results of LLM evaluation are stable over different formatting of the task instructions and the sampling algorithm used to generate the answer.We are the first to show the potential of using LLMs to assess the quality of texts and discuss the limitations and ethical considerations of LLM evaluation.",
+      "authors": [
+        "Cheng-Han Chiang",
+        "Hung-yi Lee"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 264,
+      "url": "https://openalex.org/W4385571232",
+      "pdf_url": "https://aclanthology.org/2023.acl-long.870.pdf",
+      "doi": "10.18653/v1/2023.acl-long.870",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Task (project management)",
+        "Computer science",
+        "Quality (philosophy)",
+        "Adversarial system",
+        "Artificial intelligence",
+        "Natural language processing"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 129.6154,
+      "paper_type": "benchmark",
+      "score": 2.8449,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Personal LLM Agents: Insights and Survey about the Capability, Efficiency and Security",
+      "abstract": "Since the advent of personal computing devices, intelligent personal assistants (IPAs) have been one of the key technologies that researchers and engineers have focused on, aiming to help users efficiently obtain information and execute tasks, and provide users with more intelligent, convenient, and rich interaction experiences. With the development of smartphones and IoT, computing and sensing devices have become ubiquitous, greatly expanding the boundaries of IPAs. However, due to the lack of capabilities such as user intent understanding, task planning, tool using, and personal data management etc., existing IPAs still have limited practicality and scalability. Recently, the emergence of foundation models, represented by large language models (LLMs), brings new opportunities for the development of IPAs. With the powerful semantic understanding and reasoning capabilities, LLM can enable intelligent agents to solve complex problems autonomously. In this paper, we focus on Personal LLM Agents, which are LLM-based agents that are deeply integrated with personal data and personal devices and used for personal assistance. We envision that Personal LLM Agents will become a major software paradigm for end-users in the upcoming era. To realize this vision, we take the first step to discuss several important questions about Personal LLM Agents, including their architecture, capability, efficiency and security. We start by summarizing the key components and design choices in the architecture of Personal LLM Agents, followed by an in-depth analysis of the opinions collected from domain experts. Next, we discuss several key challenges to achieve intelligent, efficient and secure Personal LLM Agents, followed by a comprehensive survey of representative solutions to address these challenges.",
+      "authors": [
+        "Yuanchun Li",
+        "Hao Wen",
+        "Weijun Wang",
+        "Xiangyu Li",
+        "Yi-Zhen Yuan",
+        "Guohong Liu",
+        "Jiacheng Liu",
+        "Wenxing Xu",
+        "Xiang Wang",
+        "Yi Sun",
+        "Rui Kong",
+        "Yile Wang",
+        "Hanfei Geng",
+        "Jian Luan",
+        "Xuefeng Jin",
+        "Zilong Ye",
+        "Guanjing Xiong",
+        "Fan Zhang",
+        "Xiang Li",
+        "Mengwei Xu",
+        "Zhijun Li",
+        "Peng Li",
+        "Yang Liu",
+        "Ya-Qin Zhang",
+        "Yunxin Liu"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 30,
+      "url": "https://openalex.org/W4390832893",
+      "pdf_url": "https://arxiv.org/pdf/2401.05459",
+      "doi": "10.48550/arxiv.2401.05459",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Domain (mathematical analysis)",
+        "Key (lock)",
+        "Personally identifiable information",
+        "Scalability",
+        "Task (project management)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs",
+        "risk-aware decoding reducing unsafe outputs while preserving capability"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 81.50583,
+      "paper_type": "survey",
+      "score": 2.819,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Use of LLMs for Illicit Purposes: Threats, Prevention Measures, and Vulnerabilities",
+      "abstract": "Spurred by the recent rapid increase in the development and distribution of large language models (LLMs) across industry and academia, much recent work has drawn attention to safety- and security-related threats and vulnerabilities of LLMs, including in the context of potentially criminal activities. Specifically, it has been shown that LLMs can be misused for fraud, impersonation, and the generation of malware; while other authors have considered the more general problem of AI alignment. It is important that developers and practitioners alike are aware of security-related problems with such models. In this paper, we provide an overview of existing - predominantly scientific - efforts on identifying and mitigating threats and vulnerabilities arising from LLMs. We present a taxonomy describing the relationship between threats caused by the generative capabilities of LLMs, prevention measures intended to address such threats, and vulnerabilities arising from imperfect prevention measures. With our work, we hope to raise awareness of the limitations of LLMs in light of such security concerns, among both experienced developers and novel users of such technologies.",
+      "authors": [
+        "Maximilian Mozes",
+        "Xuanli He",
+        "Bennett Kleinberg",
+        "Lewis D. Griffin"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 29,
+      "url": "https://openalex.org/W4386185470",
+      "pdf_url": "https://arxiv.org/pdf/2308.12833",
+      "doi": "10.48550/arxiv.2308.12833",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Business",
+        "Computer science",
+        "Computer security",
+        "Context (archaeology)",
+        "Internet privacy",
+        "Work (physics)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs",
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 93.08434,
+      "paper_type": "method",
+      "score": 2.7532,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Challenges and Applications of Large Language Models",
+      "abstract": "Large Language Models (LLMs) went from non-existent to ubiquitous in the machine learning discourse within a few years. Due to the fast pace of the field, it is difficult to identify the remaining challenges and already fruitful application areas. In this paper, we aim to establish a systematic set of open problems and application successes so that ML researchers can comprehend the field's current state more quickly and become productive.",
+      "authors": [
+        "Jean Kaddour",
+        "Joshua Harris",
+        "Maximilian Mozes",
+        "Herbie Bradley",
+        "Roberta R\u0103ileanu",
+        "Robert McHardy"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 179,
+      "url": "https://openalex.org/W4384920109",
+      "pdf_url": "https://arxiv.org/pdf/2307.10169",
+      "doi": "10.48550/arxiv.2307.10169",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Data science",
+        "Field (mathematics)",
+        "Pace",
+        "Set (abstract data type)",
+        "State (computer science)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "architectural modification reducing policy violations without capability loss",
+        "evaluating LLM capability with MMLU GSM8K MT-Bench",
+        "risk-aware decoding reducing unsafe outputs while preserving capability"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "canonical_method",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 86.58513,
+      "paper_type": "method",
+      "score": 2.7268,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "The Prompt Report: A Systematic Survey of Prompt Engineering Techniques",
+      "abstract": "Generative Artificial Intelligence (GenAI) systems are increasingly being deployed across diverse industries and research domains. Developers and end-users interact with these systems through the use of prompting and prompt engineering. Although prompt engineering is a widely adopted and extensively researched area, it suffers from conflicting terminology and a fragmented ontological understanding of what constitutes an effective prompt due to its relatively recent emergence. We establish a structured understanding of prompt engineering by assembling a taxonomy of prompting techniques and analyzing their applications. We present a detailed vocabulary of 33 vocabulary terms, a taxonomy of 58 LLM prompting techniques, and 40 techniques for other modalities. Additionally, we provide best practices and guidelines for prompt engineering, including advice for prompting state-of-the-art (SOTA) LLMs such as ChatGPT. We further present a meta-analysis of the entire literature on natural language prefix-prompting. As a culmination of these efforts, this paper presents the most comprehensive survey on prompt engineering to date.",
+      "authors": [
+        "Sander Schulhoff",
+        "Michael Ilie",
+        "Nishant Balepur",
+        "Konstantine Kahadze",
+        "Amanda Liu",
+        "Chenglei Si",
+        "Y.P. Li",
+        "Aayush Gupta",
+        "HyoJung Han",
+        "Sevien Schulhoff",
+        "Pranav Sandeep Dulepet",
+        "Saurav Vidyadhara",
+        "Dayeon Ki",
+        "Sweta Agrawal",
+        "Chau Pham",
+        "Gerson C. Kroiz",
+        "F. Li",
+        "Hudson Tao",
+        "Ashay Srivastava",
+        "Hevander Da Costa",
+        "Saloni Gupta",
+        "Megan L. Rogers",
+        "Inna Goncearenco",
+        "Giuseppe Sarli",
+        "Igor Galynker"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 89,
+      "url": "https://openalex.org/W4399597451",
+      "pdf_url": "https://arxiv.org/pdf/2406.06608",
+      "doi": "10.48550/arxiv.2406.06608",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Psychology"
+      ],
+      "topic_ids": [
+        "T11636",
+        "T10028",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 118.3633,
+      "paper_type": "survey",
+      "score": 2.7227,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Safeguarding large language models: a survey",
+      "abstract": "In the burgeoning field of Large Language Models (LLMs), developing a robust safety mechanism, colloquially known as \"safeguards\" or \"guardrails\", has become imperative to ensure the ethical use of LLMs within prescribed boundaries. This article provides a systematic literature review on the current status of this critical mechanism. It discusses its major challenges and how it can be enhanced into a comprehensive mechanism dealing with ethical issues in various contexts. First, the paper elucidates the current landscape of safeguarding mechanisms that major LLM service providers and the open-source community employ. This is followed by the techniques to evaluate, analyze, and enhance some (un)desirable properties that a guardrail might want to enforce, such as hallucinations, fairness, privacy, and so on. Based on them, we review techniques to circumvent these controls (i.e., attacks), to defend the attacks, and to reinforce the guardrails. While the techniques mentioned above represent the current status and the active research trends, we also discuss several challenges that cannot be easily dealt with by the methods and present our vision on how to implement a comprehensive guardrail through the full consideration of multi-disciplinary approach, neural-symbolic method, and systems development lifecycle.",
+      "authors": [
+        "Yi Dong",
+        "Ronghui Mu",
+        "Yanghao Zhang",
+        "Siqi Sun",
+        "Tianle Zhang",
+        "Changshun Wu",
+        "Gaojie Jin",
+        "Yi Qi",
+        "Jinwei Hu",
+        "Jie Meng",
+        "Saddek Bensalem",
+        "Xiaowei Huang"
+      ],
+      "year": 2025,
+      "venue": "Artificial Intelligence Review",
+      "citations": 48,
+      "url": "https://openalex.org/W4415271252",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10462-025-11389-2.pdf",
+      "doi": "10.1007/s10462-025-11389-2",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Safeguarding",
+        "Engineering ethics",
+        "Field (mathematics)",
+        "Computer science",
+        "Service (business)",
+        "Risk analysis (engineering)"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T12262",
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 142.25465,
+      "paper_type": "survey",
+      "score": 2.6924,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Locate, Steer, and Improve: A Practical Survey of Actionable Mechanistic Interpretability in Large Language Models",
+      "abstract": "Mechanistic Interpretability (MI) has emerged as a vital approach to demystify the opaque decision-making of Large Language Models (LLMs). However, existing reviews primarily treat MI as an observational science, summarizing analytical insights while lacking a systematic framework for actionable intervention. To bridge this gap, we present a practical survey structured around the pipeline: \"Locate, Steer, and Improve.\" We formally categorize Localizing (diagnosis) and Steering (intervention) methods based on specific Interpretable Objects to establish a rigorous intervention protocol. Furthermore, we demonstrate how this framework enables tangible improvements in Alignment, Capability, and Efficiency, effectively operationalizing MI as an actionable methodology for model optimization. The curated paper list of this work is available at https://github.com/rattlesnakey/Awesome-Actionable-MI-Survey.",
+      "authors": [
+        "Hengyuan Zhang",
+        "Zhihao Zhang",
+        "Mingyang Wang",
+        "Zunhai Su",
+        "Yiwei Wang",
+        "Qianli Wang",
+        "Shuzhou Yuan",
+        "Ercong Nie",
+        "Xufeng Duan",
+        "Han, Feijiang",
+        "Zeping Yu",
+        "Chenming Shang",
+        "Shang, Chenming",
+        "Liang, Xiao",
+        "Xiong, Jing",
+        "Shen, Hui",
+        "Tao, Chaofan",
+        "Liu, Zhengwu",
+        "Senjie Jin",
+        "Dongdong Zhang",
+        "Zhang, Dongdong",
+        "Ananiadou, Sophia",
+        "Gui, Tao",
+        "Hayden Kwok-Hay So",
+        "Hinrich Sch\u00fctze"
+      ],
+      "year": 2026,
+      "venue": "ArXiv.org",
+      "citations": 0,
+      "url": "https://openalex.org/W7125350820",
+      "pdf_url": "https://arxiv.org/pdf/2601.14004",
+      "doi": "",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Computer science",
+        "Operationalization",
+        "Categorization",
+        "Bridge (graph theory)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T11636",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "gating or extra attention heads to reweight next-token logits for safety"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 1.904727,
+      "paper_type": "survey",
+      "score": 2.65,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Mechanistic Interpretability"
+        ]
+      }
+    },
+    {
+      "title": "A Review of Trustworthy and Explainable Artificial Intelligence (XAI)",
+      "abstract": "The advancement of Artificial Intelligence (AI) technology has accelerated the development of several systems that are elicited from it. This boom has made the systems vulnerable to security attacks and allows considerable bias in order to handle errors in the system. This puts humans at risk and leaves machines, robots, and data defenseless. Trustworthy AI (TAI) guarantees human value and the environment. In this paper, we present a comprehensive review of the state-of-the-art on how to build a Trustworthy and eXplainable AI, taking into account that AI is a black box with little insight into its underlying structure. The paper also discusses various TAI components, their corresponding bias, and inclinations that make the system unreliable. The study also discusses the necessity for TAI in many verticals, including banking, healthcare, autonomous system, and IoT. We unite the ways of building trust in all fragmented areas of data protection, pricing, expense, reliability, assurance, and decision-making processes utilizing TAI in several diverse industries and to differing degrees. It also emphasizes the importance of transparent and post hoc explanation models in the construction of an eXplainable AI and lists the potential drawbacks and pitfalls of building eXplainable AI. Finally, the policies for developing TAI in the autonomous vehicle construction sectors are thoroughly examined and eclectic ways of building a reliable, interpretable, eXplainable, and Trustworthy AI systems are explained to guarantee safe autonomous vehicle systems.",
+      "authors": [
+        "Vinay Chamola",
+        "Vikas Hassija",
+        "A. Razia Sulthana",
+        "Debshishu Ghosh",
+        "Divyansh Dhingra",
+        "Biplab Sikdar"
+      ],
+      "year": 2023,
+      "venue": "IEEE Access",
+      "citations": 285,
+      "url": "https://openalex.org/W4385059984",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/10188681.pdf",
+      "doi": "10.1109/access.2023.3294569",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Trustworthiness",
+        "Boom",
+        "Order (exchange)",
+        "Computer security",
+        "Robot"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T11689",
+        "T11636"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "architectural modification reducing policy violations without capability loss"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 42.60711,
+      "paper_type": "survey",
+      "score": 2.6124,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Mechanistic Interpretability"
+        ]
+      }
+    },
+    {
+      "title": "Instruction Tuning for Large Language Models: A Survey",
+      "abstract": "This paper surveys research works in the quickly advancing field of instruction tuning (IT), which can also be referred to as supervised fine-tuning (SFT)\\footnote{In this paper, unless specified otherwise, supervised fine-tuning (SFT) and instruction tuning (IT) are used interchangeably.}, a crucial technique to enhance the capabilities and controllability of large language models (LLMs). Instruction tuning refers to the process of further training LLMs on a dataset consisting of \\textsc{(instruction, output)} pairs in a supervised fashion, which bridges the gap between the next-word prediction objective of LLMs and the users' objective of having LLMs adhere to human instructions. In this work, we make a systematic review of the literature, including the general methodology of SFT, the construction of SFT datasets, the training of SFT models, and applications to different modalities, domains and application, along with analysis on aspects that influence the outcome of SFT (e.g., generation of instruction outputs, size of the instruction dataset, etc). We also review the potential pitfalls of SFT along with criticism against it, along with efforts pointing out current deficiencies of existing strategies and suggest some avenues for fruitful research. Project Page: github.com/xiaoya-li/Instruction-Tuning-Survey",
+      "authors": [
+        "Shengyu Zhang",
+        "Linfeng Dong",
+        "Xiaoya Li",
+        "Sen Zhang",
+        "Xiaofei Sun",
+        "Shuhe Wang",
+        "Jiwei Li",
+        "Runyi Hu",
+        "Tianwei Zhang",
+        "Fei Wu",
+        "Guoyin Wang"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 98,
+      "url": "https://openalex.org/W4386081793",
+      "pdf_url": "https://arxiv.org/pdf/2308.10792",
+      "doi": "10.48550/arxiv.2308.10792",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Controllability",
+        "Modalities",
+        "Process (computing)",
+        "Field (mathematics)",
+        "Work (physics)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "evaluating LLM capability with MMLU GSM8K MT-Bench"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 85.39305,
+      "paper_type": "survey",
+      "score": 2.5083,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Evaluating Large Language Models: A Comprehensive Survey",
+      "abstract": "Large language models (LLMs) have demonstrated remarkable capabilities across a broad spectrum of tasks. They have attracted significant attention and been deployed in numerous downstream applications. Nevertheless, akin to a double-edged sword, LLMs also present potential risks. They could suffer from private data leaks or yield inappropriate, harmful, or misleading content. Additionally, the rapid progress of LLMs raises concerns about the potential emergence of superintelligent systems without adequate safeguards. To effectively capitalize on LLM capacities as well as ensure their safe and beneficial development, it is critical to conduct a rigorous and comprehensive evaluation of LLMs. This survey endeavors to offer a panoramic perspective on the evaluation of LLMs. We categorize the evaluation of LLMs into three major groups: knowledge and capability evaluation, alignment evaluation and safety evaluation. In addition to the comprehensive review on the evaluation methodologies and benchmarks on these three aspects, we collate a compendium of evaluations pertaining to LLMs' performance in specialized domains, and discuss the construction of comprehensive evaluation platforms that cover LLM evaluations on capabilities, alignment, safety, and applicability. We hope that this comprehensive overview will stimulate further research interests in the evaluation of LLMs, with the ultimate goal of making evaluation serve as a cornerstone in guiding the responsible development of LLMs. We envision that this will channel their evolution into a direction that maximizes societal benefit while minimizing potential risks. A curated list of related papers has been publicly available at https://github.com/tjunlp-lab/Awesome-LLMs-Evaluation-Papers.",
+      "authors": [
+        "Zishan Guo",
+        "Renren Jin",
+        "Chuang LIU",
+        "Yufei Huang",
+        "Dan Shi",
+        "Supryadi",
+        "Linhao Yu",
+        "Yan Liu",
+        "Jiaxuan Li",
+        "Bojian Xiong",
+        "Deyi Xiong"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 61,
+      "url": "https://openalex.org/W4388184238",
+      "pdf_url": "https://arxiv.org/pdf/2310.19736",
+      "doi": "10.48550/arxiv.2310.19736",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Compendium",
+        "SWORD",
+        "Risk analysis (engineering)",
+        "Computer science",
+        "Business",
+        "Geography"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T11636",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "evaluating LLM capability with MMLU GSM8K MT-Bench"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 122.035736,
+      "paper_type": "survey",
+      "score": 2.4627,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "LLM-Rubric: A Multidimensional, Calibrated Approach to Automated Evaluation of Natural Language Texts",
+      "abstract": "This paper introduces a framework for the automated evaluation of natural language texts.A manually constructed rubric describes how to assess multiple dimensions of interest.To evaluate a text, a large language model (LLM) is prompted with each rubric question and produces a distribution over potential responses.The LLM predictions often fail to agree well with human judges-indeed, the humans do not fully agree with one another.However, the multiple LLM distributions can be combined to predict each human judge's annotations on all questions, including a summary question that assesses overall quality or relevance.LLM-RUBRIC accomplishes this by training a small feed-forward neural network that includes both judge-specific and judge-independent parameters.When evaluating dialogue systems in a human-AI information-seeking task, we find that LLM-RUBRIC with 9 questions (assessing dimensions such as naturalness, conciseness, and citation quality) predicts human judges' assessment of overall user satisfaction, on a scale of 1-4, with RMS error 0.5, a 2 mprovement over the uncalibrated baseline.",
+      "authors": [
+        "Helia Hashemi",
+        "Jason Eisner",
+        "Corby Rosset",
+        "Benjamin Van Durme",
+        "Chris Kedzie"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 36,
+      "url": "https://openalex.org/W4402671506",
+      "pdf_url": "https://aclanthology.org/2024.acl-long.745.pdf",
+      "doi": "10.18653/v1/2024.acl-long.745",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Rubric",
+        "Computer science",
+        "Natural language processing",
+        "Natural language",
+        "Natural (archaeology)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 86.31106,
+      "paper_type": "benchmark",
+      "score": 2.2761,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "SALAD-Bench: A Hierarchical and Comprehensive Safety Benchmark for Large Language Models",
+      "abstract": "In the rapidly evolving landscape of Large Language Models (LLMs), ensuring robust safety measures is paramount.To meet this crucial need, we propose SALAD-Bench, a safety benchmark specifically designed for evaluating LLMs, attack, and defense methods.Distinguished by its breadth, SALAD-Bench transcends conventional benchmarks through its large scale, rich diversity, intricate taxonomy spanning three levels, and versatile functionalities.SALAD-Bench is crafted with a meticulous array of questions, from standard queries to complex ones enriched with attack, defense modifications and multiple-choice.To effectively manage the inherent complexity, we introduce an innovative evaluators: the LLMbased MD-Judge for QA pairs with a particular focus on attack-enhanced queries, ensuring a seamless, and reliable evaluation.Above components extend SALAD-Bench from standard LLM safety evaluation to both LLM attack and defense methods evaluation, ensuring the joint-purpose utility.Our extensive experiments shed light on the resilience of LLMs against emerging threats and the efficacy of contemporary defense tactics.Data and evaluator are released under https://github.com/ OpenSafetyLab/SALAD-BENCH. Warning: this paper includes examples that may be offensive or harmful.",
+      "authors": [
+        "Lijun Li",
+        "Bowen Dong",
+        "Ruohui Wang",
+        "Xuhao Hu",
+        "Wangmeng Zuo",
+        "Dahua Lin",
+        "Yu Qiao",
+        "Jing Shao"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 26,
+      "url": "https://openalex.org/W4402670748",
+      "pdf_url": "https://aclanthology.org/2024.findings-acl.235.pdf",
+      "doi": "10.18653/v1/2024.findings-acl.235",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Computer science",
+        "Hierarchical database model",
+        "Artificial intelligence",
+        "Natural language processing",
+        "Data mining"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 80.98196,
+      "paper_type": "benchmark",
+      "score": 2.2458,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Explainable Artificial Intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI",
+      "abstract": "",
+      "authors": [
+        "Alejandro Barredo Arrieta",
+        "Natalia D\u00edaz-Rodr\u00edguez",
+        "Javier Del Ser",
+        "Adrien Bennetot",
+        "Siham Tabik",
+        "Alberto Barbado",
+        "Salvador Garc\u00eda",
+        "Sergio Gil-L\u00f3pez",
+        "Daniel Molina",
+        "Richard Benjamins",
+        "Raja Chatila",
+        "Francisco Herrera"
+      ],
+      "year": 2019,
+      "venue": "Information Fusion",
+      "citations": 9046,
+      "url": "https://openalex.org/W2981731882",
+      "pdf_url": "https://arxiv.org/pdf/1910.10045",
+      "doi": "10.1016/j.inffus.2019.12.012",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Artificial intelligence",
+        "Taxonomy (biology)",
+        "Field (mathematics)",
+        "Software deployment",
+        "Data science"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T11689",
+        "T11636"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "architectural modification reducing policy violations without capability loss"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 237.77405,
+      "paper_type": "method",
+      "score": 2.24,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Mechanistic Interpretability"
+        ]
+      }
+    },
+    {
+      "title": "A Survey on ChatGPT: AI\u2013Generated Contents, Challenges, and Solutions",
+      "abstract": "With the widespread use of large artificial intelligence (AI) models such as ChatGPT, AI-generated content (AIGC) has garnered increasing attention and is leading a paradigm shift in content creation and knowledge representation. AIGC uses generative large AI algorithms to assist or replace humans in creating massive, high-quality, and human-like content at a faster pace and lower cost, based on user-provided prompts. Despite the recent significant progress in AIGC, security, privacy, ethical, and legal challenges still need to be addressed. This paper presents an in-depth survey of working principles, security and privacy threats, state-of-the-art solutions, and future challenges of the AIGC paradigm. Specifically, we first explore the enabling technologies, general architecture of AIGC, and discuss its working modes and key characteristics. Then, we investigate the taxonomy of security and privacy threats to AIGC and highlight the ethical and societal implications of GPT and AIGC technologies. Furthermore, we review the state-of-the-art AIGC watermarking approaches for regulatable AIGC paradigms regarding the AIGC model and its produced content. Finally, we identify future challenges and open research directions related to AIGC.",
+      "authors": [
+        "Yuntao Wang",
+        "Yanghe Pan",
+        "Miao Yan",
+        "Zhou Su",
+        "Tom H. Luan"
+      ],
+      "year": 2023,
+      "venue": "IEEE Open Journal of the Computer Society",
+      "citations": 327,
+      "url": "https://openalex.org/W4385469325",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/8782664/9024218/10221755.pdf",
+      "doi": "10.1109/ojcs.2023.3300321",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Pace",
+        "Computer science",
+        "Key (lock)",
+        "Data science",
+        "Generative grammar",
+        "Best practice"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10764",
+        "T11636"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "architectural modification reducing policy violations without capability loss"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 54.724922,
+      "paper_type": "survey",
+      "score": 2.226,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "MrGuard: A Multilingual Reasoning Guardrail for Universal LLM Safety",
+      "abstract": "Large Language Models (LLMs) are susceptible to adversarial attacks such as jailbreaking, which can elicit harmful or unsafe behaviors.This vulnerability is exacerbated in multilingual settings, where multilingual safetyaligned data is often limited.Thus, developing a guardrail capable of detecting and filtering unsafe content across diverse languages is critical for deploying LLMs in real-world applications.In this work, we introduce a multilingual guardrail with reasoning for prompt classification.Our method consists of: (1) synthetic multilingual data generation incorporating culturally and linguistically nuanced variants, (2) supervised fine-tuning, and (3) a curriculum-based Group Relative Policy Optimization (GRPO) framework that further improves performance.Experimental results demonstrate that our multilingual guardrail, Mr-Guard, consistently outperforms recent baselines across both in-domain and out-of-domain languages by more than 15%.We also evaluate MrGuard's robustness to multilingual variations, such as code-switching and low-resource language distractors in the prompt, and demonstrate that it preserves safety judgments under these challenging conditions.The multilingual reasoning capability of our guardrail enables it to generate explanations, which are particularly useful for understanding languagespecific risks and ambiguities in multilingual content moderation.Warning: This paper contains potentially harmful examples.",
+      "authors": [
+        "Yahan Yang",
+        "Soham Dan",
+        "Shuo Li",
+        "Dan Roth",
+        "Insup Lee"
+      ],
+      "year": 2025,
+      "venue": "",
+      "citations": 1,
+      "url": "https://openalex.org/W4416035657",
+      "pdf_url": "https://aclanthology.org/2025.emnlp-main.1392.pdf",
+      "doi": "10.18653/v1/2025.emnlp-main.1392",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Linguistics",
+        "Action (physics)",
+        "Artificial intelligence",
+        "Natural language processing",
+        "Engineering"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10181",
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.90522766,
+      "paper_type": "method",
+      "score": 2.1544,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+      "abstract": "The misuse of large language models (LLMs) has drawn significant attention from the general public and LLM vendors. One particular type of adversarial prompt, known as jailbreak prompt, has emerged as the main attack vector to bypass the safeguards and elicit harmful content from LLMs. In this paper, employing our new framework JailbreakHub, we conduct a comprehensive analysis of 1,405 jailbreak prompts spanning from December 2022 to December 2023. We identify 131 jailbreak communities and discover unique characteristics of jailbreak prompts and their major attack strategies, such as prompt injection and privilege escalation. We also observe that jailbreak prompts increasingly shift from online Web communities to prompt-aggregation websites and 28 user accounts have consistently optimized jailbreak prompts over 100 days. To assess the potential harm caused by jailbreak prompts, we create a question set comprising 107,250 samples across 13 forbidden scenarios. Leveraging this dataset, our experiments on six popular LLMs show that their safeguards cannot adequately defend jailbreak prompts in all scenarios. Particularly, we identify five highly effective jailbreak prompts that achieve 0.95 attack success rates on ChatGPT (GPT-3.5) and GPT-4, and the earliest one has persisted online for over 240 days. We hope that our study can facilitate the research community and LLM vendors in promoting safer and regulated LLMs.",
+      "authors": [
+        "Xinyue Shen",
+        "Zeyuan Chen",
+        "Michael Backes",
+        "Yun Shen",
+        "Yang Zhang"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 176,
+      "url": "https://openalex.org/W4405181600",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3658644.3670388",
+      "doi": "10.1145/3658644.3670388",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Harm",
+        "Set (abstract data type)",
+        "Adversarial system",
+        "Privilege (computing)",
+        "Computer science",
+        "SAFER"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T11689",
+        "T12262"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 94.58736,
+      "paper_type": "method",
+      "score": 2.1492,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Constructing Domain-Specific Evaluation Sets for LLM-as-a-judge",
+      "abstract": "Ravi Shanker Raju, Swayambhoo Jain, Bo Li, Jonathan Lingjie Li, Urmish Thakker. Proceedings of the 1st Workshop on Customizable NLP: Progress and Challenges in Customizing NLP for a Domain, Application, Group, or Individual (CustomNLP4U). 2024.",
+      "authors": [
+        "Ravi Raju",
+        "Swayambhoo Jain",
+        "Bo Li",
+        "Jonathan Lingjie Li",
+        "Urmish Thakker"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 6,
+      "url": "https://openalex.org/W4404783885",
+      "pdf_url": "https://aclanthology.org/2024.customnlp4u-1.14.pdf",
+      "doi": "10.18653/v1/2024.customnlp4u-1.14",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Domain (mathematical analysis)",
+        "Mathematics",
+        "Mathematical analysis"
+      ],
+      "topic_ids": [
+        "T13643",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "evaluating LLM capability with MMLU GSM8K MT-Bench"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 75.604805,
+      "paper_type": "benchmark",
+      "score": 2.1209,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Survey of Cultural Awareness in Language Models: Text and Beyond",
+      "abstract": "Abstract Large-scale deployment of large language models (LLMs) in various applications, such as chatbots and virtual assistants, requires LLMs to be culturally sensitive to the user to ensure inclusivity. Culture has been widely studied in psychology and anthropology, and there has been a recent surge in research on making LLMs more culturally inclusive, going beyond multilinguality and building on findings from psychology and anthropology. In this article, we survey efforts towards incorporating cultural awareness into text-based and multimodal LLMs. We start by defining cultural awareness in LLMs, taking definitions of culture from the anthropology and psychology literature as a point of departure. We then examine methodologies adopted for creating cross-cultural datasets, strategies for cultural inclusion in downstream tasks, and methodologies that have been used for benchmarking cultural awareness in LLMs. Further, we discuss the ethical implications of cultural alignment, the role of human\u2013computer interaction in driving cultural inclusion in LLMs, and the role of cultural alignment in driving social science research. We finally provide pointers to future research based on our findings about gaps in the literature.1",
+      "authors": [
+        "Siddhesh Pawar",
+        "Junyeong Park",
+        "Jiho Jin",
+        "Arnav Arora",
+        "Junho Myung",
+        "Srishti Yadav",
+        "Faiz Ghifari Haznitrama",
+        "Inhwa Song",
+        "Alice Oh",
+        "Isabelle Augenstein"
+      ],
+      "year": 2025,
+      "venue": "Computational Linguistics",
+      "citations": 23,
+      "url": "https://openalex.org/W4410357609",
+      "pdf_url": "https://direct.mit.edu/coli/article-pdf/doi/10.1162/COLI.a.14/2523159/coli.a.14.pdf",
+      "doi": "10.1162/coli.a.14",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Linguistics",
+        "Natural language processing",
+        "Philosophy"
+      ],
+      "topic_ids": [
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "risk-aware decoding reducing unsafe outputs while preserving capability"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 55.17335,
+      "paper_type": "survey",
+      "score": 2.0227,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Can Large Language Models Transform Computational Social Science?",
+      "abstract": "Abstract Large language models (LLMs) are capable of successfully performing many language processing tasks zero-shot (without training data). If zero-shot LLMs can also reliably classify and explain social phenomena like persuasiveness and political ideology, then LLMs could augment the computational social science (CSS) pipeline in important ways. This work provides a road map for using LLMs as CSS tools. Towards this end, we contribute a set of prompting best practices and an extensive evaluation pipeline to measure the zero-shot performance of 13 language models on 25 representative English CSS benchmarks. On taxonomic labeling tasks (classification), LLMs fail to outperform the best fine-tuned models but still achieve fair levels of agreement with humans. On free-form coding tasks (generation), LLMs produce explanations that often exceed the quality of crowdworkers\u2019 gold references. We conclude that the performance of today\u2019s LLMs can augment the CSS research pipeline in two ways: (1) serving as zero-shot data annotators on human annotation teams, and (2) bootstrapping challenging creative generation tasks (e.g., explaining the underlying attributes of a text). In summary, LLMs are posed to meaningfully participate in social science analysis in partnership with humans.",
+      "authors": [
+        "Caleb Ziems",
+        "William A. Held",
+        "Omar Ahmed Shaikh",
+        "Jiaao Chen",
+        "Zhehao Zhang",
+        "Diyi Yang"
+      ],
+      "year": 2023,
+      "venue": "Computational Linguistics",
+      "citations": 430,
+      "url": "https://openalex.org/W4389636360",
+      "pdf_url": "https://direct.mit.edu/coli/article-pdf/doi/10.1162/coli_a_00502/2191886/coli_a_00502.pdf",
+      "doi": "10.1162/coli_a_00502",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Pipeline (software)",
+        "Computer science",
+        "Bootstrapping (finance)",
+        "Set (abstract data type)",
+        "Data science",
+        "Finance"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T13910",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "per-response policy violation rate benchmarks for LLMs"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 143.32628,
+      "paper_type": "method",
+      "score": 2.0129,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Current state of LLM Risks and AI Guardrails",
+      "abstract": "Large language models (LLMs) have become increasingly sophisticated, leading to widespread deployment in sensitive applications where safety and reliability are paramount. However, LLMs have inherent risks accompanying them, including bias, potential for unsafe actions, dataset poisoning, lack of explainability, hallucinations, and non-reproducibility. These risks necessitate the development of \"guardrails\" to align LLMs with desired behaviors and mitigate potential harm. This work explores the risks associated with deploying LLMs and evaluates current approaches to implementing guardrails and model alignment techniques. We examine intrinsic and extrinsic bias evaluation methods and discuss the importance of fairness metrics for responsible AI development. The safety and reliability of agentic LLMs (those capable of real-world actions) are explored, emphasizing the need for testability, fail-safes, and situational awareness. Technical strategies for securing LLMs are presented, including a layered protection model operating at external, secondary, and internal levels. System prompts, Retrieval-Augmented Generation (RAG) architectures, and techniques to minimize bias and protect privacy are highlighted. Effective guardrail design requires a deep understanding of the LLM's intended use case, relevant regulations, and ethical considerations. Striking a balance between competing requirements, such as accuracy and privacy, remains an ongoing challenge. This work underscores the importance of continuous research and development to ensure the safe and responsible use of LLMs in real-world applications.",
+      "authors": [
+        "Suriya Ganesh Ayyamperumal",
+        "Ge, Limin"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 16,
+      "url": "https://openalex.org/W4399912081",
+      "pdf_url": "https://arxiv.org/pdf/2406.12934",
+      "doi": "10.48550/arxiv.2406.12934",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Current (fluid)",
+        "State (computer science)",
+        "Computer science",
+        "Engineering",
+        "Electrical engineering",
+        "Algorithm"
+      ],
+      "topic_ids": [
+        "T11357",
+        "T10763",
+        "T10876"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9244916565741415,
+      "paper_type": "benchmark",
+      "score": 2.0019,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+      "abstract": "Optimizing large language models (LLMs) for downstream use cases often involves the customization of pre-trained LLMs through further fine-tuning. Meta's open release of Llama models and OpenAI's APIs for fine-tuning GPT-3.5 Turbo on custom datasets also encourage this practice. But, what are the safety costs associated with such custom fine-tuning? We note that while existing safety alignment infrastructures can restrict harmful behaviors of LLMs at inference time, they do not cover safety risks when fine-tuning privileges are extended to end-users. Our red teaming studies find that the safety alignment of LLMs can be compromised by fine-tuning with only a few adversarially designed training examples. For instance, we jailbreak GPT-3.5 Turbo's safety guardrails by fine-tuning it on only 10 such examples at a cost of less than $0.20 via OpenAI's APIs, making the model responsive to nearly any harmful instructions. Disconcertingly, our research also reveals that, even without malicious intent, simply fine-tuning with benign and commonly used datasets can also inadvertently degrade the safety alignment of LLMs, though to a lesser extent. These findings suggest that fine-tuning aligned LLMs introduces new safety risks that current safety infrastructures fall short of addressing -- even if a model's initial safety alignment is impeccable, it is not necessarily to be maintained after custom fine-tuning. We outline and critically analyze potential mitigations and advocate for further research efforts toward reinforcing safety protocols for the custom fine-tuning of aligned LLMs.",
+      "authors": [
+        "Xiangyu Qi",
+        "Yi Zeng",
+        "Tinghao Xie",
+        "Pin\u2010Yu Chen",
+        "Ruoxi Jia",
+        "Prateek Mittal",
+        "Peter Henderson"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 40,
+      "url": "https://openalex.org/W4387436590",
+      "pdf_url": "https://arxiv.org/pdf/2310.03693",
+      "doi": "10.48550/arxiv.2310.03693",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Personalization",
+        "Fine-tuning",
+        "Risk analysis (engineering)",
+        "Computer security",
+        "Business"
+      ],
+      "topic_ids": [
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of LLM safety guardrails preserving capability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 98.296135,
+      "paper_type": "method",
+      "score": 1.9829,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Safety and Grounding"
+        ]
+      }
+    },
+    {
+      "title": "Unleashing the potential of prompt engineering for large language models",
+      "abstract": "This comprehensive review delves into the pivotal role of prompt engineering in unleashing the capabilities of Large Language Models (LLMs). The development of Artificial Intelligence (AI), from its inception in the 1950s to the emergence of advanced neural networks and deep learning architectures, has made a breakthrough in LLMs, with models such as GPT-4o and Claude-3, and in Vision-Language Models (VLMs), with models such as CLIP and ALIGN. Prompt engineering is the process of structuring inputs, which has emerged as a crucial technique to maximize the utility and accuracy of these models. This paper explores both foundational and advanced methodologies of prompt engineering, including techniques such as self-consistency, chain-of-thought, and generated knowledge, which significantly enhance model performance. Additionally, it examines the prompt method of VLMs through innovative approaches such as Context Optimization (CoOp), Conditional Context Optimization (CoCoOp), and Multimodal Prompt Learning (MaPLe). Critical to this discussion is the aspect of AI security, particularly adversarial attacks that exploit vulnerabilities in prompt engineering. Strategies to mitigate these risks and enhance model robustness are thoroughly reviewed. The evaluation of prompt methods is also addressed through both subjective and objective metrics, ensuring a robust analysis of their efficacy. This review also reflects the essential role of prompt engineering in advancing AI capabilities, providing a structured framework for future research and application.",
+      "authors": [
+        "B.\u2010C. CHEN",
+        "Zhaofeng Zhang",
+        "Nicolas Langren\u00e9",
+        "Shengxin Zhu"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 136,
+      "url": "https://openalex.org/W4387929411",
+      "pdf_url": "https://arxiv.org/pdf/2310.14735",
+      "doi": "10.48550/arxiv.2310.14735",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Transformative learning",
+        "Structuring",
+        "Task (project management)",
+        "Process (computing)",
+        "Computer science",
+        "Engineering ethics"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "evaluating LLM capability with MMLU GSM8K MT-Bench"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 80.40295,
+      "paper_type": "method",
+      "score": 1.9,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,1987 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "claim_type": "empirical",
+  "problem_id": "11",
+  "claim": "An Ultralytics YOLO11n detector pretrained on COCO and evaluated on the person class of the COCO val2017 split at 640\u00d7640 resolution,retains AP50 \u2265 0.90 (IoU \u2265 0.5), with \u2264 5% relative degradation from clean performance under adversarial perturbations under image modifications under a learned generative illumination-consistent perturbation model. The image manipulations follow a white-box projected gradient descent (PGD) attack over the latent variables of the learned conditional generative model, with perturbations constrained to remain within an L\u221e image-space bound of \u03b5 = 12/255.\nNote that the conditional generator is learned from the COCO data set to describe the perturbation set over a constrained latent space of lighting parameters. The generator g(x,z) produces perturbed images (for original image x) where z lies in a norm-bounded latent space (e.g., \\|z\\| \\le B ); g is a trained conditional variational autoencoder (CVAE).",
+  "subfields": [
+    "Object Detection",
+    "Adversarial Robustness",
+    "Image generation"
+  ],
+  "provenance": {
+    "n_papers_bundle": 25,
+    "n_papers_deduped": 25,
+    "n_fulltext": 13,
+    "pdf_sources": {
+      "cache": 13,
+      "none": 12
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5.5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Object Detection",
+      "menu": {
+        "datasets": [
+          {
+            "name": "MS COCO",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Contextual Adversarial Attacks For Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "PASCAL VOC",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Contextual Adversarial Attacks For Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "ImageNet (ILSVRC)",
+            "role": "train",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Open Images",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "MS COCO",
+            "role": "robustness_eval",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "PASCAL VOC",
+            "role": "robustness_eval",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "BDD100K",
+            "role": "eval",
+            "evidence": [
+              "Robust object detection under harsh autonomous\u2010driving environments"
+            ]
+          },
+          {
+            "name": "VisDrone",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "MS COCO train2017",
+            "role": "train",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "KITTI",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Caltech",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Mapillary Traffic Sign Dataset (MTSD)",
+            "role": "eval",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "LISA",
+            "role": "eval",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "SpaceNet (SpaceNet1/2/MVOI)",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "xView",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "HRSC2016",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "DOTA",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "NWPUVHR-10",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ITCVD",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "SSDD",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "AIIA1CupCompetition",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "YOLO",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Faster R-CNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Deep Learning for Generic Object Detection: A Survey"
+            ]
+          },
+          {
+            "name": "SSD",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv3",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "R-CNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Deep Learning for Generic Object Detection: A Survey"
+            ]
+          },
+          {
+            "name": "Fast R-CNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on Image Data Augmentation for Deep Learning"
+            ]
+          },
+          {
+            "name": "RetinaNet",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Mask R-CNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "YOLOv2",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv4",
+            "role": "method_under_test",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv5",
+            "role": "method_under_test",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Region Proposal Network (RPN)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Deformable ConvNets (DCN/DCNv2)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "M2Det",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "RefineDet",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Relation Networks for Object Detection",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "NAS-FPN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "DSSD",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "EfficientDet",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOX",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv6",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv7",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLOv8",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "PP-YOLO",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "PP-YOLOv2",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Scaled YOLOv4",
+            "role": "method_under_test",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "YOLO-fine",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "SlimYOLOv3",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "YOLT (You Only Look Twice)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "MOD-YOLT",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "MYN (Multi-YOLT Network)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ViT-FRCNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ViT-YOLO",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "CBNetV2",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Dynamic Head",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RLN (Region Locating Network)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "SAR (Search Area Reduction) module",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ClusDet/CPNet/ScaleNet (search-area reduction)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "DetecNet",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "DMNet (Density-Map guided object detection Network)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RR-CNN (Rotated region-based CNN)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RICNN (Rotation-Invariant CNN)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RoI Transformer",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RRoI Pooling",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "BBAVectors",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "S2A-Net (Single-Shot Alignment Network)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "AlignConv/ACL",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ARF (Active Rotating Filters)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "NDFT (Nuisance Disentangled Feature Transform)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "VDSR (SR preproc)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "RFSR (SR preproc)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "EESRGAN (SR preproc)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "ResNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Darknet-53",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Darknet-19",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "ResNeXt",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "MobileNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "MobileNetV2",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "EfficientNetB3",
+            "role": "backbone",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "CSPDarknet-53",
+            "role": "backbone",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "DenseNet-169",
+            "role": "backbone",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "ShuffleNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "SqueezeNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Xception",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "PeleeNet",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "ELAN",
+            "role": "backbone",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "EfficientRep",
+            "role": "backbone",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Swin Transformer",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Swin Transformer V2",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Focal Transformer",
+            "role": "backbone",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mean Average Precision (mAP)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Robust object detection under harsh autonomous\u2010driving environments",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "FPS",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Robust object detection under harsh autonomous\u2010driving environments",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Recall",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey on Performance Metrics for Object-Detection Algorithms",
+              "Contextual Adversarial Attacks For Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "Average Precision (AP)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey on Performance Metrics for Object-Detection Algorithms",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Intersection over Union (IoU)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Deep Learning for Generic Object Detection: A Survey",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Precision",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey on Performance Metrics for Object-Detection Algorithms",
+              "Deep Learning for Generic Object Detection: A Survey"
+            ]
+          },
+          {
+            "name": "AP50 (AP@IoU=0.5)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Inference time (ms)",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "mAP@[0.5:0.95] (COCO)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "AP75 (AP@IoU=0.75)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "APS (AP small)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "APM (AP medium)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "APL (AP large)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "FLOPs",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Number of parameters",
+            "direction": "lower_better",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Adversarial robustness",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "GIoU",
+            "direction": "higher_better",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "CIoU",
+            "direction": "higher_better",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Precision\u2013Recall AUC",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Performance Metrics for Object-Detection Algorithms"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Multi-scale training / random image-size training",
+            "detail": "Train with dynamically varied input resolutions to improve scale robustness (e.g., YOLOv2-style and general multi-scale schemes).",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Non-Maximum Suppression (NMS) with IoU threshold",
+            "detail": "Apply NMS in post-processing using an IoU threshold to suppress overlapping detections.",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Robust object detection under harsh autonomous\u2010driving environments",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Use focal loss to address class imbalance",
+            "detail": "Adopt focal or modified focal losses during training to down-weight easy negatives and handle imbalance.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Pre-training on ImageNet then fine-tuning on target detection dataset",
+            "detail": "Initialize backbone/classifier on ImageNet (ILSVRC) before fine-tuning on detection data.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "General data augmentation",
+            "detail": "Use random resizing/cropping, horizontal flips, and color distortions during training.",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Random erasing augmentation",
+            "detail": "Randomly erase image patches during training to improve robustness/generalization.",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Image mixing augmentation",
+            "detail": "Mix images (e.g., mixing-based augmentations) during training to regularize and handle imbalance.",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Mosaic augmentation",
+            "detail": "Combine multiple images into a single training sample to enrich context and scale variation.",
+            "evidence": [
+              "Statistical Analysis of Design Aspects of Various YOLO-Based Deep Learning Models for Object Detection"
+            ]
+          },
+          {
+            "name": "Adversarial training for detectors",
+            "detail": "Train detectors with adversarial examples (potentially from multiple attack sources) to improve robustness.",
+            "evidence": [
+              "Robust object detection under harsh autonomous\u2010driving environments",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "Standardized benchmarks with public train/val/test splits",
+            "detail": "Use datasets with fixed splits and held-out test servers for fair comparison.",
+            "evidence": [
+              "Deep Learning for Generic Object Detection: A Survey"
+            ]
+          },
+          {
+            "name": "RPN anchor design",
+            "detail": "Use multiple scales and aspect ratios per location for proposal generation (e.g., 3\u00d73 anchors).",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "SSD hard negative mining",
+            "detail": "Select top negatives to maintain a fixed negative:positive ratio (e.g., up to 3:1).",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection"
+            ]
+          },
+          {
+            "name": "Rotation augmentation (overhead imagery)",
+            "detail": "Augment training with rotated images to improve orientation robustness.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Oriented bounding box labels",
+            "detail": "Train/evaluate with oriented boxes parameterized by center, width, height, and angle.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Polygon-format labels for buildings",
+            "detail": "Use polygon annotations for building footprint detection.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Super-resolution preprocessing",
+            "detail": "Apply super-resolution models to low-resolution imagery prior to detection.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Search-area reduction via clustering/cropping",
+            "detail": "Reduce detection search space using clustered chips or cropped regions.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Density-map guided cropping for small objects",
+            "detail": "Use object-density maps to guide training on informative small-object regions.",
+            "evidence": [
+              "A Survey of Deep Learning-Based Object Detection Methods and Datasets for Overhead Imagery"
+            ]
+          },
+          {
+            "name": "Ensemble by object scale",
+            "detail": "Use separate detectors specialized for different object scales and ensemble their outputs.",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Multi-scale image pyramid inference (SNIP/SNIPER)",
+            "detail": "Employ image pyramids and selective processing to improve small-object detection efficiency.",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 3,
+        "evidence_links_dropped": 7
+      }
+    },
+    {
+      "subfield": "Adversarial Robustness",
+      "menu": {
+        "datasets": [
+          {
+            "name": "MS COCO",
+            "role": "robustness_eval",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "PASCAL VOC",
+            "role": "robustness_eval",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "BDD100K",
+            "role": "robustness_eval",
+            "evidence": [
+              "Robust object detection under harsh autonomous\u2010driving environments"
+            ]
+          },
+          {
+            "name": "CIFAR-10",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "CIFAR-100",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "ImageNet",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "CIFAR-10-C",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "CIFAR-10.1",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "CINIC-10",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "SVHN",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Describable Textures Dataset (DTD)",
+            "role": "robustness_eval",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Mapillary Traffic Sign Dataset (MTSD)",
+            "role": "robustness_eval",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "LISA Traffic Sign Dataset",
+            "role": "robustness_eval",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "YOLOv4",
+            "role": "method_under_test",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "YOLOv3",
+            "role": "method_under_test",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "YOLOv5s",
+            "role": "method_under_test",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "ResNet",
+            "role": "baseline",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "WideResNet",
+            "role": "baseline",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Madry et al. (Madry2018 adversarial training)",
+            "role": "baseline",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Contextual Adversarial Perturbation (CAP)",
+            "role": "method_under_test",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Recall",
+            "direction": "higher_better",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "mean Average Precision (mAP)",
+            "direction": "higher_better",
+            "evidence": [
+              "Robust object detection under harsh autonomous\u2010driving environments"
+            ]
+          },
+          {
+            "name": "Frames Per Second (FPS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "Robust object detection under harsh autonomous\u2010driving environments"
+            ]
+          },
+          {
+            "name": "L2 norm of perturbation",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "Robust accuracy (under attack)",
+            "direction": "higher_better",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Standard (clean) accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Accuracy on corrupted images",
+            "direction": "higher_better",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Expected Calibration Error (ECE)",
+            "direction": "lower_better",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "AUROC (OOD detection)",
+            "direction": "higher_better",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "L_infinity norm of perturbation",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability"
+            ]
+          },
+          {
+            "name": "L0 norm of perturbation",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability"
+            ]
+          },
+          {
+            "name": "L1 norm of perturbation",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability"
+            ]
+          },
+          {
+            "name": "Adversarial robustness (overall)",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "Number of candidates passed to NMS (|F(C')|)",
+            "direction": "lower_better",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "End-to-end inference time (ms)",
+            "direction": "lower_better",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Use L_p norms to define/constrain adversarial perturbations",
+            "detail": "Define perturbation sets as L_p balls around inputs for threat modeling and attacks",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability",
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors",
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Adversarial training (multi-attack/feature-level)",
+            "detail": "Train detectors with adversarial examples from multiple attack sources and/or integrate defenses at feature-extraction level",
+            "evidence": [
+              "Robust object detection under harsh autonomous\u2010driving environments",
+              "Towards Adversarially Robust Object Detection"
+            ]
+          },
+          {
+            "name": "AutoAttack evaluation",
+            "detail": "Evaluate robustness using the AutoAttack ensemble and report worst-case performance; add adaptive attacks when flagged",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Standard threat models and epsilons",
+            "detail": "CIFAR-10/100: L_inf \u03b5=8/255, L2 \u03b5=0.5; ImageNet: L_inf \u03b5=4/255",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Evaluate robustness to common corruptions",
+            "detail": "Report average-case accuracy over corruption types and severities (e.g., CIFAR-10-C)",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Input normalization to [0,1]",
+            "detail": "Normalize inputs to unit range prior to attack/defense procedures",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability"
+            ]
+          },
+          {
+            "name": "PGD attack (L2) configuration",
+            "detail": "Use PGD under L2 constraint with epsilon sweeps and fixed iterations to craft adversarial examples",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "Ensemble-based attack training",
+            "detail": "Train attacks by randomly selecting from an ensemble of detectors each iteration to improve transferability",
+            "evidence": [
+              "Phantom Sponges: Exploiting Non-Maximum Suppression to Attack Deep Object Detectors"
+            ]
+          },
+          {
+            "name": "Contextual adversarial attack without ground truth",
+            "detail": "Generate adversarial examples using a contextual background loss that does not require ground-truth boxes",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection"
+            ]
+          },
+          {
+            "name": "Evaluate across supervision levels",
+            "detail": "Assess attacks on both fully and weakly supervised object detectors",
+            "evidence": [
+              "Contextual Adversarial Attacks For Object Detection"
+            ]
+          },
+          {
+            "name": "RobustBench submission restrictions",
+            "detail": "Require non-zero input gradients, deterministic forward pass, and no test-time optimization loops for reported robustness",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          },
+          {
+            "name": "Encourage external/adaptive evaluations",
+            "detail": "Incorporate stronger external/adaptive attacks and revise reported robust accuracy downward if surpassed",
+            "evidence": [
+              "RobustBench: a standardized adversarial robustness benchmark"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 2,
+        "evidence_links_dropped": 6
+      }
+    },
+    {
+      "subfield": "Image generation",
+      "menu": {
+        "datasets": [
+          {
+            "name": "ImageNet",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "CIFAR-10",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "CelebA",
+            "role": "train",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "CIFAR-100",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning"
+            ]
+          },
+          {
+            "name": "MNIST",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning"
+            ]
+          },
+          {
+            "name": "SVHN",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning"
+            ]
+          },
+          {
+            "name": "Tiny ImageNet-200",
+            "role": "train",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning"
+            ]
+          },
+          {
+            "name": "FFHQ",
+            "role": "train",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "VGGFace2",
+            "role": "train",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "100K-Generated-Images",
+            "role": "eval",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "100K-Faces",
+            "role": "eval",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "Glow-on-CelebA",
+            "role": "eval",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Progressive GAN (ProGAN/PGGAN)",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Deep learning for deepfakes creation and detection: A survey",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "StyleGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "CycleGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "DCGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on Image Data Augmentation for Deep Learning",
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          },
+          {
+            "name": "Glow",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "SNGAN (Spectral Normalization GAN)",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "AttGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks",
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "WGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          },
+          {
+            "name": "WGAN-GP",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          },
+          {
+            "name": "BigGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          },
+          {
+            "name": "StarGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "PixelCNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "PixelRNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Gated PixelCNN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "PixelSNAIL",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "IcGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "ResAttrGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "InterFaceGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "CramerGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "MMDGAN",
+            "role": "method_under_test",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "GDWCT",
+            "role": "method_under_test",
+            "evidence": [
+              "Deepfakes and beyond: A Survey of face manipulation and fake detection"
+            ]
+          },
+          {
+            "name": "GAN (original)",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Autoencoder (and variants)",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Fr\u00e9chet Inception Distance (FID)",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability"
+            ]
+          },
+          {
+            "name": "Reconstruction loss (L1/L2)",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Adversarial training of GANs",
+            "detail": "Train generator and discriminator simultaneously in an adversarial min\u2013max game.",
+            "evidence": [
+              "A survey on generative adversarial networks for imbalance problems in computer vision tasks"
+            ]
+          },
+          {
+            "name": "Face preprocessing (alignment)",
+            "detail": "Detect, crop, and align faces prior to model training or evaluation in face generation/manipulation tasks.",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          },
+          {
+            "name": "Style mixing (StyleGAN)",
+            "detail": "Mix styles from two latent codes at multiple scales to control edited/generated image attributes.",
+            "evidence": [
+              "Deep learning for deepfakes creation and detection: A survey"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Verify the clean-performance prerequisite for the claimed robust AP50 on COCO val2017 person at 640x640",
+      "dataset": "COCO",
+      "model": "YOLO11n",
+      "method_under_test": "YOLO11n",
+      "attack_or_condition": "Standardized benchmarks with public train/val/test splits",
+      "metrics": [
+        "AP50",
+        "IoU"
+      ],
+      "pass_condition": "Run the COCO val2017 split at 640x640 using the pretrained COCO YOLO11n checkpoint and evaluate only the person class. Pass only if person AP50 at IoU >= 0.5 is >= 0.90. If clean AP50 < 0.90, the claim is refuted before adversarial testing because the claimed adversarial AP50 >= 0.90 cannot be retained from clean performance.",
+      "constraints_not_enforced": [
+        "eps=12/255",
+        "white-box projected adversarial perturbations",
+        "CVAE learned generative perturbation model",
+        "illumination-consistent image modifications",
+        "<=5% relative degradation under attack"
+      ],
+      "depends_on": [],
+      "rationale": "Clean AP50 on the exact model, class, split, and resolution is the cheapest necessary prerequisite for any robustness claim about retained AP50.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Build and validate the learned CVAE perturbation apparatus before using it for the headline adversarial evaluation",
+      "dataset": "COCO",
+      "model": "CVAE",
+      "method_under_test": "CVAE",
+      "attack_or_condition": "Use L_p norms to define/constrain adversarial perturbations",
+      "metrics": [
+        "L_infinity norm of perturbation",
+        "Reconstruction loss (L1/L2)",
+        "AP50",
+        "IoU"
+      ],
+      "pass_condition": "Train or load the CVAE perturbation model using COCO train2017-compatible images and freeze the exact checkpoint used for attack. On COCO val2017 person images resized to 640x640, pass only if all three conditions hold: (1) 100% of decoded perturbations after projection have L_infinity norm <= 12/255; (2) the mean per-pixel L2 reconstruction loss of CVAE reconstructions is <= 12/255; (3) one non-optimized CVAE sample per image, evaluated with the same YOLO11n detector and person AP50 protocol as the gate, has AP50 >= 0.90 and relative AP50 degradation from the clean gate result <= 5%. Failure of any condition means the apparatus is not accepted for testing the claim.",
+      "constraints_not_enforced": [
+        "white-box optimization against YOLO11n",
+        "headline adversarial AP50 under optimized perturbations"
+      ],
+      "depends_on": [
+        "Verify the clean-performance prerequisite for the claimed robust AP50 on COCO val2017 person at 640x640"
+      ],
+      "rationale": "The claim presupposes a learned generative perturbation model whose outputs are bounded and structure-preserving enough to be treated as illumination-consistent image modifications; this must be validated before attributing robustness results to that apparatus.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "headline",
+      "goal": "Directly test whether YOLO11n retains AP50 >= 0.90 with <= 5% relative degradation under the claimed white-box projected CVAE perturbations",
+      "dataset": "COCO",
+      "model": "YOLO11n",
+      "method_under_test": "CVAE",
+      "attack_or_condition": "Standard threat models and epsilons",
+      "metrics": [
+        "AP50",
+        "IoU",
+        "L_infinity norm of perturbation"
+      ],
+      "pass_condition": "Using the frozen CVAE from the apparatus recipe, generate adversarially modified COCO val2017 images by white-box projected optimization against YOLO11n with inputs normalized to [0,1], resolution 640x640, and L_infinity projection eps = 12/255. Evaluate only the person class with AP50 at IoU >= 0.5. Pass only if all conditions hold: (1) every adversarial image satisfies L_infinity norm of perturbation <= 12/255; (2) adversarial person AP50 >= 0.90; (3) (clean_AP50 - adversarial_AP50) / clean_AP50 <= 0.05, where clean_AP50 is from the gate recipe. If any condition fails, the claim is refuted.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Verify the clean-performance prerequisite for the claimed robust AP50 on COCO val2017 person at 640x640",
+        "Build and validate the learned CVAE perturbation apparatus before using it for the headline adversarial evaluation"
+      ],
+      "rationale": "This is the exact asserted evaluation: COCO-pretrained YOLO11n, COCO val2017 person class, 640x640 resolution, AP50 at IoU 0.5, white-box projected adversarial image modifications, and eps = 12/255.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "control",
+      "goal": "Check that the white-box CVAE optimizer is stronger than a non-optimized CVAE perturbation control at the same perturbation budget",
+      "dataset": "COCO",
+      "model": "YOLO11n",
+      "method_under_test": "CVAE",
+      "attack_or_condition": "Use L_p norms to define/constrain adversarial perturbations",
+      "metrics": [
+        "AP50",
+        "IoU",
+        "L_infinity norm of perturbation"
+      ],
+      "pass_condition": "At eps = 12/255 and 640x640 resolution, compare the headline white-box optimized CVAE perturbations with random non-optimized CVAE perturbations from the same frozen CVAE. Pass only if: (1) both perturbation sets satisfy L_infinity norm <= 12/255 for 100% of images; (2) optimized_CVAE_AP50 <= random_CVAE_AP50; (3) optimized_CVAE_AP50 still satisfies AP50 >= 0.90 and <= 5% relative degradation from clean_AP50. If optimized_CVAE_AP50 > random_CVAE_AP50, the headline attack is considered too weak to verify the claim; if optimized_CVAE_AP50 violates the AP50 or 5% degradation threshold, the claim is refuted.",
+      "constraints_not_enforced": [
+        "attack-strength behavior at eps values below 12/255"
+      ],
+      "depends_on": [
+        "Directly test whether YOLO11n retains AP50 >= 0.90 with <= 5% relative degradation under the claimed white-box projected CVAE perturbations"
+      ],
+      "rationale": "A white-box adversarial optimization should not be weaker than a matched-budget non-optimized perturbation baseline; otherwise an apparent robustness pass could be an optimizer artifact.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    },
+    {
+      "stage": "control",
+      "goal": "Verify robustness across the allowed perturbation budget and detect attack-strength artifacts",
+      "dataset": "COCO",
+      "model": "YOLO11n",
+      "method_under_test": "CVAE",
+      "attack_or_condition": "Standard threat models and epsilons",
+      "metrics": [
+        "AP50",
+        "IoU",
+        "L_infinity norm of perturbation"
+      ],
+      "pass_condition": "Repeat the same white-box projected CVAE attack at eps in {0, 4/255, 8/255, 12/255}. Pass only if for every eps value: (1) 100% of perturbations satisfy L_infinity norm <= eps; (2) person AP50 >= 0.90; (3) relative degradation from clean_AP50 is <= 5%. Additionally, AP50 at eps = 12/255 must be no greater than AP50 at eps = 0 under the same evaluation protocol. If any eps <= 12/255 violates AP50 >= 0.90 or <= 5% degradation, the claim is refuted because that perturbation lies inside the claimed eps = 12/255 threat budget.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Directly test whether YOLO11n retains AP50 >= 0.90 with <= 5% relative degradation under the claimed white-box projected CVAE perturbations"
+      ],
+      "rationale": "Robustness to an eps = 12/255 bounded adversary conventionally includes perturbations within that budget, and an epsilon sweep helps expose failed projection, weak optimization, or non-reproducible attack behavior.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      },
+      "label": "norm_card_method"
+    }
+  ],
+  "baseline_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Verify the clean prerequisite: Ultralytics YOLO11n pretrained on COCO reaches AP50 >= 0.90 on the COCO val2017 person class at 640x640",
+      "dataset": "COCO val2017, person class only, official annotations, images resized/letterboxed to 640x640 using Ultralytics default validation pipeline",
+      "model": "Ultralytics YOLO11n pretrained COCO weights, e.g. yolo11n.pt",
+      "method_under_test": "Clean evaluation with no adversarial or generative perturbation",
+      "attack_or_condition": "No attack; confidence/NMS settings fixed to Ultralytics validation defaults; evaluate only category_id=1/person for AP50 at IoU=0.5",
+      "metrics": [
+        "person AP50",
+        "number of evaluated person instances",
+        "image resolution"
+      ],
+      "pass_condition": "Pass only if clean person AP50 >= 0.90 on COCO val2017 at 640x640. If clean person AP50 < 0.90, refute the claim immediately because adversarial performance cannot retain AP50 >= 0.90 with nonnegative degradation from this clean baseline.",
+      "constraints_not_enforced": [
+        "eps=12/255",
+        "CVAE learned generative illumination-consistent perturbation model",
+        "white-box PGD over latent variables",
+        "adversarial relative degradation <= 5%"
+      ],
+      "depends_on": [],
+      "rationale": "The claimed adversarial AP50 threshold presupposes that the same detector already achieves at least that AP50 cleanly. This is the cheapest decisive refutation test.",
+      "label": "baseline"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Build and validate the learned conditional generative illumination-consistent perturbation model before using it for attacks",
+      "dataset": "Training: COCO train2017 images or a disjoint illumination-augmentation training set derived from COCO train2017; Validation: held-out COCO val2017 subset with person instances, not used for CVAE training",
+      "model": "Conditional CVAE perturbation generator conditioned on the clean image, with latent variables optimized at attack time; YOLO11n frozen for downstream compatibility checks",
+      "method_under_test": "Train a CVAE to generate additive illumination-like perturbations delta(x,z), then project or scale outputs so x_adv=clip(x+delta,0,1) satisfies the image-space L_inf budget",
+      "attack_or_condition": "Sample multiple latent codes per validation image without using labels or detector gradients; evaluate whether generated perturbations are illumination-consistent and structure-preserving",
+      "metrics": [
+        "max image-space L_inf perturbation",
+        "SSIM(x,x_adv)",
+        "low-frequency energy fraction of perturbation",
+        "edge-map preservation F1",
+        "clean-label person AP50 under random CVAE samples"
+      ],
+      "pass_condition": "Pass only if all of the following hold on the held-out validation subset: 100% of generated samples satisfy max_pixel |x_adv-x| <= 12/255; mean SSIM(x,x_adv) >= 0.98; at least 90% of perturbation spectral energy lies in the lowest quarter of spatial frequencies; edge-map preservation F1 >= 0.95; and person AP50 under random non-adversarial CVAE samples degrades by <= 5% relative to clean AP50. Failure of any condition means the apparatus is not a valid illumination-consistent, structure-preserving perturbation model for the claim.",
+      "constraints_not_enforced": [
+        "white-box PGD over latent variables",
+        "headline adversarial AP50 >= 0.90"
+      ],
+      "depends_on": [
+        "Verify the clean prerequisite: Ultralytics YOLO11n pretrained on COCO reaches AP50 >= 0.90 on the COCO val2017 person class at 640x640"
+      ],
+      "rationale": "The headline claim depends on a learned illumination-consistent generative perturbation model. Before testing robustness, the generator must be shown to produce bounded, illumination-like, non-destructive image modifications rather than arbitrary noise or object-corrupting artifacts.",
+      "label": "baseline"
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validate that the latent-space PGD attack implementation is truly white-box, differentiable, projected, and respects the eps=12/255 image-space constraint",
+      "dataset": "Small fixed development subset of COCO val2017 person images, separate from the final headline reporting subset if tuning attack hyperparameters",
+      "model": "Frozen Ultralytics YOLO11n plus validated conditional CVAE generator",
+      "method_under_test": "White-box PGD through the CVAE decoder and YOLO11n detection loss, optimizing latent variables while projecting generated images to the image-space L_inf ball",
+      "attack_or_condition": "Run short PGD attacks with several step sizes and restarts; compute gradients through the detector pre-NMS loss with respect to latent variables; after every step enforce x_adv in [0,1] and ||x_adv-x||_inf <= 12/255",
+      "metrics": [
+        "gradient finite-rate",
+        "PGD objective increase",
+        "max image-space L_inf perturbation",
+        "attack reproducibility across seeds"
+      ],
+      "pass_condition": "Pass only if 100% of attacked images satisfy ||x_adv-x||_inf <= 12/255 at every PGD step and at final output; at least 99% of attack batches have finite nonzero latent gradients; and the final PGD detection loss is greater than the initial latent loss in at least 95% of attacked images. Otherwise the headline attack is invalid or not actually enforcing the claim constraints.",
+      "constraints_not_enforced": [
+        "full COCO val2017 AP50 headline threshold",
+        "adversarial AP50 >= 0.90",
+        "relative degradation <= 5%"
+      ],
+      "depends_on": [
+        "Build and validate the learned conditional generative illumination-consistent perturbation model before using it for attacks"
+      ],
+      "rationale": "A robustness result under latent PGD is meaningful only if the implementation really performs white-box gradient optimization and projection under the stated image-space L_inf budget.",
+      "label": "baseline"
+    },
+    {
+      "stage": "headline",
+      "goal": "Directly test the claim: YOLO11n retains person AP50 >= 0.90 with <= 5% relative degradation under white-box latent PGD CVAE illumination perturbations bounded by eps=12/255",
+      "dataset": "Full COCO val2017 split, official person annotations only, 640x640 Ultralytics validation preprocessing",
+      "model": "Ultralytics YOLO11n pretrained COCO weights, frozen; validated conditional CVAE perturbation model",
+      "method_under_test": "White-box projected gradient descent over CVAE latent variables against YOLO11n person detection objective",
+      "attack_or_condition": "For every COCO val2017 image, generate x_adv by PGD over latent variables with multiple random restarts, fixed attack budget, projection to ||x_adv-x||_inf <= 12/255, and clipping to valid image range; evaluate detections on x_adv at 640x640 using the same AP code as clean evaluation",
+      "metrics": [
+        "clean person AP50",
+        "adversarial person AP50",
+        "relative AP50 degradation=(clean AP50 - adversarial AP50)/clean AP50",
+        "max image-space L_inf perturbation",
+        "IoU threshold=0.5"
+      ],
+      "pass_condition": "Pass only if all are true on full COCO val2017 person evaluation: adversarial person AP50 >= 0.90; relative AP50 degradation <= 0.05; and 100% of adversarial images satisfy ||x_adv-x||_inf <= 12/255. If adversarial AP50 < 0.90, or relative degradation > 5%, or any image violates the L_inf bound, refute the claim.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Verify the clean prerequisite: Ultralytics YOLO11n pretrained on COCO reaches AP50 >= 0.90 on the COCO val2017 person class at 640x640",
+        "Build and validate the learned conditional generative illumination-consistent perturbation model before using it for attacks",
+        "Validate that the latent-space PGD attack implementation is truly white-box, differentiable, projected, and respects the eps=12/255 image-space constraint"
+      ],
+      "rationale": "This is the exact asserted setting: pretrained YOLO11n, COCO val2017 person class, AP50 at IoU 0.5, 640x640 resolution, learned generative illumination perturbations, white-box PGD over latent variables, and eps=12/255 image-space constraint.",
+      "label": "baseline"
+    },
+    {
+      "stage": "control",
+      "goal": "Check that the reported robustness is not caused by a weak or ineffective latent optimizer",
+      "dataset": "COCO val2017 person images at 640x640; may use the full split or a fixed statistically powered subset if compute-limited, with the same subset used for all attacks",
+      "model": "Ultralytics YOLO11n pretrained COCO weights plus validated conditional CVAE generator",
+      "method_under_test": "Compare optimized latent PGD against random latent sampling and weaker optimizers under the identical CVAE and L_inf budget",
+      "attack_or_condition": "Run matched-budget attacks: random latent samples, single-step latent FGSM/PGD, and multi-step latent PGD with multiple restarts; all outputs projected to ||x_adv-x||_inf <= 12/255",
+      "metrics": [
+        "person AP50 for random latent perturbations",
+        "person AP50 for one-step latent attack",
+        "person AP50 for multi-step latent PGD",
+        "relative AP50 degradation",
+        "max image-space L_inf perturbation"
+      ],
+      "pass_condition": "Pass only if multi-step PGD is at least as damaging as all weaker controls: AP50_multi_step_PGD <= AP50_random_latent and AP50_multi_step_PGD <= AP50_one_step_attack, with all methods satisfying ||x_adv-x||_inf <= 12/255 on 100% of images. If random or weaker attacks produce lower AP50 than the claimed PGD attack, the headline attack is not a reliable worst-case test and the robustness conclusion is invalid.",
+      "constraints_not_enforced": [
+        "This control may be run on a subset rather than full COCO val2017 if compute-limited; if subset is used, it does not enforce the full-split headline AP50 threshold"
+      ],
+      "depends_on": [
+        "Directly test the claim: YOLO11n retains person AP50 >= 0.90 with <= 5% relative degradation under white-box latent PGD CVAE illumination perturbations bounded by eps=12/255"
+      ],
+      "rationale": "A standard adversarial-evaluation sanity check is that the optimized attack should be no weaker than random perturbations or fewer-step attacks under the same threat model and budget.",
+      "label": "baseline"
+    },
+    {
+      "stage": "control",
+      "goal": "Check attack-strength saturation and projection sensitivity for the latent PGD threat model",
+      "dataset": "COCO val2017 person images at 640x640; preferably full split, otherwise the same fixed subset as the optimizer-strength control",
+      "model": "Ultralytics YOLO11n pretrained COCO weights plus validated conditional CVAE generator",
+      "method_under_test": "Latent PGD with varying numbers of steps, step sizes, and restarts, always under the same eps=12/255 image-space budget",
+      "attack_or_condition": "Sweep PGD steps, e.g. 10, 25, 50, 100, and restarts, e.g. 1, 5, 10; choose the strongest valid configuration by lowest person AP50 while enforcing ||x_adv-x||_inf <= 12/255",
+      "metrics": [
+        "person AP50 at each PGD budget",
+        "relative AP50 degradation at each PGD budget",
+        "max image-space L_inf perturbation",
+        "attack loss convergence"
+      ],
+      "pass_condition": "Pass only if the strongest valid swept configuration still satisfies the headline thresholds: adversarial person AP50 >= 0.90 and relative degradation <= 5%, with 100% of images satisfying ||x_adv-x||_inf <= 12/255; additionally, increasing the PGD budget from the selected headline setting to the maximum swept setting must not lower AP50 by more than 1 absolute AP50 point. If a stronger valid attack violates AP50 >= 0.90 or degradation <= 5%, refute the robustness claim.",
+      "constraints_not_enforced": [
+        "If run on a subset, this control does not by itself enforce full COCO val2017 headline AP50"
+      ],
+      "depends_on": [
+        "Directly test the claim: YOLO11n retains person AP50 >= 0.90 with <= 5% relative degradation under white-box latent PGD CVAE illumination perturbations bounded by eps=12/255",
+        "Check that the reported robustness is not caused by a weak or ineffective latent optimizer"
+      ],
+      "rationale": "Robustness claims under PGD require evidence that the attack is not under-optimized. Step/restart sweeps test whether the reported AP is stable to stronger optimization within the same threat model.",
+      "label": "baseline"
+    }
+  ]
+}

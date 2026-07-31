@@ -1,0 +1,1545 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "claim_type": "empirical",
+  "problem_id": "10",
+  "claim": "Over defined operating conditions and with sufficient data, non-trivial error models of learned discrete-time robotic dynamical systems can be determined such that the error model always over estimates the true error up to a statistical confidence.",
+  "subfields": [
+    "System Identification",
+    "Statistical Learning Theory",
+    "Model-based Reinforcement Learning"
+  ],
+  "provenance": {
+    "n_papers_bundle": 25,
+    "n_papers_deduped": 25,
+    "n_fulltext": 17,
+    "pdf_sources": {
+      "arxiv": 7,
+      "unpaywall": 3,
+      "pdf_url": 7,
+      "none": 8
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5.5",
+    "recipe_model": "gpt-5.5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "System Identification",
+      "menu": {
+        "datasets": [
+          {
+            "name": "simulated pendulum-system benchmarks",
+            "role": "eval",
+            "evidence": [
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "robot arm / manipulator experimental data",
+            "role": "eval",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "finite trajectory data from dynamical systems",
+            "role": "train",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "random-noise or Gaussian-excitation simulation data",
+            "role": "train",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems",
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "race-car dynamics dataset",
+            "role": "eval",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars"
+            ]
+          },
+          {
+            "name": "quadrotor real-world flight data",
+            "role": "eval",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          },
+          {
+            "name": "Lorenz \u201963 dynamical system",
+            "role": "eval",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "Lorenz \u201996 multiscale dynamical system",
+            "role": "eval",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "Michaelis\u2013Menten dynamics",
+            "role": "eval",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "Yeast glycolysis dynamics",
+            "role": "eval",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "modified KdV equation",
+            "role": "eval",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "simplified Belousov\u2013Zhabotinsky reaction PDE",
+            "role": "eval",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Gaussian process dynamics / regression model",
+            "role": "method_under_test",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "neural network dynamics model",
+            "role": "backbone",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "state-space dynamical model",
+            "role": "method_under_test",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "linear dynamical system / LTI model",
+            "role": "method_under_test",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "recurrent neural network dynamics model",
+            "role": "backbone",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "deep kernel model",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control"
+            ]
+          },
+          {
+            "name": "Bayesian neural network",
+            "role": "method_under_test",
+            "evidence": [
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Bayesian linear regression",
+            "role": "method_under_test",
+            "evidence": [
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "FIR model",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "NFIR model",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "Output-Error neural network",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "Wiener model",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "Hammerstein model",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "Volterra series model",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "kernel ridge regression",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "support vector regression",
+            "role": "baseline",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "Empirical Transfer Function Estimate",
+            "role": "method_under_test",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "nonparametric frequency-response-function estimator",
+            "role": "method_under_test",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "impulse-response estimator",
+            "role": "method_under_test",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "implicit-SINDy / SINDy-PI",
+            "role": "method_under_test",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "PDE-FIND",
+            "role": "method_under_test",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "reservoir computing",
+            "role": "method_under_test",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "hybrid mechanistic plus machine-learning model",
+            "role": "method_under_test",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "one-step-ahead prediction error / mean squared error",
+            "direction": "lower_better",
+            "evidence": [
+              "Convex Bounds for Equation Error in Stable Nonlinear Identification",
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "long-term prediction error / rollout error",
+            "direction": "lower_better",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "validation error / validation fit",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "generalization error / excess risk",
+            "direction": "lower_better",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "parameter estimation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "equation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Convex Bounds for Equation Error in Stable Nonlinear Identification"
+            ]
+          },
+          {
+            "name": "derivative prediction error",
+            "direction": "lower_better",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "model-structure error",
+            "direction": "lower_better",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "correct-model recovery success rate",
+            "direction": "higher_better",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "prediction uncertainty / posterior variance",
+            "direction": "lower_better",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "uncertainty bounds / confidence intervals",
+            "direction": "higher_better",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "bias",
+            "direction": "lower_better",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "variance",
+            "direction": "lower_better",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "signal-to-noise ratio",
+            "direction": "higher_better",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "noise variance",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "AIC",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "BIC",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "GP marginal likelihood / evidence",
+            "direction": "higher_better",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "residual independence test pass rate",
+            "direction": "higher_better",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "sample efficiency / data efficiency",
+            "direction": "higher_better",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          },
+          {
+            "name": "tracking accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control"
+            ]
+          },
+          {
+            "name": "control performance with learned dynamics",
+            "direction": "higher_better",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "one-step-ahead prediction training",
+            "detail": "Train or optimize identification models using one-step-ahead prediction or equation-error objectives.",
+            "evidence": [
+              "Convex Bounds for Equation Error in Stable Nonlinear Identification",
+              "Deep networks for system identification: A survey",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "independent validation / cross-validation",
+            "detail": "Use a held-out validation set or cross-validation for hyperparameter tuning and model selection.",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "long-term recursive simulation evaluation",
+            "detail": "Evaluate identified models by recursively rolling predictions forward over long horizons.",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "residual analysis",
+            "detail": "Test residuals for independence from inputs and from each other after fitting.",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "AIC/BIC model selection",
+            "detail": "Select among candidate system-identification models using information criteria.",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "regularized neural-network training",
+            "detail": "Apply regularization such as weight decay, normalization, dropout, or early stopping when training neural system models.",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "stochastic-gradient training",
+            "detail": "Use first-order stochastic optimization methods for neural or dynamical-system identification objectives.",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "finite-trajectory subsampling with truncation",
+            "detail": "Learn from a single finite trajectory by forming truncated sub-trajectories for empirical risk minimization.",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "projected stochastic gradient descent for LTI systems",
+            "detail": "Train LTI models with projected SGD over a constrained parameter set using fresh sample sequences.",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "GP hyperparameter learning by marginal likelihood",
+            "detail": "Choose GP kernel hyperparameters offline by maximizing log marginal likelihood or evidence.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "online GP dataset update",
+            "detail": "Add new points when prediction error or predictive variance exceeds a threshold, with bounded dataset size.",
+            "evidence": [
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "recursive GP covariance update",
+            "detail": "Update the Cholesky factor of the GP covariance inverse after online dataset changes.",
+            "evidence": [
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "state-action to state-difference GP training",
+            "detail": "Use state-action tuples as GP inputs and next-state differences as training targets.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control"
+            ]
+          },
+          {
+            "name": "condition-independent GP outputs",
+            "detail": "Train conditionally independent GPs for each target dimension of the dynamics model.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control"
+            ]
+          },
+          {
+            "name": "safe or active data collection for dynamics learning",
+            "detail": "Choose exploratory actions or operating points to collect informative data while maintaining safety or control performance.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "uncertainty-aware control evaluation",
+            "detail": "Use predictive uncertainty or confidence intervals from the learned dynamics inside downstream control evaluation.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "periodic excitation for frequency-response identification",
+            "detail": "Use periodic excitations, split measurements into periods, and average spectra for FRF estimation.",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "anti-aliasing and synchronization checks",
+            "detail": "Apply anti-alias filters and ensure synchronization between excitation generation and data acquisition.",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "FFT/DFT spectral estimation",
+            "detail": "Compute frequency-domain estimates using DFT/FFT and average input/output spectra before division.",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "multisine or PRBS excitation",
+            "detail": "Use periodic multisines or PRBS signals to excite multiple frequencies simultaneously.",
+            "evidence": [
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function"
+            ]
+          },
+          {
+            "name": "SINDy sparsity sweep with validation selection",
+            "detail": "Sweep the sparsity parameter and select the candidate sparse model with lowest validation error.",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "derivative estimation with TVRegDiff",
+            "detail": "Compute time derivatives using total-variation-regularized differentiation before sparse identification.",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "noise-robustness sweep",
+            "detail": "Add Gaussian measurement noise and sweep noise levels to quantify robustness of identified models.",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "data-usage sweep",
+            "detail": "Randomly subsample percentages of the dataset across repeated trials to evaluate data requirements.",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "train/validation split for sparse identification",
+            "detail": "Use an explicit train/validation split, such as 80% training and 20% validation, for model selection.",
+            "evidence": [
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "hybrid versus purely data-driven comparison",
+            "detail": "Compare mechanistic-plus-ML models against purely data-driven learned dynamical models.",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "continuous-time versus discrete-time framing comparison",
+            "detail": "Evaluate model-error learning under continuous-time and discrete-time formulations, especially with irregular or undersampled data.",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "hidden-dynamics learning with data assimilation",
+            "detail": "Use data assimilation to learn hidden dynamics from noisy, partially observed measurements.",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 3,
+        "evidence_links_dropped": 5
+      }
+    },
+    {
+      "subfield": "Statistical Learning Theory",
+      "menu": {
+        "datasets": [
+          {
+            "name": "finite trajectories or sequence samples from dynamical systems",
+            "role": "train",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "i.i.d. Gaussian inputs and noise for controlled dynamical-system learning",
+            "role": "train",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "independent validation sets or validation trajectories",
+            "role": "eval",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "Monte Carlo samples from known distributions",
+            "role": "robustness_eval",
+            "evidence": [
+              "Standard errors: A review and evaluation of standard error estimators using Monte Carlo simulations"
+            ]
+          },
+          {
+            "name": "Lorenz '63 and Lorenz '96 multiscale systems",
+            "role": "eval",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Gaussian process regression / GP dynamics models",
+            "role": "method_under_test",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "neural network predictors or policies",
+            "role": "method_under_test",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "A survey of uncertainty in deep neural networks",
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "kernel-based regression methods",
+            "role": "method_under_test",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "linear dynamical systems / linear time-invariant models",
+            "role": "backbone",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "Bayesian neural networks",
+            "role": "method_under_test",
+            "evidence": [
+              "A survey of uncertainty in deep neural networks",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "recurrent neural networks",
+            "role": "method_under_test",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems",
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "empirical risk minimization optimized by gradient descent or SGD",
+            "role": "method_under_test",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "generalized linear models",
+            "role": "backbone",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "over-parameterized LTI models",
+            "role": "method_under_test",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "confidence-interval coverage / uncertainty-bound validity",
+            "direction": "higher_better",
+            "evidence": [
+              "A survey of uncertainty in deep neural networks",
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees",
+              "Standard errors: A review and evaluation of standard error estimators using Monte Carlo simulations"
+            ]
+          },
+          {
+            "name": "mean squared error / squared loss / prediction error",
+            "direction": "lower_better",
+            "evidence": [
+              "A survey of uncertainty in deep neural networks",
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "validation risk or validation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "log-likelihood / marginal likelihood / evidence",
+            "direction": "higher_better",
+            "evidence": [
+              "A survey of uncertainty in deep neural networks",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "generalization error",
+            "direction": "lower_better",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "excess risk",
+            "direction": "lower_better",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          },
+          {
+            "name": "population risk",
+            "direction": "lower_better",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "parameter estimation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "uniform gradient convergence bound",
+            "direction": "lower_better",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "statistical error rate",
+            "direction": "lower_better",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "sample complexity",
+            "direction": "lower_better",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "calibration quality",
+            "direction": "higher_better",
+            "evidence": [
+              "A survey of uncertainty in deep neural networks"
+            ]
+          },
+          {
+            "name": "cross-validation score",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "AIC / BIC",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "independent validation evaluation",
+            "detail": "Use a held-out validation set or validation trajectories to estimate validation risk/error for model assessment or selection.",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "gradient-based empirical risk minimization",
+            "detail": "Optimize empirical objectives with gradient descent, projected SGD, or stochastic first-order methods.",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "Gradient Descent Learns Linear Dynamical Systems",
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "confidence-based validation or verification",
+            "detail": "Use statistical confidence intervals, uncertainty bounds, or Hoeffding-style validation to support finite-sample guarantees.",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Nonparametric Data-Driven Modeling of Linear Systems: Estimating the Frequency Response and Impulse Response Function",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees",
+              "Standard errors: A review and evaluation of standard error estimators using Monte Carlo simulations"
+            ]
+          },
+          {
+            "name": "hyperparameter tuning by validation or cross-validation",
+            "detail": "Tune hyperparameters using validation data or cross-validation rather than test data.",
+            "evidence": [
+              "Deep networks for system identification: A survey"
+            ]
+          },
+          {
+            "name": "model selection by validation error or information criteria",
+            "detail": "Select among candidate models using validation error, AIC, BIC, or cross-validation.",
+            "evidence": [
+              "Deep networks for system identification: A survey",
+              "SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics"
+            ]
+          },
+          {
+            "name": "finite-trajectory learning with truncation/subsampling",
+            "detail": "Learn from a single finite trajectory by truncating into sub-trajectories and subsampling to control dependence.",
+            "evidence": [
+              "Non-asymptotic and Accurate Learning of Nonlinear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "i.i.d. sequence sampling for SGD analysis",
+            "detail": "Analyze SGD using fresh independently sampled input-output sequences of fixed length per iteration.",
+            "evidence": [
+              "Gradient Descent Learns Linear Dynamical Systems"
+            ]
+          },
+          {
+            "name": "GP hyperparameter selection by marginal likelihood",
+            "detail": "Fit GP hyperparameters using log marginal likelihood or evidence maximization, with fixed hyperparameters during online updates when specified.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "Monte Carlo coverage evaluation",
+            "detail": "Evaluate standard-error or confidence-interval procedures by repeated Monte Carlo sampling and empirical coverage checks.",
+            "evidence": [
+              "Standard errors: A review and evaluation of standard error estimators using Monte Carlo simulations"
+            ]
+          },
+          {
+            "name": "generalization-scaling assessment",
+            "detail": "Assess how excess risk or generalization error scales with the training time interval or sample size.",
+            "evidence": [
+              "A framework for machine learning of model error in dynamical systems"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1
+      }
+    },
+    {
+      "subfield": "Model-based Reinforcement Learning",
+      "menu": {
+        "datasets": [
+          {
+            "name": "simulated pendulum / inverted pendulum benchmark",
+            "role": "eval",
+            "evidence": [
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "continuous stirred tank reactor (CSTR) benchmark (discrete-time)",
+            "role": "eval",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "RMPC sampled state-controller dataset",
+            "role": "train",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "validation trajectories with uniformly sampled initial conditions",
+            "role": "eval",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "simulated race car one-lap dataset",
+            "role": "train",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars"
+            ]
+          },
+          {
+            "name": "online GP-MPC training dataset / incoming datapoints",
+            "role": "train",
+            "evidence": [
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "simulated and real seven-degree-of-freedom robotic manipulator data",
+            "role": "eval",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control"
+            ]
+          },
+          {
+            "name": "quadrotor system real-world experiments",
+            "role": "eval",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Gaussian process dynamics model",
+            "role": "backbone",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "Model Predictive Control variants (MPC / NMPC / RMPC / GP-MPC / uncertainty-aware MPC)",
+            "role": "method_under_test",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "neural network policy or controller approximator",
+            "role": "backbone",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "robust or safety-filtered control models",
+            "role": "method_under_test",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "sparse or recursive Gaussian process model",
+            "role": "method_under_test",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "Bayesian uncertainty models",
+            "role": "backbone",
+            "evidence": [
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "PILCO / GP-based model-based policy search",
+            "role": "method_under_test",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control"
+            ]
+          },
+          {
+            "name": "Control Barrier Function / Exponential Control Barrier Function controller",
+            "role": "method_under_test",
+            "evidence": [
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics"
+            ]
+          },
+          {
+            "name": "Quadratically Constrained Quadratic Program safe controller",
+            "role": "method_under_test",
+            "evidence": [
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics"
+            ]
+          },
+          {
+            "name": "Linear Quadratic Regulator",
+            "role": "baseline",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "nominal physics-based dynamics model",
+            "role": "baseline",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars"
+            ]
+          },
+          {
+            "name": "classical and adaptive control baselines",
+            "role": "baseline",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "constraint or safety satisfaction",
+            "direction": "higher_better",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "trajectory, control, or cumulative cost",
+            "direction": "lower_better",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "model prediction or dynamics approximation error",
+            "direction": "lower_better",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Probabilistic Safety Constraints for Learned High Relative Degree System Dynamics"
+            ]
+          },
+          {
+            "name": "posterior variance / predictive uncertainty",
+            "direction": "lower_better",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "closed-loop stability / region of attraction",
+            "direction": "higher_better",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "online computation or solver time",
+            "direction": "lower_better",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "control or tracking performance",
+            "direction": "higher_better",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control"
+            ]
+          },
+          {
+            "name": "GP marginal likelihood / evidence",
+            "direction": "higher_better",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "sample efficiency of online learning",
+            "direction": "higher_better",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control"
+            ]
+          },
+          {
+            "name": "lap time",
+            "direction": "lower_better",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "finite-horizon or receding-horizon MPC evaluation",
+            "detail": "Use a fixed prediction horizon, solve the MPC problem repeatedly, and apply the first control action before re-solving.",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Learning an Approximate Model Predictive Controller With Guarantees",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "online model learning or adaptation",
+            "detail": "Update the learned dynamics or inverse-dynamics model during operation from newly collected interaction data.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "uncertainty-aware safety verification or constraint tightening",
+            "detail": "Use GP confidence intervals, posterior variance, or chance-constraint tightening to enforce safety under model uncertainty.",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "uncertainty-driven safe exploration",
+            "detail": "Select exploratory states or actions using posterior uncertainty while restricting actions to a verified safe set or safe controller.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Safe Model-based Reinforcement Learning with Stability Guarantees"
+            ]
+          },
+          {
+            "name": "GP hyperparameter selection by marginal likelihood",
+            "detail": "Learn GP hyperparameters offline by evidence or log marginal likelihood maximization; keep them fixed during online updates when required.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Online learning\u2010based model predictive control with Gaussian process models and stability guarantees"
+            ]
+          },
+          {
+            "name": "state-action transition learning for dynamics models",
+            "detail": "Train dynamics models from state-action tuples, commonly predicting next-state differences or next outputs.",
+            "evidence": [
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control"
+            ]
+          },
+          {
+            "name": "offline-to-online learning workflow",
+            "detail": "Initialize from prior data or past experience, then continue learning from current robot interactions.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Safe Learning in Robotics: From Learning-Based Control to Safe Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "baseline comparison against nominal, robust, or adaptive controllers",
+            "detail": "Compare learned model-based controllers to nominal MPC, reference controllers, LQR, classical, or adaptive control baselines.",
+            "evidence": [
+              "Active Learning of Discrete-Time Dynamics for Uncertainty-Aware Model Predictive Control",
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Efficient Learning of Inverse Dynamics Models for Adaptive Computed Torque Control",
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "statistical validation over sampled trajectories",
+            "detail": "Validate controller approximation or safety empirically over many sampled trajectories, optionally using concentration bounds such as Hoeffding's inequality.",
+            "evidence": [
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          },
+          {
+            "name": "sparse GP approximation for real-time control",
+            "detail": "Use inducing inputs or dynamic sparse GP updates to reduce computational cost inside MPC.",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars"
+            ]
+          },
+          {
+            "name": "control saturation or input constraint handling",
+            "detail": "Enforce action bounds through tightened constraints, input sets, or squashing functions before applying controls.",
+            "evidence": [
+              "Cautious NMPC with Gaussian Process Dynamics for Autonomous Miniature Race Cars",
+              "Gaussian Processes for Data-Efficient Learning in Robotics and Control",
+              "Learning an Approximate Model Predictive Controller With Guarantees"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Verify that the operating conditions are explicitly defined and that the learned discrete-time dynamics model is non-vacuously predictive before testing any error bound",
+      "dataset": "simulated pendulum / inverted pendulum benchmark",
+      "model": "Gaussian process dynamics model",
+      "method_under_test": "Gaussian process dynamics model",
+      "attack_or_condition": "state-action transition learning for dynamics models",
+      "metrics": [
+        "one-step-ahead prediction error / mean squared error",
+        "model prediction or dynamics approximation error"
+      ],
+      "pass_condition": "Using 10000 training transitions sampled inside the declared operating box and 2000 independent validation transitions from the same condition, the GP one-step state-difference predictor must achieve validation MSE <= 0.50 times the MSE of a zero-order-hold predictor and 100% of validation state-action pairs must lie inside the declared operating box. Failure of either condition refutes the claim for this operating condition/data regime because the prerequisite learned dynamics system is not established.",
+      "constraints_not_enforced": [
+        "Does not test the error bound itself",
+        "Does not test statistical-confidence coverage",
+        "Does not test long-horizon or trajectory-wise always-overestimating behavior",
+        "Does not test real robotic data"
+      ],
+      "depends_on": [],
+      "rationale": "A cheap system-identification prerequisite is to check that the learned dynamics model has non-trivial one-step predictive skill on independent data drawn from the stated operating condition.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Construct and validate a non-trivial statistical error model for the learned dynamics model",
+      "dataset": "simulated pendulum / inverted pendulum benchmark",
+      "model": "Gaussian process dynamics model",
+      "method_under_test": "Gaussian process dynamics model",
+      "attack_or_condition": "independent validation evaluation",
+      "metrics": [
+        "error bound",
+        "confidence-interval coverage / uncertainty-bound validity",
+        "prediction uncertainty / posterior variance"
+      ],
+      "pass_condition": "Fit a 95% one-step Euclidean prediction-error bound b(x,u) from the GP predictive uncertainty using a calibration split, then evaluate on a separate apparatus-validation split of at least 5000 transitions. Pass only if empirical pointwise coverage Pr(||x_{t+1}-xhat_{t+1}||_2 <= b(x_t,u_t)) is >= 0.95 and the median bound is <= 0.50 times the operating-box one-step state-difference diameter. If coverage is < 0.95, or if the bound is larger than this non-triviality threshold, the apparatus is invalid.",
+      "constraints_not_enforced": [
+        "Does not establish trajectory-wise always-overestimating behavior",
+        "Does not establish coverage on real robotic systems",
+        "Does not prove validity outside the declared operating box",
+        "Uses 95% as the tested statistical confidence level"
+      ],
+      "depends_on": [
+        "Verify that the operating conditions are explicitly defined and that the learned discrete-time dynamics model is non-vacuously predictive before testing any error bound"
+      ],
+      "rationale": "Uncertainty-bound validation on an independent split is the standard statistical-learning check that the fitted error model is both calibrated and not merely a vacuous worst-case bound.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Directly test whether the learned error model overestimates the true discrete-time dynamics error with the claimed statistical confidence on independent simulated trajectories",
+      "dataset": "simulated pendulum / inverted pendulum benchmark",
+      "model": "Gaussian process dynamics model",
+      "method_under_test": "Gaussian process dynamics model",
+      "attack_or_condition": "statistical validation over sampled trajectories",
+      "metrics": [
+        "error bound",
+        "confidence-interval coverage / uncertainty-bound validity",
+        "long-term prediction error / rollout error"
+      ],
+      "pass_condition": "On 1000 independent test trajectories of length 200 with uniformly sampled initial conditions and admissible controls inside the declared operating box, mark a trajectory successful only if ||x_{t+1}-xhat_{t+1}||_2 <= b(x_t,u_t) for every time step t. Pass only if the one-sided 95% Clopper-Pearson lower confidence bound on the successful-trajectory probability is >= 0.95 and the median per-step bound remains <= 0.50 times the operating-box one-step state-difference diameter. Any violation of the lower-confidence-bound criterion refutes the always-overestimates-up-to-statistical-confidence claim for this condition.",
+      "constraints_not_enforced": [
+        "Does not exhaustively quantify over every continuous state-action point between sampled trajectories",
+        "Does not test physical robot measurement noise",
+        "Does not test confidence levels other than 95%",
+        "Does not test operating conditions outside the declared box"
+      ],
+      "depends_on": [
+        "Construct and validate a non-trivial statistical error model for the learned dynamics model"
+      ],
+      "rationale": "The claim's central assertion is simultaneous overestimation of true error with statistical confidence; trajectory-level coverage is the standard direct Monte Carlo validation for discrete-time learned dynamics.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Test the same statistical error-bound claim on robotic manipulator data rather than only on a simulated benchmark",
+      "dataset": "simulated and real seven-degree-of-freedom robotic manipulator data",
+      "model": "Bayesian neural network",
+      "method_under_test": "Bayesian neural network",
+      "attack_or_condition": "independent validation evaluation",
+      "metrics": [
+        "error bound",
+        "confidence-interval coverage / uncertainty-bound validity",
+        "model prediction or dynamics approximation error"
+      ],
+      "pass_condition": "Train the Bayesian neural-network dynamics model on the training portion of the manipulator transition data, fit a 95% error bound using a calibration split, and evaluate on held-out validation trajectories. A trajectory is successful only if the observed one-step Euclidean prediction error is <= the predicted error bound at every step. Pass only if the one-sided 95% Clopper-Pearson lower confidence bound on successful-trajectory probability is >= 0.95 and the median bound is <= 0.75 times the median bound of the trivial operating-range diameter bound. Otherwise refute the claim for this robotic-data operating condition.",
+      "constraints_not_enforced": [
+        "Uses observed transition error as the true error, not an unobserved noise-free latent dynamics error",
+        "Does not test every possible robotic platform",
+        "Does not test operating conditions outside the recorded manipulator regime",
+        "Uses 95% as the tested statistical confidence level"
+      ],
+      "depends_on": [
+        "Construct and validate a non-trivial statistical error model for the learned dynamics model"
+      ],
+      "rationale": "A real robotic manipulator dataset is a standard model-based-RL/system-identification setting; validating uncertainty bounds on held-out trajectories tests whether the claim survives realistic robotic data rather than only simulation.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Show that successful coverage is attributable to the learned non-trivial error model rather than to arbitrary conservative widening or random bounds",
+      "dataset": "simulated pendulum / inverted pendulum benchmark",
+      "model": "Gaussian process dynamics model",
+      "method_under_test": "Gaussian process dynamics model",
+      "attack_or_condition": "confidence-based validation or verification",
+      "metrics": [
+        "error bound",
+        "confidence-interval coverage / uncertainty-bound validity",
+        "prediction uncertainty / posterior variance"
+      ],
+      "pass_condition": "Repeat the headline simulated-trajectory test with two matched-budget ablations: (i) replace b(x,u) by a constant bound equal to the full model's median bound, and (ii) randomly permute b(x,u) across test state-action pairs, preserving the same bound distribution. The control passes only if the full learned error model has one-sided 95% lower successful-trajectory coverage >= 0.95, while each ablation either has lower confidence bound < 0.95 or has empirical successful-trajectory coverage at least 5 percentage points below the full model at the same median bound. If ablations also satisfy the same coverage and tightness criteria, the mechanism-specific claim is not supported.",
+      "constraints_not_enforced": [
+        "Does not compare against every possible alternative uncertainty method",
+        "Does not test real robotic data",
+        "Does not prove validity outside sampled operating conditions"
+      ],
+      "depends_on": [
+        "Directly test whether the learned error model overestimates the true discrete-time dynamics error with the claimed statistical confidence on independent simulated trajectories"
+      ],
+      "rationale": "Ablating the state/action-dependent learned error model while matching bound size tests whether the result is caused by the claimed error-model mechanism rather than by vacuous conservatism or chance.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Check the claim's sufficient-data dependence by sweeping data size and verifying that valid non-trivial bounds emerge only when enough data are provided",
+      "dataset": "simulated pendulum / inverted pendulum benchmark",
+      "model": "Gaussian process dynamics model",
+      "method_under_test": "Gaussian process dynamics model",
+      "attack_or_condition": "generalization-scaling assessment",
+      "metrics": [
+        "error bound",
+        "confidence-interval coverage / uncertainty-bound validity",
+        "sample complexity",
+        "one-step-ahead prediction error / mean squared error"
+      ],
+      "pass_condition": "Train and calibrate the same GP dynamics/error-bound pipeline with n in {500, 2000, 10000, 50000} transitions, using identical operating conditions and independent 1000-trajectory test sets. Pass only if there exists at least one n <= 50000 for which the one-sided 95% lower successful-trajectory coverage is >= 0.95 and the median bound is <= 0.50 times the operating-box one-step state-difference diameter, and if increasing n from 500 to that passing n reduces validation MSE by at least 25%. If no tested data size reaches the coverage and non-triviality thresholds, the sufficient-data claim is refuted for this benchmark and data budget.",
+      "constraints_not_enforced": [
+        "Does not prove that some larger untested data size could not eventually pass",
+        "Does not test all robotic systems",
+        "Does not test outside the declared operating box",
+        "Uses 95% as the tested statistical confidence level"
+      ],
+      "depends_on": [
+        "Directly test whether the learned error model overestimates the true discrete-time dynamics error with the claimed statistical confidence on independent simulated trajectories"
+      ],
+      "rationale": "Statistical learning theory expects uncertainty validity and tightness to improve with sample size; a sample-complexity sweep checks the claim's explicit sufficient-data qualifier.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

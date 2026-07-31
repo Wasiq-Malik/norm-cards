@@ -1,0 +1,1515 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "33",
+  "problem_version": "1.0",
+  "domain": "ai",
+  "claim": "Sandbagging (strategic underperformance) on a randomly selected 1,000-problem subset of GSM8K math word problems in Llama\u20113 is mediated by fewer than 50 attention heads in the final 10 layers. Using direct logit attribution to the correct\u2013decoy logit gap, we select heads on a train/validation split whose contributions flip sign between honest and sandbagging contexts in at least 70% of prompts (significantly above chance); ablating or patching this head set yields a statistically significant reduction in the honest\u2013sandbagging logit gap and corresponding accuracy gap on the held-out validation split.",
+  "analysis": {
+    "subfields": [
+      "Math",
+      "Reasoning",
+      "Classic Language Modeling"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T10028",
+      "T10181",
+      "T10260"
+    ],
+    "openalex_topic_names": [
+      "Topic Modeling",
+      "Natural Language Processing Techniques",
+      "Software Engineering Research"
+    ],
+    "claim_type": "empirical",
+    "temporal_mode": "static",
+    "entities": {
+      "models": [
+        "Llama-3"
+      ],
+      "datasets": [
+        "GSM8K",
+        "randomly selected 1,000-problem subset of GSM8K",
+        "train/validation split",
+        "held-out validation split"
+      ],
+      "metrics": [
+        "correct\u2013decoy logit gap",
+        "honest\u2013sandbagging logit gap",
+        "accuracy gap",
+        "flip-sign frequency (per-head across prompts)",
+        "statistical significance (above chance)"
+      ],
+      "thresholds": [
+        "1,000 problems",
+        "fewer than 50 attention heads",
+        "final 10 layers",
+        "flip sign in at least 70% of prompts",
+        "statistically significant reduction (unspecified p-value)"
+      ]
+    },
+    "confidence": 0.9,
+    "method": "llm"
+  },
+  "queries": {
+    "survey": [
+      "math reasoning surveys",
+      "language model interpretability survey",
+      "mechanistic interpretability review"
+    ],
+    "benchmark_dataset": [
+      "GSM8K dataset paper",
+      "math word problems datasets",
+      "GSM8K evaluation protocol",
+      "reasoning benchmarks comparison"
+    ],
+    "canonical_method": [
+      "chain of thought prompting",
+      "logit attribution method",
+      "attention head ablation",
+      "causal mediation interpretability"
+    ],
+    "sota_leaderboard": [
+      "GSM8K leaderboard",
+      "math reasoning leaderboard",
+      "reasoning benchmark results"
+    ],
+    "entity_anchored": [
+      "Llama-3 GSM8K evaluation",
+      "Llama-3 attention head analysis",
+      "correct decoy logit gap",
+      "direct logit attribution paper",
+      "sandbagging strategic underperformance"
+    ],
+    "intersection": [
+      "math reasoning language models",
+      "attention heads reasoning math",
+      "mechanistic interpretability reasoning datasets"
+    ]
+  },
+  "stats": {
+    "n_queries": 22,
+    "n_candidates": 293,
+    "n_selected": 30,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 53.6
+  },
+  "papers": [
+    {
+      "title": "A Survey of Large Language Models",
+      "abstract": "Abstract The rapid evolution of large language models (LLMs) has driven a transformative shift in artificial intelligence (AI), reshaping both research paradigms and practical applications. Distinguished from their predecessors by unprecedented scale and advanced capabilities, LLMs necessitate new frameworks for understanding their development, behavior, and societal impact. This survey systematically reviews recent advancements in LLM techniques across four key dimensions: (1) pre-training methodologies, which establish core model capabilities through large-scale self-supervised training, architectural innovations, and data curation strategies; (2) post-training techniques, including supervised fine-tuning and reinforcement learning, which adapt foundational models to downstream tasks and enhance their alignment and safety; (3) utilization strategies, such as in-context learning, prompt engineering, and agentic reasoning, that optimize real-world deployment and enable effective interaction with external environments; and (4) evaluation methods, encompassing benchmarks for key ability dimensions such as core language capabilities, reasoning, and safety, which support comprehensive and reliable assessment of model performance. Additionally, we identify critical research issues, including those concerning theoretical foundations, efficient scaling, alignment, and agentic capability, and highlight the open challenges they present. By synthesizing state-of-the-art insights and emerging trends, this survey aims to provide a systematic and comprehensive framework for understanding the trajectory, current limitations, and future directions of LLM progress.",
+      "authors": [
+        "Wayne Xin Zhao",
+        "Kun Zhou",
+        "Junyi Li",
+        "Tianyi Tang",
+        "Xiaolei Wang",
+        "Yupeng Hou",
+        "Yingqian Min",
+        "Beichen Zhang",
+        "Junjie Zhang",
+        "Zican Dong",
+        "Yifan Du",
+        "Yang Chen",
+        "Yushuo Chen",
+        "Zhipeng Chen",
+        "Jinhao Jiang",
+        "Ruiyang Ren",
+        "Yifan Li",
+        "Xinyu Tang",
+        "Zikang Liu",
+        "Peiyu Liu",
+        "Jian\u2010Yun Nie",
+        "Ji-Rong Wen",
+        "Ji-Rong Wen"
+      ],
+      "year": 2026,
+      "venue": "Frontiers of Computer Science",
+      "citations": 1417,
+      "url": "https://openalex.org/W4362515116",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11704-026-60308-3.pdf",
+      "doi": "10.1007/s11704-026-60308-3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Language model",
+        "Mainstream",
+        "Scale (ratio)",
+        "Scaling"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K evaluation protocol",
+        "Llama-3 GSM8K evaluation",
+        "attention heads reasoning math",
+        "language model interpretability survey",
+        "math reasoning language models",
+        "math reasoning surveys",
+        "mechanistic interpretability reasoning datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored",
+        "intersection",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 835.56384,
+      "paper_type": "survey",
+      "score": 5.4304
+    },
+    {
+      "title": "Large language models encode clinical knowledge",
+      "abstract": "Abstract Large language models (LLMs) have demonstrated impressive capabilities, but the bar for clinical applications is high. Attempts to assess the clinical knowledge of models typically rely on automated evaluations based on limited benchmarks. Here, to address these limitations, we present MultiMedQA, a benchmark combining six existing medical question answering datasets spanning professional medicine, research and consumer queries and a new dataset of medical questions searched online, HealthSearchQA. We propose a human evaluation framework for model answers along multiple axes including factuality, comprehension, reasoning, possible harm and bias. In addition, we evaluate Pathways Language Model 1 (PaLM, a 540-billion parameter LLM) and its instruction-tuned variant, Flan-PaLM 2 on MultiMedQA. Using a combination of prompting strategies, Flan-PaLM achieves state-of-the-art accuracy on every MultiMedQA multiple-choice dataset (MedQA 3 , MedMCQA 4 , PubMedQA 5 and Measuring Massive Multitask Language Understanding (MMLU) clinical topics 6 ), including 67.6% accuracy on MedQA (US Medical Licensing Exam-style questions), surpassing the prior state of the art by more than 17%. However, human evaluation reveals key gaps. To resolve this, we introduce instruction prompt tuning, a parameter-efficient approach for aligning LLMs to new domains using a few exemplars. The resulting model, Med-PaLM, performs encouragingly, but remains inferior to clinicians. We show that comprehension, knowledge recall and reasoning improve with model scale and instruction prompt tuning, suggesting the potential utility of LLMs in medicine. Our human evaluations reveal limitations of today\u2019s models, reinforcing the importance of both evaluation frameworks and method development in creating safe, helpful LLMs for clinical applications.",
+      "authors": [
+        "Karan Singhal",
+        "Shekoofeh Azizi",
+        "Tao Tu",
+        "S. Sara Mahdavi",
+        "Jason Lee",
+        "Hyung Won Chung",
+        "Nathan Scales",
+        "Ajay Kumar Tanwani",
+        "Heather Cole-Lewis",
+        "Stephen Pfohl",
+        "Perry W. Payne",
+        "Martin Seneviratne",
+        "Paul Gamble",
+        "Christopher Kelly",
+        "Abubakr Babiker",
+        "Nathanael Sch\u00e4rli",
+        "Aakanksha Chowdhery",
+        "P. Mansfield",
+        "Dina Demner\u2010Fushman",
+        "Blaise Ag\u00fcera y Arcas",
+        "Dale R. Webster",
+        "Greg S. Corrado",
+        "Yossi Matias",
+        "Katherine Chou",
+        "Juraj Gottweis"
+      ],
+      "year": 2023,
+      "venue": "Nature",
+      "citations": 3278,
+      "url": "https://openalex.org/W4384071683",
+      "pdf_url": "https://www.nature.com/articles/s41586-023-06291-2.pdf",
+      "doi": "10.1038/s41586-023-06291-2",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Benchmark (surveying)",
+        "Comprehension",
+        "Computer science",
+        "Harm",
+        "Language model"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11636"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "language model interpretability survey",
+        "math reasoning language models",
+        "reasoning benchmark results",
+        "reasoning benchmarks comparison"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "intersection",
+        "sota_leaderboard",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 847.6692,
+      "paper_type": "benchmark",
+      "score": 5.3891
+    },
+    {
+      "title": "Towards Reasoning in Large Language Models: A Survey",
+      "abstract": "Reasoning is a fundamental aspect of human intelligence that plays a crucial role in activities such as problem solving, decision making, and critical thinking. In recent years, large language models (LLMs) have made significant progress in natural language processing, and there is observation that these models may exhibit reasoning abilities when they are sufficiently large. However, it is not yet clear to what extent LLMs are capable of reasoning. This paper provides a comprehensive overview of the current state of knowledge on reasoning in LLMs, including techniques for improving and eliciting reasoning in these models, methods and benchmarks for evaluating reasoning abilities, findings and implications of previous research in this field, and suggestions on future directions. Our aim is to provide a detailed and up-to-date review of this topic and stimulate meaningful discussion and future work.",
+      "authors": [
+        "Jie Huang",
+        "Kevin Chen\u2013Chuan Chang"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 350,
+      "url": "https://openalex.org/W4385571689",
+      "pdf_url": "https://aclanthology.org/2023.findings-acl.67.pdf",
+      "doi": "10.18653/v1/2023.findings-acl.67",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Cognitive science",
+        "Computer science",
+        "Field (mathematics)",
+        "Management science",
+        "Psychology",
+        "Verbal reasoning"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11273"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning surveys",
+        "reasoning benchmarks comparison"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 339.06262,
+      "paper_type": "survey",
+      "score": 5.0403
+    },
+    {
+      "title": "A survey on multimodal large language models",
+      "abstract": "Recently, the multimodal large language model (MLLM) represented by GPT-4V has been a new rising research hotspot, which uses powerful large language models (LLMs) as a brain to perform multimodal tasks. The surprising emergent capabilities of the MLLM, such as writing stories based on images and optical character recognition-free math reasoning, are rare in traditional multimodal methods, suggesting a potential path to artificial general intelligence. To this end, both academia and industry have endeavored to develop MLLMs that can compete with or even outperform GPT-4V, pushing the limit of research at a surprising speed. In this paper, we aim to trace and summarize the recent progress of MLLMs. First, we present the basic formulation of the MLLM and delineate its related concepts, including architecture, training strategy and data, as well as evaluation. Then, we introduce research topics about how MLLMs can be extended to support more granularity, modalities, languages and scenarios. We continue with multimodal hallucination and extended techniques, including multimodal in-context learning, multimodal chain of thought and LLM-aided visual reasoning. To conclude the paper, we discuss existing challenges and point out promising research directions.",
+      "authors": [
+        "Shukang Yin",
+        "Chaoyou Fu",
+        "Sirui Zhao",
+        "Ke Li",
+        "Xing Sun",
+        "Tong Xu",
+        "Enhong Chen"
+      ],
+      "year": 2024,
+      "venue": "National Science Review",
+      "citations": 583,
+      "url": "https://openalex.org/W4404356490",
+      "pdf_url": "https://doi.org/10.1093/nsr/nwae403",
+      "doi": "10.1093/nsr/nwae403",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Linguistics",
+        "Philosophy"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning language models",
+        "math reasoning surveys"
+      ],
+      "buckets": [
+        "intersection",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 566.0061,
+      "paper_type": "survey",
+      "score": 4.6245
+    },
+    {
+      "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+      "abstract": "Large Language Models (LLMs) showcase impressive capabilities but encounter challenges like hallucination, outdated knowledge, and non-transparent, untraceable reasoning processes. Retrieval-Augmented Generation (RAG) has emerged as a promising solution by incorporating knowledge from external databases. This enhances the accuracy and credibility of the generation, particularly for knowledge-intensive tasks, and allows for continuous knowledge updates and integration of domain-specific information. RAG synergistically merges LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases. This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG. It meticulously scrutinizes the tripartite foundation of RAG frameworks, which includes the retrieval, the generation and the augmentation techniques. The paper highlights the state-of-the-art technologies embedded in each of these critical components, providing a profound understanding of the advancements in RAG systems. Furthermore, this paper introduces up-to-date evaluation framework and benchmark. At the end, this article delineates the challenges currently faced and points out prospective avenues for research and development.",
+      "authors": [
+        "Yunfan Gao",
+        "Yun Xiong",
+        "Xinyu Gao",
+        "Kangxiang Jia",
+        "Jinliu Pan",
+        "Yuxi Bi",
+        "Yi Dai",
+        "Jiawei Sun",
+        "Wang, Meng",
+        "Wang, Haofen"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 670,
+      "url": "https://openalex.org/W4389984066",
+      "pdf_url": "https://arxiv.org/pdf/2312.10997",
+      "doi": "10.48550/arxiv.2312.10997",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Computer science",
+        "Credibility",
+        "Data science",
+        "Domain (mathematical analysis)",
+        "Modular design"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning leaderboard",
+        "math reasoning surveys"
+      ],
+      "buckets": [
+        "sota_leaderboard",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 227.89507,
+      "paper_type": "survey",
+      "score": 4.5007
+    },
+    {
+      "title": "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing",
+      "abstract": "This article surveys and organizes research works in a new paradigm in natural language processing, which we dub \u201cprompt-based learning.\u201d Unlike traditional supervised learning, which trains a model to take in an input x and predict an output y as P ( y|x ), prompt-based learning is based on language models that model the probability of text directly. To use these models to perform prediction tasks, the original input x is modified using a template into a textual string prompt x\u2032 that has some unfilled slots, and then the language model is used to probabilistically fill the unfilled information to obtain a final string x\u0302 , from which the final output y can be derived. This framework is powerful and attractive for a number of reasons: It allows the language model to be pre-trained on massive amounts of raw text, and by defining a new prompting function the model is able to perform few-shot or even zero-shot learning, adapting to new scenarios with few or no labeled data. In this article, we introduce the basics of this promising paradigm, describe a unified set of mathematical notations that can cover a wide variety of existing work, and organize existing work along several dimensions, e.g., the choice of pre-trained language models, prompts, and tuning strategies. To make the field more accessible to interested beginners, we not only make a systematic review of existing works and a highly structured typology of prompt-based concepts but also release other resources, e.g., a website NLPedia\u2013Pretrain including constantly updated survey and paperlist.",
+      "authors": [
+        "Pengfei Liu",
+        "Weizhe Yuan",
+        "Jinlan Fu",
+        "Zhengbao Jiang",
+        "Hiroaki Hayashi",
+        "Graham Neubig"
+      ],
+      "year": 2022,
+      "venue": "ACM Computing Surveys",
+      "citations": 3637,
+      "url": "https://openalex.org/W3185341429",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3560815",
+      "doi": "10.1145/3560815",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Variety (cybernetics)",
+        "Set (abstract data type)",
+        "Notation",
+        "Cover (algebra)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10664"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "language model interpretability survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 781.7441,
+      "paper_type": "survey",
+      "score": 3.8279
+    },
+    {
+      "title": "MWPToolkit: An Open-Source Framework for Deep Learning-Based Math Word Problem Solvers",
+      "abstract": "While Math Word Problem (MWP) solving has emerged as a popular field of study and made great progress in recent years, most existing methods are benchmarked solely on one or two datasets and implemented with different configurations. In this paper, we introduce the first open-source library for solving MWPs called MWPToolkit, which provides a unified, comprehensive, and extensible framework for the research purpose. Specifically, we deploy 17 deep learning-based MWP solvers and 6 MWP datasets in our toolkit. These MWP solvers are advanced models for MWP solving, covering the categories of Seq2seq, Seq2Tree, Graph2Tree, and Pre-trained Language Models. And these MWP datasets are popular datasets that are commonly used as benchmarks in existing work. Our toolkit is featured with highly modularized and reusable components, which can help researchers quickly get started and develop their own models. We have released the code and documentation of MWPToolkit in https://github.com/LYH-YF/MWPToolkit.",
+      "authors": [
+        "Yihuai Lan",
+        "Lei Wang",
+        "Qiyuan Zhang",
+        "Yunshi Lan",
+        "Bing Tian Dai",
+        "Yan Wang",
+        "Dongxiang Zhang",
+        "Ee\u2010Peng Lim"
+      ],
+      "year": 2022,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "citations": 38,
+      "url": "https://openalex.org/W3198845875",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/21723/21472",
+      "doi": "10.1609/aaai.v36i11.21723",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Documentation",
+        "Field (mathematics)",
+        "Open source",
+        "Source code",
+        "Word (group theory)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning leaderboard",
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 68.00576,
+      "paper_type": "method",
+      "score": 3.7717
+    },
+    {
+      "title": "TheoremQA: A Theorem-driven Question Answering Dataset",
+      "abstract": "The recent LLMs like GPT-4 and PaLM-2 have made tremendous progress in solving fundamental math problems like GSM8K by achieving over 90% accuracy. However, their capabilities to solve more challenging math problems which require domain-specific knowledge (i.e. theorem) have yet to be investigated. In this paper, we introduce TheoremQA, the first theorem-driven question-answering dataset designed to evaluate AI models\u2019 capabilities to apply theorems to solve challenging science problems. TheoremQA is curated by domain experts containing 800 high-quality questions covering 350 theorems from Math, Physics, EE&CS, and Finance. We evaluate a wide spectrum of 16 large language and code models with different prompting strategies like Chain-of-Thoughts and Program-of-Thoughts. We found that GPT-4\u2019s capabilities to solve these problems are unparalleled, achieving an accuracy of 51% with Program-of-Thoughts Prompting. All the existing open-sourced models are below 15%, barely surpassing the random-guess baseline. Given the diversity and broad coverage of TheoremQA, we believe it can be used as a better benchmark to evaluate LLMs\u2019 capabilities to solve challenging science problems.",
+      "authors": [
+        "Wenhu Chen",
+        "Ming Yin",
+        "Max Ku",
+        "Pan Lu",
+        "Yixin Wan",
+        "Xueguang Ma",
+        "Jianyu Xu",
+        "Xinyi Wang",
+        "Tony Xia"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 30,
+      "url": "https://openalex.org/W4389520703",
+      "pdf_url": "https://aclanthology.org/2023.emnlp-main.489.pdf",
+      "doi": "10.18653/v1/2023.emnlp-main.489",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Computer science",
+        "Domain (mathematical analysis)",
+        "Code (set theory)",
+        "Question answering",
+        "Quality (philosophy)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K dataset paper"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 102.86624,
+      "paper_type": "benchmark",
+      "score": 3.7606
+    },
+    {
+      "title": "AI-Assisted Pipeline for Dynamic Generation of Trustworthy Health Supplement Content at Scale",
+      "abstract": "Although geospatial question answering systems have received increasing attention in recent years, existing prototype systems struggle to properly answer qualitative spatial questions. In this work, we propose a unique framework for answering qualitative spatial questions, which comprises three main components: a geoparser that takes the input questions and extracts place semantic information from text, a reasoning system which is embedded with a crisp reasoner, and finally, answer extraction, which refines the solution space and generates final answers. We present an experimental design to evaluate our framework for point-based cardinal direction calculus (CDC) relations by developing an automated approach for generating three types of synthetic qualitative spatial questions. The initial evaluations of generated answers in our system are promising because a high proportion of answers were labelled correct.",
+      "authors": [
+        "Digdep.com"
+      ],
+      "year": 2018,
+      "venue": "DROPS (Schloss Dagstuhl \u2013 Leibniz Center for Informatics)",
+      "citations": 45719,
+      "url": "https://openalex.org/W2896457183",
+      "pdf_url": "https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.LDK.2019.21",
+      "doi": "10.4230/lipics.cosit.2022.18",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Electrical engineering",
+        "Engineering",
+        "Training (meteorology)",
+        "Transformer"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10201"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "reasoning benchmark results",
+        "reasoning benchmarks comparison"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 404.51257,
+      "paper_type": "method",
+      "score": 3.63
+    },
+    {
+      "title": "Illinois Math Solver: Math Reasoning on the Web",
+      "abstract": "There has been a recent interest in understanding text to perform mathematical reasoning.In particular, most of these efforts have focussed on automatically solving school level math word problems.In order to make advancements in this area accessible to people, as well as to facilitate this line of research, we release the ILLINOIS MATH SOLVER, a web based tool that supports performing mathematical reasoning.ILLINOIS MATH SOLVER can answer a wide range of mathematics questions, ranging from compositional operation questions like \"What is the result when 6 is divided by the sum of 7 and 5 ?\" to elementary school level math word problems, like \"I bought 6 apples.I ate 3 of them.How many do I have left ?\".The web based demo can be used as a tutoring tool for elementary school students, since it not only outputs the final result, but also the mathematical expression to compute it.The tool will allow researchers to understand the capabilities and limitations of a state of the art arithmetic problem solver, and also enable crowd based data acquisition for mathematical reasoning.",
+      "authors": [
+        "Subhro Roy",
+        "Dan Roth"
+      ],
+      "year": 2016,
+      "venue": "",
+      "citations": 26,
+      "url": "https://openalex.org/W2471059420",
+      "pdf_url": "https://www.aclweb.org/anthology/N16-3011.pdf",
+      "doi": "10.18653/v1/n16-3011",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Solver",
+        "Problem solver",
+        "Computer science",
+        "Range (aeronautics)",
+        "Mathematics education",
+        "Elementary mathematics"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning leaderboard"
+      ],
+      "buckets": [
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 0.9283202957084363,
+      "paper_type": "method",
+      "score": 3.6237
+    },
+    {
+      "title": "Mistral 7B",
+      "abstract": "We introduce Mistral 7B v0.1, a 7-billion-parameter language model engineered for superior performance and efficiency. Mistral 7B outperforms Llama 2 13B across all evaluated benchmarks, and Llama 1 34B in reasoning, mathematics, and code generation. Our model leverages grouped-query attention (GQA) for faster inference, coupled with sliding window attention (SWA) to effectively handle sequences of arbitrary length with a reduced inference cost. We also provide a model fine-tuned to follow instructions, Mistral 7B -- Instruct, that surpasses the Llama 2 13B -- Chat model both on human and automated benchmarks. Our models are released under the Apache 2.0 license.",
+      "authors": [
+        "Albert Q. Jiang",
+        "Alexandre Sablayrolles",
+        "Arthur Mensch",
+        "Chris Bamford",
+        "Devendra Singh Chaplot",
+        "Diego de Las Casas",
+        "Florian Bressand",
+        "Gianna Lengyel",
+        "Guillaume Lample",
+        "Lucile Saulnier",
+        "L\u00e9lio Renard Lavaud",
+        "Marie-Anne Lachaux",
+        "Pierre Stock",
+        "Teven Le Scao",
+        "Thibaut Lavril",
+        "Thomas J. Wang",
+        "Timoth\u00e9e Lacroix",
+        "William El Sayed"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 295,
+      "url": "https://openalex.org/W4387561528",
+      "pdf_url": "https://arxiv.org/pdf/2310.06825",
+      "doi": "10.48550/arxiv.2310.06825",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Code (set theory)",
+        "Computer science",
+        "Inference",
+        "License",
+        "Programming language",
+        "Window (computing)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12535"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K evaluation protocol",
+        "Llama-3 GSM8K evaluation",
+        "Llama-3 attention head analysis"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored"
+      ],
+      "tags": {},
+      "semantic_score": 100.973625,
+      "paper_type": "method",
+      "score": 3.5845
+    },
+    {
+      "title": "Mathematical Reasoning via Self-supervised Skip-tree Training",
+      "abstract": "We examine whether self-supervised language modeling applied to mathematical formulas enables logical reasoning. We suggest several logical reasoning tasks that can be used to evaluate language models trained on formal mathematical statements, such as type inference, suggesting missing assumptions and completing equalities. To train language models for formal mathematics, we propose a novel skip-tree task. We find that models trained on the skip-tree task show surprisingly strong mathematical reasoning abilities, and outperform models trained on standard skip-sequence tasks. We also analyze the models' ability to formulate new conjectures by measuring how often the predictions are provable and useful in other proofs.",
+      "authors": [
+        "Markus N. Rabe",
+        "Dennis Lee",
+        "Kshitij Bansal",
+        "Christian Szegedy"
+      ],
+      "year": 2021,
+      "venue": "International Conference on Learning Representations",
+      "citations": 13,
+      "url": "https://openalex.org/W3126568801",
+      "pdf_url": "https://arxiv.org/pdf/2006.04757",
+      "doi": "10.48550/arxiv.2006.04757",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Machine learning",
+        "Mathematical proof",
+        "Mathematics",
+        "Task (project management)",
+        "Training (meteorology)",
+        "Tree (set theory)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260",
+        "T11574"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning language models"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 0.9678068663049479,
+      "paper_type": "method",
+      "score": 3.5681
+    },
+    {
+      "title": "Reasoning with Language Model Prompting: A Survey",
+      "abstract": "Shuofei Qiao, Yixin Ou, Ningyu Zhang, Xiang Chen, Yunzhi Yao, Shumin Deng, Chuanqi Tan, Fei Huang, Huajun Chen. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2023.",
+      "authors": [
+        "Shuofei Qiao",
+        "Yixin Ou",
+        "Ningyu Zhang",
+        "Xiang Chen",
+        "Yunzhi Yao",
+        "Shumin Deng",
+        "Chuanqi Tan",
+        "Fei Huang",
+        "Huajun Chen"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 129,
+      "url": "https://openalex.org/W4385569771",
+      "pdf_url": "https://aclanthology.org/2023.acl-long.294.pdf",
+      "doi": "10.18653/v1/2023.acl-long.294",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Chen",
+        "Zh\u00e0ng",
+        "Computer science",
+        "Volume (thermodynamics)",
+        "Computational linguistics",
+        "Natural language processing"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning surveys"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 223.87958,
+      "paper_type": "survey",
+      "score": 3.5485
+    },
+    {
+      "title": "A Diverse Corpus for Evaluating and Developing English Math Word Problem Solvers",
+      "abstract": "We present ASDiv (Academia Sinica Diverse MWP Dataset), a diverse (in terms of both language patterns and problem types) English math word problem (MWP) corpus for evaluating the capability of various MWP solvers. Existing MWP corpora for studying AI progress remain limited either in language usage patterns or in problem types. We thus present a new English MWP corpus with 2,305 MWPs that cover more text patterns and most problem types taught in elementary school. Each MWP is annotated with its problem type and grade level (for indicating the level of difficulty). Furthermore, we propose a metric to measure the lexicon usage diversity of a given MWP corpus, and demonstrate that ASDiv is more diverse than existing corpora. Experiments show that our proposed corpus reflects the true capability of MWP solvers more faithfully.",
+      "authors": [
+        "Shen-Yun Miao",
+        "Chao-Chun Liang",
+        "Keh\u2010Yih Su"
+      ],
+      "year": 2020,
+      "venue": "",
+      "citations": 127,
+      "url": "https://openalex.org/W3034643750",
+      "pdf_url": "https://www.aclweb.org/anthology/2020.acl-main.92.pdf",
+      "doi": "10.18653/v1/2020.acl-main.92",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Natural language processing",
+        "Lexicon",
+        "Artificial intelligence",
+        "Word (group theory)",
+        "Metric (unit)"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.1103118380200716,
+      "paper_type": "benchmark",
+      "score": 3.5067
+    },
+    {
+      "title": "CLEVR-Math: A Dataset for Compositional Language, Visual and Mathematical Reasoning",
+      "abstract": "We introduce CLEVR-Math, a multi-modal math word problems dataset consisting of simple math word problems involving addition/subtraction, represented partly by a textual description and partly by an image illustrating the scenario. The text describes actions performed on the scene that is depicted in the image. Since the question posed may not be about the scene in the image, but about the state of the scene before or after the actions are applied, the solver envision or imagine the state changes due to these actions. Solving these word problems requires a combination of language, visual and mathematical reasoning. We apply state-of-the-art neural and neuro-symbolic models for visual question answering on CLEVR-Math and empirically evaluate their performances. Our results show how neither method generalise to chains of operations. We discuss the limitations of the two in addressing the task of multi-modal word problem solving.",
+      "authors": [
+        "Adam Dahlgren Lindstr\u00f6m",
+        "Savitha Sam Abraham"
+      ],
+      "year": 2022,
+      "venue": "City Research Online (City University London)",
+      "citations": 49,
+      "url": "https://openalex.org/W4290856251",
+      "pdf_url": "https://arxiv.org/pdf/2208.05358",
+      "doi": "10.48550/arxiv.2208.05358",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Visual reasoning",
+        "Subtraction",
+        "Solver",
+        "Simple (philosophy)",
+        "Word (group theory)"
+      ],
+      "topic_ids": [
+        "T11714",
+        "T10181",
+        "T11439"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.011983207202558,
+      "paper_type": "benchmark",
+      "score": 3.4731
+    },
+    {
+      "title": "Are NLP Models really able to Solve Simple Math Word Problems?",
+      "abstract": "The problem of designing NLP solvers for math word problems (MWP) has seen sustained research activity and steady gains in the test accuracy. Since existing solvers achieve high performance on the benchmark datasets for elementary level MWPs containing one-unknown arithmetic word problems, such problems are often considered \"solved\" with the bulk of research attention moving to more complex MWPs. In this paper, we restrict our attention to English MWPs taught in grades four and lower. We provide strong evidence that the existing MWP solvers rely on shallow heuristics to achieve high performance on the benchmark datasets. To this end, we show that MWP solvers that do not have access to the question asked in the MWP can still solve a large fraction of MWPs. Similarly, models that treat MWPs as bag-ofwords can also achieve surprisingly high accuracy. Further, we introduce a challenge dataset, SVAMP, created by applying carefully chosen variations over examples sampled from existing datasets. The best accuracy achieved by state-of-the-art models is substantially lower on SVAMP, thus showing that much remains to be done even for the simplest of the MWPs.",
+      "authors": [
+        "Arkil Patel",
+        "Satwik Bhattamishra",
+        "Navin Goyal"
+      ],
+      "year": 2021,
+      "venue": "",
+      "citations": 66,
+      "url": "https://openalex.org/W3138392969",
+      "pdf_url": "https://aclanthology.org/2021.naacl-main.168.pdf",
+      "doi": "10.18653/v1/2021.naacl-main.168",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Heuristics",
+        "Computer science",
+        "Word (group theory)",
+        "Simple (philosophy)",
+        "Fraction (chemistry)"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.048764669016818,
+      "paper_type": "benchmark",
+      "score": 3.473
+    },
+    {
+      "title": "Twenty Questions about Mathematical Reasoning.",
+      "abstract": "This paper poses and answers 20 questions about mathematical reasoning. Questions include: (1) Is mathematical reasoning mathematical? (2) Is mathematical reasoning useful? (3) Is mathematical reasoning an ,Ipprcpriate goal of school mathematics? (4) Can teachers teach mathematical reasoning? (5) Can mathematical reasoning be taught? (6) Do skills lead to understanding? (7) Can drills help develop mathematical reasoning? (8) Is proof essential to mathematics? (9) Does learning proofs enhance mathematical reasoning? (10) Does math anxiety prevent mathematical reasoning? (11) Do cooperative activities enhance individual understanding? (12) Can calculators and computers increase mathematical reasoning? (13) Why do so many student feel that mathematics is a foreign culture? (14) Is context essential for mathematical reasoning? (15) Must students really construct their own knowledge? (16) How many mathematics are there? (17) How does our brain do mathematics? (18) Is our brain like a computer? (19) Is the capacity for mathematics innate? and (20) Is school too late? (Contains 55 references.) (ASK) Reproductions supplied by EDRS are the best that can be made from the original document. Twenty Questions about Mathematical Reasoning PERMISSION TO REPRODUCE AND DISSEMINATE THIS MATERIAL HAS BEEN GRANTED BY TO THE EDUCATIONAL RESOURCES INFORMATION CENTER (ERIC) by Lynn Arthur Steen U.S. DEPARTMENT OF EDUCATION Office of Educational Research and Improvement EDUCATIONAL RESOURCES INFORMATION rs-Efec CENTER (ERIC) ument has been reproduced as received from the person or organization originating it. 0 Minor changes have been made to improve reproduction quality. Points of view or opinions stated in this document do not necessarily represent official OERI position or policy.",
+      "authors": [
+        "Lynn Arthur Steen"
+      ],
+      "year": 1999,
+      "venue": "",
+      "citations": 43,
+      "url": "https://openalex.org/W94090572",
+      "pdf_url": "",
+      "doi": "",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Mathematical proof",
+        "Context (archaeology)",
+        "Mathematics education",
+        "Mathematical practice",
+        "Deductive reasoning",
+        "Computer science"
+      ],
+      "topic_ids": [
+        "T11345",
+        "T10130",
+        "T14290"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning surveys"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9994475520492081,
+      "paper_type": "method",
+      "score": 3.4472
+    },
+    {
+      "title": "It Ain\u2019t Over: A Multi-aspect Diverse Math Word Problem Dataset",
+      "abstract": "The math word problem (MWP) is a complex task that requires natural language understanding and logical reasoning to extract key knowledge from natural language narratives. Previous studies have provided various MWP datasets but lack diversity in problem types, lexical usage patterns, languages, and annotations for intermediate solutions. To address these limitations, we introduce a new MWP dataset, named DMath (Diverse Math Word Problems), offering a wide range of diversity in problem types, lexical usage patterns, languages, and intermediate solutions. The problems are available in English and Korean and include an expression tree and Python code as intermediate solutions. Through extensive experiments, we demonstrate that the DMath dataset provides a new opportunity to evaluate the capability of large language models, i.e., GPT-4 only achieves about 75% accuracy on the DMath dataset.",
+      "authors": [
+        "Jiwoo Kim",
+        "Youngbin Kim",
+        "Ilwoong Baek",
+        "JinYeong Bak",
+        "Jongwuk Lee"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 3,
+      "url": "https://openalex.org/W4389523867",
+      "pdf_url": "https://aclanthology.org/2023.emnlp-main.927.pdf",
+      "doi": "10.18653/v1/2023.emnlp-main.927",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Python (programming language)",
+        "Lexical diversity",
+        "Word (group theory)",
+        "Natural language processing",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T13629"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 419.9979,
+      "paper_type": "benchmark",
+      "score": 3.4125
+    },
+    {
+      "title": "Ape210K: A Large-Scale and Template-Rich Dataset of Math Word Problems",
+      "abstract": "Automatic math word problem solving has attracted growing attention in recent years. The evaluation datasets used by previous works have serious limitations in terms of scale and diversity. In this paper, we release a new large-scale and template-rich math word problem dataset named Ape210K. It consists of 210K Chinese elementary school-level math problems, which is 9 times the size of the largest public dataset Math23K. Each problem contains both the gold answer and the equations needed to derive the answer. Ape210K is also of greater diversity with 56K templates, which is 25 times more than Math23K. Our analysis shows that solving Ape210K requires not only natural language understanding but also commonsense knowledge. We expect Ape210K to be a benchmark for math word problem solving systems. Experiments indicate that state-of-the-art models on the Math23K dataset perform poorly on Ape210K. We propose a copy-augmented and feature-enriched sequence to sequence (seq2seq) model, which outperforms existing models by 3.2% on the Math23K dataset and serves as a strong baseline of the Ape210K dataset. The gap is still significant between human and our baseline model, calling for further research efforts. We make Ape210K dataset publicly available at https://github.com/yuantiku/ape210k",
+      "authors": [
+        "Wei Zhao",
+        "Mingyue Shang",
+        "Yang Liu",
+        "Liang Wang",
+        "Jingming Liu"
+      ],
+      "year": 2020,
+      "venue": "arXiv (Cornell University)",
+      "citations": 35,
+      "url": "https://openalex.org/W3089285634",
+      "pdf_url": "https://arxiv.org/pdf/2009.11506",
+      "doi": "10.48550/arxiv.2009.11506",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Word (group theory)",
+        "Benchmark (surveying)",
+        "Baseline (sea)",
+        "Computer science",
+        "Sequence labeling",
+        "Sequence (biology)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math word problems datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 566.27264,
+      "paper_type": "benchmark",
+      "score": 3.398
+    },
+    {
+      "title": "Reasoning with Language Model is Planning with World Model",
+      "abstract": "Large language models (LLMs) have shown remarkable reasoning capabilities, particularly with Chain-of-Thought-style prompts. However, LLMs can still struggle with problems that are easy for humans, such as generating action plans for executing tasks or performing complex math or logical reasoning. This is due to LLMs\u2019 absence of an internal world model for predicting world states (e.g., environment status, variable values) and simulating long-term action outcomes of actions. This prevents LLMs from performing deliberate planning akin to human brains, which involves exploring alternative reasoning paths, anticipating future states and rewards, and iteratively refining existing reasoning steps. To overcome the limitations, we propose a new LLM reasoning framework, Reasoning via Planning (RAP). RAP repurposes the LLM as both a world model and a reasoning agent, and incorporates a principled planning algorithm (based on Monte Carlo Tree Search) for strategic exploration in the vast reasoning space. During reasoning, the LLM (as agent) incrementally builds a reasoning tree under the guidance of the LLM (as world model) and task-specific rewards, properly balancing exploration v.s. exploitation to achieve a high-reward reasoning path efficiently. We apply RAP to a variety of challenging reasoning problems, such as plan generation, math reasoning, and logical inference. Empirical results demonstrate the superiority of RAP over various strong baselines, including CoT and least-to-most prompting with self-consistency, e.g., RAP on LLaMA-33B surpasses CoT on GPT-4 with 33% relative improvement in plan generation.",
+      "authors": [
+        "Shibo Hao",
+        "Yi Gu",
+        "Haodi Ma",
+        "Joshua Hong",
+        "Zhen Wang",
+        "Daisy Wang",
+        "Zhiting Hu"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 114,
+      "url": "https://openalex.org/W4389520747",
+      "pdf_url": "https://aclanthology.org/2023.emnlp-main.507.pdf",
+      "doi": "10.18653/v1/2023.emnlp-main.507",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Deductive reasoning",
+        "Reasoning system",
+        "Inference",
+        "Consistency (knowledge bases)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10906"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "attention heads reasoning math"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 143.33153,
+      "paper_type": "method",
+      "score": 3.3973
+    },
+    {
+      "title": "GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding",
+      "abstract": "Human ability to understand language is general, flexible, and robust. In contrast, most NLU models above the word level are designed for a specific task and struggle with out-of-domain data. If we aspire to develop models with understanding beyond the detection of superficial correspondences between inputs and outputs, then it is critical to develop a unified model that can execute a range of linguistic tasks across different domains. To facilitate research in this direction, we present the General Language Understanding Evaluation (GLUE, gluebenchmark.com): a benchmark of nine diverse NLU tasks, an auxiliary dataset for probing models for understanding of specific linguistic phenomena, and an online platform for evaluating and comparing models. For some benchmark tasks, training data is plentiful, but for others it is limited or does not match the genre of the test set. GLUE thus favors models that can represent linguistic knowledge in a way that facilitates sample-efficient learning and effective knowledge-transfer across tasks. While none of the datasets in GLUE were created from scratch for the benchmark, four of them feature privately-held test data, which is used to ensure that the benchmark is used fairly. We evaluate baselines that use ELMo (Peters et al., 2018), a powerful transfer learning technique, as well as state-of-the-art sentence representation models. The best models still achieve fairly low absolute scores. Analysis with our diagnostic dataset yields similarly weak performance over all phenomena tested, with some exceptions.",
+      "authors": [
+        "Alex Wang",
+        "Amanpreet Singh",
+        "Julian Michael",
+        "Felix Hill",
+        "Omer Levy",
+        "Samuel Bowman"
+      ],
+      "year": 2018,
+      "venue": "",
+      "citations": 3966,
+      "url": "https://openalex.org/W2923014074",
+      "pdf_url": "https://www.aclweb.org/anthology/W18-5446.pdf",
+      "doi": "10.18653/v1/w18-5446",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Benchmark (surveying)",
+        "Computer science",
+        "Natural language processing",
+        "Sentence",
+        "Task (project management)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "reasoning benchmark results",
+        "reasoning benchmarks comparison"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 577.1756,
+      "paper_type": "benchmark",
+      "score": 3.381
+    },
+    {
+      "title": "Surveying Middle-Grades Teachers' Reasoning About Fraction Arithmetic in Terms of Measured Quantities",
+      "abstract": "We report a novel survey that narrows the gap between information about teachers' knowledge of fraction arithmetic provided, on the one hand, by measures practical to administer at scale and, on the other, by close analysis of moment-to-moment cognition. In particular, the survey measured components that would support reasoning directly with measured quantities, not by executing computational algorithms, to solve problems. These components\u2014each of which was grounded in past research\u2014were attention to referent units, partitioning and iterating, appropriateness, and reversibility. A second part of the survey asked about teachers' professional preparation and history. We administered the survey to a national sample of in-service middle-grades mathematics teachers in the United States and received responses from 990 of those teachers. We analyzed responses to items in the first part of the survey using the log-linear diagnostic classification model to estimate each teacher's profile of strengths and weaknesses with respect to the four components of reasoning. We report on the diversity of profiles that we found and on relationships between those profiles and various aspects of teachers' professional preparation and history. Our results provide insight into teachers' knowledge resources for enacting standards-based instruction in fraction arithmetic and an example of new possibilities for mathematics education research afforded by recent advances in psychometric modeling.",
+      "authors": [
+        "Andrew Izs\u00e1k",
+        "Erik Jacobson",
+        "Laine Bradshaw"
+      ],
+      "year": 2019,
+      "venue": "Journal for Research in Mathematics Education",
+      "citations": 31,
+      "url": "https://openalex.org/W2916383882",
+      "pdf_url": "",
+      "doi": "10.5951/jresematheduc.50.2.0156",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Mathematics education",
+        "Referent",
+        "Fraction (chemistry)",
+        "Psychology",
+        "Scale (ratio)",
+        "Cognition"
+      ],
+      "topic_ids": [
+        "T10130",
+        "T11345",
+        "T11875"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning surveys"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9752898351561274,
+      "paper_type": "survey",
+      "score": 3.3285
+    },
+    {
+      "title": "WizardMath: Empowering Mathematical Reasoning for Large Language Models via Reinforced Evol-Instruct",
+      "abstract": "Large language models (LLMs), such as GPT-4, have shown remarkable performance in natural language processing (NLP) tasks, including challenging mathematical reasoning. However, most existing open-source models are only pre-trained on large-scale internet data and without math-related optimization. In this paper, we present WizardMath, which enhances the mathematical CoT reasoning abilities of LLMs without using external python tools, by applying our proposed Reinforcement Learning from Evol-Instruct Feedback (RLEIF) method to the domain of math. Through extensive experiments on two mathematical reasoning benchmarks, namely GSM8k and MATH, we reveal the extraordinary capabilities of our model. Remarkably, WizardMath-Mistral 7B surpasses top-tier open-source LLMs by a substantial margin with higher data efficiency. Furthermore, WizardMath 70B even outperforms GPT-3.5-Turbo, Claude 2, Gemini Pro and GPT-4-early-version. Additionally, our preliminary exploration highlights the pivotal role of instruction evolution and process supervision in achieving exceptional math performance. For more details refer to https://github.com/nlpxucan/WizardLM",
+      "authors": [
+        "Haipeng Luo",
+        "Qingfeng Sun",
+        "Can Xu",
+        "Pu Zhao",
+        "Jian\u2013Guang Lou",
+        "Chongyang Tao",
+        "Xiubo Geng",
+        "Qingwei Lin",
+        "Shifeng Chen",
+        "Tang, Yansong",
+        "Zhang, Dongmei"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 28,
+      "url": "https://openalex.org/W4386044080",
+      "pdf_url": "https://arxiv.org/pdf/2308.09583",
+      "doi": "10.48550/arxiv.2308.09583",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Margin (machine learning)",
+        "Computer science",
+        "Open source",
+        "Domain (mathematical analysis)",
+        "Language of mathematics",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12535"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning language models"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 1.0015869641187876,
+      "paper_type": "method",
+      "score": 3.2749
+    },
+    {
+      "title": "Measuring the Interpretability and Explainability of Model Decisions of Five Large Language Models",
+      "abstract": "This study conducts a comprehensive analysis of the interpretability and explainability of five leading Large Language Models (LLMs): TripoSR by Stability AI, Gemma-7b by Google, Mistral 7B by Mistral AI, Llama-2-7b by Meta, and GemMoE-Beta-1 by CrystalCare AI. Through a methodical evaluation encompassing both qualitative and quantitative benchmarks, we assess these models' capacity to make their decision-making processes understandable to humans. Our findings reveal significant variability in the models' ability to provide transparent reasoning and accurate, contextually relevant explanations across different contexts. Notably, TripoSR and GemMoE-Beta-1 demonstrated superior transparency, while Gemma-7b and Llama-2-7b excelled in the accuracy of their explanations. However, challenges in maintaining consistent interpretability and explainability across varying inputs and the need for enhanced adaptability to feedback highlight areas for future improvement. This research underscores the importance of interpretability and explainability in fostering trust and reliability in LLM applications, advocating for continued advancement in these areas to achieve more transparent, accountable, and user-centric AI systems. Directions for future research include the development of standardized evaluation methodologies and interdisciplinary approaches to enhance model transparency and user understanding.",
+      "authors": [
+        "Kaito Fujiwara",
+        "Miyu Sasaki",
+        "Akira Nakamura",
+        "Natsumi Watanabe"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 20,
+      "url": "https://openalex.org/W4395089718",
+      "pdf_url": "https://osf.io/d4ntw/download",
+      "doi": "10.31219/osf.io/d4ntw",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Computer science",
+        "Language model",
+        "Natural language processing",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "language model interpretability survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.951150613338222,
+      "paper_type": "benchmark",
+      "score": 3.261
+    },
+    {
+      "title": "A Systematic Study and Comprehensive Evaluation of ChatGPT on Benchmark Datasets",
+      "abstract": "The development of large language models (LLMs) such as ChatGPT has brought a lot of attention recently. However, their evaluation in the benchmark academic datasets remains under-explored due to the difficulty of evaluating the generative outputs produced by this model against the ground truth. In this paper, we aim to present a thorough evaluation of ChatGPT's performance on diverse academic datasets, covering tasks like question-answering, text summarization, code generation, commonsense reasoning, mathematical problem-solving, machine translation, bias detection, and ethical considerations. Specifically, we evaluate ChatGPT across 140 tasks and analyze 255K responses it generates in these datasets. This makes our work the largest evaluation of ChatGPT in NLP benchmarks. In short, our study aims to validate the strengths and weaknesses of ChatGPT in various tasks and provide insights for future research using LLMs. We also report a new emergent ability to follow multi-query instructions that we mostly found in ChatGPT and other instruction-tuned models. Our extensive evaluation shows that even though ChatGPT is capable of performing a wide variety of tasks, and may obtain impressive performance in several benchmark datasets, it is still far from achieving the ability to reliably solve many challenging tasks. By providing a thorough assessment of ChatGPT's performance across diverse NLP tasks, this paper sets the stage for a targeted deployment of ChatGPT-like LLMs in real-world applications.",
+      "authors": [
+        "Md Tahmid Rahman Laskar",
+        "M Saiful Bari",
+        "Mizanur Rahman",
+        "Md Amran Hossen Bhuiyan",
+        "Shafiq Joty",
+        "Jimmy Xiangji Huang"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 78,
+      "url": "https://openalex.org/W4385570371",
+      "pdf_url": "https://aclanthology.org/2023.findings-acl.29.pdf",
+      "doi": "10.18653/v1/2023.findings-acl.29",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Automatic summarization",
+        "Benchmark (surveying)",
+        "Computer science",
+        "Strengths and weaknesses",
+        "Variety (cybernetics)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T11636",
+        "T13629"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K dataset paper",
+        "GSM8K evaluation protocol"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 79.054886,
+      "paper_type": "benchmark",
+      "score": 3.2432
+    },
+    {
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "abstract": "Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks. In this paper, we propose a new decoding strategy, self-consistency, to replace the naive greedy decoding used in chain-of-thought prompting. It first samples a diverse set of reasoning paths instead of only taking the greedy one, and then selects the most consistent answer by marginalizing out the sampled reasoning paths. Self-consistency leverages the intuition that a complex reasoning problem typically admits multiple different ways of thinking leading to its unique correct answer. Our extensive empirical evaluation shows that self-consistency boosts the performance of chain-of-thought prompting with a striking margin on a range of popular arithmetic and commonsense reasoning benchmarks, including GSM8K (+17.9%), SVAMP (+11.0%), AQuA (+12.2%), StrategyQA (+6.4%) and ARC-challenge (+3.9%).",
+      "authors": [
+        "Xuezhi Wang",
+        "Wei, Jason",
+        "Dale Schuurmans",
+        "Quoc V. Le",
+        "Ed H.",
+        "Narang, Sharan",
+        "Chowdhery, Aakanksha",
+        "Zhou, Denny"
+      ],
+      "year": 2022,
+      "venue": "arXiv (Cornell University)",
+      "citations": 702,
+      "url": "https://openalex.org/W4221161695",
+      "pdf_url": "https://arxiv.org/pdf/2203.11171",
+      "doi": "10.48550/arxiv.2203.11171",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Commonsense reasoning",
+        "Computer science",
+        "Consistency (knowledge bases)",
+        "Decoding methods",
+        "Intuition",
+        "Margin (machine learning)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11273"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "chain of thought prompting",
+        "reasoning benchmark results"
+      ],
+      "buckets": [
+        "canonical_method",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 948.85736,
+      "paper_type": "method",
+      "score": 3.2342
+    },
+    {
+      "title": "LLaMA: Open and Efficient Foundation Language Models",
+      "abstract": "We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA-65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.",
+      "authors": [
+        "Hugo Touvron",
+        "Thibaut Lavril",
+        "Gautier Izacard",
+        "Xavier Martinet",
+        "Marie-Anne Lachaux",
+        "Timoth\u00e9e Lacroix",
+        "Baptiste Rozi\u00e8re",
+        "Naman Goyal",
+        "Eric Hambro",
+        "Faisal Azhar",
+        "Aurelien Rodriguez",
+        "Armand Joulin",
+        "\u00c9douard Grave",
+        "Guillaume Lample"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 3916,
+      "url": "https://openalex.org/W4322718191",
+      "pdf_url": "https://arxiv.org/pdf/2302.13971",
+      "doi": "10.48550/arxiv.2302.13971",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Foundation (evidence)",
+        "Language model",
+        "Ranging",
+        "State (computer science)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10201"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K dataset paper",
+        "GSM8K evaluation protocol",
+        "Llama-3 GSM8K evaluation",
+        "Llama-3 attention head analysis",
+        "math reasoning language models"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 891.0648,
+      "paper_type": "method",
+      "score": 3.2257
+    },
+    {
+      "title": "CausalBench: A Comprehensive Benchmark for Evaluating Causal Reasoning Capabilities of Large Language Models",
+      "abstract": "Causal reasoning, a core aspect of human cognition, is essential for advancing large language models (LLMs) towards artificial general intelligence (AGI) and reducing their propensity for generating hallucinations.However, existing datasets for evaluating causal reasoning in LLMs are limited by narrow domain coverage and a focus on cause-to-effect reasoning through textual problems, which does not comprehensively assess whether LLMs truly grasp causal relationships or merely guess correct answers.To address these shortcomings, we introduce a novel benchmark that spans textual, mathematical, and coding problem domains.Each problem is crafted to probe causal understanding from four perspectives: cause-to-effect, effect-to-cause, causeto-effect with intervention, and effect-to-cause with intervention.This multi-dimensional evaluation method ensures that LLMs must exhibit a genuine understanding of causal structures by correctly answering questions across all four dimensions, mitigating the possibility of correct responses by chance.Furthermore, our benchmark explores the relationship between an LLM's causal reasoning performance and its tendency to produce hallucinations.We present evaluations of stateof-the-art LLMs using our benchmark, providing valuable insights into their current causal reasoning capabilities across diverse domains.The dataset is publicly available for download at https://huggingface.co/ datasets/CCLV/CausalBench.",
+      "authors": [
+        "Zeyu Wang"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 40,
+      "url": "https://openalex.org/W4402669899",
+      "pdf_url": "https://aclanthology.org/2024.sighan-1.17.pdf",
+      "doi": "10.18653/v1/2024.sighan-1.17",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Computer science",
+        "Artificial intelligence",
+        "Causal reasoning",
+        "Natural language processing",
+        "Cognition"
+      ],
+      "topic_ids": [
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning leaderboard"
+      ],
+      "buckets": [
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 74.534676,
+      "paper_type": "benchmark",
+      "score": 3.2196
+    },
+    {
+      "title": "VarBench: Robust Language Model Benchmarking Through Dynamic Variable Perturbation",
+      "abstract": "As large language models achieve impressive scores on traditional benchmarks, an increasing number of researchers are becoming concerned about benchmark data leakage during pre-training, commonly known as the data contamination problem. To ensure fair evaluation, recent benchmarks release only the training and validation sets, keeping the test set labels closed-source. They require anyone wishing to evaluate his language model to submit the model's predictions for centralized processing and then publish the model's result on their leaderboard. However, this submission process is inefficient and prevents effective error analysis. To address this issue, we propose to variabilize benchmarks and evaluate language models dynamically. Specifically, we extract variables from each test case and define a value range for each variable. For each evaluation, we sample new values from these value ranges to create unique test cases, thus ensuring a fresh evaluation each time. We applied this variable perturbation method to four datasets: GSM8K, ARC, CommonsenseQA, and TruthfulQA, which cover mathematical generation and multiple-choice tasks. Our experimental results demonstrate that this approach provides a more accurate assessment of the true capabilities of language models, effectively mitigating the contamination problem.",
+      "authors": [
+        "Kun Qian",
+        "Shunji Wan",
+        "Claudia Tang",
+        "Youzhi Wang",
+        "Xuanming Zhang",
+        "Maximillian Chen",
+        "Yu Zhou"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 1,
+      "url": "https://openalex.org/W4400104254",
+      "pdf_url": "https://arxiv.org/pdf/2406.17681",
+      "doi": "10.48550/arxiv.2406.17681",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmarking",
+        "Computer science",
+        "Variable (mathematics)",
+        "Perturbation (astronomy)",
+        "Mathematics",
+        "Economics"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "GSM8K leaderboard"
+      ],
+      "buckets": [
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 25.452694,
+      "paper_type": "benchmark",
+      "score": 3.197
+    },
+    {
+      "title": "Diverse Multi-tool Aggregation with Large Language Models for Enhanced Math Reasoning",
+      "abstract": "Augmenting large language models (LLMs) with external tools is a promising avenue for developing high-performance mathematical reasoning systems.Prior tool-augmented approaches typically finetune an LLM to select and invoke a single tool at each reasoning step and show promising results on simpler math reasoning benchmarks such as GSM8K.However, these approaches struggle with more complex math problems that require precise reasoning over multiple steps.To address this limitation, in this work, we propose Multi-TAG, a Multi-Tool AGgregation-based framework.Instead of relying on a single tool, Multi-TAG guides an LLM to concurrently invoke multiple tools at each reasoning step.It then aggregates their diverse outputs to verify and refine the reasoning process, enhancing solution robustness and accuracy.Notably, Multi-TAG is a finetuning-free, inference-only framework, making it readily applicable to any LLM backbone, including large openweight models which are computationally expensive to finetune and proprietary frontier models which cannot be finetuned with custom recipes.We evaluate Multi-TAG on four challenging benchmarks: MATH500, AIME, AMC, and OlympiadBench.Across both openweight and closed-source LLM backbones, Multi-TAG consistently and substantially outperforms state-of-the-art baselines, achieving average improvements of 6.0% to 7.5% over state-of-the-art baselines.",
+      "authors": [
+        "Bohan Yao",
+        "Vikas Yadav"
+      ],
+      "year": 2025,
+      "venue": "",
+      "citations": 0,
+      "url": "https://openalex.org/W4416034401",
+      "pdf_url": "https://aclanthology.org/2025.findings-emnlp.1377.pdf",
+      "doi": "10.18653/v1/2025.findings-emnlp.1377",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Artificial intelligence",
+        "Natural language processing",
+        "Automated reasoning",
+        "Non-monotonic logic",
+        "Mathematics"
+      ],
+      "topic_ids": [
+        "T11902",
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "math reasoning language models"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 0.9369354,
+      "paper_type": "method",
+      "score": 3.1
+    }
+  ]
+}

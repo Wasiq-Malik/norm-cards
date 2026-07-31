@@ -1,0 +1,1290 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "21",
+  "problem_version": "1.0",
+  "domain": "",
+  "claim": "A Hidden Markov Model (HMM) constructed as surrogate model of a large language model (LLM) can be used to generate outputs that are guaranteed to adhere to precisely formalized logical constraints, such that the HMM approximation enables computing a constrained conditional probability distribution under which generation is restricted to sequences accepted by a formal constraint representation (for example, a deterministic finite automaton (DFA)), ensuring constraint satisfaction by construction, which leads to a guarantee that holds independent of the surrogate model\u2019s fidelity, while the extent to which the resulting outputs reflect the original large language model depends on how accurately the surrogate model represents it.",
+  "analysis": {
+    "subfields": [
+      "Constrained Decoding and Controlled Generation",
+      "Neuro-symbolic Constraint Satisfaction",
+      "Language Modeling"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T10126",
+      "T11901",
+      "T10181"
+    ],
+    "openalex_topic_names": [],
+    "claim_type": "theoretical",
+    "temporal_mode": "static",
+    "entities": {
+      "models": [
+        "HMM",
+        "LLM"
+      ],
+      "datasets": [],
+      "metrics": [
+        "constraint satisfaction"
+      ],
+      "thresholds": []
+    },
+    "confidence": 0.0,
+    "method": "hand"
+  },
+  "queries": {
+    "survey": [
+      "survey of constrained decoding and controlled text generation"
+    ],
+    "theory": [
+      "guaranteed constraint satisfaction in language generation using finite automata",
+      "tractable surrogate models for constrained LLM decoding"
+    ],
+    "canonical_method": [
+      "Hidden Markov Model surrogates for constrained inference over language models",
+      "tractable probabilistic models for controllable text generation under logical constraints"
+    ]
+  },
+  "stats": {
+    "n_queries": 5,
+    "n_candidates": 74,
+    "n_selected": 25,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 13.5
+  },
+  "papers": [
+    {
+      "title": "A Survey of Large Language Models",
+      "abstract": "Abstract The rapid evolution of large language models (LLMs) has driven a transformative shift in artificial intelligence (AI), reshaping both research paradigms and practical applications. Distinguished from their predecessors by unprecedented scale and advanced capabilities, LLMs necessitate new frameworks for understanding their development, behavior, and societal impact. This survey systematically reviews recent advancements in LLM techniques across four key dimensions: (1) pre-training methodologies, which establish core model capabilities through large-scale self-supervised training, architectural innovations, and data curation strategies; (2) post-training techniques, including supervised fine-tuning and reinforcement learning, which adapt foundational models to downstream tasks and enhance their alignment and safety; (3) utilization strategies, such as in-context learning, prompt engineering, and agentic reasoning, that optimize real-world deployment and enable effective interaction with external environments; and (4) evaluation methods, encompassing benchmarks for key ability dimensions such as core language capabilities, reasoning, and safety, which support comprehensive and reliable assessment of model performance. Additionally, we identify critical research issues, including those concerning theoretical foundations, efficient scaling, alignment, and agentic capability, and highlight the open challenges they present. By synthesizing state-of-the-art insights and emerging trends, this survey aims to provide a systematic and comprehensive framework for understanding the trajectory, current limitations, and future directions of LLM progress.",
+      "authors": [
+        "Wayne Xin Zhao",
+        "Kun Zhou",
+        "Junyi Li",
+        "Tianyi Tang",
+        "Xiaolei Wang",
+        "Yupeng Hou",
+        "Yingqian Min",
+        "Beichen Zhang",
+        "Junjie Zhang",
+        "Zican Dong",
+        "Yifan Du",
+        "Yang Chen",
+        "Yushuo Chen",
+        "Zhipeng Chen",
+        "Jinhao Jiang",
+        "Ruiyang Ren",
+        "Yifan Li",
+        "Xinyu Tang",
+        "Zikang Liu",
+        "Peiyu Liu",
+        "Jian\u2010Yun Nie",
+        "Ji-Rong Wen",
+        "Ji-Rong Wen"
+      ],
+      "year": 2026,
+      "venue": "Frontiers of Computer Science",
+      "citations": 1410,
+      "url": "https://openalex.org/W4362515116",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11704-026-60308-3.pdf",
+      "doi": "10.1007/s11704-026-60308-3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Language model",
+        "Mainstream",
+        "Scale (ratio)",
+        "Scaling"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models",
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 790.202,
+      "paper_type": "survey",
+      "score": 3.535,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Large language models (LLMs): survey, technical frameworks, and future challenges",
+      "abstract": "Artificial intelligence (AI) has significantly impacted various fields. Large language models (LLMs) like GPT-4, BARD, PaLM, Megatron-Turing NLG, Jurassic-1 Jumbo etc., have contributed to our understanding and application of AI in these domains, along with natural language processing (NLP) techniques. This work provides a comprehensive overview of LLMs in the context of language modeling, word embeddings, and deep learning. It examines the application of LLMs in diverse fields including text generation, vision-language models, personalized learning, biomedicine, and code generation. The paper offers a detailed introduction and background on LLMs, facilitating a clear understanding of their fundamental ideas and concepts. Key language modeling architectures are also discussed, alongside a survey of recent works employing LLM methods for various downstream tasks across different domains. Additionally, it assesses the limitations of current approaches and highlights the need for new methodologies and potential directions for significant advancements in this field.",
+      "authors": [
+        "Pranjal Kumar"
+      ],
+      "year": 2024,
+      "venue": "Artificial Intelligence Review",
+      "citations": 292,
+      "url": "https://openalex.org/W4401671778",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10462-024-10888-y.pdf",
+      "doi": "10.1007/s10462-024-10888-y",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Management science",
+        "Data science",
+        "Risk analysis (engineering)",
+        "Business",
+        "Economics"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 179.09071,
+      "paper_type": "survey",
+      "score": 3.3857,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing",
+      "abstract": "This article surveys and organizes research works in a new paradigm in natural language processing, which we dub \u201cprompt-based learning.\u201d Unlike traditional supervised learning, which trains a model to take in an input x and predict an output y as P ( y|x ), prompt-based learning is based on language models that model the probability of text directly. To use these models to perform prediction tasks, the original input x is modified using a template into a textual string prompt x\u2032 that has some unfilled slots, and then the language model is used to probabilistically fill the unfilled information to obtain a final string x\u0302 , from which the final output y can be derived. This framework is powerful and attractive for a number of reasons: It allows the language model to be pre-trained on massive amounts of raw text, and by defining a new prompting function the model is able to perform few-shot or even zero-shot learning, adapting to new scenarios with few or no labeled data. In this article, we introduce the basics of this promising paradigm, describe a unified set of mathematical notations that can cover a wide variety of existing work, and organize existing work along several dimensions, e.g., the choice of pre-trained language models, prompts, and tuning strategies. To make the field more accessible to interested beginners, we not only make a systematic review of existing works and a highly structured typology of prompt-based concepts but also release other resources, e.g., a website NLPedia\u2013Pretrain including constantly updated survey and paperlist.",
+      "authors": [
+        "Pengfei Liu",
+        "Weizhe Yuan",
+        "Jinlan Fu",
+        "Zhengbao Jiang",
+        "Hiroaki Hayashi",
+        "Graham Neubig"
+      ],
+      "year": 2022,
+      "venue": "ACM Computing Surveys",
+      "citations": 3622,
+      "url": "https://openalex.org/W3185341429",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3560815",
+      "doi": "10.1145/3560815",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Variety (cybernetics)",
+        "Set (abstract data type)",
+        "Notation",
+        "Cover (algebra)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10664"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 506.9313,
+      "paper_type": "survey",
+      "score": 3.11,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Language Modeling"
+        ]
+      }
+    },
+    {
+      "title": "Large language models for generative information extraction: a survey",
+      "abstract": "Abstract Information Extraction (IE) aims to extract structural knowledge from plain natural language texts. Recently, generative Large Language Models (LLMs) have demonstrated remarkable capabilities in text understanding and generation. As a result, numerous works have been proposed to integrate LLMs for IE tasks based on a generative paradigm. To conduct a comprehensive systematic review and exploration of LLM efforts for IE tasks, in this study, we survey the most recent advancements in this field. We first present an extensive overview by categorizing these works in terms of various IE subtasks and techniques, and then we empirically analyze the most advanced methods and discover the emerging trend of IE tasks with LLMs. Based on a thorough review conducted, we identify several insights in technique and promising research directions that deserve further exploration in future studies. We maintain a public repository and consistently update related works and resources on GitHub (LLM4IE repository).",
+      "authors": [
+        "Derong Xu",
+        "Wei Chen",
+        "Wenjun Peng",
+        "Chao Zhang",
+        "Tong Xu",
+        "Xiangyu Zhao",
+        "Xian Wu",
+        "Yefeng Zheng",
+        "Yan Wang",
+        "Enhong Chen"
+      ],
+      "year": 2024,
+      "venue": "Frontiers of Computer Science",
+      "citations": 219,
+      "url": "https://openalex.org/W4404239715",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11704-024-40555-y.pdf",
+      "doi": "10.1007/s11704-024-40555-y",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Generative grammar",
+        "Information extraction",
+        "Natural language processing",
+        "Extraction (chemistry)",
+        "Artificial intelligence"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T13083"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 166.05489,
+      "paper_type": "survey",
+      "score": 2.8548,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "A Survey of Cross-lingual Word Embedding Models",
+      "abstract": "Cross-lingual representations of words enable us to reason about word meaning in multilingual contexts and are a key facilitator of cross-lingual transfer when developing natural language processing models for low-resource languages. In this survey, we provide a comprehensive typology of cross-lingual word embedding models. We compare their data requirements and objective functions. The recurring theme of the survey is that many of the models presented in the literature optimize for the same objectives, and that seemingly different models are often equivalent, modulo optimization strategies, hyper-parameters, and such. We also discuss the different ways cross-lingual word embeddings are evaluated, as well as future challenges and research horizons.",
+      "authors": [
+        "Sebastian Ruder",
+        "Ivan Vuli\u0107",
+        "Anders S\u00f8gaard"
+      ],
+      "year": 2018,
+      "venue": "Apollo (University of Cambridge)",
+      "citations": 547,
+      "url": "https://openalex.org/W3104723404",
+      "pdf_url": "https://www.repository.cam.ac.uk/handle/1810/283100",
+      "doi": "10.17863/cam.30462",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Word (group theory)",
+        "Natural language processing",
+        "Key (lock)",
+        "Artificial intelligence",
+        "Word embedding"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12031"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 200.10144,
+      "paper_type": "survey",
+      "score": 2.8345,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Generating Phrasal and Sentential Paraphrases: A Survey of Data-Driven Methods",
+      "abstract": "The task of paraphrasing is inherently familiar to speakers of all languages. Moreover, the task of automatically generating or extracting semantic equivalences for the various units of language\u2014words, phrases, and sentences\u2014is an important part of natural language processing (NLP) and is being increasingly employed to improve the performance of several NLP applications. In this article, we attempt to conduct a comprehensive and application-independent survey of data-driven phrasal and sentential paraphrase generation methods, while also conveying an appreciation for the importance and potential use of paraphrases in the field of NLP research. Recent work done in manual and automatic construction of paraphrase corpora is also examined. We also discuss the strategies used for evaluating paraphrase generation techniques and briefly explore some future trends in paraphrase generation.",
+      "authors": [
+        "Nitin Madnani",
+        "Bonnie J. Dorr"
+      ],
+      "year": 2010,
+      "venue": "Computational Linguistics",
+      "citations": 302,
+      "url": "https://openalex.org/W2051593977",
+      "pdf_url": "http://www.mitpressjournals.org/doi/pdf/10.1162/coli_a_00002",
+      "doi": "10.1162/coli_a_00002",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Paraphrase",
+        "Computer science",
+        "Natural language processing",
+        "Task (project management)",
+        "Artificial intelligence",
+        "Parallel corpora"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T13629"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 170.902,
+      "paper_type": "survey",
+      "score": 2.6679,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding",
+      "abstract": "To mitigate the high inference latency stemming from autoregressive decoding in Large Language Models (LLMs), Speculative Decoding has emerged as a novel decoding paradigm for LLM inference.In each decoding step, this method first drafts several future tokens efficiently and then verifies them in parallel.Unlike autoregressive decoding, Speculative Decoding facilitates the simultaneous decoding of multiple tokens per step, thereby accelerating inference.This paper presents a comprehensive overview and analysis of this promising decoding paradigm.We begin by providing a formal definition and formulation of Speculative Decoding.Then, we organize in-depth discussions on its key facets, such as drafter selection and verification strategies.Furthermore, we present a comparative analysis of leading methods under third-party testing environments.We aim for this work to serve as a catalyst for further research on Speculative Decoding, ultimately contributing to more efficient LLM inference. 1",
+      "authors": [
+        "Heming Xia",
+        "Zhe Yang",
+        "Qingxiu Dong",
+        "Peiyi Wang",
+        "Yongqi Li",
+        "Tao Ge",
+        "Tianyu Liu",
+        "Wenjie Li",
+        "Zhifang Sui"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 35,
+      "url": "https://openalex.org/W4402683901",
+      "pdf_url": "https://aclanthology.org/2024.findings-acl.456.pdf",
+      "doi": "10.18653/v1/2024.findings-acl.456",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Algorithm",
+        "Artificial intelligence",
+        "Computer science",
+        "Decoding methods",
+        "Inference",
+        "Programming language"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models",
+        "tractable surrogate models for constrained LLM decoding"
+      ],
+      "buckets": [
+        "canonical_method",
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 0.9639405667161374,
+      "paper_type": "survey",
+      "score": 2.6614,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "PARABANK: Monolingual Bitext Generation and Sentential Paraphrasing via Lexically-Constrained Neural Machine Translation",
+      "abstract": "We present PARABANK, a large-scale English paraphrase dataset that surpasses prior work in both quantity and quality. Following the approach of PARANMT (Wieting and Gimpel, 2018), we train a Czech-English neural machine translation (NMT) system to generate novel paraphrases of English reference sentences. By adding lexical constraints to the NMT decoding procedure, however, we are able to produce multiple high-quality sentential paraphrases per source sentence, yielding an English paraphrase resource with more than 4 billion generated tokens and exhibiting greater lexical diversity. Using human judgments, we also demonstrate that PARABANK\u2019s paraphrases improve over PARANMT on both semantic similarity and fluency. Finally, we use PARABANK to train a monolingual NMT model with the same support for lexically-constrained decoding for sentence rewriting tasks.",
+      "authors": [
+        "Junfeng Hu",
+        "Rachel Rudinger",
+        "Matt Post",
+        "Benjamin Van Durme"
+      ],
+      "year": 2019,
+      "venue": "",
+      "citations": 81,
+      "url": "https://openalex.org/W2964213257",
+      "pdf_url": "",
+      "doi": "10.1609/aaai.v33i01.33016521",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Paraphrase",
+        "Computer science",
+        "Machine translation",
+        "Natural language processing",
+        "Lexical diversity",
+        "Fluency"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T13629"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 160.66454,
+      "paper_type": "benchmark",
+      "score": 2.4889,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "COLD Decoding: Energy-based Constrained Text Generation with Langevin Dynamics",
+      "abstract": "Many applications of text generation require incorporating different constraints to control the semantics or style of generated text. These constraints can be hard (e.g., ensuring certain keywords are included in the output) and soft (e.g., contextualizing the output with the left- or right-hand context). In this paper, we present Energy-based Constrained Decoding with Langevin Dynamics (COLD), a decoding framework which unifies constrained generation as specifying constraints through an energy function, then performing efficient differentiable reasoning over the constraints through gradient-based sampling. COLD decoding is a flexible framework that can be applied directly to off-the-shelf left-to-right language models without the need for any task-specific fine-tuning, as demonstrated through three challenging text generation applications: lexically-constrained generation, abductive reasoning, and counterfactual reasoning. Our experiments on these constrained generation tasks point to the effectiveness of our approach, both in terms of automatic and human evaluation.",
+      "authors": [
+        "Lianhui Qin",
+        "Sean Welleck",
+        "Daniel Khashabi",
+        "Yejin Choi"
+      ],
+      "year": 2022,
+      "venue": "arXiv (Cornell University)",
+      "citations": 43,
+      "url": "https://openalex.org/W4221143575",
+      "pdf_url": "https://arxiv.org/pdf/2202.11705",
+      "doi": "10.48550/arxiv.2202.11705",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Context (archaeology)",
+        "Counterfactual thinking",
+        "Decoding methods",
+        "Differentiable function",
+        "Task (project management)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T13083"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation",
+        "tractable probabilistic models for controllable text generation under logical constraints"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1.0374776576760054,
+      "paper_type": "method",
+      "score": 2.3972,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Fine-Grained Controllable Text Generation Using Non-Residual Prompting",
+      "abstract": "Fredrik Carlsson, Joey \u00d6hman, Fangyu Liu, Severine Verlinden, Joakim Nivre, Magnus Sahlgren. Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2022.",
+      "authors": [
+        "Fredrik Carlsson",
+        "Joey \u00d6hman",
+        "Fangyu Liu",
+        "Severine Verlinden",
+        "Joakim Nivre",
+        "Magnus Sahlgren"
+      ],
+      "year": 2022,
+      "venue": "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+      "citations": 33,
+      "url": "https://openalex.org/W4285230133",
+      "pdf_url": "https://aclanthology.org/2022.acl-long.471.pdf",
+      "doi": "10.18653/v1/2022.acl-long.471",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Algorithm",
+        "Computer science",
+        "Residual"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12031"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation",
+        "tractable probabilistic models for controllable text generation under logical constraints"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9761455731952638,
+      "paper_type": "method",
+      "score": 2.3706,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Parallel Refinements for Lexically Constrained Text Generation with BART",
+      "abstract": "Lexically constrained text generation aims to control the generated text by incorporating some pre-specified keywords into the output. Previous work injects lexical constraints into the output by controlling the decoding process or refining the candidate output iteratively, which tends to generate generic or ungrammatical sentences, and has high computational complexity. To address these challenges, we propose Constrained BART (CBART) for lexically constrained text generation. CBART leverages the pre-trained model BART and transfers part of the generation burden from the decoder to the encoder by decomposing this task into two sub-tasks, thereby improving the sentence quality. Concretely, we extend BART by adding a token-level classifier over the encoder, aiming at instructing the decoder where to replace and insert. Guided by the encoder, the decoder refines multiple tokens of the input in one step by inserting tokens before specific positions and re-predicting tokens with low confidence. To further reduce the inference latency, the decoder predicts all tokens in parallel. Experiment results on One-Billion-Word and Yelp show that CBART can generate plausible text with high quality and diversity while significantly accelerating inference.",
+      "authors": [
+        "Xingwei He"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+      "citations": 34,
+      "url": "https://openalex.org/W3202408265",
+      "pdf_url": "https://aclanthology.org/2021.emnlp-main.681.pdf",
+      "doi": "10.18653/v1/2021.emnlp-main.681",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Decoding methods",
+        "Encoder",
+        "Inference",
+        "Security token",
+        "Text generation"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation",
+        "tractable probabilistic models for controllable text generation under logical constraints"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9979362589187015,
+      "paper_type": "method",
+      "score": 2.3551,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Controlled Text Generation as Continuous Optimization with Multiple\\n Constraints",
+      "abstract": "As large-scale language model pretraining pushes the state-of-the-art in text\\ngeneration, recent work has turned to controlling attributes of the text such\\nmodels generate. While modifying the pretrained models via fine-tuning remains\\nthe popular approach, it incurs a significant computational cost and can be\\ninfeasible due to lack of appropriate data. As an alternative, we propose\\nMuCoCO -- a flexible and modular algorithm for controllable inference from\\npretrained models. We formulate the decoding process as an optimization problem\\nwhich allows for multiple attributes we aim to control to be easily\\nincorporated as differentiable constraints to the optimization. By relaxing\\nthis discrete optimization to a continuous one, we make use of Lagrangian\\nmultipliers and gradient-descent based techniques to generate the desired text.\\nWe evaluate our approach on controllable machine translation and style transfer\\nwith multiple sentence-level attributes and observe significant improvements\\nover baselines.\\n",
+      "authors": [
+        "Sachin Kumar",
+        "Eric Malmi",
+        "Aliaksei Severyn",
+        "Yulia Tsvetkov"
+      ],
+      "year": 2021,
+      "venue": "arXiv (Cornell University)",
+      "citations": 26,
+      "url": "https://openalex.org/W4287028715",
+      "pdf_url": "https://arxiv.org/pdf/2108.01850",
+      "doi": "10.48550/arxiv.2108.01850",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Decoding methods",
+        "Differentiable function",
+        "Gradient descent",
+        "Inference",
+        "Modular design"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T10201"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation",
+        "tractable probabilistic models for controllable text generation under logical constraints"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9851301264185829,
+      "paper_type": "method",
+      "score": 2.329,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "A Survey of Controllable Text Generation Using Transformer-based Pre-trained Language Models",
+      "abstract": "Controllable Text Generation (CTG) is an emerging area in the field of natural language generation (NLG). It is regarded as crucial for the development of advanced text generation technologies that better meet the specific constraints in practical applications. In recent years, methods using large-scale pre-trained language models (PLMs), in particular the widely used Transformer-based PLMs, have become a new paradigm of NLG, allowing generation of more diverse and fluent text. However, due to the limited level of interpretability of deep neural networks, the controllability of these methods needs to be guaranteed. To this end, controllable text generation using Transformer-based PLMs has become a rapidly growing yet challenging new research hotspot. A diverse range of approaches have emerged in the past 3 to 4 years, targeting different CTG tasks that require different types of controlled constraints. In this article, we present a systematic critical review on the common tasks, main approaches, and evaluation methods in this area. Finally, we discuss the challenges that the field is facing, and put forward various promising future directions. To the best of our knowledge, this is the first survey article to summarize the state-of-the-art CTG techniques from the perspective of Transformer-based PLMs. We hope it can help researchers and practitioners in the related fields to quickly track the academic and technological frontier, providing them with a landscape of the area and a roadmap for future research.",
+      "authors": [
+        "Hanqing Zhang",
+        "Haolin Song",
+        "Shaoyu Li",
+        "Ming Zhou",
+        "Dawei Song"
+      ],
+      "year": 2023,
+      "venue": "ACM Computing Surveys",
+      "citations": 278,
+      "url": "https://openalex.org/W4386290290",
+      "pdf_url": "",
+      "doi": "10.1145/3617680",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Interpretability",
+        "Transformer",
+        "Natural language generation",
+        "Artificial intelligence",
+        "Data science"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "tractable probabilistic models for controllable text generation under logical constraints"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 1.123651924725836,
+      "paper_type": "survey",
+      "score": 2.2551,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "A Survey of Multimodel Large Language Models",
+      "abstract": "With the widespread application of the Transformer architecture in various modalities, including vision, the technology of large language models is evolving from a single modality to a multi-modal approach. It is foreseeable that multi-modal large language models will become one of the most powerful tools for humanity in the future.",
+      "authors": [
+        "Zijing Liang",
+        "Yanjie Xu",
+        "Yifan Hong",
+        "Penghui Shang",
+        "Qi Wang",
+        "Qiang Fu",
+        "Ke Liu"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 81,
+      "url": "https://openalex.org/W4401362547",
+      "pdf_url": "",
+      "doi": "10.1145/3672758.3672824",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T11714",
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 1.0427373140148457,
+      "paper_type": "survey",
+      "score": 2.1488,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Controllable Abstractive Summarization",
+      "abstract": "Current models for document summarization disregard user preferences such as the desired length, style, the entities that the user might be interested in, or how much of the document the user has already read. We present a neural summarization model with a simple but effective mechanism to enable users to specify these high level attributes in order to control the shape of the final summaries to better suit their needs. With user input, our system can produce high quality summaries that follow user preferences. Without user input, we set the control variables automatically -on the full text CNN-Dailymail dataset, we outperform state of the art abstractive systems (both in terms of F1-ROUGE1 40.38 vs. 39.53 F1-ROUGE and human evaluation).",
+      "authors": [
+        "Angela Fan",
+        "David Grangier",
+        "Michael Auli"
+      ],
+      "year": 2018,
+      "venue": "",
+      "citations": 276,
+      "url": "https://openalex.org/W2962805889",
+      "pdf_url": "https://www.aclweb.org/anthology/W18-2706.pdf",
+      "doi": "10.18653/v1/w18-2706",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Automatic summarization",
+        "Computer science",
+        "Set (abstract data type)",
+        "Multi-document summarization",
+        "Information retrieval",
+        "Quality (philosophy)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T13083"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 164.60489,
+      "paper_type": "method",
+      "score": 2.1214,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Evolution and Prospects of Foundation Models: From Large Language Models to Large Multimodal Models",
+      "abstract": "Since the 1950s, when the Turing Test was introduced, there has been notable progress in machine language intelligence. Language modeling, crucial for AI development, has evolved from statistical to neural models over the las... | Find, read and cite all the research you need on Tech Science Press",
+      "authors": [
+        "Zheyi Chen",
+        "Liuchang Xu",
+        "Hongting Zheng",
+        "Luyao Chen",
+        "Amr Tolba",
+        "Liang Zhao",
+        "Keping Yu",
+        "Hailin Feng"
+      ],
+      "year": 2024,
+      "venue": "Computers, materials & continua/Computers, materials & continua (Print)",
+      "citations": 69,
+      "url": "https://openalex.org/W4401615828",
+      "pdf_url": "https://cdn.techscience.press/files/cmc/2024/TSP_CMC-80-2/TSP_CMC_52618/TSP_CMC_52618.pdf",
+      "doi": "10.32604/cmc.2024.052618",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Foundation (evidence)",
+        "Computer science",
+        "Language evolution",
+        "Linguistics",
+        "History",
+        "Philosophy"
+      ],
+      "topic_ids": [
+        "T10181"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 191.77356,
+      "paper_type": "method",
+      "score": 1.9919,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Text Generation with Exemplar-based Adaptive Decoding",
+      "abstract": "Hao Peng, Ankur Parikh, Manaal Faruqui, Bhuwan Dhingra, Dipanjan Das. Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers). 2019.",
+      "authors": [
+        "Hao Peng",
+        "Ankur P. Parikh",
+        "Manaal Faruqui",
+        "Bhuwan Dhingra",
+        "Dipanjan Das"
+      ],
+      "year": 2019,
+      "venue": "",
+      "citations": 46,
+      "url": "https://openalex.org/W2940154139",
+      "pdf_url": "https://doi.org/10.18653/v1/n19-1263",
+      "doi": "10.18653/v1/n19-1263",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Decoding methods",
+        "Artificial intelligence",
+        "Computational linguistics",
+        "Natural language processing",
+        "Speech recognition"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11550"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1.0129106223169873,
+      "paper_type": "method",
+      "score": 1.9517,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Augmenting Neural Networks with First-order Logic",
+      "abstract": "Today, the dominant paradigm for training neural networks involves minimizing task loss on a large dataset. Using world knowledge to inform a model, and yet retain the ability to perform end-to-end training remains an open question. In this paper, we present a novel framework for introducing declarative knowledge to neural network architectures in order to guide training and prediction. Our framework systematically compiles logical statements into computation graphs that augment a neural network without extra learnable parameters or manual redesign. We evaluate our modeling strategy on three tasks: machine comprehension, natural language inference, and text chunking. Our experiments show that knowledge-augmented networks can strongly improve over baselines, especially in low-data regimes.",
+      "authors": [
+        "Tao Li",
+        "Vivek Srikumar"
+      ],
+      "year": 2019,
+      "venue": "",
+      "citations": 74,
+      "url": "https://openalex.org/W2949276121",
+      "pdf_url": "https://aclanthology.org/P19-1028.pdf",
+      "doi": "10.18653/v1/p19-1028",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Artificial neural network",
+        "Artificial intelligence",
+        "Chunking (psychology)",
+        "Inference",
+        "Machine learning"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 81.592255,
+      "paper_type": "benchmark",
+      "score": 1.8796,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Neuro-symbolic Constraint Satisfaction"
+        ]
+      }
+    },
+    {
+      "title": "DExperts: Decoding-Time Controlled Text Generation with Experts and Anti-Experts",
+      "abstract": "Despite recent advances in natural language generation, it remains challenging to control attributes of generated text. We propose DExperts: Decoding-time Experts, a decoding-time method for controlled text generation that combines a pretrained language model with \"expert\" LMs and/or \"anti-expert\" LMs in a product of experts. Intuitively, under the ensemble, tokens only get high probability if they are considered likely by the experts, and unlikely by the anti-experts. We apply DExperts to language detoxification and sentiment-controlled generation, where we outperform existing controllable generation methods on both automatic and human evaluations. Moreover, because DExperts operates only on the output of the pretrained LM, it is effective with (anti-)experts of smaller size, including when operating on GPT-3. Our work highlights the promise of tuning small LMs on text with (un)desirable attributes for efficient decoding-time steering.",
+      "authors": [
+        "Alisa Liu",
+        "Maarten Sap",
+        "Ximing Lu",
+        "Swabha Swayamdipta",
+        "Chandra Bhagavatula",
+        "Noah A. Smith",
+        "Yejin Choi"
+      ],
+      "year": 2021,
+      "venue": "arXiv (Cornell University)",
+      "citations": 11,
+      "url": "https://openalex.org/W3160250689",
+      "pdf_url": "https://arxiv.org/pdf/2105.03023",
+      "doi": "10.48550/arxiv.2105.03023",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Decoding methods",
+        "Computer science",
+        "Language model",
+        "Natural language generation",
+        "Artificial intelligence",
+        "Text generation"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9276815450138274,
+      "paper_type": "method",
+      "score": 1.8508,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "NeuroLogic Decoding: (Un)supervised Neural Text Generation with Predicate Logic Constraints",
+      "abstract": "Conditional text generation often requires lexical constraints, i.e., which words should or shouldn't be included in the output text. While the dominant recipe for conditional text generation has been large-scale pretrained language models that are finetuned on the task-specific training data, such models do not learn to follow the underlying constraints reliably, even when supervised with large amounts of task-specific examples. We propose NeuroLogic Decoding, a simple yet effective algorithm that enables neural language models -- supervised or not -- to generate fluent text while satisfying complex lexical constraints. Our approach is powerful yet efficient. It handles any set of lexical constraints that is expressible under predicate logic, while its asymptotic runtime is equivalent to conventional beam search. Empirical results on four benchmarks show that NeuroLogic Decoding outperforms previous approaches, including algorithms that handle a subset of our constraints. Moreover, we find that unsupervised models with NeuroLogic Decoding often outperform supervised models with conventional decoding, even when the latter is based on considerably larger networks. Our results suggest the limit of large-scale neural networks for fine-grained controllable generation and the promise of inference-time algorithms.",
+      "authors": [
+        "Ximing Lu",
+        "Peter West",
+        "Rowan Zellers",
+        "Ronan Le Bras",
+        "Chandra Bhagavatula",
+        "Yejin Choi"
+      ],
+      "year": 2020,
+      "venue": "arXiv (Cornell University)",
+      "citations": 11,
+      "url": "https://openalex.org/W3094622711",
+      "pdf_url": "https://arxiv.org/pdf/2010.12884",
+      "doi": "10.48550/arxiv.2010.12884",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Decoding methods",
+        "Inference",
+        "Artificial intelligence",
+        "Language model",
+        "Set (abstract data type)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11714"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of constrained decoding and controlled text generation"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9396962851507146,
+      "paper_type": "method",
+      "score": 1.8356,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation",
+          "Neuro-symbolic Constraint Satisfaction"
+        ]
+      }
+    },
+    {
+      "title": "Finite-state approximation of constraint-based grammars using left-corner grammar transforms",
+      "abstract": "This paper describes how to construct a finite-state machine (FSM) approximating a 'unification-based' grammar using a left-corner grammar transform. The approximation is presented as a series of grammar transforms, and is exact for left-linear and right-linear CFGs, and for trees up to a user-specified depth of center-embedding.",
+      "authors": [
+        "Mark Johnson"
+      ],
+      "year": 1998,
+      "venue": "",
+      "citations": 54,
+      "url": "https://openalex.org/W2112245899",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.3115/980845.980948",
+      "doi": "10.3115/980845.980948",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Unification",
+        "Computer science",
+        "Grammar",
+        "Adaptive grammar",
+        "Rule-based machine translation",
+        "Mildly context-sensitive grammar formalism"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T11269",
+        "T10126"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "guaranteed constraint satisfaction in language generation using finite automata"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 0.9886205093091716,
+      "paper_type": "method",
+      "score": 1.8338,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Functional unification grammar revisited",
+      "abstract": "In this paper, we show that one benefit of FUG, the ability to state global constraints on choice separately from syntactic rules, is difficult in generation systems based on augmented context free grammars (e.g., Definite Clause Grammars). They require that such constraints be expressed locally as part of syntactic rules and therefore, duplicated in the grammar. Finally, we discuss a reimplementation of FUG that achieves the similar levels of efficiency as Rubinoff's adaptation of MUMBLE, a deterministic language generator.",
+      "authors": [
+        "Kathleen McKeown",
+        "C\u00e9cile Paris"
+      ],
+      "year": 1987,
+      "venue": "",
+      "citations": 21,
+      "url": "https://openalex.org/W2130528578",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.3115/981175.981189",
+      "doi": "10.3115/981175.981189",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Unification",
+        "Rule-based machine translation",
+        "Grammar",
+        "Tree-adjoining grammar",
+        "Context-sensitive grammar"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10126",
+        "T11269"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "guaranteed constraint satisfaction in language generation using finite automata"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 0.9323744212725946,
+      "paper_type": "method",
+      "score": 1.7501,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Discrete abstractions of hybrid systems",
+      "abstract": "A hybrid system is a dynamical system with both discrete and continuous state changes. For analysis purposes, it is often useful to abstract a system in a way that preserves the properties being analysed while hiding the details that are of no interest. We show that interesting classes of hybrid systems can be abstracted to purely discrete systems while preserving all properties that are definable in temporal logic. The classes that permit discrete abstractions fall into two categories. Either the continuous dynamics must be restricted, as is the case for timed and rectangular hybrid systems, or the discrete dynamics must be restricted, as is the case for o-minimal hybrid systems. In this paper, we survey and unify results from both areas.",
+      "authors": [
+        "Rajeev Alur",
+        "Thomas A. Henzinger",
+        "Gerardo Lafferriere",
+        "George J. Pappas"
+      ],
+      "year": 2000,
+      "venue": "Proceedings of the IEEE",
+      "citations": 816,
+      "url": "https://openalex.org/W2117218135",
+      "pdf_url": "https://repository.upenn.edu/bitstreams/aff20763-0710-4eee-98fc-1f59823d41a6/download",
+      "doi": "10.1109/5.871304",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Hybrid system",
+        "Computer science",
+        "Discrete event dynamic system",
+        "Dynamical systems theory",
+        "Discrete system",
+        "Discrete time and continuous time"
+      ],
+      "topic_ids": [
+        "T10142",
+        "T11125",
+        "T10126"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "guaranteed constraint satisfaction in language generation using finite automata"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 107.276215,
+      "paper_type": "method",
+      "score": 1.7092,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Neuro-symbolic Constraint Satisfaction"
+        ]
+      }
+    },
+    {
+      "title": "Exploiting both local and global constraints for multi-span statistical language modeling",
+      "abstract": "A new framework is proposed to integrate the various constraints, both local and global, that are present in the language. Local constraints are captured via n-gram language modeling, while global constraints are taken into account through the use of latent semantic analysis. An integrative formulation is derived for the combination of these two paradigms, resulting in several families of multi-span language models for large vocabulary speech recognition. Because of the inherent complementarity in the two types of constraints, the performance of the integrated language models, as measured by the perplexity, compares favorably with the corresponding n-gram performance.",
+      "authors": [
+        "J.R. Bellegarda"
+      ],
+      "year": 2002,
+      "venue": "",
+      "citations": 32,
+      "url": "https://openalex.org/W2137227096",
+      "pdf_url": "",
+      "doi": "10.1109/icassp.1998.675355",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Span (engineering)",
+        "Artificial intelligence",
+        "Engineering",
+        "Civil engineering"
+      ],
+      "topic_ids": [
+        "T10181",
+        "T10028",
+        "T10201"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Hidden Markov Model surrogates for constrained inference over language models"
+      ],
+      "buckets": [
+        "canonical_method"
+      ],
+      "tags": {},
+      "semantic_score": 0.9660664532023855,
+      "paper_type": "method",
+      "score": 1.6938,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Constrained Decoding and Controlled Generation"
+        ]
+      }
+    },
+    {
+      "title": "Dependent types in practical programming",
+      "abstract": "We present an approach to enriching the type system of ML with a restricted form of dependent types, where type index objects are drawn from a constraint domain C, leading to the DML(C) language schema. This allows specification and inference of significantly more precise type information, facilitating program error detection and compiler optimization. A major complication resulting from introducing dependent types is that pure type inference for the enriched system is no longer possible, but we show that type-checking a sufficiently annotated program in DML(C) can be reduced to constraint satisfaction in the constraint domain C. We exhibit the unobtrusiveness of our approach through practical examples and prove that DML(C) is conservative over ML. The main contribution of the paper lies in our language design, including the formulation of type-checking rules which makes the approach practical. To our knowledge, no previous type system for a general purpose programming language such as ML has combined dependent types with features including datatype declarations, higher-order functions, general recursions, let-polymorphism, mutable references, and exceptions. In addition, we have finished a prototype implementation of DML(C) for an integer constraint domain C, where constraints are linear inequalities (Xi and Pfenning 1998).",
+      "authors": [
+        "Hongwei Xi",
+        "Frank Pfenning"
+      ],
+      "year": 1999,
+      "venue": "",
+      "citations": 584,
+      "url": "https://openalex.org/W2005192022",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/292540.292560",
+      "doi": "10.1145/292540.292560",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Programming language"
+      ],
+      "topic_ids": [
+        "T10126",
+        "T10142",
+        "T11010"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "guaranteed constraint satisfaction in language generation using finite automata"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 182.52307,
+      "paper_type": "method",
+      "score": 1.6718,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    }
+  ]
+}

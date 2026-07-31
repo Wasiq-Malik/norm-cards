@@ -1,0 +1,1286 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "9",
+  "problem_version": "1.0",
+  "domain": "",
+  "claim": "For an unknown discrete-time robotic system x_{t+1}=f(x_t,u_t)+\\xi(x_t,u_t)\u200b operating on a specified compact subset \\mathcal{D}\\subseteq X\\times U, where f is L-Lipschitz on \\mathcal{D} and \\xi(x_t,u_t) is a compact random variable with lower and upper bounds b_l(x,u) and b_u(x,u), there exists a learning procedure that, given sufficient T transitions collected under an exploration controller whose state\u2013action occupancy induces a known operating distribution \\mu supported on \\mathcal{D}, outputs a dynamics model \\hat{f}\u200b and a non-vacuous error bound e:\\mathcal{D}\\to\\mathbb{R}_+\u200b such that with confidence at least 1-\\delta (e.g., \\delta=0.05) over the training data, a fresh transition (x,u)\\sim\\mu satisfies \\|f(x,u)-\\hat f(x,u)\\|_2 \\le e(x,u)\u200b with probability at least 0.95, and the bound is non-vacuous in the sense that e(x,u) \\le 1.1 max(b_l(x,u), b_u(x,u)).",
+  "analysis": {
+    "subfields": [
+      "System Identification",
+      "Statistical Learning Theory",
+      "Model-based Reinforcement Learning"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T11236",
+      "T10040",
+      "T10243"
+    ],
+    "openalex_topic_names": [],
+    "claim_type": "theoretical",
+    "temporal_mode": "static",
+    "entities": {
+      "models": [],
+      "datasets": [],
+      "metrics": [
+        "error bound",
+        "coverage"
+      ],
+      "thresholds": [
+        "confidence 1-delta",
+        "delta=0.05"
+      ]
+    },
+    "confidence": 0.0,
+    "method": "hand"
+  },
+  "queries": {
+    "survey": [
+      "survey of system identification for nonlinear dynamical systems",
+      "statistical learning theory generalization bounds survey"
+    ],
+    "theory": [
+      "non-vacuous high-probability error bounds for learned dynamics",
+      "Lipschitz continuity error bounds for learned dynamical systems",
+      "PAC-style confidence bounds for system identification"
+    ],
+    "benchmark_dataset": [
+      "benchmark problems for nonlinear system identification"
+    ]
+  },
+  "stats": {
+    "n_queries": 6,
+    "n_candidates": 78,
+    "n_selected": 25,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 16.7
+  },
+  "papers": [
+    {
+      "title": "Identification of nonlinear systems\u2013a survey",
+      "abstract": "A survey of nonlinear system identification algorithms and related topics is presented by extracting significant results from the literature and presenting these in an organised and systematic way. Algorithms based on the functional expansions of Wiener and Volterra, the identification of block-oriented and bilinear systems, the selection of input signals, structure detection, parameter estimation and recent results from catastrophe theory and included. The limitations, relationships and applicability of the methods are discussed throughout.",
+      "authors": [
+        "S.A. Billings"
+      ],
+      "year": 1980,
+      "venue": "IEE Proceedings D Control Theory and Applications",
+      "citations": 483,
+      "url": "https://openalex.org/W4211171019",
+      "pdf_url": "",
+      "doi": "10.1049/ip-d.1980.0047",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Bilinear interpolation",
+        "Computer science",
+        "Identification (biology)",
+        "Nonlinear system",
+        "Nonlinear system identification",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T10320",
+        "T10534",
+        "T10876",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification",
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1.222277955186344,
+      "paper_type": "survey",
+      "score": 4.5798,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Kernel methods in system identification, machine learning and function estimation: A survey",
+      "abstract": "",
+      "authors": [
+        "Gianluigi Pillonetto",
+        "Francesco Dinuzzo",
+        "Tianshi Chen",
+        "Giuseppe De Nicolao",
+        "Lennart Ljung"
+      ],
+      "year": 2014,
+      "venue": "Automatica",
+      "citations": 732,
+      "url": "https://openalex.org/W2092766760",
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/S000510981400020X",
+      "doi": "10.1016/j.automatica.2014.01.001",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Identification (biology)",
+        "Kernel method",
+        "Machine learning",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T10876",
+        "T11236",
+        "T12814"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification",
+        "statistical learning theory generalization bounds survey",
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 595.66455,
+      "paper_type": "survey",
+      "score": 4.4236,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Structure identification of nonlinear dynamic systems\u2014A survey on input/output approaches",
+      "abstract": "",
+      "authors": [
+        "Rodolfo E. Haber",
+        "H. Unbehauen"
+      ],
+      "year": 1990,
+      "venue": "Automatica",
+      "citations": 673,
+      "url": "https://openalex.org/W2053904120",
+      "pdf_url": "",
+      "doi": "10.1016/0005-1098(90)90044-i",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Nonlinear system",
+        "System identification",
+        "Impulse response",
+        "Cascade",
+        "A priori and a posteriori",
+        "Nonlinear system identification"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T10876",
+        "T10320"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 2145.8884,
+      "paper_type": "survey",
+      "score": 3.3279,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Three Benchmarks Addressing Open Challenges in Nonlinear System Identification",
+      "abstract": "Nonlinear system identification is a fast evolving field of research with contributions from different communities. It is not always straightforward to compare different models and identification approaches. Therefore it is of high importance to offer well chosen benchmarks to the nonlinear system identification community. The interaction generated by such a benchmark can push the state of the art in nonlinear system identification forward. This paper discusses some challenges that are present nowadays in the nonlinear system identification community. Three benchmarks are presented, a hysteretic benchmark, a Wiener-Hammerstein benchmark, and a cascaded tanks benchmark, each addressing one or more of these challenges.",
+      "authors": [
+        "Maarten Schoukens",
+        "Jean\u2010Philippe No\u00ebl"
+      ],
+      "year": 2017,
+      "venue": "IFAC-PapersOnLine",
+      "citations": 53,
+      "url": "https://openalex.org/W2765772640",
+      "pdf_url": "https://doi.org/10.1016/j.ifacol.2017.08.071",
+      "doi": "10.1016/j.ifacol.2017.08.071",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Identification (biology)",
+        "Nonlinear system",
+        "Nonlinear system identification",
+        "Computer science",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T10534",
+        "T10876"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.0690561201855715,
+      "paper_type": "benchmark",
+      "score": 3.325,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Past, present and future of nonlinear system identification in structural dynamics",
+      "abstract": "",
+      "authors": [
+        "Ga\u00ebtan Kerschen",
+        "Keith Worden",
+        "Alexander F. Vakakis",
+        "Jean\u2010Claude Golinval"
+      ],
+      "year": 2005,
+      "venue": "Mechanical Systems and Signal Processing",
+      "citations": 1117,
+      "url": "https://openalex.org/W1988878180",
+      "pdf_url": "https://hal.science/hal-01863233",
+      "doi": "10.1016/j.ymssp.2005.04.008",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Nonlinear system",
+        "Identification (biology)",
+        "Computer science",
+        "Nonlinear system identification",
+        "System identification",
+        "Nonlinear dynamical systems"
+      ],
+      "topic_ids": [
+        "T10534",
+        "T11236",
+        "T11372"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1119.3829,
+      "paper_type": "method",
+      "score": 3.2714,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Identification of Nonlinear Dynamic Systems Using Extended Hammerstein and Wiener Models",
+      "abstract": "",
+      "authors": [
+        "Jozef V\u00f6r\u00f6s"
+      ],
+      "year": 1995,
+      "venue": "Medical Entomology and Zoology",
+      "citations": 49,
+      "url": "https://openalex.org/W2340293507",
+      "pdf_url": "",
+      "doi": "",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Identification (biology)",
+        "Mathematics",
+        "Nonlinear system",
+        "Nonlinear system identification",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T11233",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification",
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 1.0182607878986578,
+      "paper_type": "method",
+      "score": 3.2299,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Nonlinear System Identification: Selected Survey and Recent Trends *",
+      "abstract": "",
+      "authors": [
+        "R.\u041a. Mehra"
+      ],
+      "year": 1979,
+      "venue": "IFAC Proceedings Volumes",
+      "citations": 17,
+      "url": "https://openalex.org/W2732654293",
+      "pdf_url": "",
+      "doi": "10.1016/s1474-6670(17)65412-0",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Identification (biology)",
+        "Nonlinear system",
+        "System identification",
+        "Volterra series",
+        "Catastrophe theory",
+        "Cluster analysis"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T10320",
+        "T14351"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9741638916800933,
+      "paper_type": "survey",
+      "score": 3.1781,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "On evolutionary system identification with applications to nonlinear benchmarks",
+      "abstract": "This paper presents a record of the participation of the authors in a workshop on nonlinear system identification held in 2016. It provides a summary of a keynote lecture by one of the authors and also gives an account of how the authors developed identification strategies and methods for a number of benchmark nonlinear systems presented as challenges, before and during the workshop. It is argued here that more general frameworks are now emerging for nonlinear system identification, which are capable of addressing substantial ranges of problems. One of these frameworks is based on evolutionary optimisation (EO); it is a framework developed by the authors in previous papers and extended here. As one might expect from the \u2018no-free-lunch\u2019 theorem for optimisation, the methodology is not particularly sensitive to the particular (EO) algorithm used, and a number of different variants are presented in this paper, some used for the first time in system identification problems, which show equal capability. In fact, the EO approach advocated in this paper succeeded in finding the best solutions to two of the three benchmark problems which motivated the workshop. The paper provides considerable discussion on the approaches used and makes a number of suggestions regarding best practice; one of the major new opportunities identified here concerns the application of grey-box models which combine the insight of any prior physical-law based models (white box) with the power of machine learners with universal approximation properties (black box).",
+      "authors": [
+        "Keith Worden",
+        "Robert J. Barthorpe",
+        "Elizabeth J. Cross",
+        "Nikolaos Dervilis",
+        "Geoffrey R. Holmes",
+        "G. Manson",
+        "Timothy J. Rogers"
+      ],
+      "year": 2018,
+      "venue": "Mechanical Systems and Signal Processing",
+      "citations": 58,
+      "url": "https://openalex.org/W2800947561",
+      "pdf_url": "https://doi.org/10.1016/j.ymssp.2018.04.001",
+      "doi": "10.1016/j.ymssp.2018.04.001",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Identification (biology)",
+        "Nonlinear system",
+        "Computer science",
+        "Nonlinear system identification",
+        "Black box"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T11975",
+        "T10100"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 327.87418,
+      "paper_type": "benchmark",
+      "score": 3.0493,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Benchmark problems for nonlinear system identification and control using Soft Computing methods: Need and overview",
+      "abstract": "",
+      "authors": [
+        "Andreas Kroll",
+        "Horst Schulte"
+      ],
+      "year": 2014,
+      "venue": "Applied Soft Computing",
+      "citations": 82,
+      "url": "https://openalex.org/W2274897277",
+      "pdf_url": "",
+      "doi": "10.1016/j.asoc.2014.08.034",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Benchmarking",
+        "Computer science",
+        "Identification (biology)",
+        "Soft computing",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T10791",
+        "T10876",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1523.045,
+      "paper_type": "benchmark",
+      "score": 3.0273,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Matching Methods for Causal Inference: A Review and a Look Forward",
+      "abstract": "When estimating causal effects using observational data, it is desirable to replicate a randomized experiment as closely as possible by obtaining treated and control groups with similar covariate distributions. This goal can often be achieved by choosing well-matched samples of the original treated and control groups, thereby reducing bias due to the covariates. Since the 1970's, work on matching methods has examined how to best choose treated and control subjects for comparison. Matching methods are gaining popularity in fields such as economics, epidemiology, medicine, and political science. However, until now the literature and related advice has been scattered across disciplines. Researchers who are interested in using matching methods-or developing methods related to matching-do not have a single place to turn to learn about past and current research. This paper provides a structure for thinking about matching methods and guidance on their use, coalescing the existing research (both old and new) and providing a summary of where the literature on matching methods is now and where it should be headed.",
+      "authors": [
+        "Elizabeth A. Stuart"
+      ],
+      "year": 2010,
+      "venue": "Statistical Science",
+      "citations": 5372,
+      "url": "https://openalex.org/W2155163959",
+      "pdf_url": "https://projecteuclid.org/journals/statistical-science/volume-25/issue-1/Matching-Methods-for-Causal-Inference--A-Review-and-a/10.1214/09-STS313.pdf",
+      "doi": "10.1214/09-sts313",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Causal inference",
+        "Covariate",
+        "Matching (statistics)",
+        "Observational study",
+        "Replicate",
+        "Randomized experiment"
+      ],
+      "topic_ids": [
+        "T10845",
+        "T10136",
+        "T10243"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "statistical learning theory generalization bounds survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 112.59904,
+      "paper_type": "survey",
+      "score": 3.0,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Statistical Learning Theory"
+        ]
+      }
+    },
+    {
+      "title": "Sample Size for Survey Research: Review and Recommendations",
+      "abstract": "Determining an appropriate sample size is vital in drawing realistic conclusions from research findings. Although there are several widely adopted rules of thumb to calculate sample size, researchers remain unclear about which one to consider when determining sample size in their respective studies. \u2018How large should the sample be?\u2019 is one the most frequently asked questions in survey research. The objective of this editorial is three-fold. First, we discuss the factors that influence sample size decisions. Second, we review existing rules of thumb related to the calculation of sample size. Third, we present the guidelines to perform power analysis using the G*Power programme. There is, however, a caveat: we urge researchers not to blindly follow these rules. Such rules or guidelines should be understood in their specific contexts and under the conditions in which they were prescribed. We hope that this editorial does not only provide researchers a fundamental understanding of sample size and its associated issues, but also facilitates their consideration of sample size determination in their own studies.",
+      "authors": [
+        "Mumtaz Ali Memon",
+        "Hiram Ting",
+        "Jun\u2010Hwa Cheah",
+        "Ramayah Thurasamy",
+        "Francis Chuah",
+        "Tat\u2010Huei Cham"
+      ],
+      "year": 2020,
+      "venue": "Journal of Applied Structural Equation Modeling",
+      "citations": 1241,
+      "url": "https://openalex.org/W3047225376",
+      "pdf_url": "https://doi.org/10.47263/jasem.4(2)01",
+      "doi": "10.47263/jasem.4(2)01",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Sample size determination",
+        "Rule of thumb",
+        "Sample (material)",
+        "Computer science",
+        "Data science",
+        "Psychology"
+      ],
+      "topic_ids": [
+        "T11539",
+        "T10243",
+        "T11722"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "statistical learning theory generalization bounds survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 305.80984,
+      "paper_type": "survey",
+      "score": 2.9762,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "A survey of cross-validation procedures for model selection",
+      "abstract": "Used to estimate the risk of an estimator or to perform model selection, cross-validation is a widespread strategy because of its simplicity and its (apparent) universality. Many results exist on model selection performances of cross-validation procedures. This survey intends to relate these results to the most recent advances of model selection theory, with a particular emphasis on distinguishing empirical statements from rigorous theoretical results. As a conclusion, guidelines are provided for choosing the best cross-validation procedure according to the particular features of the problem in hand.",
+      "authors": [
+        "Sylvain Arlot",
+        "Alain Celisse"
+      ],
+      "year": 2010,
+      "venue": "Statistics Surveys",
+      "citations": 3278,
+      "url": "https://openalex.org/W1981552604",
+      "pdf_url": "https://projecteuclid.org/journals/statistics-surveys/volume-4/issue-none/A-survey-of-cross-validation-procedures-for-model-selection/10.1214/09-SS054.pdf",
+      "doi": "10.1214/09-ss054",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Econometrics",
+        "Estimator",
+        "Model selection",
+        "Selection (genetic algorithm)",
+        "Simplicity"
+      ],
+      "topic_ids": [
+        "T10136",
+        "T10243",
+        "T11871"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "statistical learning theory generalization bounds survey",
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 571.62354,
+      "paper_type": "survey",
+      "score": 2.945,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Statistical Learning Theory"
+        ]
+      }
+    },
+    {
+      "title": "Perspectives on system identification",
+      "abstract": "",
+      "authors": [
+        "Lennart Ljung"
+      ],
+      "year": 2010,
+      "venue": "Annual Reviews in Control",
+      "citations": 675,
+      "url": "https://openalex.org/W4246840991",
+      "pdf_url": "http://urn.kb.se/resolve?urn=urn:nbn:se:liu:diva-56061",
+      "doi": "10.1016/j.arcontrol.2009.12.001",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Data science",
+        "Identification (biology)",
+        "Interface (matter)",
+        "Presentation (obstetrics)",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T10876",
+        "T10928",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 766.5081,
+      "paper_type": "method",
+      "score": 2.93,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Three free data sets for development and benchmarking in nonlinear system identification",
+      "abstract": "System identification is a fundamentally experimental field of science in that it deals with modeling of system dynamics using measured data. Despite this fact many algorithms and theoretical results are only tested with simulations at the time of publication. One reason for this may be a lack of easily available live data. This paper therefore presents three sets of data, suitable for development, testing and benchmarking of system identification algorithms for nonlinear systems. The data sets are collected from laboratory processes that can be described by block - oriented dynamic models, and by more general nonlinear difference and differential equation models. All data sets are available for free download.",
+      "authors": [
+        "Torbj\u00f6rn Wigren",
+        "J. Schoukens"
+      ],
+      "year": 2013,
+      "venue": "",
+      "citations": 92,
+      "url": "https://openalex.org/W1563957082",
+      "pdf_url": "http://urn.kb.se/resolve?urn=urn:nbn:se:uu:diva-212577",
+      "doi": "10.23919/ecc.2013.6669201",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmarking",
+        "Computer science",
+        "Identification (biology)",
+        "Nonlinear system",
+        "Nonlinear system identification",
+        "System identification"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T10876",
+        "T10534"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 1.0918946205073299,
+      "paper_type": "method",
+      "score": 2.8456,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "RETRACTED ARTICLE: Nonlinear System Identification using Neural Networks",
+      "abstract": "This paper proposes a computationally efficient artificial neural network (ANN) model for system identification of unknown dynamic nonlinear discrete time systems. A single layer functional link ANN is used for the model where the need of hidden layer is eliminated by expanding the input pattern by Chebyshev polynomials. Thus, creation of nonlinear decision boundaries in the multidimensional input space and approximation of complex nonlinear systems becomes easier. These models are linear in their parameters and nonlinear in the inputs. The recursive least squares method with forgetting factor is used as on-line learning algorithm for parameter updation. The good behaviour of the identification method is tested on Box and Jenkins Gas furnace benchmark identification problem, single input single output (SISO) and multi input multi output (MIMO) discrete time plants. Stability of the identification scheme is also addressed.",
+      "authors": [
+        "Shubhi Purwar",
+        "Indra Narayan Kar",
+        "A. N. JHA"
+      ],
+      "year": 2007,
+      "venue": "IETE Journal of Research",
+      "citations": 91,
+      "url": "https://openalex.org/W2321052407",
+      "pdf_url": "",
+      "doi": "10.1080/03772063.2007.10876119",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial neural network",
+        "Identification (biology)",
+        "Nonlinear system",
+        "Computer science",
+        "System identification",
+        "Nonlinear system identification"
+      ],
+      "topic_ids": [
+        "T10320",
+        "T11236",
+        "T10876"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "benchmark problems for nonlinear system identification"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 301.8299,
+      "paper_type": "method",
+      "score": 2.8077,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "A survey of design methods for failure detection in dynamic systems",
+      "abstract": "",
+      "authors": [
+        "Alan Willsky",
+        "S Faqin",
+        "T Tarn",
+        "J Zaborszky",
+        "A Jazwinski",
+        "J Gilmore",
+        "R Mckern",
+        "R Broen",
+        "M Athans",
+        "D Willner",
+        "D Lainiotis",
+        "R Montgomery",
+        "A Caglayan",
+        "R Montgomery",
+        "D Price",
+        "P Buxbaum",
+        "R Haddad",
+        "A Willsky",
+        "J Deyst",
+        "B Crawford",
+        "A Willsky",
+        "J Deyst",
+        "Jr",
+        "B Crawfcrd",
+        "B Pierce"
+      ],
+      "year": 1977,
+      "venue": "Microelectronics Reliability",
+      "citations": 1433,
+      "url": "https://openalex.org/W3022296623",
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/0026271477903262",
+      "doi": "10.1016/0026-2714(77)90326-2",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Reliability engineering",
+        "Engineering"
+      ],
+      "topic_ids": [
+        "T10876",
+        "T10928",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey of system identification for nonlinear dynamical systems"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 839.96893,
+      "paper_type": "survey",
+      "score": 2.7943,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Statistical paradises and paradoxes in big data (I): Law of large populations, big data paradox, and the 2016 US presidential election",
+      "abstract": "Statisticians are increasingly posed with thought-provoking and even paradoxical questions, challenging our qualifications for entering the statistical paradises created by Big Data. By developing measures for data quality, this article suggests a framework to address such a question: \u201cWhich one should I trust more: a 1% survey with 60% response rate or a self-reported administrative dataset covering 80% of the population?\u201d A 5-element Euler-formula-like identity shows that for any dataset of size $n$, probabilistic or not, the difference between the sample average $\\overline{X}_{n}$ and the population average $\\overline{X}_{N}$ is the product of three terms: (1) a data quality measure, $\\rho_{{R,X}}$, the correlation between $X_{j}$ and the response/recording indicator $R_{j}$; (2) a data quantity measure, $\\sqrt{(N-n)/n}$, where $N$ is the population size; and (3) a problem difficulty measure, $\\sigma_{X}$, the standard deviation of $X$. This decomposition provides multiple insights: (I) Probabilistic sampling ensures high data quality by controlling $\\rho_{{R,X}}$ at the level of $N^{-1/2}$; (II) When we lose this control, the impact of $N$ is no longer canceled by $\\rho_{{R,X}}$, leading to a Law of Large Populations (LLP), that is, our estimation error, relative to the benchmarking rate $1/\\sqrt{n}$, increases with $\\sqrt{N}$; and (III) the \u201cbigness\u201d of such Big Data (for population inferences) should be measured by the relative size $f=n/N$, not the absolute size $n$; (IV) When combining data sources for population inferences, those relatively tiny but higher quality ones should be given far more weights than suggested by their sizes. Estimates obtained from the Cooperative Congressional Election Study (CCES) of the 2016 US presidential election suggest a $\\rho_{{R,X}}\\approx-0.005$ for self-reporting to vote for Donald Trump. Because of LLP, this seemingly minuscule data defect correlation implies that the simple sample proportion of the self-reported voting preference for Trump from $1\\%$ of the US eligible voters, that is, $n\\approx2\\mbox{,}300\\mbox{,}000$, has the same mean squared error as the corresponding sample proportion from a genuine simple random sample of size $n\\approx400$, a $99.98\\%$ reduction of sample size (and hence our confidence). The CCES data demonstrate LLP vividly: on average, the larger the state\u2019s voter populations, the further away the actual Trump vote shares from the usual $95\\%$ confidence intervals based on the sample proportions. This should remind us that, without taking data quality into account, population inferences with Big Data are subject to a Big Data Paradox: the more the data, the surer we fool ourselves.",
+      "authors": [
+        "Xiao\u2010Li Meng"
+      ],
+      "year": 2018,
+      "venue": "The Annals of Applied Statistics",
+      "citations": 316,
+      "url": "https://openalex.org/W2883811944",
+      "pdf_url": "https://projecteuclid.org/journals/annals-of-applied-statistics/volume-12/issue-2/Statistical-paradises-and-paradoxes-in-big-data-I--Law/10.1214/18-AOAS1161SF.pdf",
+      "doi": "10.1214/18-aoas1161sf",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Population",
+        "Statistics",
+        "Big data",
+        "Mathematics",
+        "Measure (data warehouse)",
+        "Econometrics"
+      ],
+      "topic_ids": [
+        "T10136",
+        "T10243",
+        "T11875"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "statistical learning theory generalization bounds survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 118.12977,
+      "paper_type": "survey",
+      "score": 2.7911,
+      "norm_label": {
+        "tier": "noise",
+        "subfields": []
+      }
+    },
+    {
+      "title": "Orthogonal statistical learning",
+      "abstract": "We provide nonasymptotic excess risk guarantees for statistical learning in a setting where the population risk with respect to which we evaluate the target parameter depends on an unknown nuisance parameter that must be estimated from data. We analyze a two-stage sample splitting meta-algorithm that takes as input arbitrary estimation algorithms for the target parameter and nuisance parameter. We show that if the population risk satisfies a condition called Neyman orthogonality, the impact of the nuisance estimation error on the excess risk bound achieved by the meta-algorithm is of second order. Our theorem is agnostic to the particular algorithms used for the target and nuisance and only makes an assumption on their individual performance. This enables the use of a plethora of existing results from machine learning to give new guarantees for learning with a nuisance component. Moreover, by focusing on excess risk rather than parameter estimation, we can provide rates under weaker assumptions than in previous works and accommodate settings in which the target parameter belongs to a complex nonparametric class. We provide conditions on the metric entropy of the nuisance and target classes such that oracle rates of the same order, as if we knew the nuisance parameter, are achieved.",
+      "authors": [
+        "Dylan J. Foster",
+        "Vasilis Syrgkanis"
+      ],
+      "year": 2023,
+      "venue": "The Annals of Statistics",
+      "citations": 55,
+      "url": "https://openalex.org/W2914527946",
+      "pdf_url": "https://arxiv.org/pdf/1901.09036",
+      "doi": "10.1214/23-aos2258",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Empirical risk minimization",
+        "Nuisance parameter",
+        "Population",
+        "Nonparametric statistics",
+        "Estimation theory",
+        "Mathematics"
+      ],
+      "topic_ids": [
+        "T10136",
+        "T10845",
+        "T10243"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "statistical learning theory generalization bounds survey"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 141.14984,
+      "paper_type": "method",
+      "score": 2.0545,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Statistical Learning Theory"
+        ]
+      }
+    },
+    {
+      "title": "Learning stability of partially observed switched linear systems",
+      "abstract": "This paper deals with learning stability of partially observed switched linear systems under arbitrary switching. Such systems are widely used to describe cyber-physical systems which arise by combining physical systems with digital components. In many real-world applications, the internal states cannot be observed directly. It is thus more realistic to conduct system analysis using the outputs of the system. Stability is one of the most frequent requirement for safety and robustness of cyber-physical systems. Existing methods for analyzing stability of switched linear systems often require the knowledge of the parameters and/or all the states of the underlying system. In this paper, we propose an algorithm for deciding stability of switched linear systems under arbitrary switching based purely on observed output data. The proposed algorithm essentially relies on an output-based Lyapunov stability framework and returns an estimate of the joint spectral radius (JSR). We also prove a probably approximately correct error bound on the quality of the estimate of the JSR from the perspective of statistical learning theory.",
+      "authors": [
+        "Zheming Wang",
+        "Rapha\u00ebl M. Jungers",
+        "Mih\u00e1ly Petreczky",
+        "Bo Chen",
+        "Li Yu"
+      ],
+      "year": 2024,
+      "venue": "Automatica",
+      "citations": 2,
+      "url": "https://openalex.org/W4393336634",
+      "pdf_url": "https://hal.science/hal-04787633v1/document",
+      "doi": "10.1016/j.automatica.2024.111643",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Control theory (sociology)",
+        "Cyber-physical system",
+        "Linear system",
+        "Perspective (graphical)",
+        "Robustness (evolution)",
+        "Stability (learning theory)"
+      ],
+      "topic_ids": [
+        "T10791",
+        "T10876",
+        "T11236"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "PAC-style confidence bounds for system identification"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 15.022779,
+      "paper_type": "method",
+      "score": 1.8797,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "PAC-Bayesian bounds for learning LTI-ss systems with input from empirical loss",
+      "abstract": "In this paper we derive a Probably Approxilmately Correct(PAC)-Bayesian error bound for linear time-invariant (LTI) stochastic dynamical systems with inputs. Such bounds are widespread in machine learning, and they are useful for characterizing the predictive power of models learned from finitely many data points. In particular, with the bound derived in this paper relates future average prediction errors with the prediction error generated by the model on the data used for learning. In turn, this allows us to provide finite-sample error bounds for a wide class of learning/system identification algorithms. Furthermore, as LTI systems are a sub-class of recurrent neural networks (RNNs), these error bounds could be a first step towards PAC-Bayesian bounds for RNNs.",
+      "authors": [
+        "Deividas Eringis",
+        "John Leth",
+        "Zheng\u2010Hua Tan",
+        "Rafael Wisniewski",
+        "Mih\u00e1ly Petreczky"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 1,
+      "url": "https://openalex.org/W4361807135",
+      "pdf_url": "https://arxiv.org/pdf/2303.16816",
+      "doi": "10.48550/arxiv.2303.16816",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "LTI system theory",
+        "Computer science",
+        "Bayesian probability",
+        "Dynamical systems theory",
+        "Upper and lower bounds",
+        "Linear dynamical system"
+      ],
+      "topic_ids": [
+        "T12072",
+        "T11236",
+        "T12814"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "non-vacuous high-probability error bounds for learned dynamics"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 27.543402,
+      "paper_type": "method",
+      "score": 1.8311,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Statistical Learning Theory",
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "On data-driven stabilization of systems with nonlinearities satisfying quadratic constraints",
+      "abstract": "In this paper, we directly design a state feedback controller that stabilizes a class of uncertain nonlinear systems solely based on input-state data collected from a finite-length experiment. Necessary and sufficient conditions are derived to guarantee that the system is absolutely stabilizable and a controller is designed. Results derived under some relaxed prior information about the system, strengthened data assumptions and perturbed data are also discussed. All the results are based on semi-definite programs that depend on input-state data only, which \u2013 once solved \u2013 directly return controllers. As such they represent end-to-end solutions to the problem of learning control from data for an important class of nonlinear systems. Numerical examples illustrate the method with different levels of prior information.",
+      "authors": [
+        "Alessandro Luppi",
+        "Claudio De Persis",
+        "Pietro Tesi"
+      ],
+      "year": 2022,
+      "venue": "Systems & Control Letters",
+      "citations": 37,
+      "url": "https://openalex.org/W4226515446",
+      "pdf_url": "https://doi.org/10.1016/j.sysconle.2022.105206",
+      "doi": "10.1016/j.sysconle.2022.105206",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Control theory (sociology)",
+        "Nonlinear system",
+        "State (computer science)",
+        "Quadratic equation",
+        "Controller (irrigation)",
+        "Class (philosophy)"
+      ],
+      "topic_ids": [
+        "T11749",
+        "T11236",
+        "T10791"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Lipschitz continuity error bounds for learned dynamical systems"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 45.46807,
+      "paper_type": "method",
+      "score": 1.5915,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "System Identification",
+          "Model-based Reinforcement Learning"
+        ]
+      }
+    },
+    {
+      "title": "Safe and Stable Adaptive Control for a Class of Dynamic Systems",
+      "abstract": "Adaptive control has focused on online control of dynamic systems in the presence of parametric uncertainties, with solutions guaranteeing stability and control performance. Safety, a related property to stability, is becoming increasingly important as the footprint of autonomous systems grows in society. One of the popular ways for ensuring safety is through the notion of a control barrier function (CBF). In this paper, we combine adaptation and CBFs to develop a real-time controller that guarantees stability and remains safe in the presence of parametric uncertainties. The class of dynamic systems that we focus on is linear time-invariant systems whose states are accessible and where the inputs are subject to a magnitude limit. Conditions of stability, state convergence to a desired value, and parameter learning are all elucidated. One of the elements of the proposed adaptive controller that ensures stability and safety is the use of a CBF-based safety filter that suitably generates safe reference commands, employs error-based relaxation (EBR) of Nagumo's theorem, and leads to guarantees of set invariance. To demonstrate the effectiveness of our approach, we present two numerical examples, an obstacle avoidance case and a missile flight control case.",
+      "authors": [
+        "Johannes Autenrieb",
+        "Anuradha M. Annaswamy"
+      ],
+      "year": 2023,
+      "venue": "",
+      "citations": 11,
+      "url": "https://openalex.org/W4391019967",
+      "pdf_url": "https://elib.dlr.de/212135/1/Safe_and_Stable_Adaptive_Control_for_a_Class_of_Dynamic_Systems%20%281%29.pdf",
+      "doi": "10.1109/cdc49753.2023.10383779",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Control theory (sociology)",
+        "Computer science",
+        "Parametric statistics",
+        "Adaptive control",
+        "Controller (irrigation)",
+        "Stability (learning theory)"
+      ],
+      "topic_ids": [
+        "T10791",
+        "T10040",
+        "T10046"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Lipschitz continuity error bounds for learned dynamical systems"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 57.21738,
+      "paper_type": "method",
+      "score": 1.4922,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Model-based Reinforcement Learning"
+        ]
+      }
+    },
+    {
+      "title": "SafEDMD: A Koopman-based data-driven controller design framework for nonlinear dynamical systems",
+      "abstract": "The Koopman operator serves as the theoretical backbone for machine learning of dynamical control systems, where the operator is heuristically approximated by extended dynamic mode decomposition (EDMD). In this paper, we propose SafEDMD, a novel stability- and feedback-oriented EDMD-based controller design framework. Our approach leverages a reliable surrogate model generated in a data-driven fashion in order to provide closed-loop guarantees. In particular, we establish a controller design based on semi-definite programming with guaranteed stabilization of the underlying nonlinear system. As central ingredient, we derive proportional error bounds that vanish at the origin and are tailored to control tasks. We illustrate the developed method by means of several benchmark examples and highlight the advantages over state-of-the-art methods.",
+      "authors": [
+        "Robin Str\u00e4sser",
+        "Manuel Schaller",
+        "Karl Worthmann",
+        "Julian Berberich",
+        "Frank Allg\u00f6wer"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 8,
+      "url": "https://openalex.org/W4391620856",
+      "pdf_url": "https://arxiv.org/pdf/2402.03145",
+      "doi": "10.48550/arxiv.2402.03145",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Certification",
+        "Architecture",
+        "Control (management)",
+        "Nonlinear system",
+        "Computer science",
+        "Control engineering"
+      ],
+      "topic_ids": [
+        "T11236",
+        "T10791",
+        "T10320"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Lipschitz continuity error bounds for learned dynamical systems"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 52.762085,
+      "paper_type": "method",
+      "score": 1.485,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "System Identification"
+        ]
+      }
+    },
+    {
+      "title": "Online Optimization of Dynamical Systems With Deep Learning Perception",
+      "abstract": "This paper considers the problem of controlling a dynamical system when the state cannot be directly measured and the control performance metrics are unknown or only partially known. In particular, we focus on the design of data-driven controllers to regulate a dynamical system to the solution of a constrained convex optimization problem where: i) the state must be estimated from nonlinear and possibly high-dimensional data; and ii) the cost of the optimization problem \u2013 which models control objectives associated with inputs and states of the system \u2013 is not available and must be learned from data. We propose a data-driven feedback controller that is based on adaptations of a projected gradient-flow method; the controller includes neural networks as integral components for the estimation of the unknown functions. Leveraging stability theory for perturbed systems, we derive sufficient conditions to guarantee exponential input-to-state stability (ISS) of the control loop. In particular, we show that the interconnected system is ISS with respect to the approximation errors of the neural network and unknown disturbances affecting the system. The transient bounds combine the universal approximation property of deep neural networks with the ISS characterization. Illustrative numerical results are presented in the context of robotics and control of epidemics.",
+      "authors": [
+        "Liliaokeawawa Cothren",
+        "Gianluca Bianchin",
+        "Emiliano Dall\u2019Anese"
+      ],
+      "year": 2022,
+      "venue": "IEEE Open Journal of Control Systems",
+      "citations": 11,
+      "url": "https://openalex.org/W4295789132",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/9552933/9712344/09891838.pdf",
+      "doi": "10.1109/ojcsys.2022.3205871",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Controller (irrigation)",
+        "Control theory (sociology)",
+        "Context (archaeology)",
+        "Artificial neural network",
+        "Computer science",
+        "Dynamical systems theory"
+      ],
+      "topic_ids": [
+        "T11206",
+        "T11236",
+        "T10046"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "Lipschitz continuity error bounds for learned dynamical systems"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 68.43184,
+      "paper_type": "method",
+      "score": 1.4734,
+      "norm_label": {
+        "tier": "adjacent",
+        "subfields": [
+          "Model-based Reinforcement Learning"
+        ]
+      }
+    },
+    {
+      "title": "A unified recipe for deriving (time-uniform) PAC-Bayes bounds",
+      "abstract": "We present a unified framework for deriving PAC-Bayesian generalization bounds. Unlike most previous literature on this topic, our bounds are anytime-valid (i.e., time-uniform), meaning that they hold at all stopping times, not only for a fixed sample size. Our approach combines four tools in the following order: (a) nonnegative supermartingales or reverse submartingales, (b) the method of mixtures, (c) the Donsker-Varadhan formula (or other convex duality principles), and (d) Ville's inequality. Our main result is a PAC-Bayes theorem which holds for a wide class of discrete stochastic processes. We show how this result implies time-uniform versions of well-known classical PAC-Bayes bounds, such as those of Seeger, McAllester, Maurer, and Catoni, in addition to many recent bounds. We also present several novel bounds. Our framework also enables us to relax traditional assumptions; in particular, we consider nonstationary loss functions and non-i.i.d. data. In sum, we unify the derivation of past bounds and ease the search for future bounds: one may simply check if our supermartingale or submartingale conditions are met and, if so, be guaranteed a (time-uniform) PAC-Bayes bound.",
+      "authors": [
+        "Ben Chugg",
+        "Hongjian Wang",
+        "Aaditya Ramdas"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 7,
+      "url": "https://openalex.org/W4319653703",
+      "pdf_url": "https://arxiv.org/pdf/2302.03421",
+      "doi": "10.48550/arxiv.2302.03421",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Generalization",
+        "Bayes' theorem",
+        "Mathematics",
+        "Regular polygon",
+        "Class (philosophy)",
+        "Applied mathematics"
+      ],
+      "topic_ids": [
+        "T10136",
+        "T11413",
+        "T10243"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "PAC-style confidence bounds for system identification"
+      ],
+      "buckets": [
+        "theory"
+      ],
+      "tags": {},
+      "semantic_score": 77.861275,
+      "paper_type": "method",
+      "score": 1.4523,
+      "norm_label": {
+        "tier": "core",
+        "subfields": [
+          "Statistical Learning Theory"
+        ]
+      }
+    }
+  ]
+}
