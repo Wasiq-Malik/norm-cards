@@ -133,31 +133,23 @@ def _complete_json_strict(prompt: str, model: str) -> dict:
 
 
 def run_ablation(card_path: str, model: str = "gpt-5.5",
-                 subclaims: list = None, claim: str = None,
-                 problem_id: str = None) -> dict:
+                 subclaims: list = None) -> dict:
     """Baseline (no norm card) vs method (norm card in current_evidence).
 
     Mirrors SciFy's real flow: the claim is first decomposed into subclaims
     (identical for both arms), then the proposer runs with/without the norm card.
     Pass `subclaims` explicitly to skip decomposition (e.g. to reuse a fixed set).
-
-    `claim` overrides the card's own claim field. That is what makes a FIELD-LEVEL
-    card (one not anchored to a single claim) usable here: point it at any claim in
-    its field. Reuse the subclaims from an existing run for that claim too, so the
-    card stays the only variable across every arm being compared.
     """
     card = json.load(open(card_path))
-    claim = claim or card["claim"]
+    claim = card["claim"]
     if subclaims is None:
         subclaims = decompose(claim, model=model)
     baseline = propose(claim, subclaims, {}, model=model)
     method = propose(claim, subclaims, norm_card_evidence(card), model=model)
     return {
-        "problem_id": problem_id or card.get("problem_id"),
+        "problem_id": card.get("problem_id"),
         "claim": claim,
         "model": model,
-        "card_path": card_path,
-        "card_source": card.get("provenance", {}).get("note", ""),
         "subclaims": subclaims,
         "baseline_experiments": baseline,
         "method_experiments": method,
@@ -170,22 +162,8 @@ if __name__ == "__main__":
     ap.add_argument("--card", required=True, help="path to a norm_card.json")
     ap.add_argument("--model", default="gpt-5.5")
     ap.add_argument("--out", default=None)
-    ap.add_argument("--problem", default=None,
-                    help="problem id from the sprint claims file; use its claim "
-                         "instead of the card's own (for field-level cards)")
-    ap.add_argument("--reuse_subclaims", default=None,
-                    help="path to an existing scify_proposer.json whose subclaims to "
-                         "reuse, so arms differ only by the card")
     a = ap.parse_args()
-
-    claim, subclaims = None, None
-    if a.problem:
-        from .eval import load_claims
-        claim = load_claims()[a.problem]["claim"]
-    if a.reuse_subclaims:
-        subclaims = json.load(open(a.reuse_subclaims))["subclaims"]
-    res = run_ablation(a.card, model=a.model, claim=claim, subclaims=subclaims,
-                       problem_id=a.problem)
+    res = run_ablation(a.card, model=a.model)
     js = json.dumps(res, indent=2)
     if a.out:
         open(a.out, "w").write(js)
