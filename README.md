@@ -165,12 +165,24 @@ norm_cards/
   fulltext.py       #   PDF/full-text resolver chain (arXiv -> pdf_url -> Unpaywall -> S2)
   sources/          #   OpenAlex (default), arXiv, Semantic Scholar, SerpAPI adapters
   normcard.py       # stage 2: bundle -> norm_card.json  (map/reduce/recipe)
-  scify_proposer.py # stage 3: evaluation harness (baseline vs card ablation)
+  scify_proposer.py # stage 3: baseline vs card ablation (SciFy proposer, verbatim)
   llm.py            #   litellm wrapper (temp/model handling)
   config.py         #   defaults + key loading
-  data/             #   PwC task seeds, OpenAlex topic seeds
+  data/             #   PwC task seeds, OpenAlex topic seeds, sprint claims JSONL
   test_gather.py    #   keyless smoke test for the search/rank stages
+  eval/             # stage 4: automated evaluation harness
+    tools.py        #   web/OpenAlex/full-text/resource-check tool belt
+    agent_loop.py   #   tool-calling loop, evidence ledger, tracing
+    schemas.py      #   submit_evaluation schema, evidence-discipline validator,
+                    #     and the reference-recipe input gate
+    prompts.py      #   the judge's system prompt
+    scoring.py      #   verdicts -> numbers; majority vote across judge runs
+    reference.py    #   reference recipes as INPUT (--template / --check)
+    evaluate.py     #   judge CLI (gpt-5.6-luna, k runs, blind to arm)
+    calibrate.py    #   judge-vs-hand-label agreement check
+    report.py       #   aggregate -> REPORT.md
 results/norm_cards_hybrid/  # shared bundles, cards, proposer outputs, reports
+results/eval_v2/            # reference recipes, judgments, REPORT.md (traces gitignored)
 ```
 
 ---
@@ -186,10 +198,52 @@ python -m norm_cards.test_gather --case 11   # empirical: detection robustness
 
 ---
 
-## Next: automated evaluation harness (in progress)
+## Automated evaluation harness (`norm_cards/eval/`)
 
-The current `scify_proposer.py` produces the baseline/method experiment sets; the
-next step is scoring them automatically against `ground_truth_recipes.md`
-(coverage, correctness, groundedness) so we can evaluate overall pipeline
-correctness at scale — letting the proposer generate more than 3 experiments and
-without the compute cap.
+Scores the experiment sets from `scify_proposer.py` for coverage, correctness,
+groundedness and decision sufficiency, so pipeline changes can be measured as
+deltas on a fixed benchmark. Full design: [`docs/eval_harness_design.md`](docs/eval_harness_design.md).
+
+One agentic stage — the judge — with web search, OpenAlex, paper full text, and
+dataset/model existence checks, under no time or compute budget. It scores against
+a **reference recipe**, which the harness takes as an input and never produces:
+someone writes it, or transcribes it from the experiment section of the paper the
+claim came from. Format: [`docs/reference_format.md`](docs/reference_format.md).
+
+The harness deliberately has no way to generate a reference. One written by asking
+a strong model to design experiments for the claim is not an independent standard —
+it is another system's output, and if that model were good enough to define
+correctness you would ship it as the proposer instead of scoring against it.
+
+```bash
+# Reference recipes — authored by hand, validated and rendered here.
+python -m norm_cards.eval.reference --template 11   # blank skeleton to fill in
+python -m norm_cards.eval.reference --check         # validate + render markdown
+# -> results/eval_v2/ground_truth/problem_<id>/{ground_truth.json, ground_truth.md}
+
+# Score a pipeline's output against those fixtures, per arm, k runs.
+python -m norm_cards.eval.evaluate --problems 11 --judge-runs 3   # gpt-5.6-luna
+# -> results/eval_v2/judgments/problem_<id>/{baseline,method}.json
+
+python -m norm_cards.eval.report        # -> results/eval_v2/REPORT.md
+python -m norm_cards.eval.calibrate --template   # judge vs. hand labels
+```
+
+Each experiment gets one of three verdicts — `ACCURATE` (1.0) / `MIXED` (0.5,
+right idea but under-specified) / `IRRELEVANT` (0.0, would yield nothing useful).
+
+What keeps the judge honest:
+
+- **The reference is treated as fallible.** It is a first orientation, not an
+  authority — and it says its own provenance at the top, which the judge is shown.
+  A divergent-but-sound experiment scores ACCURATE *and* files a defect against the
+  reference; those defects are the input to a human's decision to revise it.
+  Nothing is revised automatically.
+- **No verdict can rest on "the reference disagrees."** Faulting an experiment
+  requires a quoted source *and* a step-by-step reasoning chain from that quote to
+  the fault — enforced in `schemas.validate_evaluation`, which hands rejections
+  back to the agent to fix.
+- **The judge is blind to the arm**, and never told a second arm exists.
+- **Scores are computed in code** (`scoring.py`) from small per-experiment
+  judgments; no agent ever emits a score. k runs are majority-voted, and verdicts
+  without a majority are marked `CONTESTED` for hand review.

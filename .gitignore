@@ -20,6 +20,13 @@ env/
 # results/ IS tracked (bundles, cards, proposer outputs, reports) so teammates
 # get the shared experiment artifacts. Heavy binaries (*.pdf) stay ignored above.
 
+# Exception: the eval harness's raw agent traces run to megabytes each and are
+# regenerable. The ground truths and judgments they produce ARE tracked, and each
+# carries its own evidence ledger (source + verbatim quote per claim made), so
+# verdicts stay auditable without the full trajectories in git.
+results/eval_v2/**/*trace.jsonl
+results/eval_v2/.toolcache/
+
 # OS / editor
 .DS_Store
 .idea/

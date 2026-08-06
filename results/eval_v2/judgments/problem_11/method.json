@@ -1,0 +1,1486 @@
+{
+  "type": "evaluation",
+  "format_version": "1.0",
+  "problem_id": "11",
+  "arm": "method",
+  "claim": "An Ultralytics YOLO11n detector pretrained on COCO and evaluated on the person class of the COCO val2017 split at 640\u00d7640 resolution,retains AP50 \u2265 0.90 (IoU \u2265 0.5), with \u2264 5% relative degradation from clean performance under adversarial perturbations under image modifications under a learned generative illumination-consistent perturbation model. The image manipulations follow a white-box projected gradient descent (PGD) attack over the latent variables of the learned conditional generative model, with perturbations constrained to remain within an L\u221e image-space bound of \u03b5 = 12/255.\nNote that the conditional generator is learned from the COCO data set to describe the perturbation set over a constrained latent space of lighting parameters. The generator g(x,z) produces perturbed images (for original image x) where z lies in a norm-bounded latent space (e.g., \\|z\\| \\le B ); g is a trained conditional variational autoencoder (CVAE).",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 3
+  },
+  "proposer_model": "gpt-5.5",
+  "n_experiments": 3,
+  "experiments_evaluated": [
+    "To address subclaim 1 (and subclaims 2\u20137), reproduce the clean COCO-val2017 person-class evaluation using the exact Ultralytics YOLO11n COCO-pretrained checkpoint. Download COCO val2017 and annotations from a public source such as HuggingFace/Kaggle/COCO, load the official Ultralytics YOLO11n pretrained weights, run inference with imgsz=640, and compute AP50 for category_id=1/person using pycocotools at IoU=0.5. Record the model name/checkpoint hash, whether the weights are COCO-pretrained, the image size, class filtering procedure, confidence/NMS settings, and clean person AP50. If clean person AP50 is already below 0.90, then the claim that adversarial AP50 remains \u22650.90 is likely infeasible unless a nonstandard AP computation is being used. If clean AP50 is \u22650.90, this establishes the necessary baseline for testing the adversarial degradation claim. This experiment could be made unnecessary by official logs or a reproducible evaluation script showing the YOLO11n checkpoint, COCO val2017 person-only AP50 at 640\u00d7640, and pycocotools metric output.",
+    "To address subclaim 8 (and subclaims 12\u201316), audit and reproduce the learned conditional generative illumination-consistent perturbation model. Train or obtain the claimed CVAE generator g(x,z) using COCO train2017 images, with x as the conditioning image and z as a norm-bounded lighting latent variable, then evaluate on held-out COCO val2017 images. Verify that g takes an original image x plus latent z and outputs a perturbed image, that z is explicitly projected or sampled within ||z||\u2264B, that the architecture is a trained conditional VAE, and that generated changes are illumination-like rather than arbitrary texture/object changes. Quantify this by measuring reconstruction/regularization losses, image-space L\u221e distances, color/brightness/shading statistics, and perceptual or semantic consistency using public models; visually inspect random samples and latent traversals. If the generator produces only smooth lighting/color changes while preserving scene geometry and object identity, the generative-illumination subclaims are plausible. If it introduces object distortions, non-lighting artifacts, or lacks a bounded latent space, those subclaims are unsupported and the adversarial robustness result would not test the stated threat model. This experiment could be made unnecessary by a released trained CVAE checkpoint, architecture, training data split, latent-bound definition, and sample outputs demonstrating illumination consistency.",
+    "To address subclaim 9 (and subclaims 5, 7, 10, and 11), run the actual white-box PGD attack over the CVAE latent variables and evaluate robust person AP50 on COCO val2017. Use the differentiable YOLO11n detection loss with full access to model weights, backpropagate through g(x,z), update z by PGD with multiple restarts, project z back into its norm-bounded latent set, and additionally reject or project outputs so that ||g(x,z)-x||\u221e\u226412/255 in normalized image space. Evaluate the attacked images at 640\u00d7640 with pycocotools AP50 for the person class and compute relative degradation: (clean AP50 \u2212 adversarial AP50)/clean AP50. Include attack-strength checks such as increasing PGD steps/restarts, comparing against random latent perturbations, and confirming that gradients are nonzero and the attack reduces detector confidence/localization. If adversarial AP50 remains \u22650.90 and relative degradation is \u22645% under the strongest white-box latent PGD tested, the main robustness claim is supported. If AP50 falls below 0.90 or degradation exceeds 5%, the claim is refuted for this implementation. If weak PGD fails but stronger PGD succeeds, the original attack was insufficient. This experiment could be made unnecessary by released adversarial images, attack code, hyperparameters, model/generator checkpoints, and official AP50 logs enabling exact verification."
+  ],
+  "scores": {
+    "n_experiments": 3,
+    "correctness": 0.667,
+    "coverage": 0.65,
+    "groundedness": 0.6,
+    "redundancy_penalty": 0.0,
+    "decision_sufficiency": "insufficient",
+    "sufficiency_score": 0.0,
+    "verdicts": [
+      "ACCURATE",
+      "MIXED",
+      "MIXED"
+    ],
+    "n_novel": 0,
+    "unsupported_indices": [],
+    "n_contested": 0,
+    "judge_runs": 3,
+    "run_agreement": 1.0
+  },
+  "experiments": [
+    {
+      "index": 0,
+      "normalized": {
+        "target_subclaim": "Clean prerequisite: the specified Ultralytics YOLO11n checkpoint is COCO-pretrained, evaluated on COCO val2017 person detections at 640, and its clean person AP50 is measured against the 0.90 floor. It also screens the prerequisite for the later relative-degradation calculation.",
+        "method": "Run the official checkpoint on COCO val2017 at imgsz=640 and compute person-only bbox AP50 with pycocotools at IoU=0.5; record hash, provenance, preprocessing, class filtering, confidence and NMS settings.",
+        "resources": [
+          "COCO val2017 and instances_val2017.json",
+          "Ultralytics YOLO11n/yolo11n.pt",
+          "pycocotools COCOeval"
+        ],
+        "measurement": "Clean person AP50 C, with checkpoint/provenance and evaluation-pipeline metadata.",
+        "decision_rule": "C<0.90 is a decisive clean-baseline warning/gate failure only if the claim's perturbation set includes the identity; C>=0.90 establishes the necessary clean numerical prerequisite but does not establish the adversarial claim."
+      },
+      "gt_triage": "MATCH",
+      "gt_steps_covered": [
+        "G0"
+      ],
+      "verdict": "ACCURATE",
+      "novel": false,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] The claim names the Ultralytics YOLO11n detector, COCO pretraining, COCO val2017, person-class AP50, and 640 resolution.",
+        "[2] Ultralytics documents yolo11n.pt as a COCO-pretrained YOLO11n model and lists its detection reference size as 640; the documentation also says the detection models have 80 COCO classes (E0, E1).",
+        "[3] Ultralytics identifies val2017 as a 5,000-image split and maps class 0 to person (E2, E3), while its validation interface supports class-restricted evaluation (E4).",
+        "[4] COCOeval has a dedicated AP summary at IoU=.5 (E5), so the proposed measurement targets the claim's AP50 quantity rather than a different averaged metric.",
+        "[5] Therefore this experiment is a useful and appropriate clean gate. It cannot by itself test the learned-generator attack or the 5% degradation, but its stated purpose is to establish the prerequisite baseline, so it is accurate for that role."
+      ],
+      "evidence": [
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "See Detection Docs for usage examples with these models trained on COCO , which include 80 pretrained classes.\n\n Model size\n (pixels) mAP val\n50-95 Speed\n CPU ONNX\n(ms) Speed\n T4 TensorRT10\n(ms) params\n (M) FLOPs\n (B) YOLO11n 640 39.5",
+          "bearing": "Confirms the named model family is an official COCO-trained detector with a 640-pixel reference evaluation, while not supplying the claimed person AP50."
+        },
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "# Load a COCO-pretrained YOLO11n model\nmodel = YOLO(\"yolo11n.pt\")",
+          "bearing": "Confirms that the proposed checkpoint is a documented public model resource."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "Train2017 : 118,287 images for training object detection, segmentation, and captioning models.\n\nVal2017 : 5,000 images used for validation during model training.",
+          "bearing": "Confirms the named COCO split exists and has the stated validation size."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "val: val2017.txt # val images (relative to 'path') 5000 images\n...\nnames:\n 0: person",
+          "bearing": "Confirms the person class mapping relevant to the proposed evaluation."
+        },
+        {
+          "source": "https://raw.githubusercontent.com/cocodataset/cocoapi/master/PythonAPI/pycocotools/cocoeval.py",
+          "quote": "stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2])",
+          "bearing": "Confirms that pycocotools directly reports AP at IoU 0.5."
+        }
+      ],
+      "evidence_tier": "T2",
+      "resource_audit": [
+        {
+          "name": "COCO val2017 and instances_val2017.json",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "Official COCO/Ultralytics documentation identifies the 5,000-image val2017 split; the proposed person AP evaluation is an appropriate use."
+        },
+        {
+          "name": "Ultralytics YOLO11n/yolo11n.pt",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "Ultralytics documents yolo11n.pt as a COCO-pretrained detection model; the official model page and the Ultralytics/YOLO11 hub corroborate availability."
+        },
+        {
+          "name": "pycocotools COCOeval",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The public COCO API contains the bbox evaluator and an explicit IoU=.5 AP summary."
+        }
+      ],
+      "run_verdicts": [
+        "ACCURATE",
+        "ACCURATE",
+        "ACCURATE"
+      ],
+      "mean_verdict_score": 1.0
+    },
+    {
+      "index": 1,
+      "normalized": {
+        "target_subclaim": "The conditional generator is a trained CVAE g(x,z) learned from COCO data, with a bounded lighting latent and outputs that are illumination-consistent, image-preserving perturbations.",
+        "method": "Train or obtain a CVAE conditioned on COCO images, inspect latent constraints and outputs, and measure reconstruction/regularization, image-space distance, photometric statistics, perceptual/semantic consistency, visual samples and latent traversals.",
+        "resources": [
+          "COCO train2017",
+          "COCO val2017",
+          "A conditional CVAE and unspecified public perception/semantic models"
+        ],
+        "measurement": "Generator losses and regularization, L-infinity distance, lighting/color/shading statistics, perceptual/semantic consistency, and qualitative inspection.",
+        "decision_rule": "The generator is considered plausible if it produces smooth lighting/color changes while preserving geometry and identity; distortions, non-lighting artifacts, or no latent bound count against the apparatus."
+      },
+      "gt_triage": "PARTIAL",
+      "gt_steps_covered": [
+        "A1",
+        "A2"
+      ],
+      "verdict": "MIXED",
+      "novel": false,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] The claim requires a learned generative illumination-consistent threat model, not merely an arbitrary image-to-image autoencoder.",
+        "[2] The learned-perturbation paper states that its approach learns from pairs of examples in which one is a perturbed version of the other and calls collecting such pairs the only requirement for the approach (E6).",
+        "[3] For illumination specifically, the paper describes scene-held-out validation and pairs of different lighting variations for each scene (E8), and it defines the threat set through a bounded latent generator (E9).",
+        "[4] Experiment 1 says to train using COCO train2017 images but does not require paired, same-content, independently relit observations or a documented lighting-only intervention. Ordinary COCO train images alone therefore do not establish the illumination training apparatus described in the evidence.",
+        "[5] It also proposes evaluating the generator on held-out COCO val2017 images, even though val2017 is the headline detector test split; unless that audit is strictly separated and never used for generator/model/bound selection, it risks contaminating the final evaluation.",
+        "[6] The proposed visual and quantitative checks would still reveal useful failures such as object distortion, absent bounds, or non-lighting artifacts, so the experiment is not irrelevant. However, without paired COCO-derived training data, an independent apparatus-validation split, and a prespecified latent coordinate/norm/radius, it cannot verify the generator subclaim as written; the correct verdict is MIXED."
+      ],
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Shows why COCO images alone are insufficient evidence for a learned perturbation set intended to represent illumination changes."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "We use the test set provided by Murmann et al. (2019) which consists of 30 held out scenes and hold out 25 additional \u201cdrylab\u201d scenes for validation. Unlike in the CIFAR10 common corruptions setting, there is no such thing as an \u201cunperturbed\u201d example in this dataset so we train on random pairs selected from the 25 different lighting variations for each scene.",
+          "bearing": "Establishes the relevant illumination protocol's same-scene multi-lighting pairs and scene-held-out validation structure, both absent from the proposed design."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5",
+          "bearing": "Supports validating latent-set coverage with held-out approximation and an explicitly defined latent bound, not just inspecting samples."
+        }
+      ],
+      "evidence_tier": "T1",
+      "resource_audit": [
+        {
+          "name": "COCO train2017",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The dataset exists and is publicly obtainable, and is appropriate for detector conditions and image content; by itself it does not provide the paired multi-illumination observations needed to learn the claimed illumination perturbation set."
+        },
+        {
+          "name": "COCO val2017",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The split exists and is appropriate as the final detector test, but using it for generator validation or selection risks leakage and is not appropriate for that role unless the procedure guarantees strict non-use in all choices."
+        },
+        {
+          "name": "Conditional CVAE and unspecified public perception/semantic models",
+          "exists": false,
+          "publicly_available": false,
+          "appropriate": false,
+          "note": "No concrete checkpoint, implementation, or named public model is supplied; availability and suitability cannot be verified from the experiment description."
+        }
+      ],
+      "run_verdicts": [
+        "MIXED",
+        "MIXED",
+        "MIXED"
+      ],
+      "mean_verdict_score": 0.5
+    },
+    {
+      "index": 2,
+      "normalized": {
+        "target_subclaim": "Directly test the headline retained-AP claim and attack-method subclaims: white-box latent PGD through g and YOLO11n, latent norm bound, image-space L\u221e\u226412/255, person AP50 at 640, and \u22645% relative degradation.",
+        "method": "Backpropagate a differentiable YOLO detection loss through the frozen CVAE, optimize each image's latent code with multi-start PGD and latent projection, enforce the image-space bound, evaluate attacked val2017 detections with pycocotools, and run strength/random/gradient controls.",
+        "resources": [
+          "Frozen Ultralytics YOLO11n checkpoint",
+          "Frozen conditional CVAE from Experiment 1",
+          "COCO val2017 and annotations",
+          "pycocotools"
+        ],
+        "measurement": "Attacked person AP50 A at IoU=.50, relative degradation D=(C-A)/C, attack-strength trends, random-search comparison, and gradient sanity checks.",
+        "decision_rule": "Support the main numerical claim only if the strongest tested feasible attack has A\u22650.90 and D\u22640.05; A<0.90 or D>0.05 refutes the numerical robustness assertion for the specified implementation. A weak-PGD failure is not evidence of robustness."
+      },
+      "gt_triage": "PARTIAL",
+      "gt_steps_covered": [
+        "H3",
+        "C4"
+      ],
+      "verdict": "MIXED",
+      "novel": false,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] The experiment targets the correct endpoint: it uses a white-box differentiable detector loss, differentiates through g, optimizes latent variables with PGD, evaluates person AP50 on COCO val2017 at 640, and computes the claim's relative degradation.",
+        "[2] The learned-set formulation requires generated candidates to be of the form g(x,z) with z inside a norm-bounded latent set (E4), and latent PGD is an established way to optimize within such a set (E6).",
+        "[3] The claim additionally requires the generated image itself to satisfy the L\u221e 12/255 constraint while remaining a generator output.",
+        "[4] Projecting or clipping the decoded image in pixel space can produce an image that is no longer g(x,z) for any allowed z; therefore the phrase 'reject or project outputs' is not sufficient unless projection is implemented as a latent-space constrained step, rejection, or backtracking that preserves both memberships.",
+        "[5] The experiment also does not explicitly state a frozen all-5,000-image corpus, exact common inference/postprocessing settings, or a predeclared attack loss/feasibility policy, although most of these can be supplied without changing its central design.",
+        "[6] It would still yield useful direct evidence and can decisively refute the numerical claim when a valid feasible attack drops below threshold, so these are execution/specification gaps rather than irrelevance; hence MIXED."
+      ],
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "let g : Rk \u00d7 Rm \u2192 Rm ... be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : (\u2016z\u2016 \u2264 \u03b5)}",
+          "bearing": "Establishes that the attack candidates must remain generator outputs with bounded latent codes; it is why pixel-space clipping is not automatically valid."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "This approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+          "bearing": "Supports projected-gradient optimization in the latent perturbation setting, while not by itself validating the proposed YOLO loss or the exact intersection constraint."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "Val2017 : 5,000 images used for validation during model training.\n...\n0: person",
+          "bearing": "Confirms the intended public evaluation split and person-class mapping."
+        },
+        {
+          "source": "https://docs.ultralytics.com/modes/val",
+          "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+          "bearing": "Confirms that person-focused evaluation is supported."
+        }
+      ],
+      "evidence_tier": "T1",
+      "resource_audit": [
+        {
+          "name": "Ultralytics YOLO11n COCO-pretrained checkpoint",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "Official Ultralytics documentation names the checkpoint; hash the exact file and package commit before attack generation."
+        },
+        {
+          "name": "Conditional CVAE from Experiment 1",
+          "exists": false,
+          "publicly_available": false,
+          "appropriate": false,
+          "note": "No concrete trained checkpoint currently exists in the proposal; its existence and suitability depend on Experiment 1 successfully producing and validating the apparatus."
+        },
+        {
+          "name": "COCO val2017",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The official split is appropriate for the headline test if generator training/model selection and attack tuning do not use its labels or results."
+        },
+        {
+          "name": "pycocotools / COCO API",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The public cocodataset/cocoapi resource is appropriate for COCO bounding-box AP evaluation."
+        }
+      ],
+      "run_verdicts": [
+        "MIXED",
+        "MIXED",
+        "MIXED"
+      ],
+      "mean_verdict_score": 0.5
+    }
+  ],
+  "role_coverage": {
+    "gate": {
+      "status": "covered",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "note": "Experiment 0 supplies the clean checkpoint/split/class/resolution/AP50 gate and records the necessary provenance."
+    },
+    "headline": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Experiment 2 directly measures attacked person AP50 and relative degradation under latent PGD, but its pixel-space projection option can leave the generator range and therefore does not guarantee the exact claimed threat model."
+    },
+    "apparatus": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Experiment 1 audits generator behavior and Experiment 2 exercises it, but the set does not require paired COCO-derived illumination observations, a scene/content-disjoint apparatus-validation split, or a fixed latent coordinate/norm/radius."
+    },
+    "control": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "covered",
+        "partial"
+      ],
+      "note": "Multiple PGD strengths, restarts, random latent perturbations, gradient checks, and confidence/localization diagnostics are useful controls, but there is no explicit identity check, latent/image-budget ablation, or objective-union procedure ensuring a strong common attack evaluation."
+    }
+  },
+  "decision_sufficiency": "insufficient",
+  "sufficiency_reasoning": "The set has the right overall decomposition: a clean gate, a generator audit, and a direct latent-PGD headline test. Experiment 0 can establish or reject the clean prerequisite, and Experiment 2 can provide useful attack evidence. However, executing the set as written cannot verify the full conjunction. Experiment 1 does not require the paired same-content illumination data that the learned-perturbation method uses, and it risks using the headline val split for generator validation. Experiment 2 does not unambiguously preserve both constraints simultaneously: pixel projection can move an image outside the set {g(x,z)}, and the latent norm/radius and coordinate system are not fixed. A passing AP result would therefore be under a potentially different or weakly specified threat model; a valid failing attack could still refute the numerical robustness claim.",
+  "missing": [
+    "A COCO-derived paired, same-content multi-illumination training protocol, with documented geometry/label preservation and no val2017 leakage.",
+    "A separate scene/content-disjoint generator-validation set and held-out approximation/coverage tests to establish that the CVAE represents illumination rather than arbitrary image changes.",
+    "A preregistered latent coordinate system, norm, and radius B selected independently of YOLO val2017 robustness results.",
+    "A feasibility-preserving attack implementation that guarantees every final image is exactly g(x,z), satisfies the latent bound, and satisfies ||g(x,z)-x||\u221e\u226412/255; decoded pixel clipping/projection must not be used as a substitute.",
+    "A frozen common clean/attacked COCOeval pipeline, explicit all-image handling and class/NMS settings, plus identity and budget/objective convergence controls before interpreting a passing robustness result."
+  ],
+  "contested": [],
+  "gt_defects": [
+    {
+      "gt_step": "A1",
+      "defect": "The proposed set's generator audit does not require paired same-content lighting observations or an equivalent validated COCO-derived intervention, although the claim specifically calls for a learned illumination-consistent perturbation model.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Establishes the missing paired-data requirement for a learned perturbation model."
+        }
+      ]
+    },
+    {
+      "gt_step": "A2",
+      "defect": "The proposed set lacks the held-out latent approximation/coverage validation needed to establish that the learned set captures real illumination perturbations rather than merely generating visually smooth changes.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5",
+          "bearing": "Supports a concrete held-out approximation test for the learned threat set."
+        }
+      ]
+    },
+    {
+      "gt_step": "H3",
+      "defect": "The proposed attack permits pixel-space projection of decoded outputs, which can violate the defining generator-range constraint; it must instead search or reject within the intersection of generator outputs, latent bound, and pixel L-infinity bound.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "S(x) = {g(z, x) : ||z|| \u2264 \u03b5}",
+          "bearing": "Shows that an image not representable as g(z,x) is outside the claimed learned perturbation set."
+        }
+      ]
+    },
+    {
+      "gt_step": "A1",
+      "defect": "The reference recipe's demand for a particular COCO-derived paired recapture/relighting construction and its imported low-resolution reconstruction thresholds is stronger and more specific than the claim itself. A suitably documented alternative generator audit could be valid, but it still needs paired/equivalent evidence and predeclared criteria; the proposed Experiment 1 does not yet provide enough of that evidence.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Supports the general need for perturbation-pair evidence while not requiring the exact recapture protocol or the reference's particular numeric thresholds."
+        }
+      ]
+    },
+    {
+      "gt_step": "A1/A2",
+      "defect": "The reference's paired-data requirement is supported, but its specific COCO-derived recapture implementation and imported numerical thresholds are not uniquely entailed by the claim; equivalent documented paired illumination data and validation could suffice.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Supports the essential paired-data requirement without requiring the reference's exact intervention or threshold choices."
+        }
+      ]
+    },
+    {
+      "gt_step": "H3",
+      "defect": "The reference's exact latent norm, attack schedule and intersection optimizer are defensible design choices, but the claim does not specify them. They should be preregistered and justified rather than treated as uniquely required.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "S(x) = {g(z, x) : ||z|| \u2264 \u03b5}",
+          "bearing": "Supports a norm-bounded generator set but does not determine the particular detector loss, restart schedule or image-space intersection algorithm."
+        }
+      ]
+    },
+    {
+      "gt_step": "G0",
+      "defect": "The reference's claim that C<0.90 directly refutes the full conjunction assumes that the identity/no-modification case is included in the stated generator threat set. The proposed experiment appropriately says 'likely infeasible' rather than making that implication unconditional.",
+      "evidence": [
+        {
+          "source": "claim text (user prompt)",
+          "quote": "The generator g(x,z) produces perturbed images (for original image x) where z lies in a norm-bounded latent space (e.g., \\|z\\| \\le B ); g is a trained conditional variational autoencoder (CVAE).",
+          "bearing": "The claim states a bounded latent generator but does not explicitly state g(x,0)=x, so clean AP is a decisive prerequisite under the natural identity interpretation but not an unconditional logical refutation by itself."
+        }
+      ]
+    },
+    {
+      "gt_step": "A1/A2",
+      "defect": "The reference correctly identifies paired illumination data and held-out validation as important, but its exact COCO-derived recapture interpretation and imported numerical thresholds are more specific than the claim. The qualitative checks are useful supplements, not replacements.",
+      "evidence": [
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "Unlike in the CIFAR10 common corruptions setting, there is no such thing as an \u201cunperturbed\u201d example in this dataset so we train on random pairs selected from the 25 different lighting variations for each scene.",
+          "bearing": "Supports paired-lighting data while showing that the source protocol is specific to its illumination dataset."
+        }
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 6,
+        "usage": {
+          "prompt_tokens": 141878,
+          "completion_tokens": 14840,
+          "calls": 6
+        },
+        "seconds": 165.3,
+        "trace": "results/eval_v2/judgments/problem_11/method.run0.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "See Detection Docs for usage examples with these models trained on COCO , which include 80 pretrained classes.\n\n Model size\n (pixels) mAP val\n50-95 Speed\n CPU ONNX\n(ms) Speed\n T4 TensorRT10\n(ms) params\n (M) FLOPs\n (B) YOLO11n 640 39.5",
+          "bearing": "Establishes that the named YOLO11n detection artifact is an official COCO-trained model with a 640-pixel reference evaluation; it does not establish person AP50."
+        },
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "# Load a COCO-pretrained YOLO11n model\nmodel = YOLO(\"yolo11n.pt\")",
+          "bearing": "Confirms that yolo11n.pt is an official, publicly documented COCO-pretrained model resource appropriate for Experiment 0 and Experiment 2."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "Train2017 : 118,287 images for training object detection, segmentation, and captioning models.\n\nVal2017 : 5,000 images used for validation during model training.",
+          "bearing": "Establishes the named COCO train2017 and val2017 resources and the size of the validation corpus."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "val: val2017.txt # val images (relative to 'path') 5000 images\n...\nnames:\n 0: person",
+          "bearing": "Establishes the Ultralytics class mapping and that val2017 is a 5,000-image split; raw COCO category_id=1 must be mapped consistently to Ultralytics class 0."
+        },
+        {
+          "source": "https://docs.ultralytics.com/modes/val",
+          "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+          "bearing": "Confirms that person-only evaluation is supported, making the proposed class-restricted evaluation appropriate, provided class mapping and prediction filtering are handled consistently."
+        },
+        {
+          "source": "https://raw.githubusercontent.com/cocodataset/cocoapi/master/PythonAPI/pycocotools/cocoeval.py",
+          "quote": "stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2])",
+          "bearing": "Confirms that pycocotools has an AP summary specifically at IoU=.5, supporting the proposed AP50 measurement."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Establishes that a learned perturbation generator requires paired perturbed examples; COCO train images alone do not provide the stated illumination-learning apparatus."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The resulting perturbation sets are well-defined and can naturally be used in robust training and evaluation tasks.",
+          "bearing": "Supports evaluating a learned generator as a threat model, but only after its training data and perturbation-set properties are established."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "We use the test set provided by Murmann et al. (2019) which consists of 30 held out scenes and hold out 25 additional \u201cdrylab\u201d scenes for validation. Unlike in the CIFAR10 common corruptions setting, there is no such thing as an \u201cunperturbed\u201d example in this dataset so we train on random pairs selected from the 25 different lighting variations for each scene.",
+          "bearing": "Shows the relevant illumination CVAE protocol uses same-scene multi-lighting pairs and scene-held-out validation, which Experiment 1 does not specify for COCO."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "Specifically, let g : Rk \u00d7 Rm \u2192 Rm be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : ||z|| \u2264 \u03b5}",
+          "bearing": "Confirms the claimed conditional generator and norm-bounded latent-set structure; Experiment 2 must preserve both generator membership and latent feasibility."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "For convenience, we will define the perturbation set in the latent space before the reparameterization trick, so the latent perturbation set for all examples is a standard \u21132 ball {u : ||u||\u2082 \u2264 \u03b5} where z = u \u00b7 \u03c3(y) + \u00b5(y).",
+          "bearing": "Confirms one accepted CVAE construction uses a pre-reparameterization L2 ball; the proposed generic projection is meaningful only if the actual latent coordinate and radius are explicitly fixed."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5",
+          "bearing": "Supports latent constrained optimization and indicates that held-out approximation testing is a relevant apparatus validation, absent from Experiment 1."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Clean prerequisite: the specified Ultralytics YOLO11n checkpoint is COCO-pretrained, evaluated on COCO val2017 person detections at 640, and its clean person AP50 is measured against the 0.90 floor. It also screens the prerequisite for the later relative-degradation calculation.",
+            "method": "Run the official checkpoint on COCO val2017 at imgsz=640 and compute person-only bbox AP50 with pycocotools at IoU=0.5; record hash, provenance, preprocessing, class filtering, confidence and NMS settings.",
+            "resources": [
+              "COCO val2017 and instances_val2017.json",
+              "Ultralytics YOLO11n/yolo11n.pt",
+              "pycocotools COCOeval"
+            ],
+            "measurement": "Clean person AP50 C, with checkpoint/provenance and evaluation-pipeline metadata.",
+            "decision_rule": "C<0.90 is a decisive clean-baseline warning/gate failure only if the claim's perturbation set includes the identity; C>=0.90 establishes the necessary clean numerical prerequisite but does not establish the adversarial claim."
+          },
+          "gt_triage": "MATCH",
+          "gt_steps_covered": [
+            "G0"
+          ],
+          "verdict": "ACCURATE",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim names the Ultralytics YOLO11n detector, COCO pretraining, COCO val2017, person-class AP50, and 640 resolution.",
+            "[2] Ultralytics documents yolo11n.pt as a COCO-pretrained YOLO11n model and lists its detection reference size as 640; the documentation also says the detection models have 80 COCO classes (E0, E1).",
+            "[3] Ultralytics identifies val2017 as a 5,000-image split and maps class 0 to person (E2, E3), while its validation interface supports class-restricted evaluation (E4).",
+            "[4] COCOeval has a dedicated AP summary at IoU=.5 (E5), so the proposed measurement targets the claim's AP50 quantity rather than a different averaged metric.",
+            "[5] Therefore this experiment is a useful and appropriate clean gate. It cannot by itself test the learned-generator attack or the 5% degradation, but its stated purpose is to establish the prerequisite baseline, so it is accurate for that role."
+          ],
+          "evidence": [
+            {
+              "source": "https://docs.ultralytics.com/models/yolo11",
+              "quote": "See Detection Docs for usage examples with these models trained on COCO , which include 80 pretrained classes.\n\n Model size\n (pixels) mAP val\n50-95 Speed\n CPU ONNX\n(ms) Speed\n T4 TensorRT10\n(ms) params\n (M) FLOPs\n (B) YOLO11n 640 39.5",
+              "bearing": "Confirms the named model family is an official COCO-trained detector with a 640-pixel reference evaluation, while not supplying the claimed person AP50."
+            },
+            {
+              "source": "https://docs.ultralytics.com/models/yolo11",
+              "quote": "# Load a COCO-pretrained YOLO11n model\nmodel = YOLO(\"yolo11n.pt\")",
+              "bearing": "Confirms that the proposed checkpoint is a documented public model resource."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "Train2017 : 118,287 images for training object detection, segmentation, and captioning models.\n\nVal2017 : 5,000 images used for validation during model training.",
+              "bearing": "Confirms the named COCO split exists and has the stated validation size."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "val: val2017.txt # val images (relative to 'path') 5000 images\n...\nnames:\n 0: person",
+              "bearing": "Confirms the person class mapping relevant to the proposed evaluation."
+            },
+            {
+              "source": "https://raw.githubusercontent.com/cocodataset/cocoapi/master/PythonAPI/pycocotools/cocoeval.py",
+              "quote": "stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2])",
+              "bearing": "Confirms that pycocotools directly reports AP at IoU 0.5."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "COCO val2017 and instances_val2017.json",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official COCO/Ultralytics documentation identifies the 5,000-image val2017 split; the proposed person AP evaluation is an appropriate use."
+            },
+            {
+              "name": "Ultralytics YOLO11n/yolo11n.pt",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Ultralytics documents yolo11n.pt as a COCO-pretrained detection model; the official model page and the Ultralytics/YOLO11 hub corroborate availability."
+            },
+            {
+              "name": "pycocotools COCOeval",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The public COCO API contains the bbox evaluator and an explicit IoU=.5 AP summary."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "The conditional generator is a trained CVAE g(x,z) learned from COCO data, with a bounded lighting latent and outputs that are illumination-consistent, image-preserving perturbations.",
+            "method": "Train or obtain a CVAE conditioned on COCO images, inspect latent constraints and outputs, and measure reconstruction/regularization, image-space distance, photometric statistics, perceptual/semantic consistency, visual samples and latent traversals.",
+            "resources": [
+              "COCO train2017",
+              "COCO val2017",
+              "A conditional CVAE and unspecified public perception/semantic models"
+            ],
+            "measurement": "Generator losses and regularization, L-infinity distance, lighting/color/shading statistics, perceptual/semantic consistency, and qualitative inspection.",
+            "decision_rule": "The generator is considered plausible if it produces smooth lighting/color changes while preserving geometry and identity; distortions, non-lighting artifacts, or no latent bound count against the apparatus."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1",
+            "A2"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim requires a learned generative illumination-consistent threat model, not merely an arbitrary image-to-image autoencoder.",
+            "[2] The learned-perturbation paper states that its approach learns from pairs of examples in which one is a perturbed version of the other and calls collecting such pairs the only requirement for the approach (E6).",
+            "[3] For illumination specifically, the paper describes scene-held-out validation and pairs of different lighting variations for each scene (E8), and it defines the threat set through a bounded latent generator (E9).",
+            "[4] Experiment 1 says to train using COCO train2017 images but does not require paired, same-content, independently relit observations or a documented lighting-only intervention. Ordinary COCO train images alone therefore do not establish the illumination training apparatus described in the evidence.",
+            "[5] It also proposes evaluating the generator on held-out COCO val2017 images, even though val2017 is the headline detector test split; unless that audit is strictly separated and never used for generator/model/bound selection, it risks contaminating the final evaluation.",
+            "[6] The proposed visual and quantitative checks would still reveal useful failures such as object distortion, absent bounds, or non-lighting artifacts, so the experiment is not irrelevant. However, without paired COCO-derived training data, an independent apparatus-validation split, and a prespecified latent coordinate/norm/radius, it cannot verify the generator subclaim as written; the correct verdict is MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+              "bearing": "Shows why COCO images alone are insufficient evidence for a learned perturbation set intended to represent illumination changes."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "We use the test set provided by Murmann et al. (2019) which consists of 30 held out scenes and hold out 25 additional \u201cdrylab\u201d scenes for validation. Unlike in the CIFAR10 common corruptions setting, there is no such thing as an \u201cunperturbed\u201d example in this dataset so we train on random pairs selected from the 25 different lighting variations for each scene.",
+              "bearing": "Establishes the relevant illumination protocol's same-scene multi-lighting pairs and scene-held-out validation structure, both absent from the proposed design."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5",
+              "bearing": "Supports validating latent-set coverage with held-out approximation and an explicitly defined latent bound, not just inspecting samples."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "COCO train2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The dataset exists and is publicly obtainable, and is appropriate for detector conditions and image content; by itself it does not provide the paired multi-illumination observations needed to learn the claimed illumination perturbation set."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The split exists and is appropriate as the final detector test, but using it for generator validation or selection risks leakage and is not appropriate for that role unless the procedure guarantees strict non-use in all choices."
+            },
+            {
+              "name": "Conditional CVAE and unspecified public perception/semantic models",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "No concrete checkpoint, implementation, or named public model is supplied; availability and suitability cannot be verified from the experiment description."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "A frozen YOLO11n is attacked by white-box PGD over the bounded latent variables of the conditional CVAE, with generated images satisfying the 12/255 image-space L-infinity bound, and attacked person AP50 remains or fails the 0.90 and 5%-relative-degradation thresholds.",
+            "method": "Backpropagate a differentiable YOLO detection loss through g(x,z), use latent PGD with multiple restarts and projection, impose the image-space bound, evaluate attacked COCO val2017 person AP50 at 640, and run strength/random-search/gradient diagnostics.",
+            "resources": [
+              "Ultralytics YOLO11n/yolo11n.pt",
+              "The CVAE from Experiment 1",
+              "COCO val2017",
+              "pycocotools COCOeval"
+            ],
+            "measurement": "Attacked person AP50 A, relative degradation (C-A)/C, feasibility of latent and pixel constraints, and attack-strength diagnostics.",
+            "decision_rule": "If the strongest valid attack has A>=0.90 and relative degradation<=0.05, the robustness claim is supported for that attack suite; if A<0.90 or degradation>0.05, it is refuted for that implementation. A weak or invalid attack is inconclusive."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H3",
+            "C4"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim requires white-box PGD over the latent variables, membership of every attacked image in the conditional generator set, a norm-bounded latent variable, and an additional image-space L-infinity bound of 12/255.",
+            "[2] The learned-set formulation defines the admissible images as S(x)={g(z,x):||z||\u2264\u03b5} (E9), so an admissible candidate must remain a generator output as well as satisfy the latent bound.",
+            "[3] The paper's CVAE construction makes the latent coordinate and norm explicit, including a pre-reparameterization L2 ball (E10); a usable experiment must therefore specify which latent coordinate, norm, and radius B are being projected.",
+            "[4] Experiment 2 projects z but leaves the norm and B to the unspecified CVAE, and says to \u201creject or project outputs\u201d to meet the pixel bound. Projecting a decoded image in pixel space generally produces an image that is no longer equal to g(x,z), so that option violates the generator-membership condition unless it is rejected or followed by a valid reparameterized feasible search.",
+            "[5] Consequently, the attack can produce useful evidence and can decisively refute the claim if a valid feasible attack lowers AP below a threshold, but a passing result as written would not verify the exact stated threat model. The missing joint-feasibility implementation and latent-bound specification are more than cosmetic, so the verdict is MIXED rather than ACCURATE."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "Specifically, let g : Rk \u00d7 Rm \u2192 Rm be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : ||z|| \u2264 \u03b5}",
+              "bearing": "Establishes that generator membership and latent feasibility jointly define the learned threat set."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "For convenience, we will define the perturbation set in the latent space before the reparameterization trick, so the latent perturbation set for all examples is a standard \u21132 ball {u : ||u||\u2082 \u2264 \u03b5} where z = u \u00b7 \u03c3(y) + \u00b5(y).",
+              "bearing": "Shows why the attack must identify the actual latent coordinates and norm/radius rather than merely say that z is projected."
+            },
+            {
+              "source": "https://raw.githubusercontent.com/cocodataset/cocoapi/master/PythonAPI/pycocotools/cocoeval.py",
+              "quote": "stats[1] = _summarize(1, iouThr=.5, maxDets=self.params.maxDets[2])",
+              "bearing": "Confirms that the proposed attacked AP measurement can target the claim's IoU=.5 AP metric."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "Ultralytics YOLO11n/yolo11n.pt",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official Ultralytics documentation and the Ultralytics/YOLO11 hub identify the public COCO-pretrained detection artifact."
+            },
+            {
+              "name": "CVAE from Experiment 1",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "No concrete checkpoint or implementation is named; its existence depends on successfully constructing Experiment 1's underspecified generator."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The split is the correct named headline test resource, provided it is not used to fit or select the generator."
+            },
+            {
+              "name": "pycocotools COCOeval",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The public COCO API is appropriate for person-only bbox AP50 if category mapping, max detections, and other evaluation settings are frozen consistently."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "covered",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 supplies the clean checkpoint/split/class/resolution/AP50 gate and records the necessary provenance."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1,
+            2
+          ],
+          "note": "Experiment 1 audits generator behavior and Experiment 2 exercises it, but the set does not require paired COCO-derived illumination observations, a scene/content-disjoint apparatus-validation split, or a fixed latent coordinate/norm/radius."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            2
+          ],
+          "note": "Experiment 2 directly measures attacked person AP50 and relative degradation under latent PGD, but its pixel-space projection option can leave the generator range and therefore does not guarantee the exact claimed threat model."
+        },
+        "control": {
+          "status": "partial",
+          "by": [
+            2
+          ],
+          "note": "Multiple PGD strengths, restarts, random latent perturbations, gradient checks, and confidence/localization diagnostics are useful controls, but there is no explicit identity check, latent/image-budget ablation, or objective-union procedure ensuring a strong common attack evaluation."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The set has the right overall decomposition: a clean gate, a generator audit, and a direct latent-PGD headline test. Experiment 0 can establish or reject the clean prerequisite, and Experiment 2 can provide useful attack evidence. However, executing the set as written cannot verify the full conjunction. Experiment 1 does not require the paired same-content illumination data that the learned-perturbation method uses, and it risks using the headline val split for generator validation. Experiment 2 does not unambiguously preserve both constraints simultaneously: pixel projection can move an image outside the set {g(x,z)}, and the latent norm/radius and coordinate system are not fixed. A passing AP result would therefore be under a potentially different or weakly specified threat model; a valid failing attack could still refute the numerical robustness claim.",
+      "missing": [
+        "A COCO-derived paired, same-content multi-illumination training protocol, with documented geometry/label preservation and no val2017 leakage.",
+        "A separate scene/content-disjoint generator-validation set and held-out approximation/coverage tests to establish that the CVAE represents illumination rather than arbitrary image changes.",
+        "A preregistered latent coordinate system, norm, and radius B selected independently of YOLO val2017 robustness results.",
+        "A feasibility-preserving attack implementation that guarantees every final image is exactly g(x,z), satisfies the latent bound, and satisfies ||g(x,z)-x||\u221e\u226412/255; decoded pixel clipping/projection must not be used as a substitute.",
+        "A frozen common clean/attacked COCOeval pipeline, explicit all-image handling and class/NMS settings, plus identity and budget/objective convergence controls before interpreting a passing robustness result."
+      ]
+    },
+    {
+      "run": 1,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 7,
+        "usage": {
+          "prompt_tokens": 142812,
+          "completion_tokens": 10150,
+          "calls": 7
+        },
+        "seconds": 91.7,
+        "trace": "results/eval_v2/judgments/problem_11/method.run1.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "See Detection Docs for usage examples with these models trained on COCO , which include 80 pretrained classes.\n\n Model size\n (pixels) mAP val\n50-95 ... YOLO11n 640 39.5",
+          "bearing": "Confirms that official YOLO11n is a named COCO-trained detection checkpoint with a 640-pixel entry, though this table is not person AP50."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "Val2017 : 5,000 images used for validation during model training.\n...\n0: person",
+          "bearing": "Confirms the named COCO val2017 split exists, contains 5,000 validation images, and maps person to class 0 in the Ultralytics dataset configuration."
+        },
+        {
+          "source": "https://docs.ultralytics.com/modes/val",
+          "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+          "bearing": "Confirms that person-only class evaluation is a supported validation operation."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "Supports the need for paired perturbed observations when learning a perturbation set."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "let g : Rk \u00d7 Rm \u2192 Rm ... be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : (\u2016z\u2016 \u2264 \u03b5)}",
+          "bearing": "Supports the claimed conditional generator form and norm-bounded latent perturbation set."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "These consist of a thousand scenes captured in the wild under 25 different lighting variations, and our goal is to learn a perturbation set which captures real-world lighting conditions.",
+          "bearing": "Confirms that a learned multi-illumination perturbation model is a recognized apparatus, while distinguishing the cited MI data from COCO."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "This approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+          "bearing": "Supports latent PGD as a method for fitting/validating a learned perturbation set, though not specifically the proposed detector attack."
+        },
+        {
+          "source": "https://github.com/cocodataset/cocoapi",
+          "quote": "This package provides Matlab, Python, and Lua APIs that assists in loading, parsing, and visualizing the annotations in COCO.",
+          "bearing": "Confirms the public COCO API resource underlying pycocotools exists and is appropriate for COCO detection evaluation."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Clean prerequisite for subclaims 1\u20137: exact Ultralytics YOLO11n COCO checkpoint, COCO val2017 person detection at 640, and clean person AP50 at IoU 0.50.",
+            "method": "Run the frozen official checkpoint on COCO val2017, export detections, and evaluate category_id 1/person with pycocotools at IoU=.50; record hash and inference settings.",
+            "resources": [
+              "Ultralytics YOLO11n COCO-pretrained checkpoint",
+              "COCO val2017 images and annotations",
+              "pycocotools/COCO API"
+            ],
+            "measurement": "Clean person AP50 C; model/checkpoint identity, split, resolution, class filtering, and confidence/NMS settings.",
+            "decision_rule": "C<0.90 is a decisive clean-baseline failure under the claim's retained-AP requirement; C\u22650.90 establishes the necessary baseline but does not by itself establish adversarial robustness."
+          },
+          "gt_triage": "MATCH",
+          "gt_steps_covered": [
+            "G0"
+          ],
+          "verdict": "ACCURATE",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim names a specific YOLO11n COCO-pretrained detector, COCO val2017, the person class, 640 resolution, and AP50 at IoU .50.",
+            "[2] Official Ultralytics documentation identifies YOLO11n as a COCO-pretrained detection model with a 640-pixel entry and 80 pretrained classes (E0).",
+            "[3] The official COCO configuration identifies val2017 as a 5,000-image split and person as class 0 (E1), while Ultralytics supports class-restricted evaluation (E2).",
+            "[4] Therefore, evaluating the complete val2017 split with a correctly mapped COCO person category and pycocotools AP at IoU .50 is a direct and useful gate for the clean portion of the claim.",
+            "[5] The experiment explicitly treats C\u2265.90 only as a prerequisite and does not pretend that clean AP alone proves the adversarial degradation subclaims."
+          ],
+          "evidence": [
+            {
+              "source": "https://docs.ultralytics.com/models/yolo11",
+              "quote": "See Detection Docs for usage examples with these models trained on COCO , which include 80 pretrained classes.\n\n Model size\n (pixels) mAP val\n50-95 ... YOLO11n 640 39.5",
+              "bearing": "Confirms the named YOLO11n COCO-trained detection artifact and its 640-pixel evaluation entry; it does not supply person AP50."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "Val2017 : 5,000 images used for validation during model training.\n...\n0: person",
+              "bearing": "Confirms the public val2017 split and the Ultralytics person class mapping."
+            },
+            {
+              "source": "https://docs.ultralytics.com/modes/val",
+              "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+              "bearing": "Confirms person-only validation is an available operation."
+            },
+            {
+              "source": "https://github.com/cocodataset/cocoapi",
+              "quote": "This package provides Matlab, Python, and Lua APIs that assists in loading, parsing, and visualizing the annotations in COCO.",
+              "bearing": "Confirms the public COCO API underlying pycocotools exists and fits the requested COCO evaluation."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "Ultralytics YOLO11n COCO-pretrained checkpoint",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official Ultralytics documentation names yolo11n.pt and gives a COCO-pretrained YOLO11n usage example. The exact downloaded file and package version should be hashed."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official Ultralytics COCO documentation identifies the 5,000-image val2017 split and supplies public download links/configuration."
+            },
+            {
+              "name": "pycocotools / COCO API",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The cocodataset/cocoapi repository is public and provides the APIs for loading COCO annotations and evaluation."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "Learn and validate the conditional CVAE illumination perturbation apparatus: g(x,z) outputs an illumination-like modification, z is norm bounded, and the model is learned from COCO without compromising the val2017 headline evaluation.",
+            "method": "Train or obtain a conditional CVAE using COCO train2017, inspect samples and latent traversals, measure reconstruction/regularization, image-space bounds, lighting statistics, and semantic consistency, and visually audit generated changes.",
+            "resources": [
+              "COCO train2017",
+              "COCO val2017 held-out images",
+              "A trained conditional VAE/CVAE implementation",
+              "Public perceptual/semantic models (not concretely named)"
+            ],
+            "measurement": "Qualitative illumination/geometry preservation plus reconstruction, regularization, L\u221e, photometric, and perceptual/semantic diagnostics.",
+            "decision_rule": "Only a qualitative rule is stated: smooth illumination-like changes with preserved geometry/object identity make the subclaims plausible; distortions, arbitrary artifacts, or no latent bound leave them unsupported. No preregistered numerical acceptance rule is supplied."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1",
+            "A2"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The experiment tests the correct apparatus-level objects\u2014conditionality, a latent bound, CVAE training, and whether changes look like illumination rather than object/texture replacement.",
+            "[2] The learned-perturbation literature defines the set by a generator applied to an input over a norm-bounded latent ball (E4), and states that its framework requires pairs of perturbed examples (E3).",
+            "[3] The cited illumination setting uses scenes captured under 25 lighting variations (E5), so merely training a CVAE on ordinary COCO images, without specifying same-content lighting pairs or a validated lighting intervention, does not establish that its latent variation represents a learned illumination perturbation set.",
+            "[4] Visual inspection and generic reconstruction, color, and semantic metrics can provide useful diagnostic evidence, but the experiment supplies no fixed pass thresholds, no predeclared latent-radius calibration independent of detector results, and no explicit same-content/co-registration protocol.",
+            "[5] Because it can reveal whether a proposed generator is plausible but cannot, as written, verify the claimed illumination apparatus, the appropriate verdict is MIXED rather than IRRELEVANT."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "The approach is widely applicable to a range of robustness settings, as we make no assumptions on the type of perturbation being learned: the only requirement is to collect pairs of perturbed examples.",
+              "bearing": "Shows why an illumination perturbation model needs a specified paired-observation or equivalent intervention protocol, not just unpaired COCO images."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "These consist of a thousand scenes captured in the wild under 25 different lighting variations, and our goal is to learn a perturbation set which captures real-world lighting conditions.",
+              "bearing": "Provides the field precedent for same-scene multi-illumination data and distinguishes it from an unspecified COCO-only training procedure."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "let g : Rk \u00d7 Rm \u2192 Rm ... be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : (\u2016z\u2016 \u2264 \u03b5)}",
+              "bearing": "Supports the parts of the proposed audit concerning a conditional generator and a norm-bounded latent set."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "COCO train2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official COCO/Ultralytics documentation identifies train2017 as the public 118,287-image training split; it is appropriate for generator training, subject to the missing paired-lighting protocol."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "It is appropriate for a final, frozen generator audit, but not for generator architecture, checkpoint, latent-bound, or threshold selection because it is also the claim's headline test split. The experiment does not explicitly impose that separation."
+            },
+            {
+              "name": "Trained conditional VAE/CVAE implementation",
+              "exists": true,
+              "publicly_available": false,
+              "appropriate": true,
+              "note": "A CVAE is a standard trainable model class, but this experiment names no released checkpoint or concrete implementation; the claimed artifact must be produced and versioned."
+            },
+            {
+              "name": "Public perceptual/semantic models",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The experiment does not name a specific model, so reproducibility and resource fit cannot be audited beyond this general observation."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "Directly test the headline retained-AP claim and attack-method subclaims: white-box latent PGD through g and YOLO11n, latent norm bound, image-space L\u221e\u226412/255, person AP50 at 640, and \u22645% relative degradation.",
+            "method": "Backpropagate a differentiable YOLO detection loss through the frozen CVAE, optimize each image's latent code with multi-start PGD and latent projection, enforce the image-space bound, evaluate attacked val2017 detections with pycocotools, and run strength/random/gradient controls.",
+            "resources": [
+              "Frozen Ultralytics YOLO11n checkpoint",
+              "Frozen conditional CVAE from Experiment 1",
+              "COCO val2017 and annotations",
+              "pycocotools"
+            ],
+            "measurement": "Attacked person AP50 A at IoU=.50, relative degradation D=(C-A)/C, attack-strength trends, random-search comparison, and gradient sanity checks.",
+            "decision_rule": "Support the main numerical claim only if the strongest tested feasible attack has A\u22650.90 and D\u22640.05; A<0.90 or D>0.05 refutes the numerical robustness assertion for the specified implementation. A weak-PGD failure is not evidence of robustness."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H3",
+            "C4"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The experiment targets the correct endpoint: it uses a white-box differentiable detector loss, differentiates through g, optimizes latent variables with PGD, evaluates person AP50 on COCO val2017 at 640, and computes the claim's relative degradation.",
+            "[2] The learned-set formulation requires generated candidates to be of the form g(x,z) with z inside a norm-bounded latent set (E4), and latent PGD is an established way to optimize within such a set (E6).",
+            "[3] The claim additionally requires the generated image itself to satisfy the L\u221e 12/255 constraint while remaining a generator output.",
+            "[4] Projecting or clipping the decoded image in pixel space can produce an image that is no longer g(x,z) for any allowed z; therefore the phrase 'reject or project outputs' is not sufficient unless projection is implemented as a latent-space constrained step, rejection, or backtracking that preserves both memberships.",
+            "[5] The experiment also does not explicitly state a frozen all-5,000-image corpus, exact common inference/postprocessing settings, or a predeclared attack loss/feasibility policy, although most of these can be supplied without changing its central design.",
+            "[6] It would still yield useful direct evidence and can decisively refute the numerical claim when a valid feasible attack drops below threshold, so these are execution/specification gaps rather than irrelevance; hence MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "let g : Rk \u00d7 Rm \u2192 Rm ... be a generator that takes a k-dimensional latent vector and an input, and outputs a perturbed version of the input. Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : (\u2016z\u2016 \u2264 \u03b5)}",
+              "bearing": "Establishes that the attack candidates must remain generator outputs with bounded latent codes; it is why pixel-space clipping is not automatically valid."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "This approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+              "bearing": "Supports projected-gradient optimization in the latent perturbation setting, while not by itself validating the proposed YOLO loss or the exact intersection constraint."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "Val2017 : 5,000 images used for validation during model training.\n...\n0: person",
+              "bearing": "Confirms the intended public evaluation split and person-class mapping."
+            },
+            {
+              "source": "https://docs.ultralytics.com/modes/val",
+              "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+              "bearing": "Confirms that person-focused evaluation is supported."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "Ultralytics YOLO11n COCO-pretrained checkpoint",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official Ultralytics documentation names the checkpoint; hash the exact file and package commit before attack generation."
+            },
+            {
+              "name": "Conditional CVAE from Experiment 1",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "No concrete trained checkpoint currently exists in the proposal; its existence and suitability depend on Experiment 1 successfully producing and validating the apparatus."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official split is appropriate for the headline test if generator training/model selection and attack tuning do not use its labels or results."
+            },
+            {
+              "name": "pycocotools / COCO API",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The public cocodataset/cocoapi resource is appropriate for COCO bounding-box AP evaluation."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "covered",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 directly establishes the exact clean model/split/class/resolution/metric prerequisite and can reject an impossible clean AP floor."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1
+          ],
+          "note": "Experiment 1 inspects the CVAE and illumination semantics, but it does not specify paired same-content lighting data, independent latent-bound selection, or fixed acceptance criteria; Experiment 2 depends on this unresolved artifact."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            2
+          ],
+          "note": "Experiment 2 is the direct retained-AP test with the right metrics and thresholds, but the generator validity and exact intersection-feasibility procedure are not fully secured."
+        },
+        "control": {
+          "status": "covered",
+          "by": [
+            2
+          ],
+          "note": "Experiment 2 includes increasing steps/restarts, random latent search, gradient checks, and attack-effect diagnostics. It is less extensive than the reference suite but functionally supplies attack-strength controls."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The set contains the correct clean gate and a largely correct direct attack, and it can refute the claim if clean AP is below .90 or if a demonstrably valid feasible attack violates either headline threshold. It cannot verify the full conjunction as written because Experiment 1 does not establish that the CVAE was learned from appropriate paired COCO-derived illumination observations or that its latent bound and checkpoint were fixed independently of the val2017 headline result. Experiment 2 also leaves open whether pixel-space projection leaves the generator range. Thus a passing AP result could reflect an inadequately defined or invalid threat model rather than the claimed illumination-consistent latent threat model.",
+      "missing": [
+        "A concrete, same-content paired-lighting/intervention dataset derived from COCO (or a justified alternative that still satisfies the literal claim), with co-registration and scene-disjoint train/validation splits.",
+        "A frozen generator checkpoint and latent norm/radius selected from held-out generator evidence before any YOLO val2017 attack or headline tuning; val2017 must be audit-only after freezing.",
+        "Predeclared quantitative generator coverage/illumination/label-preservation criteria, with suitable resolution-normalized definitions rather than only qualitative plausibility.",
+        "A constrained latent optimization method\u2014rejection/backtracking or an equivalent parameterization\u2014that guarantees both z-bound and ||g(x,z)-x||\u221e\u226412/255 without pixel clipping outside the generator range.",
+        "An explicit frozen evaluation manifest covering all 5,000 val2017 images, identical clean/attacked preprocessing, postprocessing, and COCOeval settings, plus a predeclared attack objective and feasibility policy."
+      ]
+    },
+    {
+      "run": 2,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 14,
+        "usage": {
+          "prompt_tokens": 402873,
+          "completion_tokens": 17315,
+          "calls": 14
+        },
+        "seconds": 187.8,
+        "trace": "results/eval_v2/judgments/problem_11/method.run2.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://docs.ultralytics.com/models/yolo11",
+          "quote": "YOLO11n 640 39.5 ... See Detection Docs for usage examples with these models trained on COCO, which include 80 pretrained classes.",
+          "bearing": "The named YOLO11n artifact is official, has a 640-pixel COCO detection entry, and is documented as COCO-pretrained; the published metric is all-class mAP50-95, not person AP50."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "Train2017 : 118,287 images used for training object detection, segmentation, and captioning models.\n\nVal2017 : 5,000 images used for validation during model training.",
+          "bearing": "COCO train2017 and val2017 are real, publicly documented splits; val2017 has 5,000 images."
+        },
+        {
+          "source": "https://docs.ultralytics.com/datasets/detect/coco",
+          "quote": "names:\n 0: person",
+          "bearing": "Ultralytics' COCO configuration maps class ID 0 to person; the experiment's category_id=1 wording is correct for native COCO annotations, but a class-filter implementation must respect the mapping."
+        },
+        {
+          "source": "https://docs.ultralytics.com/modes/val",
+          "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+          "bearing": "Ultralytics validation supports person-only class filtering, though the experiment must distinguish model class ID 0 from COCO annotation category_id 1."
+        },
+        {
+          "source": "https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/cocoeval.py",
+          "quote": "iouThrs - [.5:.05:.95] T=10 IoU thresholds for evaluation",
+          "bearing": "The official COCO evaluator supports the standard IoU threshold grid, including exactly 0.5, and can be configured for person-only bbox AP50."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "given pairs of examples where one is a perturbed version of the other, we propose learning generative models that can \u201cperturb\u201d an example by varying a fixed region of the underlying latent space. ... the only requirement is to collect pairs of perturbed examples.",
+          "bearing": "The cited learned-perturbation framework supports a conditional generator but requires paired perturbed examples; COCO's ordinary split alone does not establish illumination-pair training."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "Then, we can define a learned perturbation set as follows:\nS(x) = {g(z, x) : ||z|| \u2264 \u03b5}\nIn other words, we have taken a well-defined norm-bounded ball in the latent space and mapped it to a set of perturbations with a generator g, which perturbs x into x\u02dc via a latent code z.",
+          "bearing": "The scholarly source supports the proposed generator form, bounded latent attack domain, and generator-produced perturbations."
+        },
+        {
+          "source": "arXiv:2007.08450",
+          "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5\nThis approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+          "bearing": "The scholarly source supports latent projected-gradient optimization under a norm constraint as a valid learned-perturbation-set procedure."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Detector identity/provenance and clean person AP50 on COCO val2017 at 640 and IoU 0.5; this is a prerequisite, not the adversarial result.",
+            "method": "Run official COCO-pretrained YOLO11n at imgsz 640 on COCO val2017 and evaluate native COCO category_id 1 with pycocotools bbox AP at IoU 0.5; record hashes and settings.",
+            "resources": [
+              "Ultralytics YOLO11n",
+              "COCO val2017",
+              "pycocotools"
+            ],
+            "measurement": "Clean person AP50 plus checkpoint, split, resolution, class-filtering, confidence and NMS metadata.",
+            "decision_rule": "C<0.90 indicates the retained floor is not met by the clean baseline; C>=0.90 establishes the baseline needed for the adversarial test. No complete adversarial decision rule is stated."
+          },
+          "gt_triage": "MATCH",
+          "gt_steps_covered": [
+            "G0"
+          ],
+          "verdict": "ACCURATE",
+          "novel": false,
+          "reasoning_chain": [
+            "The experiment measures the named detector, split, person class, resolution and IoU-0.5 clean baseline.",
+            "Ultralytics documents yolo11n.pt as COCO-pretrained and lists its 640-pixel detection entry, but its published 39.5 value is all-class mAP50-95, so direct person AP50 evaluation is appropriate (E0).",
+            "COCO documents val2017 as a 5,000-image split (E1), and its Ultralytics mapping is model class 0 for person (E2); using native COCO category_id 1 is correct if the annotation evaluator is used.",
+            "COCOeval supports the IoU grid including exactly 0.5 and can be restricted to person (E4).",
+            "Thus the experiment is a useful and correctly scoped clean gate, though it cannot alone establish adversarial retention or degradation."
+          ],
+          "evidence": [
+            {
+              "source": "https://docs.ultralytics.com/models/yolo11",
+              "quote": "YOLO11n 640 39.5 ... See Detection Docs for usage examples with these models trained on COCO, which include 80 pretrained classes.",
+              "bearing": "Confirms the official named model, COCO provenance and 640-pixel artifact, while showing that the published metric is not person AP50."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "Train2017 : 118,287 images used for training object detection, segmentation, and captioning models.\n\nVal2017 : 5,000 images used for validation during model training.",
+              "bearing": "Confirms the named COCO split exists and is publicly documented."
+            },
+            {
+              "source": "https://docs.ultralytics.com/datasets/detect/coco",
+              "quote": "names:\n 0: person",
+              "bearing": "Establishes the Ultralytics class mapping that must be distinguished from native COCO category_id 1."
+            },
+            {
+              "source": "https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/cocoeval.py",
+              "quote": "iouThrs - [.5:.05:.95] T=10 IoU thresholds for evaluation",
+              "bearing": "Establishes support for the requested IoU threshold."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "Ultralytics YOLO11n",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official documentation names yolo11n.pt and describes it as COCO-pretrained; freeze its version and hash."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official documentation identifies the public 5,000-image val2017 split."
+            },
+            {
+              "name": "pycocotools",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official cocodataset/cocoapi contains COCOeval and is appropriate for bbox person AP50."
+            }
+          ],
+          "gt_defects": [
+            {
+              "gt_step": "G0",
+              "defect": "The reference's claim that C<0.90 directly refutes the full conjunction assumes that the identity/no-modification case is included in the stated generator threat set. The proposed experiment appropriately says 'likely infeasible' rather than making that implication unconditional.",
+              "evidence": [
+                {
+                  "source": "claim text (user prompt)",
+                  "quote": "The generator g(x,z) produces perturbed images (for original image x) where z lies in a norm-bounded latent space (e.g., \\|z\\| \\le B ); g is a trained conditional variational autoencoder (CVAE).",
+                  "bearing": "The claim states a bounded latent generator but does not explicitly state g(x,0)=x, so clean AP is a decisive prerequisite under the natural identity interpretation but not an unconditional logical refutation by itself."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "Whether a COCO-trained conditional CVAE g(x,z) defines an illumination-consistent, label-preserving perturbation set with a bounded lighting latent.",
+            "method": "Train or obtain a CVAE conditioned on COCO train2017, inspect its conditioning and bounded latent implementation, test samples and traversals for illumination-only changes, and measure reconstruction, regularization, image-space and semantic consistency.",
+            "resources": [
+              "COCO train2017",
+              "COCO val2017",
+              "conditional CVAE generator",
+              "public perceptual/semantic audit models"
+            ],
+            "measurement": "Reconstruction/regularization, image-space distances, illumination statistics, perceptual/semantic consistency, visual samples and latent traversals.",
+            "decision_rule": "No quantitative rule is stated; smooth lighting-like outputs make the subclaims plausible, while distortions or an absent bound make them unsupported."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1",
+            "A2"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "reasoning_chain": [
+            "The experiment checks relevant apparatus properties: conditioning on x, latent boundedness, CVAE status, and whether outputs look like lighting rather than arbitrary edits.",
+            "The cited learned-perturbation framework says its requirement is paired perturbed examples (E5), and its illumination experiment uses a multi-illumination dataset with scenes captured under 25 lighting variations (E5).",
+            "Therefore ordinary COCO train images alone do not establish that the CVAE learned an illumination perturbation set; the experiment does not require same-content, co-registered COCO-derived lighting pairs or document how they were obtained.",
+            "It also uses COCO val2017 for held-out evaluation without an explicit no-leakage/no-selection rule, and it omits an independently fixed latent radius and quantitative held-out approximation/coverage test.",
+            "Nevertheless, qualitative and semantic auditing would provide useful information about a candidate generator, so the design is incomplete rather than irrelevant."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "given pairs of examples where one is a perturbed version of the other, we propose learning generative models that can \u201cperturb\u201d an example by varying a fixed region of the underlying latent space. ... the only requirement is to collect pairs of perturbed examples.",
+              "bearing": "Shows why single ordinary COCO images do not by themselves establish learned illumination."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "The perturbation set generates meaningful lighting samples and interpolations while generalizing to unseen scenes ...",
+              "bearing": "Supports inspecting lighting semantics and generalization, but not the experiment's vague plausibility-only rule."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5\nThis approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+              "bearing": "Establishes a relevant held-out paired-data and latent-PGD approximation validation that the proposed audit omits."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "COCO train2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official documentation identifies the 118,287-image train2017 split; appropriate for training, but it has no native paired relighting observations."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "It is appropriate for the headline detector test, but using it for generator selection or apparatus tuning risks leakage."
+            },
+            {
+              "name": "conditional CVAE generator",
+              "exists": true,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "CVAE is a valid model class and supported by the cited paper, but no specific COCO-trained illumination checkpoint is supplied; it must be built with valid paired data."
+            }
+          ],
+          "gt_defects": [
+            {
+              "gt_step": "A1/A2",
+              "defect": "The reference correctly identifies paired illumination data and held-out validation as important, but its exact COCO-derived recapture interpretation and imported numerical thresholds are more specific than the claim. The qualitative checks are useful supplements, not replacements.",
+              "evidence": [
+                {
+                  "source": "arXiv:2007.08450",
+                  "quote": "Unlike in the CIFAR10 common corruptions setting, there is no such thing as an \u201cunperturbed\u201d example in this dataset so we train on random pairs selected from the 25 different lighting variations for each scene.",
+                  "bearing": "Supports paired-lighting data while showing that the source protocol is specific to its illumination dataset."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "Whether white-box latent PGD through the CVAE and YOLO11n yields attacked val2017 images satisfying the latent and 12/255 image bounds while person AP50 remains at least 0.90 and relative degradation is at most 5%.",
+            "method": "Backpropagate a differentiable YOLO detection loss through the frozen generator and detector, use multi-start latent PGD with latent projection and reject or otherwise enforce the image-space L-infinity bound, then evaluate attacked val2017 with person AP50 and compute relative degradation; add strength, random-search and gradient checks.",
+            "resources": [
+              "Ultralytics YOLO11n",
+              "frozen conditional CVAE",
+              "COCO val2017",
+              "pycocotools",
+              "latent PGD implementation"
+            ],
+            "measurement": "Attacked person AP50, clean-to-attacked relative degradation, latent/image constraint feasibility, attack-strength behavior, random baseline and gradient diagnostics.",
+            "decision_rule": "Support only if attacked AP50 is at least 0.90 and (C-A)/C is at most 0.05 under the strongest valid tested attack; refute for this implementation if either threshold fails. Exact PGD schedules and objective are absent."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H3",
+            "C4"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "reasoning_chain": [
+            "This directly tests the central numerical claim and includes latent PGD, multiple restarts, the 12/255 image-space bound, person AP50 and relative degradation.",
+            "The literature defines the set as generator outputs from a norm-bounded latent ball and supports projected-gradient optimization over the latent variable (E6, E7), so the basic attack route is sound.",
+            "However, 'reject or project outputs' is ambiguous: pixel-projecting g(x,z) can leave the generator range, while rejection/backtracking preserves the required g(x,z) membership. The experiment does not require the valid option or explicitly verify membership after projection.",
+            "A generic full detection loss is not guaranteed to optimize person AP; it may degrade other classes or terms while leaving person detections intact. A fixed person-focused vanishing/objectness or matched-person objective, or a predeclared objective union, is needed.",
+            "Multiple restarts and strength checks are useful, but exact iteration counts, step sizes, restart counts, candidate selection and convergence criteria are missing. A passing result could therefore reflect a weak attack and cannot by itself verify robustness, although a correctly feasible below-threshold attack would be useful refuting evidence.",
+            "Thus the experiment would produce useful signal but is incompletely specified: MIXED, not IRRELEVANT."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "S(x) = {g(z, x) : ||z|| \u2264 \u03b5}",
+              "bearing": "Requires attacked images to be generator outputs with bounded latent codes."
+            },
+            {
+              "source": "arXiv:2007.08450",
+              "quote": "For a perturbation set defined by the generative model from Equation (2), this amounts to finding a latent vector z which best approximates the perturbed example x\u02dc by solving the following problem:\nmin d(g(z, x), x\u02dc).\n||z||\u2264\u03b5\nThis approximation error can be upper bounded with point estimates or can be solved more accurately with projected gradient descent.",
+              "bearing": "Supports latent PGD with norm projection and underscores the need to preserve the generator-defined set."
+            },
+            {
+              "source": "https://github.com/locuslab/perturbation_learning/blob/master/configs_attack/mi_cvae_pgd_881.json",
+              "quote": "\"attack\" : {\n\n \"type\" : \" cvae_attack \", \n\n \"max_dist\" : 8.81 , \"alpha\" : 0.4405 , \"niters\" : 50 ,",
+              "bearing": "Shows that concrete CVAE attack schedules specify iteration count and step size, which the proposal leaves vague."
+            },
+            {
+              "source": "https://docs.ultralytics.com/modes/val",
+              "quote": "classes list[int] None Specifies a list of class IDs to evaluate. Useful for filtering out and focusing only on certain classes during evaluation.",
+              "bearing": "Supports person-only evaluation, but attack optimization also needs to be person-relevant."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "Ultralytics YOLO11n",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Officially documented COCO-pretrained yolo11n.pt; freeze hash and software version."
+            },
+            {
+              "name": "frozen conditional CVAE",
+              "exists": true,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "A CVAE is a valid model class, but this particular COCO-trained illumination generator is not supplied and its validity depends on Experiment 1."
+            },
+            {
+              "name": "COCO val2017",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Publicly documented named headline evaluation split."
+            },
+            {
+              "name": "pycocotools",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official COCO API provides the requested bbox AP50 evaluation."
+            },
+            {
+              "name": "latent PGD implementation",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The cited repository supplies a concrete CVAE attack configuration, but it is not detector-specific and requires adaptation and validation."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "covered",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 checks checkpoint, provenance, split, class mapping, resolution and clean person AP50."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1
+          ],
+          "note": "Experiment 1 audits CVAE behavior and illumination semantics, but lacks required paired-data provenance, independent latent-bound calibration and quantitative held-out coverage/validity criteria."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            2
+          ],
+          "note": "Experiment 2 directly measures attacked person AP50 and relative degradation under the stated numerical bounds, but its objective and constraint-preserving attack procedure are under-specified."
+        },
+        "control": {
+          "status": "partial",
+          "by": [
+            2
+          ],
+          "note": "Strength sweeps, random latent search and gradient checks are useful, but exact schedules, candidate selection, convergence and identity/budget ablations are absent."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "Experiment 0 is a sound clean gate and Experiment 2 is directionally the right headline test, but the set cannot reliably verify or refute the full conjunction as written. Experiment 1 assumes COCO train images can establish learned illumination despite the cited framework requiring paired perturbed observations, uses the headline validation split without an explicit no-leakage rule, and has no quantitative pass criterion. Experiment 2 permits an image projection that may leave the generator range, uses an unspecified generic detection loss rather than a fixed person-focused objective, and leaves attack strength and candidate selection vague. A properly feasible below-threshold attack could refute the claim for the implementation, but a passing outcome would not verify it.",
+      "missing": [
+        "Paired, co-registered COCO-derived illumination observations or an explicit justified alternative consistent with 'learned from COCO'; ordinary COCO images alone are insufficient.",
+        "Generator-held-out validation independent of headline tuning, with preregistered latent norm/bound selection and quantitative coverage and label-preservation criteria.",
+        "Exact person-focused differentiable objective, PGD step size/iterations/restarts, feasibility-preserving intersection optimization and explicit generator-membership checks.",
+        "Complete attacked-corpus protocol covering all val2017 images with frozen preprocessing/evaluation and a predeclared candidate-union/convergence rule."
+      ]
+    }
+  ],
+  "missing_all_runs": [
+    "A COCO-derived paired, same-content multi-illumination training protocol, with documented geometry/label preservation and no val2017 leakage.",
+    "A concrete, same-content paired-lighting/intervention dataset derived from COCO (or a justified alternative that still satisfies the literal claim), with co-registration and scene-disjoint train/validation splits.",
+    "A constrained latent optimization method\u2014rejection/backtracking or an equivalent parameterization\u2014that guarantees both z-bound and ||g(x,z)-x||\u221e\u226412/255 without pixel clipping outside the generator range.",
+    "A feasibility-preserving attack implementation that guarantees every final image is exactly g(x,z), satisfies the latent bound, and satisfies ||g(x,z)-x||\u221e\u226412/255; decoded pixel clipping/projection must not be used as a substitute.",
+    "A frozen common clean/attacked COCOeval pipeline, explicit all-image handling and class/NMS settings, plus identity and budget/objective convergence controls before interpreting a passing robustness result.",
+    "A frozen generator checkpoint and latent norm/radius selected from held-out generator evidence before any YOLO val2017 attack or headline tuning; val2017 must be audit-only after freezing.",
+    "A preregistered latent coordinate system, norm, and radius B selected independently of YOLO val2017 robustness results.",
+    "A separate scene/content-disjoint generator-validation set and held-out approximation/coverage tests to establish that the CVAE represents illumination rather than arbitrary image changes.",
+    "An explicit frozen evaluation manifest covering all 5,000 val2017 images, identical clean/attacked preprocessing, postprocessing, and COCOeval settings, plus a predeclared attack objective and feasibility policy.",
+    "Complete attacked-corpus protocol covering all val2017 images with frozen preprocessing/evaluation and a predeclared candidate-union/convergence rule.",
+    "Exact person-focused differentiable objective, PGD step size/iterations/restarts, feasibility-preserving intersection optimization and explicit generator-membership checks.",
+    "Generator-held-out validation independent of headline tuning, with preregistered latent norm/bound selection and quantitative coverage and label-preservation criteria.",
+    "Paired, co-registered COCO-derived illumination observations or an explicit justified alternative consistent with 'learned from COCO'; ordinary COCO images alone are insufficient.",
+    "Predeclared quantitative generator coverage/illumination/label-preservation criteria, with suitable resolution-normalized definitions rather than only qualitative plausibility."
+  ]
+}

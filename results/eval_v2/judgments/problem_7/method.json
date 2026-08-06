@@ -1,0 +1,1946 @@
+{
+  "type": "evaluation",
+  "format_version": "1.0",
+  "problem_id": "7",
+  "arm": "method",
+  "claim": "Relative to an unmodified LLM, LLM policy violations can be reduce by 50% or more by augmenting the LLM with an additional attention head that reweights tokens likely to induce policy violation.",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 3
+  },
+  "proposer_model": "gpt-5.5",
+  "n_experiments": 3,
+  "experiments_evaluated": [
+    "To address subclaim 1 ('Compared to what baseline are LLM policy violations reduced?') and subclaim 2 ('By how much can LLM policy violations be reduced?'), run a controlled before/after evaluation on the same open-weight instruction model, e.g. Llama-3-8B-Instruct or Mistral-7B-Instruct, comparing the unmodified model against the augmented model on public safety datasets such as HarmBench, SALAD-Bench/SALAD-Base-Test, ToxicChat, and RealToxicityPrompts. Use identical prompts, decoding settings, system prompts, and refusal policies for both models. Score outputs with at least two evaluators: an automated safety judge such as LlamaGuard or MD-Judge, plus a toxicity/safety classifier such as a Jigsaw-finetuned toxicity model; optionally add a small human audit sample. Primary metric: policy violation rate or attack success rate. Test whether the augmented model reduces violations by at least 50%, e.g. from 20% to 10% or lower, with bootstrap confidence intervals across prompts and stratified results by harm category. If the reduction is >=50% with overlapping evaluator agreement and no large degradation in benign helpfulness, this supports the main claim. If reduction is smaller, inconsistent across datasets, or only appears under one judge, the claim is weakened. If the unmodified baseline is not clearly specified or is already safety-tuned to near-zero violation rate, the 50% claim may be ill-posed. This experiment could be made partly unnecessary if the proponents provide full paired prompt-level outputs, scoring code, baseline definition, and confidence intervals on public benchmarks.",
+    "To address subclaim 3 ('What is added to the LLM to reduce policy violations?') and subclaim 4 ('What does the additional attention head do?'), perform an architectural ablation study comparing: (a) the unmodified model, (b) the model with the proposed additional attention head that reweights violation-inducing tokens, (c) the same number of added parameters but randomly initialized/frozen or trained without token-risk supervision, and (d) a simpler non-attention intervention such as logit biasing or a classifier-gated refusal layer. Train any needed token-risk supervision using public safety corpora such as SALAD-Base, HarmBench behaviors, ToxicChat, and RealToxicityPrompts, labeling tokens/spans associated with unsafe requests or unsafe completions. Evaluate on held-out datasets not used for training, such as SALAD-Attack-Enhanced-Subset and HarmBench. Measure both violation rate and whether the added head assigns higher weights or suppression scores to tokens/spans judged risky by an independent classifier or human annotation. If only condition (b) achieves large safety gains and its learned attention/reweighting aligns with risky tokens, this supports the claim that the added attention head and its token reweighting mechanism are responsible. If condition (c) or (d) performs similarly, the benefit may come from extra parameters, fine-tuning, refusal calibration, or classifier gating rather than the proposed head. If attention weights do not correlate with risky tokens, the claimed mechanism is undermined even if safety improves. This experiment could be made unnecessary by released model code, trained weights, token-level risk labels, and ablation results isolating the added head.",
+    "To address subclaim 2 ('By how much can LLM policy violations be reduced?') under realistic adversarial pressure, run an adaptive jailbreak robustness evaluation where public attack sets from HarmBench and SALAD-Attack-Enhanced-Subset are supplemented with automated paraphrase and jailbreak generation using an open model such as Mixtral-8x7B-Instruct or Llama-3-70B-Instruct. Keep the target model fixed and compare the unmodified and augmented versions across single-turn harmful requests, multi-turn escalation, role-play, encoding/obfuscation, and prompt-injection-style attacks. Use attack success rate, unsafe score, and severity-weighted harm as metrics, with the same safety judges as in the first experiment. Also measure benign refusal rate on harmless prompts from datasets such as AlpacaEval, MT-Bench, or a benign slice of ToxicChat to detect over-refusal. If the augmented model maintains a >=50% lower attack success rate across both static and adaptive attacks without a major increase in false refusals, the feasibility claim is strengthened. If the reduction disappears under adaptive attacks or comes mainly from refusing benign requests, the practical claim is weakened. Earlier benchmark results should inform which attack categories to emphasize here. This experiment could be made unnecessary if independent red-team evaluations already show prompt-level adaptive attack results, benign false-refusal rates, and severity-weighted safety outcomes for the exact augmented architecture."
+  ],
+  "scores": {
+    "n_experiments": 3,
+    "correctness": 0.5,
+    "coverage": 0.5,
+    "groundedness": 0.625,
+    "redundancy_penalty": 0.0,
+    "decision_sufficiency": "insufficient",
+    "sufficiency_score": 0.0,
+    "verdicts": [
+      "MIXED",
+      "MIXED",
+      "MIXED"
+    ],
+    "n_novel": 2,
+    "unsupported_indices": [],
+    "n_contested": 0,
+    "judge_runs": 3,
+    "run_agreement": 1.0
+  },
+  "experiments": [
+    {
+      "index": 0,
+      "normalized": {
+        "target_subclaim": "Baseline and magnitude: whether an augmented model has at least a 50% relative reduction in policy-violation rate versus the same unmodified model.",
+        "method": "Controlled before/after comparison on a selected open-weight instruction model, with matched prompts, system prompts, decoding, and generation settings; multiple automated judges and optional human audit; bootstrap intervals and harm-category strata.",
+        "resources": [
+          "Llama-3-8B-Instruct or Mistral-7B-Instruct",
+          "HarmBench",
+          "SALAD-Bench/SALAD-Base-Test",
+          "ToxicChat",
+          "RealToxicityPrompts",
+          "LlamaGuard",
+          "MD-Judge",
+          "a Jigsaw-finetuned toxicity classifier"
+        ],
+        "measurement": "Policy-violation rate/ASR, plus toxicity/safety scores, evaluator agreement, bootstrap confidence intervals, and an unspecified benign-helpfulness check.",
+        "decision_rule": "A reduction of at least 50% with evaluator agreement supports the claim; smaller, inconsistent, or judge-specific reductions weaken it. The exact primary benchmark, statistical decision rule, and harmlessness threshold are not pre-specified."
+      },
+      "gt_triage": "PARTIAL",
+      "gt_steps_covered": [
+        "G0 gate in part",
+        "H1 direct headline in part"
+      ],
+      "verdict": "MIXED",
+      "novel": false,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] The claim compares an augmented LLM with an unmodified LLM and asserts a 50% reduction in policy violations; the proposed paired before/after design does make that comparison on the same prompts and matched inference settings.",
+        "[2] HarmBench is a relevant standardized red-teaming resource, and the SALAD-Bench work explicitly creates base and attack-enhanced test splits and uses ToxicChat as a safety-evaluation set (E0, E1, E5).",
+        "[3] However, RealToxicityPrompts contains web sentence snippets with Perspective-API toxicity scores rather than behavior-specific policy-violation labels (E3, E4, E10), so a reduction in its toxicity score is not by itself evidence for the claimed policy-violation reduction.",
+        "[4] A Jigsaw-finetuned toxicity classifier is not identified by a checkpoint or policy and would likewise measure toxicity rather than the behavior-specific violation criterion unless separately validated.",
+        "[5] The experiment permits an 'e.g.' model choice, leaves the additional-head architecture unspecified, and does not require a held-out behavior split, an exact violation definition, a fixed generation length, or a pre-specified primary decision cell.",
+        "[6] Fixed generation parameters matter because HarmBench reports that the number of generated tokens can change ASR by up to 30% (E7).",
+        "[7] Therefore the experiment would produce useful comparative safety signals, especially on HarmBench, but its mixed toxicity and safety quantities and under-specified model, architecture, and decision rule prevent it from deciding the stated single-added-head policy claim: MIXED, not IRRELEVANT."
+      ],
+      "evidence": [
+        {
+          "source": "https://openalex.org/W4391632220",
+          "quote": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+          "bearing": "Supports using HarmBench as a relevant policy-safety/red-teaming benchmark."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms that the named SALAD base split exists and that the benchmark distinguishes base from attack-enhanced evaluation."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We also use public test sets, i.e. , ToxicChat (Lin et al., 2023 ) , Beavertails (Ji et al., 2023 ) , and a 2k subset of SafeRLHF (Dai et al., 2023 ) test set for evaluation.",
+          "bearing": "Supports ToxicChat as an obtainable safety-evaluation resource, while not making it equivalent to a behavior-specific policy benchmark."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "RealToxicityPrompts is a dataset of 100k sentence snippets from the web for researchers to further address the risk of neural toxic degeneration in models.",
+          "bearing": "Shows that RealToxicityPrompts targets toxic degeneration rather than the full policy-violation quantity in the claim."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "The scores accompanying the prompt and the continuation are generated using the Perspective API",
+          "bearing": "Shows why its scores cannot directly serve as behavior-specific policy-violation labels."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "In developing our evaluations, we found that the number of tokens generated during evaluation can have a drastic effect on ASR computed by substring matching metrics used in earlier work. We show in Figure 2 that the choice of this parameter can change ASR by up to 30 % percent 30 30\\% 30 % .",
+          "bearing": "Supports the fault that matched and pre-registered generation length is necessary."
+        }
+      ],
+      "evidence_tier": "T2",
+      "resource_audit": [
+        {
+          "name": "Llama-3-8B-Instruct",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The resource search finds Meta-Llama-3-8B-Instruct; the proposal should name the exact checkpoint and revision rather than use 'e.g.'."
+        },
+        {
+          "name": "Mistral-7B-Instruct",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The resource search finds mistralai/Mistral-7B-Instruct-v0.3; exact revision and access conditions should be fixed."
+        },
+        {
+          "name": "HarmBench",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "A public HarmBench dataset/repository is found and it is appropriate for behavior-level harmful-request evaluation."
+        },
+        {
+          "name": "SALAD-Bench",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The official paper and project search results identify SALAD-Bench and its evaluation splits."
+        },
+        {
+          "name": "SALAD-Base-Test",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The paper explicitly names this split (E0); the exact release path and version must be specified because the hub search did not return an exact dataset identifier."
+        },
+        {
+          "name": "ToxicChat",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The lmsys/toxic-chat dataset exists and is used for safety evaluation, but it is toxicity/content-moderation data and is not automatically a comprehensive behavior-specific policy-violation benchmark."
+        },
+        {
+          "name": "RealToxicityPrompts",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The official Hugging Face dataset exists, but its prompt/continuation Perspective-API toxicity scores are not the claimed policy-violation measure."
+        },
+        {
+          "name": "LlamaGuard",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The resource search finds Meta's LlamaGuard-7b; it is a plausible supplementary safety judge, subject to a fixed policy/version."
+        },
+        {
+          "name": "MD-Judge",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "OpenSafetyLab/MD-Judge-v0.1 exists and is explicitly a QA-pair safety classifier (E2); its policy and calibration must be fixed."
+        },
+        {
+          "name": "Jigsaw-finetuned toxicity model",
+          "exists": false,
+          "publicly_available": false,
+          "appropriate": false,
+          "note": "This is a generic description rather than an identifiable checkpoint. The hub search found no exact resource; this is an identity/specification failure, not a claim that no Jigsaw-derived model exists anywhere."
+        }
+      ],
+      "run_verdicts": [
+        "MIXED",
+        "MIXED",
+        "MIXED"
+      ],
+      "mean_verdict_score": 0.5
+    },
+    {
+      "index": 1,
+      "normalized": {
+        "target_subclaim": "What is added and whether it is the added attention head that reweights violation-inducing tokens.",
+        "method": "Ablation study comparing the unmodified model, the proposed risk-token-reweighting attention head, parameter-matched random/no-risk-supervision variants, and a non-attention refusal intervention; train token/span supervision on public safety corpora and evaluate on held-out safety data while inspecting attention alignment.",
+        "resources": [
+          "SALAD-Base",
+          "HarmBench",
+          "ToxicChat",
+          "RealToxicityPrompts",
+          "SALAD-Attack-Enhanced-Subset"
+        ],
+        "measurement": "Violation rate plus alignment of learned attention/suppression scores with independently judged risky spans; qualitative decision based on whether only the proposed head has large gains and token alignment.",
+        "decision_rule": "No exact numerical threshold or pre-registered test is stated. The intended rule is that condition (b) must outperform the unmodified model and matched controls, with attention aligned to risky spans; comparable control performance or absent alignment undermines the mechanism."
+      },
+      "gt_triage": "PARTIAL",
+      "gt_steps_covered": [
+        "A1 literal added-head apparatus",
+        "A2 token-risk mechanism checks",
+        "C1 parameter/mechanism ablations"
+      ],
+      "verdict": "MIXED",
+      "novel": true,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] The subclaims explicitly ask what is added and what the head does, so comparing the proposed head against the unchanged model and parameter/control interventions is directly informative.",
+        "[2] SALAD-Bench includes base and attack-enhanced safety questions, and the paper states that the attack-enhanced subset is useful for appraising defenses (E4, E5); HarmBench also provides a behavior classifier (E6).",
+        "[3] The proposed ablations can distinguish some safety gain caused by an extra pathway or generic refusal calibration from gain associated with risk-token supervision, and independent span annotations plus attention measurements address the mechanism rather than only the output rate.",
+        "[4] However, 'the proposed additional attention head' is never specified as exactly one causal head at a fixed insertion point with frozen original parameters, nor are the training loss, split/leakage policy, score definition, judge, or insertion procedure fixed.",
+        "[5] 'Randomly initialized/frozen or trained without token-risk supervision' conflates two different controls, and 'large safety gains' has no numerical threshold; arbitrary choices after looking at outputs could change the apparent conclusion.",
+        "[6] The proposed training resources are broad and include toxicity data, but toxicity labels are not equivalent to token-level policy-violation spans; RealToxicityPrompts in particular is a toxicity/continuation resource (E2, E8).",
+        "[7] Therefore the ablation would produce useful mechanistic evidence and is a valuable parameter-matched extension of the reference recipe, but it needs a literal architecture, locked splits, and quantitative decision rule to be decisive: MIXED."
+      ],
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms that the proposed base/enhanced evaluation idea corresponds to a real safety benchmark resource."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied to assess attack strategies.",
+          "bearing": "Supports using the attack-enhanced subset for defense evaluation, but not treating it as adaptive attack generation."
+        },
+        {
+          "source": "https://github.com/centerforaisafety/HarmBench",
+          "quote": "HarmBench provide 3 classifier models: ... cais/HarmBench-Llama-2-13b-cls for standard and contextual behaviors.",
+          "bearing": "Confirms an official behavior-specific evaluator exists for a stronger mechanism experiment."
+        },
+        {
+          "source": "https://aclanthology.org/2020.findings-emnlp.301.pdf",
+          "quote": "We create and release REALTOXICITYPROMPTS, a dataset of 100K naturally occurring, sentence-level prompts derived from a large corpus of English web text, paired with toxicity scores from a widely-used and commercially deployed toxicity classifier.",
+          "bearing": "Shows why RealToxicityPrompts cannot supply policy-violation span labels without an additional annotation scheme."
+        }
+      ],
+      "evidence_tier": "T1",
+      "resource_audit": [
+        {
+          "name": "SALAD-Base",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The SALAD base-question/base-test resource exists as part of SALAD-Bench and its public release, though 'SALAD-Base' is an ambiguous alias rather than a uniquely pinned dataset identifier."
+        },
+        {
+          "name": "HarmBench",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "Public official framework, behavior data, and classifiers; appropriate for held-out harmful-behavior evaluation."
+        },
+        {
+          "name": "ToxicChat",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "Public and useful for toxicity/jailbreak auxiliary training or evaluation, but not sufficient as the sole source of policy-specific token supervision."
+        },
+        {
+          "name": "RealToxicityPrompts",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "Public toxicity-generation dataset; inappropriate as a direct source of policy-violation token labels unless separately annotated."
+        },
+        {
+          "name": "SALAD-Attack-Enhanced-Subset",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The official SALAD paper documents a 5k attack-enhanced subset and public SALAD data/repository, but the exact proposed identifier is not verified; the paper also calls related evaluator material SALAD-Enhance-Test. The alias must be pinned before execution."
+        }
+      ],
+      "run_verdicts": [
+        "MIXED",
+        "MIXED",
+        "MIXED"
+      ],
+      "mean_verdict_score": 0.5
+    },
+    {
+      "index": 2,
+      "normalized": {
+        "target_subclaim": "Magnitude under adversarial pressure: whether the augmented model preserves at least a 50% lower policy-violation/attack-success rate when jailbreaks are generated against it.",
+        "method": "Compare unmodified and augmented targets on HarmBench and a proposed SALAD attack-enhanced subset, with automated paraphrase/jailbreak generation using Mixtral-8x7B-Instruct or Llama-3-70B-Instruct; include single-turn, multi-turn, role-play, obfuscation, and prompt-injection attacks, and a benign-refusal evaluation.",
+        "resources": [
+          "HarmBench",
+          "SALAD-Attack-Enhanced-Subset",
+          "Mixtral-8x7B-Instruct",
+          "Llama-3-70B-Instruct",
+          "LlamaGuard",
+          "MD-Judge",
+          "AlpacaEval",
+          "MT-Bench",
+          "a benign ToxicChat slice"
+        ],
+        "measurement": "ASR, unsafe score, unspecified severity-weighted harm, and benign refusal rate.",
+        "decision_rule": "The augmented model should have at least a 50% lower ASR across static and adaptive attacks without a major increase in false refusals; the exact attack budgets, aggregation, judge, and 'major' threshold are absent."
+      },
+      "gt_triage": "PARTIAL",
+      "gt_steps_covered": [
+        "H2 adaptive headline in part",
+        "C1 benign-refusal control in part"
+      ],
+      "verdict": "MIXED",
+      "novel": true,
+      "redundant_with": [],
+      "reasoning_chain": [
+        "[1] An attack evaluation is relevant because the claim concerns policy violations under prompts that may try to induce harmful behavior, and comparing both targets on the same attack categories can provide useful robustness information.",
+        "[2] The proposed use of an attacker model and a fixed target is directionally appropriate, and PAIR is an established adaptive jailbreak approach that iteratively explores harmful behavior elicitation (E8).",
+        "[3] However, the proposal does not explicitly require attacks to be optimized separately from scratch against each exact target, nor does it specify budgets, seeds, stopping rules, or the attack-to-target adaptation criterion; merely adding generated paraphrases can be a transferred/static test rather than an adaptive test.",
+        "[4] HarmBench requires a held-out validation/test split and prohibits tuning on test behaviors or semantically identical behaviors (E6), but the proposal does not state that its attack generation, category selection, or model tuning will respect that separation.",
+        "[5] It also does not fix target generation length or decoding. This matters because generated-token count can change ASR by up to 30% (E7), so an apparent 50% difference can be a protocol artifact.",
+        "[6] The exact SALAD-Attack-Enhanced-Subset is not confirmed as a public named resource; the source names SALAD-Enhance-Test instead (E0, E9).",
+        "[7] AlpacaEval and MT-Bench are general helpfulness benchmarks, not specified harmless-prompt/refusal benchmarks, and 'a benign ToxicChat slice' does not establish a clean benign control; consequently the design may miss a universal-refusal explanation.",
+        "[8] The experiment would still yield useful adversarial robustness evidence, but its adaptive protocol, datasets, metrics, and anti-over-refusal rule are insufficiently specified to decide the claim: MIXED."
+      ],
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "PAIR (Chao et al., 2023 ) : Iterative prompting of an attacker LLM to adaptively explore and elicit specific harmful behaviors from the target LLM.",
+          "bearing": "Supports the relevance of adaptive attack generation while highlighting that the proposed experiment must specify a genuinely target-adaptive procedure."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "To improve the robustness of our evaluation, we provide an official validation/test split of HarmBench behaviors. The validation set contains 100 behaviors and the test set contains 410 behaviors. We require that attacks and defenses do not tune on the test set or on behaviors semantically identical to those in the test set.",
+          "bearing": "Supports the missing held-out split and no-tuning requirement."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "In developing our evaluations, we found that the number of tokens generated during evaluation can have a drastic effect on ASR computed by substring matching metrics used in earlier work. We show in Figure 2 that the choice of this parameter can change ASR by up to 30 % percent 30 30\\% 30 % .",
+          "bearing": "Supports the missing fixed generation-length and decoding protocol."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms the official SALAD attack-enhanced naming and the mismatch with the proposed resource name."
+        }
+      ],
+      "evidence_tier": "T2",
+      "resource_audit": [
+        {
+          "name": "HarmBench",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "Public standardized red-teaming benchmark appropriate for held-out harmful-behavior evaluation, subject to its split rules."
+        },
+        {
+          "name": "SALAD-Attack-Enhanced-Subset",
+          "exists": false,
+          "publicly_available": false,
+          "appropriate": false,
+          "note": "No exact resource identifier was found. SALAD-Enhance-Test is confirmed by the paper and should be named/versioned instead."
+        },
+        {
+          "name": "Mixtral-8x7B-Instruct",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The resource search finds mistralai/Mixtral-8x7B-Instruct-v0.1, a plausible attacker model; exact revision and attack configuration must be fixed."
+        },
+        {
+          "name": "Llama-3-70B-Instruct",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "The resource search finds Meta-Llama-3-70B-Instruct and later revisions; exact checkpoint and computationally feasible attacker configuration must be fixed."
+        },
+        {
+          "name": "LlamaGuard",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "A public Meta LlamaGuard checkpoint is found and it can be a supplementary safety judge, not a substitute for a behavior-specific ground-truth audit."
+        },
+        {
+          "name": "MD-Judge",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": true,
+          "note": "OpenSafetyLab/MD-Judge-v0.1 exists as a QA-pair safety classifier (E2), but its policy/version and judge separation must be fixed."
+        },
+        {
+          "name": "AlpacaEval",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The benchmark exists and can assess general helpfulness, but it is not by itself a clean harmless-prompt false-refusal measure."
+        },
+        {
+          "name": "MT-Bench",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "The benchmark prompts and judgments exist, but general dialogue quality is not a direct benign-refusal control."
+        },
+        {
+          "name": "benign ToxicChat slice",
+          "exists": true,
+          "publicly_available": true,
+          "appropriate": false,
+          "note": "ToxicChat exists, but the proposal does not identify a validated harmless subset; a toxicity dataset slice is not automatically a benign-helpfulness/refusal control."
+        }
+      ],
+      "run_verdicts": [
+        "MIXED",
+        "MIXED",
+        "MIXED"
+      ],
+      "mean_verdict_score": 0.5
+    }
+  ],
+  "role_coverage": {
+    "gate": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Experiment 0 notices that a near-zero baseline makes a relative claim ill-posed, but it does not impose a pre-training nonzero-denominator gate, freeze the test set, or specify a stop rule."
+    },
+    "headline": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Experiment 0 supplies a direct paired comparison and Experiment 2 supplies adversarial stress testing, but the direct policy metric is mixed with toxicity metrics and the purported adaptive attacks are not required to be target-specific."
+    },
+    "apparatus": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Experiment 1 compares architectural and parameter controls, but it does not define the literal one-head architecture, frozen-weight integrity, or reproducible training/split protocol."
+    },
+    "control": {
+      "status": "partial",
+      "run_statuses": [
+        "partial",
+        "partial",
+        "partial"
+      ],
+      "note": "Ablations and benign-helpfulness/refusal checks are present, but controls, thresholds, and the harmless benchmark are not pinned well enough to rule out generic refusal or parameter-count effects."
+    }
+  },
+  "decision_sufficiency": "insufficient",
+  "sufficiency_reasoning": "The set would generate useful evidence, but executing it as written would not verify or refute the claim. The direct experiment leaves model selection, benchmark cells, policy labels, and judge/aggregation rules open and includes resources measuring toxicity rather than behavior-specific policy violations. The architecture experiment does not specify that the intervention is literally one added causal head with all original weights frozen, and its qualitative 'large gain' rule is not pre-registered. The adversarial experiment calls attacks adaptive without requiring separate target-specific optimization and equal budgets for base and augmented models. These gaps permit post-hoc choices, cannot attribute an effect to the claimed head, and cannot establish the stated 50% reduction under a defined policy.",
+  "missing": [
+    "A pinned unmodified checkpoint and exact single-head architecture with frozen original weights, zero-gate/base-equivalence test, and reproducible training/split protocol.",
+    "A behavior-specific, pre-registered violation definition and held-out direct evaluation (for example HarmBench behavior classification with fixed decoding and generation length), with exact relative-reduction calculation and nonzero baseline gate.",
+    "A genuinely adaptive evaluation in which attacks are separately optimized against the unmodified and augmented targets under identical budgets, rather than merely applying public or generated attack prompts.",
+    "A pre-registered aggregation rule and thresholds for evaluator disagreement, confidence intervals, benign refusal/utility, and mechanism-ablation outcomes.",
+    "Explicitly separate toxicity/degen benchmarks (RealToxicityPrompts, generic Jigsaw toxicity) from the headline policy-violation endpoint."
+  ],
+  "missing_all_runs": [
+    "A behavior-specific, pre-registered violation definition and held-out direct evaluation (for example HarmBench behavior classification with fixed decoding and generation length), with exact relative-reduction calculation and nonzero baseline gate.",
+    "A genuinely adaptive evaluation in which attacks are separately optimized against the unmodified and augmented targets under identical budgets, rather than merely applying public or generated attack prompts.",
+    "A pinned unmodified checkpoint and exact single-head architecture with frozen original weights, zero-gate/base-equivalence test, and reproducible training/split protocol.",
+    "A pre-registered aggregation rule and thresholds for evaluator disagreement, confidence intervals, benign refusal/utility, and mechanism-ablation outcomes.",
+    "Add a clean benign refusal/compliance control and token-blind/permuted/inverted head ablations to rule out universal refusal and generic residual effects.",
+    "Add a nonzero-baseline gate, exact relative-ratio rule, uncertainty/count reporting, and quantitative policy-benign refusal control.",
+    "Create disjoint train/validation/test splits with semantic deduplication, especially if HarmBench or SALAD data are used for supervision.",
+    "Define policy violation behavior-by-behavior using a policy-specific held-out judge plus blinded human labels; keep ToxicChat and RealToxicityPrompts auxiliary rather than treating toxicity as equivalent to violation.",
+    "Define the added module as exactly one causal attention head, freeze all original parameters, and include a zero-gate round-trip/integrity test.",
+    "Define the relative 50% ratio, zero-denominator handling, aggregation across prompts/models/seeds, and the exact statistical rule.",
+    "Explicitly separate toxicity/degen benchmarks (RealToxicityPrompts, generic Jigsaw toxicity) from the headline policy-violation endpoint.",
+    "Pre-register one exact unmodified checkpoint, tokenizer/template, augmented-head implementation, and all training parameters.",
+    "Pre-specify adaptive attack algorithms, per-target optimization, budgets, seeds, stopping rules, and target generation protocol.",
+    "Replace SALAD-Attack-Enhanced-Subset with the official SALAD-Enhance-Test/released split and document its exact availability and contents.",
+    "Replace or clearly subordinate RealToxicityPrompts and generic toxicity classifiers; they cannot be the primary policy-violation measure.",
+    "Replace the unverified SALAD-Attack-Enhanced-Subset name with the exact public SALAD split and version.",
+    "Run a genuine defense-aware adaptive attack against the exact augmented target, with preregistered attack type, query/gradient/token budgets, stopping rule, and identical budgets for baseline and augmented conditions.",
+    "Specify and hash the exact unmodified checkpoint(s), tokenizer, chat template, system prompt, decoding, and generation length.",
+    "Use behavior-specific held-out HarmBench/JailbreakBench/StrongREJECT-style labels and keep training, judge, validation, and headline test items disjoint.",
+    "Use explicit token-score permutation/uniform/inversion and g=0 controls to attribute any gain to selective token reweighting rather than extra parameters or universal refusal."
+  ],
+  "contested": [],
+  "gt_defects": [
+    {
+      "gt_step": "G0",
+      "defect": "The proposed set has no sealed, pre-training gate that fixes the model, benchmark cells, policy, and nonzero denominator before training or evaluation."
+    },
+    {
+      "gt_step": "A1",
+      "defect": "Experiment 1's architecture and training description is insufficiently literal to establish that only one additional attention head was added while the original model was unchanged."
+    },
+    {
+      "gt_step": "H2",
+      "defect": "Experiment 2 labels an attack-generation approach adaptive but does not require target-specific optimization, separate attacks for base and head, or identical attack budgets."
+    },
+    {
+      "gt_step": "H1",
+      "defect": "Experiment 0 mixes behavior-level policy benchmarks with toxicity resources and leaves the violation label and evaluator aggregation under-specified, so it cannot serve as a decisive headline test."
+    },
+    {
+      "gt_step": "A1 apparatus / C1 control",
+      "defect": "The reference recipe could be strengthened by adding the proposed parameter-matched random-head and non-attention intervention comparators. Those controls can distinguish selective attention-head causality from a generic extra-parameter or refusal-calibration effect, provided the head and evaluation splits are first fully specified.",
+      "evidence": [
+        {
+          "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+          "quote": "MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+          "bearing": "Shows why an observed QA-pair safety difference alone does not identify the architectural cause; additional architecture-matched controls are useful."
+        }
+      ]
+    },
+    {
+      "gt_step": "A1/A2/C1",
+      "defect": "The reference recipe does not include the proposed parameter-matched random-head and non-attention intervention comparators. These are useful additional controls for separating the effect of an attention-head mechanism from generic added capacity or refusal calibration.",
+      "evidence": [
+        {
+          "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+          "quote": "MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+          "bearing": "Supports the need to distinguish a safety outcome/evaluator from the specific architectural mechanism; the proposed non-attention comparator would add that attribution control."
+        }
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 6,
+        "usage": {
+          "prompt_tokens": 220972,
+          "completion_tokens": 10507,
+          "calls": 6
+        },
+        "seconds": 502.3,
+        "trace": "results/eval_v2/judgments/problem_7/method.run0.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://arxiv.org/html/2402.04249v2",
+          "quote": "The primary measure of a red teaming method\u2019s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.",
+          "bearing": "Establishes that HarmBench ASR is a behavior-elicitation metric relevant to policy-violation reduction."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249v2",
+          "quote": "The number of tokens generated by the target model during evaluation drastically impacts the attack success rate (ASR) of red teaming methods. This crucial evaluation parameter is not standardized in prior work. As a result, cross-paper comparisons can be misleading.",
+          "bearing": "Supports identical decoding and generation-length controls in the proposed before/after comparison."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "Each instance represents a prompt and its metadata: ... \"prompt\": ... \"continuation\": ... The scores accompanying the prompt and the continuation are generated using the Perspective API",
+          "bearing": "Establishes that RealToxicityPrompts is a toxicity/continuation resource, not by itself a behavior-specific policy-violation benchmark."
+        },
+        {
+          "source": "https://huggingface.co/meta-llama/LlamaGuard-7b",
+          "quote": "Llama-Guard is a 7B parameter Llama 2-based input-output safeguard model. It can be used for classifying content in both LLM inputs (prompt classification) and in LLM responses (response classification).",
+          "bearing": "Establishes LlamaGuard exists and is relevant as an auxiliary safety-response classifier, though it has its own taxonomy."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Establishes SALAD-Base-Test exists in the paper and is a legitimate safety evaluation resource."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied to assess attack strategies.",
+          "bearing": "Supports use of SALAD attack-enhanced data for evaluating defenses, while distinguishing it from adaptive attack generation."
+        },
+        {
+          "source": "https://github.com/centerforaisafety/HarmBench",
+          "quote": "HarmBench provide 3 classifier models: ... cais/HarmBench-Llama-2-13b-cls for standard and contextual behaviors.",
+          "bearing": "Establishes an official HarmBench behavior classifier exists and is more directly aligned to behavior elicitation than generic toxicity classification."
+        },
+        {
+          "source": "https://github.com/OpenSafetyLab/SALAD-BENCH",
+          "quote": "SALAD-Bench contains 21k harmful base questions classified into 6 domains, 16 tasks, and 66 specific categories. It contains questions with variation, including QA and multiple choice, and with enhancement, by attack and defense methods.",
+          "bearing": "Establishes SALAD-Bench exists and is relevant to broad safety/attack-defense evaluation."
+        },
+        {
+          "source": "https://aclanthology.org/2020.findings-emnlp.301.pdf",
+          "quote": "We create and release REALTOXICITYPROMPTS, a dataset of 100K naturally occurring, sentence-level prompts derived from a large corpus of English web text, paired with toxicity scores from a widely-used and commercially deployed toxicity classifier.",
+          "bearing": "Establishes RealToxicityPrompts measures toxicity of naturally occurring web-text prompts, not necessarily policy violations elicited by an instruction-following assistant."
+        },
+        {
+          "source": "https://github.com/centerforaisafety/HarmBench",
+          "quote": "There are two primary ways to use HarmBench: (1) evaluating red teaming methods against a set of LLMs, and (2) evaluating LLMs against a set of red teaming methods.",
+          "bearing": "Supports the proposed adaptive robustness component's use of HarmBench, provided attacks are actually generated against each target."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Baseline comparison and >=50% reduction in policy-violation rate.",
+            "method": "Paired before/after inference on one selected open-weight instruction model, comparing the unmodified checkpoint with an augmented version on several public safety/toxicity datasets; identical prompts, system prompts, decoding, and refusal settings; automated safety judges and optional human audit.",
+            "resources": [
+              "Llama-3-8B-Instruct",
+              "Mistral-7B-Instruct",
+              "HarmBench",
+              "SALAD-Bench/SALAD-Base-Test",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "LlamaGuard",
+              "MD-Judge",
+              "Jigsaw-finetuned toxicity model"
+            ],
+            "measurement": "Policy-violation rate/ASR, with bootstrap intervals, harm-category strata, evaluator agreement, and benign helpfulness.",
+            "decision_rule": "Support if the augmented model has at least a 50% relative reduction (for example 20% to 10% or lower) with evaluator agreement and no large benign-helpfulness degradation; weaken if the reduction is smaller, inconsistent, or judge-dependent. The exact model, benchmark cells, evaluator thresholds, and what constitutes a violation are not pre-specified."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H1 direct-policy headline",
+            "matched base/head comparison",
+            "matched decoding and generation settings"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim compares an augmented LLM with its unmodified counterpart and asserts a relative reduction in policy violations, so a paired base-versus-augmented evaluation with a behavior-level violation metric is relevant.",
+            "[2] HarmBench defines ASR as the percentage of test cases that elicit the specified behavior, which is directly relevant to policy-violation measurement (E0).",
+            "[3] The proposed identical prompts, system prompts, and decoding are appropriate controls; generated-token length also matters because it can drastically change ASR (E1).",
+            "[4] RealToxicityPrompts supplies prompt/continuation toxicity scores from Perspective API and is a toxicity-degeneration resource (E2, E8), not a behavior-specific policy-violation benchmark.",
+            "[5] ToxicChat and generic toxicity classifiers likewise do not by themselves define the requested disallowed behavior, while LlamaGuard has its own safety taxonomy (E3); agreement among such judges is therefore not equivalent to agreement on one pre-registered policy.",
+            "[6] The experiment says 'e.g.' for the model and 'such as' for datasets, makes human auditing optional, and does not pin the exact policy, violation labeling rule, model checkpoint, dataset cells, or whether the 50% ratio must hold separately rather than after aggregation.",
+            "[7] Thus it would produce useful comparative safety signal and could support or weaken the claim, but its execution as written cannot decisively establish the claim's exact mechanism-independent numerical assertion: MIXED rather than IRRELEVANT."
+          ],
+          "evidence": [
+            {
+              "source": "https://arxiv.org/html/2402.04249v2",
+              "quote": "The primary measure of a red teaming method\u2019s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.",
+              "bearing": "Shows that a behavior-level ASR on HarmBench is an appropriate primary signal for policy-violation reduction."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249v2",
+              "quote": "The number of tokens generated by the target model during evaluation drastically impacts the attack success rate (ASR) of red teaming methods. This crucial evaluation parameter is not standardized in prior work. As a result, cross-paper comparisons can be misleading.",
+              "bearing": "Supports the proposed matched decoding/length control and identifies why it matters."
+            },
+            {
+              "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+              "quote": "Each instance represents a prompt and its metadata: ... \"prompt\": ... \"continuation\": ... The scores accompanying the prompt and the continuation are generated using the Perspective API",
+              "bearing": "Shows that RealToxicityPrompts is toxicity/continuation data rather than a direct policy-violation benchmark."
+            },
+            {
+              "source": "https://huggingface.co/meta-llama/LlamaGuard-7b",
+              "quote": "Llama-Guard is a 7B parameter Llama 2-based input-output safeguard model. It can be used for classifying content in both LLM inputs (prompt classification) and in LLM responses (response classification).",
+              "bearing": "Confirms LlamaGuard is a usable auxiliary response classifier, while its taxonomy still needs alignment to the adopted policy."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "Llama-3-8B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The exact Meta-Llama-3-8B-Instruct checkpoint is publicly listed on Hugging Face, with gated/manual access; it is an open-weight instruction model suitable in principle for a paired augmentation experiment."
+            },
+            {
+              "name": "Mistral-7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Mistral-7B-Instruct-v0.3 is publicly listed on Hugging Face and is structurally suitable for an intervention."
+            },
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Official HarmBench code/framework and classifiers are public; it directly evaluates elicitation of harmful behaviors."
+            },
+            {
+              "name": "SALAD-Bench/SALAD-Base-Test",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "SALAD-Bench and its Base-Test/Enhance-Test subsets are documented in the official paper/repository; appropriate as a broad safety resource, with evaluator taxonomy needing to be fixed."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The lmsys/toxic-chat dataset is public and contains toxicity/jailbreaking annotations, but it is not by itself a complete behavior-specific policy-violation benchmark; appropriate as an auxiliary slice, not sole headline metric."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "allenai/real-toxicity-prompts is public and valid for toxicity generation, but it measures toxicity of naturally occurring sentence prompts/continuations rather than compliance with disallowed requests."
+            },
+            {
+              "name": "LlamaGuard",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "meta-llama/LlamaGuard-7b is publicly listed with gated access and is appropriate as an auxiliary safety classifier, subject to taxonomy alignment."
+            },
+            {
+              "name": "MD-Judge",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "OpenSafetyLab/MD-Judge is public and intended for SALAD-style QA safety evaluation; appropriate as a judge if its taxonomy and calibration are declared."
+            },
+            {
+              "name": "Jigsaw-finetuned toxicity model",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "This is not a uniquely identified checkpoint or repository in the proposal. A Jigsaw-trained toxicity classifier may exist in multiple implementations, but the named resource is not reproducible as written and would measure toxicity rather than general policy violation."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "What is added and whether it is the added attention head that reweights violation-inducing tokens.",
+            "method": "Ablation study comparing the unmodified model, the proposed risk-token-reweighting attention head, parameter-matched random/no-risk-supervision variants, and a non-attention refusal intervention; train token/span supervision on public safety corpora and evaluate on held-out safety data while inspecting attention alignment.",
+            "resources": [
+              "SALAD-Base",
+              "HarmBench",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "SALAD-Attack-Enhanced-Subset"
+            ],
+            "measurement": "Violation rate plus alignment of learned attention/suppression scores with independently judged risky spans; qualitative decision based on whether only the proposed head has large gains and token alignment.",
+            "decision_rule": "No exact numerical threshold or pre-registered test is stated. The intended rule is that condition (b) must outperform the unmodified model and matched controls, with attention aligned to risky spans; comparable control performance or absent alignment undermines the mechanism."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1 literal added-head apparatus",
+            "A2 token-risk mechanism checks",
+            "C1 parameter/mechanism ablations"
+          ],
+          "verdict": "MIXED",
+          "novel": true,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The subclaims explicitly ask what is added and what the head does, so comparing the proposed head against the unchanged model and parameter/control interventions is directly informative.",
+            "[2] SALAD-Bench includes base and attack-enhanced safety questions, and the paper states that the attack-enhanced subset is useful for appraising defenses (E4, E5); HarmBench also provides a behavior classifier (E6).",
+            "[3] The proposed ablations can distinguish some safety gain caused by an extra pathway or generic refusal calibration from gain associated with risk-token supervision, and independent span annotations plus attention measurements address the mechanism rather than only the output rate.",
+            "[4] However, 'the proposed additional attention head' is never specified as exactly one causal head at a fixed insertion point with frozen original parameters, nor are the training loss, split/leakage policy, score definition, judge, or insertion procedure fixed.",
+            "[5] 'Randomly initialized/frozen or trained without token-risk supervision' conflates two different controls, and 'large safety gains' has no numerical threshold; arbitrary choices after looking at outputs could change the apparent conclusion.",
+            "[6] The proposed training resources are broad and include toxicity data, but toxicity labels are not equivalent to token-level policy-violation spans; RealToxicityPrompts in particular is a toxicity/continuation resource (E2, E8).",
+            "[7] Therefore the ablation would produce useful mechanistic evidence and is a valuable parameter-matched extension of the reference recipe, but it needs a literal architecture, locked splits, and quantitative decision rule to be decisive: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms that the proposed base/enhanced evaluation idea corresponds to a real safety benchmark resource."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied to assess attack strategies.",
+              "bearing": "Supports using the attack-enhanced subset for defense evaluation, but not treating it as adaptive attack generation."
+            },
+            {
+              "source": "https://github.com/centerforaisafety/HarmBench",
+              "quote": "HarmBench provide 3 classifier models: ... cais/HarmBench-Llama-2-13b-cls for standard and contextual behaviors.",
+              "bearing": "Confirms an official behavior-specific evaluator exists for a stronger mechanism experiment."
+            },
+            {
+              "source": "https://aclanthology.org/2020.findings-emnlp.301.pdf",
+              "quote": "We create and release REALTOXICITYPROMPTS, a dataset of 100K naturally occurring, sentence-level prompts derived from a large corpus of English web text, paired with toxicity scores from a widely-used and commercially deployed toxicity classifier.",
+              "bearing": "Shows why RealToxicityPrompts cannot supply policy-violation span labels without an additional annotation scheme."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "SALAD-Base",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The SALAD base-question/base-test resource exists as part of SALAD-Bench and its public release, though 'SALAD-Base' is an ambiguous alias rather than a uniquely pinned dataset identifier."
+            },
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public official framework, behavior data, and classifiers; appropriate for held-out harmful-behavior evaluation."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public and useful for toxicity/jailbreak auxiliary training or evaluation, but not sufficient as the sole source of policy-specific token supervision."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public toxicity-generation dataset; inappropriate as a direct source of policy-violation token labels unless separately annotated."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official SALAD paper documents a 5k attack-enhanced subset and public SALAD data/repository, but the exact proposed identifier is not verified; the paper also calls related evaluator material SALAD-Enhance-Test. The alias must be pinned before execution."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "Whether the >=50% policy-violation reduction survives adversarial jailbreaks.",
+            "method": "Compare unmodified and augmented targets on static HarmBench/SALAD attack material plus automatically generated paraphrase/jailbreak attacks, including multi-turn, role-play, obfuscation, and injection categories; use open attacker models, safety judges, ASR/unsafe/severity metrics, and benign-refusal controls.",
+            "resources": [
+              "HarmBench attacks",
+              "SALAD-Attack-Enhanced-Subset",
+              "Mixtral-8x7B-Instruct",
+              "Llama-3-70B-Instruct",
+              "AlpacaEval",
+              "MT-Bench",
+              "benign slice of ToxicChat"
+            ],
+            "measurement": "Attack success rate, unsafe score, severity-weighted harm, and benign refusal rate.",
+            "decision_rule": "Support if the augmented target has a >=50% lower ASR across both static and adaptive attacks without major false-refusal increase; weaken if the effect disappears under adaptive attacks or is explained by benign refusals. Attack budgets, target-specific optimization, aggregation, and 'major' are not defined."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H2 adaptive defense-aware headline",
+            "adaptive robustness comparison",
+            "benign-refusal control"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] Testing a safety augmentation against attacks that are tailored to the defended model is relevant to whether a claimed policy-violation reduction is robust rather than an artifact of static prompts.",
+            "[2] HarmBench explicitly supports evaluating LLMs against red-teaming methods (E9), and ASR is a behavior-elicitation metric (E0).",
+            "[3] SALAD's attack-enhanced subset is documented as useful for evaluating defenses (E5), so it is a reasonable static stress test.",
+            "[4] But a public attack set or an open-model paraphrase generator is not automatically adaptive: the proposal does not require generating or optimizing separate attacks against each exact base and augmented target, does not state that the attacker observes the head, and does not specify equal query/token/optimization budgets.",
+            "[5] Consequently, the proposed 'adaptive' result could be a transfer/static result and cannot establish that the reduction survives a defense-aware attacker; a failure would also not cleanly refute adaptive robustness if the attack battery is weak.",
+            "[6] The proposed benign resources are general helpfulness benchmarks or a derived toxicity slice, and 'no major increase' is undefined; they can detect gross over-refusal but do not supply the reference recipe's pinned benign refusal test.",
+            "[7] The experiment nevertheless yields useful robustness and over-refusal information, so the appropriate verdict is MIXED rather than IRRELEVANT."
+          ],
+          "evidence": [
+            {
+              "source": "https://github.com/centerforaisafety/HarmBench",
+              "quote": "There are two primary ways to use HarmBench: (1) evaluating red teaming methods against a set of LLMs, and (2) evaluating LLMs against a set of red teaming methods.",
+              "bearing": "Supports using HarmBench attacks to test target models, provided attacks are actually run against each target."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied to assess attack strategies.",
+              "bearing": "Supports the static defense stress test but distinguishes it from adaptive attack generation."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249v2",
+              "quote": "The number of tokens generated by the target model during evaluation drastically impacts the attack success rate (ASR) of red teaming methods. This crucial evaluation parameter is not standardized in prior work. As a result, cross-paper comparisons can be misleading.",
+              "bearing": "Shows why equal generation limits and decoding must be specified in the adversarial comparison."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "HarmBench attacks",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official public HarmBench framework contains attack/red-teaming methods and an evaluation pipeline; 'HarmBench attacks' is not a single uniquely named dataset, so methods, versions, and budgets must be pinned."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "A public SALAD attack-enhanced subset is documented, but the exact alias is not verified; it is appropriate for static defense evaluation, not sufficient by itself for adaptive attacks."
+            },
+            {
+              "name": "Mixtral-8x7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "mistralai/Mixtral-8x7B-Instruct-v0.1 is publicly listed and can serve as an attacker, subject to a fixed prompt/decoding configuration."
+            },
+            {
+              "name": "Llama-3-70B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Meta-Llama-3-70B-Instruct is publicly listed with gated/manual access; it is a possible attacker but expensive and not a standard attack configuration merely by being named."
+            },
+            {
+              "name": "AlpacaEval",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public general instruction-following/preference benchmark; useful for broad utility context, but not a dedicated harmless-prompt false-refusal benchmark."
+            },
+            {
+              "name": "MT-Bench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public multi-turn instruction-following benchmark; useful for general capability, but not a policy-aligned benign refusal control."
+            },
+            {
+              "name": "benign slice of ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "A slice can be derived from public ToxicChat annotations, but it is not a uniquely released resource and toxicity/jailbreak labels do not guarantee benign-policy labels."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "partial",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 notices that a near-zero baseline makes a relative claim ill-posed, but it does not impose a pre-training nonzero-denominator gate, freeze the test set, or specify a stop rule."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1
+          ],
+          "note": "Experiment 1 compares architectural and parameter controls, but it does not define the literal one-head architecture, frozen-weight integrity, or reproducible training/split protocol."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            0,
+            2
+          ],
+          "note": "Experiment 0 supplies a direct paired comparison and Experiment 2 supplies adversarial stress testing, but the direct policy metric is mixed with toxicity metrics and the purported adaptive attacks are not required to be target-specific."
+        },
+        "control": {
+          "status": "partial",
+          "by": [
+            1,
+            2
+          ],
+          "note": "Ablations and benign-helpfulness/refusal checks are present, but controls, thresholds, and the harmless benchmark are not pinned well enough to rule out generic refusal or parameter-count effects."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The set would generate useful evidence, but executing it as written would not verify or refute the claim. The direct experiment leaves model selection, benchmark cells, policy labels, and judge/aggregation rules open and includes resources measuring toxicity rather than behavior-specific policy violations. The architecture experiment does not specify that the intervention is literally one added causal head with all original weights frozen, and its qualitative 'large gain' rule is not pre-registered. The adversarial experiment calls attacks adaptive without requiring separate target-specific optimization and equal budgets for base and augmented models. These gaps permit post-hoc choices, cannot attribute an effect to the claimed head, and cannot establish the stated 50% reduction under a defined policy.",
+      "missing": [
+        "A pinned unmodified checkpoint and exact single-head architecture with frozen original weights, zero-gate/base-equivalence test, and reproducible training/split protocol.",
+        "A behavior-specific, pre-registered violation definition and held-out direct evaluation (for example HarmBench behavior classification with fixed decoding and generation length), with exact relative-reduction calculation and nonzero baseline gate.",
+        "A genuinely adaptive evaluation in which attacks are separately optimized against the unmodified and augmented targets under identical budgets, rather than merely applying public or generated attack prompts.",
+        "A pre-registered aggregation rule and thresholds for evaluator disagreement, confidence intervals, benign refusal/utility, and mechanism-ablation outcomes.",
+        "Explicitly separate toxicity/degen benchmarks (RealToxicityPrompts, generic Jigsaw toxicity) from the headline policy-violation endpoint."
+      ]
+    },
+    {
+      "run": 1,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 8,
+        "usage": {
+          "prompt_tokens": 188103,
+          "completion_tokens": 14196,
+          "calls": 8
+        },
+        "seconds": 8491.2,
+        "trace": "results/eval_v2/judgments/problem_7/method.run1.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms that SALAD-Base-Test is a real named evaluation split and that SALAD-Bench distinguishes base from attack-enhanced testing."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We also use public test sets, i.e. , ToxicChat (Lin et al., 2023 ) , Beavertails (Ji et al., 2023 ) , and a 2k subset of SafeRLHF (Dai et al., 2023 ) test set for evaluation.",
+          "bearing": "Confirms ToxicChat is used as a safety-evaluation test set in the SALAD-Bench work."
+        },
+        {
+          "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+          "quote": "MD-Judge is a LLM-based safetyguard, fine-tund on top of Mistral-7B . MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+          "bearing": "Establishes MD-Judge exists and is intended as a QA-pair safety classifier."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "RealToxicityPrompts is a dataset of 100k sentence snippets from the web for researchers to further address the risk of neural toxic degeneration in models.",
+          "bearing": "Establishes RealToxicityPrompts exists and is primarily a toxicity-generation benchmark, not a policy-violation benchmark."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "The scores accompanying the prompt and the continuation are generated using the Perspective API",
+          "bearing": "Shows RealToxicityPrompts supplies toxicity scores, which do not by themselves operationalize behavior-specific policy violations."
+        },
+        {
+          "source": "https://openalex.org/W4391632220",
+          "quote": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+          "bearing": "Confirms HarmBench is a relevant standardized red-teaming/robust-refusal evaluation resource."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "To improve the robustness of our evaluation, we provide an official validation/test split of HarmBench behaviors. The validation set contains 100 behaviors and the test set contains 410 behaviors. We require that attacks and defenses do not tune on the test set or on behaviors semantically identical to those in the test set.",
+          "bearing": "Establishes that HarmBench requires held-out behavior evaluation and prohibits tuning on test or semantically identical behaviors; relevant to Experiments 0\u20132."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "In developing our evaluations, we found that the number of tokens generated during evaluation can have a drastic effect on ASR computed by substring matching metrics used in earlier work. We show in Figure 2 that the choice of this parameter can change ASR by up to 30 % percent 30 30\\% 30 % .",
+          "bearing": "Establishes why matched and pre-specified generation length is necessary for a valid ASR comparison."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "PAIR (Chao et al., 2023 ) : Iterative prompting of an attacker LLM to adaptively explore and elicit specific harmful behaviors from the target LLM.",
+          "bearing": "Establishes PAIR as an adaptive jailbreak method relevant to Experiment 2."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms SALAD-Bench's named base and attack-enhanced evaluation splits."
+        },
+        {
+          "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+          "quote": "Each instance represents a prompt and its metadata: ... The scores accompanying the prompt and the continuation are generated using the Perspective API",
+          "bearing": "Establishes that RealToxicityPrompts is prompt/continuation toxicity-scored data, not a behavior-specific policy-violation benchmark."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Baseline and magnitude: whether an augmented model has at least a 50% relative reduction in policy-violation rate versus the same unmodified model.",
+            "method": "Controlled before/after comparison on a selected open-weight instruction model, with matched prompts, system prompts, decoding, and generation settings; multiple automated judges and optional human audit; bootstrap intervals and harm-category strata.",
+            "resources": [
+              "Llama-3-8B-Instruct or Mistral-7B-Instruct",
+              "HarmBench",
+              "SALAD-Bench/SALAD-Base-Test",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "LlamaGuard",
+              "MD-Judge",
+              "a Jigsaw-finetuned toxicity classifier"
+            ],
+            "measurement": "Policy-violation rate/ASR, plus toxicity/safety scores, evaluator agreement, bootstrap confidence intervals, and an unspecified benign-helpfulness check.",
+            "decision_rule": "A reduction of at least 50% with evaluator agreement supports the claim; smaller, inconsistent, or judge-specific reductions weaken it. The exact primary benchmark, statistical decision rule, and harmlessness threshold are not pre-specified."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "G0 gate in part",
+            "H1 direct headline in part"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim compares an augmented LLM with an unmodified LLM and asserts a 50% reduction in policy violations; the proposed paired before/after design does make that comparison on the same prompts and matched inference settings.",
+            "[2] HarmBench is a relevant standardized red-teaming resource, and the SALAD-Bench work explicitly creates base and attack-enhanced test splits and uses ToxicChat as a safety-evaluation set (E0, E1, E5).",
+            "[3] However, RealToxicityPrompts contains web sentence snippets with Perspective-API toxicity scores rather than behavior-specific policy-violation labels (E3, E4, E10), so a reduction in its toxicity score is not by itself evidence for the claimed policy-violation reduction.",
+            "[4] A Jigsaw-finetuned toxicity classifier is not identified by a checkpoint or policy and would likewise measure toxicity rather than the behavior-specific violation criterion unless separately validated.",
+            "[5] The experiment permits an 'e.g.' model choice, leaves the additional-head architecture unspecified, and does not require a held-out behavior split, an exact violation definition, a fixed generation length, or a pre-specified primary decision cell.",
+            "[6] Fixed generation parameters matter because HarmBench reports that the number of generated tokens can change ASR by up to 30% (E7).",
+            "[7] Therefore the experiment would produce useful comparative safety signals, especially on HarmBench, but its mixed toxicity and safety quantities and under-specified model, architecture, and decision rule prevent it from deciding the stated single-added-head policy claim: MIXED, not IRRELEVANT."
+          ],
+          "evidence": [
+            {
+              "source": "https://openalex.org/W4391632220",
+              "quote": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+              "bearing": "Supports using HarmBench as a relevant policy-safety/red-teaming benchmark."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms that the named SALAD base split exists and that the benchmark distinguishes base from attack-enhanced evaluation."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We also use public test sets, i.e. , ToxicChat (Lin et al., 2023 ) , Beavertails (Ji et al., 2023 ) , and a 2k subset of SafeRLHF (Dai et al., 2023 ) test set for evaluation.",
+              "bearing": "Supports ToxicChat as an obtainable safety-evaluation resource, while not making it equivalent to a behavior-specific policy benchmark."
+            },
+            {
+              "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+              "quote": "RealToxicityPrompts is a dataset of 100k sentence snippets from the web for researchers to further address the risk of neural toxic degeneration in models.",
+              "bearing": "Shows that RealToxicityPrompts targets toxic degeneration rather than the full policy-violation quantity in the claim."
+            },
+            {
+              "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+              "quote": "The scores accompanying the prompt and the continuation are generated using the Perspective API",
+              "bearing": "Shows why its scores cannot directly serve as behavior-specific policy-violation labels."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249",
+              "quote": "In developing our evaluations, we found that the number of tokens generated during evaluation can have a drastic effect on ASR computed by substring matching metrics used in earlier work. We show in Figure 2 that the choice of this parameter can change ASR by up to 30 % percent 30 30\\% 30 % .",
+              "bearing": "Supports the fault that matched and pre-registered generation length is necessary."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "Llama-3-8B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The resource search finds Meta-Llama-3-8B-Instruct; the proposal should name the exact checkpoint and revision rather than use 'e.g.'."
+            },
+            {
+              "name": "Mistral-7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The resource search finds mistralai/Mistral-7B-Instruct-v0.3; exact revision and access conditions should be fixed."
+            },
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "A public HarmBench dataset/repository is found and it is appropriate for behavior-level harmful-request evaluation."
+            },
+            {
+              "name": "SALAD-Bench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The official paper and project search results identify SALAD-Bench and its evaluation splits."
+            },
+            {
+              "name": "SALAD-Base-Test",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The paper explicitly names this split (E0); the exact release path and version must be specified because the hub search did not return an exact dataset identifier."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The lmsys/toxic-chat dataset exists and is used for safety evaluation, but it is toxicity/content-moderation data and is not automatically a comprehensive behavior-specific policy-violation benchmark."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The official Hugging Face dataset exists, but its prompt/continuation Perspective-API toxicity scores are not the claimed policy-violation measure."
+            },
+            {
+              "name": "LlamaGuard",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The resource search finds Meta's LlamaGuard-7b; it is a plausible supplementary safety judge, subject to a fixed policy/version."
+            },
+            {
+              "name": "MD-Judge",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "OpenSafetyLab/MD-Judge-v0.1 exists and is explicitly a QA-pair safety classifier (E2); its policy and calibration must be fixed."
+            },
+            {
+              "name": "Jigsaw-finetuned toxicity model",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "This is a generic description rather than an identifiable checkpoint. The hub search found no exact resource; this is an identity/specification failure, not a claim that no Jigsaw-derived model exists anywhere."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "Architecture and mechanism: whether the intervention is an additional attention head and whether it selectively reweights tokens or spans likely to induce violations.",
+            "method": "Ablation comparison between the unmodified model, the proposed token-risk attention-head model, parameter-matched random/no-risk-supervision variants, and a non-attention refusal intervention; train token/span supervision and inspect learned weights on held-out data.",
+            "resources": [
+              "SALAD-Base",
+              "HarmBench behaviors",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "SALAD-Attack-Enhanced-Subset",
+              "the proposed augmented model and its ablations"
+            ],
+            "measurement": "Violation rate plus token/span weight or suppression alignment with independently annotated or classifier-identified risky spans.",
+            "decision_rule": "The head must be the only condition with a large gain and its weights must align with risky spans; comparable random-parameter or non-attention performance undermines the mechanism. Exact gain threshold, split protocol, and alignment statistic are not fully specified."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1 apparatus in part",
+            "A2 token-mechanism validation in part",
+            "C1 mechanism controls in part"
+          ],
+          "verdict": "MIXED",
+          "novel": true,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] Comparing the proposed head against the unmodified model, a parameter-matched random variant, and a non-attention intervention is directly relevant to distinguishing the named mechanism from generic extra capacity or refusal calibration.",
+            "[2] The experiment also asks whether the head's weights align with risky spans, which is useful evidence for the phrase 'reweights tokens likely to induce policy violation.'",
+            "[3] But the condition called 'the proposed additional attention head' is never architecturally defined: the experiment does not specify one head, its insertion point, causal masking, frozen original weights, or a zero-gate equivalence test.",
+            "[4] The proposed training sources do not all provide the required labels. RealToxicityPrompts supplies prompt/continuation toxicity scores from the Perspective API (E3, E4, E10), not policy-violation or minimal harmful-intent span labels; ToxicChat is also a toxicity/content-moderation resource rather than a complete token-level policy annotation.",
+            "[5] The exact resource name SALAD-Attack-Enhanced-Subset is not the named SALAD split confirmed by the source, which calls the split SALAD-Enhance-Test (E0, E9); using an unavailable or unversioned split makes the held-out evaluation non-reproducible.",
+            "[6] Weight correlation alone is not causal evidence: the design does not require prompt-preserving token/head interventions, matched random/permuted controls with fixed evaluation sets, or a pre-specified causal behavioral test.",
+            "[7] Thus this would yield useful ablation and mechanism evidence, but it is under-specified and partly trains on mismatched toxicity resources; it cannot by itself verify the literal added-head claim: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+              "quote": "Each instance represents a prompt and its metadata: ... The scores accompanying the prompt and the continuation are generated using the Perspective API",
+              "bearing": "Shows that the proposed token-risk training source supplies toxicity metadata rather than the claimed policy/span labels."
+            },
+            {
+              "source": "https://huggingface.co/datasets/allenai/real-toxicity-prompts",
+              "quote": "RealToxicityPrompts is a dataset of 100k sentence snippets from the web for researchers to further address the risk of neural toxic degeneration in models.",
+              "bearing": "Supports the distinction between toxicity-generation data and behavior-specific policy-violation data."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms the official naming of the available SALAD splits and exposes the proposal's unversioned 'SALAD-Attack-Enhanced-Subset' name."
+            },
+            {
+              "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+              "quote": "MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+              "bearing": "Illustrates that safety judges operate on QA-pair safety, not automatically on token-level causal attribution."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "SALAD-Base",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "SALAD-Bench and base evaluation material exist, but 'SALAD-Base' is not a sufficiently precise official release identifier for training token-level policy labels."
+            },
+            {
+              "name": "HarmBench behaviors",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "HarmBench is public and behavior-level harmful requests are appropriate for held-out evaluation; using behaviors for training requires strict separation from the test split."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Publicly obtainable, but toxicity labels do not directly provide minimal risky-token or policy-violation span supervision."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Publicly obtainable toxicity-prompt data; inappropriate as a stand-in for policy-violation span labels without additional annotation."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "The exact name was not found. The official source confirms SALAD-Enhance-Test, so the proposal must use and version that actual split rather than silently substituting a differently defined subset."
+            }
+          ],
+          "gt_defects": [
+            {
+              "gt_step": "A1/A2/C1",
+              "defect": "The reference recipe does not include the proposed parameter-matched random-head and non-attention intervention comparators. These are useful additional controls for separating the effect of an attention-head mechanism from generic added capacity or refusal calibration.",
+              "evidence": [
+                {
+                  "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+                  "quote": "MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+                  "bearing": "Supports the need to distinguish a safety outcome/evaluator from the specific architectural mechanism; the proposed non-attention comparator would add that attribution control."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "Magnitude under adversarial pressure: whether the augmented model preserves at least a 50% lower policy-violation/attack-success rate when jailbreaks are generated against it.",
+            "method": "Compare unmodified and augmented targets on HarmBench and a proposed SALAD attack-enhanced subset, with automated paraphrase/jailbreak generation using Mixtral-8x7B-Instruct or Llama-3-70B-Instruct; include single-turn, multi-turn, role-play, obfuscation, and prompt-injection attacks, and a benign-refusal evaluation.",
+            "resources": [
+              "HarmBench",
+              "SALAD-Attack-Enhanced-Subset",
+              "Mixtral-8x7B-Instruct",
+              "Llama-3-70B-Instruct",
+              "LlamaGuard",
+              "MD-Judge",
+              "AlpacaEval",
+              "MT-Bench",
+              "a benign ToxicChat slice"
+            ],
+            "measurement": "ASR, unsafe score, unspecified severity-weighted harm, and benign refusal rate.",
+            "decision_rule": "The augmented model should have at least a 50% lower ASR across static and adaptive attacks without a major increase in false refusals; the exact attack budgets, aggregation, judge, and 'major' threshold are absent."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H2 adaptive headline in part",
+            "C1 benign-refusal control in part"
+          ],
+          "verdict": "MIXED",
+          "novel": true,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] An attack evaluation is relevant because the claim concerns policy violations under prompts that may try to induce harmful behavior, and comparing both targets on the same attack categories can provide useful robustness information.",
+            "[2] The proposed use of an attacker model and a fixed target is directionally appropriate, and PAIR is an established adaptive jailbreak approach that iteratively explores harmful behavior elicitation (E8).",
+            "[3] However, the proposal does not explicitly require attacks to be optimized separately from scratch against each exact target, nor does it specify budgets, seeds, stopping rules, or the attack-to-target adaptation criterion; merely adding generated paraphrases can be a transferred/static test rather than an adaptive test.",
+            "[4] HarmBench requires a held-out validation/test split and prohibits tuning on test behaviors or semantically identical behaviors (E6), but the proposal does not state that its attack generation, category selection, or model tuning will respect that separation.",
+            "[5] It also does not fix target generation length or decoding. This matters because generated-token count can change ASR by up to 30% (E7), so an apparent 50% difference can be a protocol artifact.",
+            "[6] The exact SALAD-Attack-Enhanced-Subset is not confirmed as a public named resource; the source names SALAD-Enhance-Test instead (E0, E9).",
+            "[7] AlpacaEval and MT-Bench are general helpfulness benchmarks, not specified harmless-prompt/refusal benchmarks, and 'a benign ToxicChat slice' does not establish a clean benign control; consequently the design may miss a universal-refusal explanation.",
+            "[8] The experiment would still yield useful adversarial robustness evidence, but its adaptive protocol, datasets, metrics, and anti-over-refusal rule are insufficiently specified to decide the claim: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "https://arxiv.org/html/2402.04249",
+              "quote": "PAIR (Chao et al., 2023 ) : Iterative prompting of an attacker LLM to adaptively explore and elicit specific harmful behaviors from the target LLM.",
+              "bearing": "Supports the relevance of adaptive attack generation while highlighting that the proposed experiment must specify a genuinely target-adaptive procedure."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249",
+              "quote": "To improve the robustness of our evaluation, we provide an official validation/test split of HarmBench behaviors. The validation set contains 100 behaviors and the test set contains 410 behaviors. We require that attacks and defenses do not tune on the test set or on behaviors semantically identical to those in the test set.",
+              "bearing": "Supports the missing held-out split and no-tuning requirement."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249",
+              "quote": "In developing our evaluations, we found that the number of tokens generated during evaluation can have a drastic effect on ASR computed by substring matching metrics used in earlier work. We show in Figure 2 that the choice of this parameter can change ASR by up to 30 % percent 30 30\\% 30 % .",
+              "bearing": "Supports the missing fixed generation-length and decoding protocol."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms the official SALAD attack-enhanced naming and the mismatch with the proposed resource name."
+            }
+          ],
+          "evidence_tier": "T2",
+          "resource_audit": [
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public standardized red-teaming benchmark appropriate for held-out harmful-behavior evaluation, subject to its split rules."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "No exact resource identifier was found. SALAD-Enhance-Test is confirmed by the paper and should be named/versioned instead."
+            },
+            {
+              "name": "Mixtral-8x7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The resource search finds mistralai/Mixtral-8x7B-Instruct-v0.1, a plausible attacker model; exact revision and attack configuration must be fixed."
+            },
+            {
+              "name": "Llama-3-70B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The resource search finds Meta-Llama-3-70B-Instruct and later revisions; exact checkpoint and computationally feasible attacker configuration must be fixed."
+            },
+            {
+              "name": "LlamaGuard",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "A public Meta LlamaGuard checkpoint is found and it can be a supplementary safety judge, not a substitute for a behavior-specific ground-truth audit."
+            },
+            {
+              "name": "MD-Judge",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "OpenSafetyLab/MD-Judge-v0.1 exists as a QA-pair safety classifier (E2), but its policy/version and judge separation must be fixed."
+            },
+            {
+              "name": "AlpacaEval",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The benchmark exists and can assess general helpfulness, but it is not by itself a clean harmless-prompt false-refusal measure."
+            },
+            {
+              "name": "MT-Bench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "The benchmark prompts and judgments exist, but general dialogue quality is not a direct benign-refusal control."
+            },
+            {
+              "name": "benign ToxicChat slice",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "ToxicChat exists, but the proposal does not identify a validated harmless subset; a toxicity dataset slice is not automatically a benign-helpfulness/refusal control."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "partial",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 recognizes the need for a clearly specified baseline and warns about a near-zero denominator, but it does not run a sealed nonzero-baseline gate under a fixed, pre-registered scope."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1
+          ],
+          "note": "Experiment 1 proposes architectural and control ablations, but no literal one-head architecture, frozen-parameter integrity check, exact checkpoint, or reproducible head training protocol is specified."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            0,
+            2
+          ],
+          "note": "Experiment 0 supplies a direct before/after headline and Experiment 2 supplies an adversarial headline, but both permit mixed non-policy metrics and leave key datasets, adaptive budgets, judge rules, and aggregation thresholds open."
+        },
+        "control": {
+          "status": "partial",
+          "by": [
+            0,
+            1,
+            2
+          ],
+          "note": "All three mention helpfulness, ablations, or benign refusals, but none specifies the reference-quality XSTest/matched-benign control, a fixed refusal/compliance threshold, and paired mechanism ablations on sealed headline prompts."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The set would generate useful preliminary evidence: Experiment 0 measures a paired safety difference, Experiment 1 attempts mechanism attribution, and Experiment 2 probes adversarial persistence. It would not decide the claim as written, however. The architecture is never fixed as literally one added causal head; the main evaluation mixes behavior-level policy benchmarks with toxicity benchmarks; one repeated SALAD resource name is not confirmed; held-out splits and judge separation are not enforced; adaptive attacks are not operationally specified as separately optimized against each target; generation lengths and attack budgets are not fixed; and benign-refusal controls lack a pre-specified threshold. A favorable result could therefore reflect evaluator choice, toxicity rather than policy violations, transferred attacks, or indiscriminate refusal rather than selective token reweighting.",
+      "missing": [
+        "Specify and hash the exact unmodified checkpoint(s), tokenizer, chat template, system prompt, decoding, and generation length.",
+        "Define the added module as exactly one causal attention head, freeze all original parameters, and include a zero-gate round-trip/integrity test.",
+        "Use behavior-specific held-out HarmBench/JailbreakBench/StrongREJECT-style labels and keep training, judge, validation, and headline test items disjoint.",
+        "Replace or clearly subordinate RealToxicityPrompts and generic toxicity classifiers; they cannot be the primary policy-violation measure.",
+        "Replace the unverified SALAD-Attack-Enhanced-Subset name with the exact public SALAD split and version.",
+        "Pre-specify adaptive attack algorithms, per-target optimization, budgets, seeds, stopping rules, and target generation protocol.",
+        "Define the relative 50% ratio, zero-denominator handling, aggregation across prompts/models/seeds, and the exact statistical rule.",
+        "Add a clean benign refusal/compliance control and token-blind/permuted/inverted head ablations to rule out universal refusal and generic residual effects."
+      ]
+    },
+    {
+      "run": 2,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 7,
+        "usage": {
+          "prompt_tokens": 282524,
+          "completion_tokens": 14297,
+          "calls": 7
+        },
+        "seconds": 8422.2,
+        "trace": "results/eval_v2/judgments/problem_7/method.run2.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "claim text (user-provided)",
+          "quote": "Relative to an unmodified LLM, LLM policy violations can be reduce by 50% or more by augmenting the LLM with an additional attention head that reweights tokens likely to induce policy violation.",
+          "bearing": "Defines the target comparison, relative 50% reduction, and the required intervention/mechanism; toxicity alone is not automatically the claimed policy-violation quantity."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.04249v2",
+          "quote": "The primary measure of a red teaming method\u2019s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.",
+          "bearing": "Establishes that ASR is an appropriate behavior-elicitation metric for harmful-request safety evaluation."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+          "bearing": "Confirms SALAD base and attack-enhanced evaluation resources exist, while the proposed name SALAD-Attack-Enhanced-Subset is not the official name shown here."
+        },
+        {
+          "source": "https://github.com/OpenSafetyLab/SALAD-BENCH",
+          "quote": "SALAD-Bench contains 21k harmful base questions classified into 6 domains, 16 tasks, and 66 specific categories. It contains questions with variation, including QA and multiple choice, and with enhancement, by attack and defense methods.",
+          "bearing": "Establishes that SALAD-Bench is publicly released and appropriate for broad safety/attack-defense testing."
+        },
+        {
+          "source": "https://arxiv.org/abs/2310.17389",
+          "quote": "TOXICCHAT is the first toxicity dataset based on real-world user-AI conversations.",
+          "bearing": "Establishes ToxicChat\u2019s domain: toxicity in real-world conversations, which is not identical to behavior-specific policy violation."
+        },
+        {
+          "source": "https://arxiv.org/abs/2009.11462",
+          "quote": "With this dataset, we quantify the effect of prompt toxicity on the toxicity of generation from our five language models.",
+          "bearing": "Establishes RealToxicityPrompts measures toxicity generation, not the full policy-violation construct in the claim."
+        },
+        {
+          "source": "https://huggingface.co/datasets/lmsys/toxic-chat",
+          "quote": "This dataset contains toxicity annotations on 10K user prompts collected from the Vicuna online demo.",
+          "bearing": "Confirms ToxicChat is publicly obtainable and toxicity-annotated, but its native label is toxicity rather than the claim\u2019s behavior-specific policy violation."
+        },
+        {
+          "source": "https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1",
+          "quote": "MD-Judge is a LLM-based safetyguard, fine-tund on top of Mistral-7B. MD-Judge serves as a classifier to evaluate the safety of QA pairs.",
+          "bearing": "Confirms MD-Judge exists and is appropriate as a safety evaluator, subject to validation and judge-bias controls."
+        },
+        {
+          "source": "https://arxiv.org/html/2402.05044v4",
+          "quote": "We test MD-Judge on several datasets, including self-generated and publicly available ones. We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench ... We also use public test sets, i.e., ToxicChat ...",
+          "bearing": "Confirms the named SALAD/ToxicChat evaluation ecosystem is real and public, while also distinguishing evaluator testing from a direct policy-violation ground truth."
+        },
+        {
+          "source": "https://arxiv.org/abs/2402.05044",
+          "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied for assessing attack strategies.",
+          "bearing": "Establishes that an attack-enhanced SALAD subset is substantively appropriate for testing a defense, even though the proposed exact resource name is inaccurate."
+        },
+        {
+          "source": "https://arxiv.org/abs/2310.17389",
+          "quote": "Finally, in section 4, we take an ablation study towards existing toxicity datasets compared to TOXICCHAT and find that the model trained on TOXICCHAT always performs the best on our user\u2019s real-world validation set, even the data size of previous datasets are 10 times larger.",
+          "bearing": "Supports using ToxicChat for toxicity-domain training/evaluation, but also highlights domain specificity rather than general policy-violation coverage."
+        },
+        {
+          "source": "https://arxiv.org/pdf/2404.01318",
+          "quote": "proper evaluation of test-time defenses should rely on adaptive attacks, i.e., attacks tailored to the specific defense under evaluation (Tram`er et al., 2020). Transfer attacks from undefended LLMs can only provide a lower bound on the worst-case attack success rate.",
+          "bearing": "Supports adaptive attacks against the exact augmented model; static attack sets alone are not sufficient for a defense claim."
+        }
+      ],
+      "experiments": [
+        {
+          "index": 0,
+          "normalized": {
+            "target_subclaim": "Baseline comparison and at-least-50% relative reduction in policy-violation rate.",
+            "method": "Paired before/after comparison of an unmodified open-weight instruction model with the same model augmented by the proposed head, using identical prompts, system prompts, decoding, and generation settings; evaluate across HarmBench, SALAD-Bench/SALAD-Base-Test, ToxicChat, and RealToxicityPrompts.",
+            "resources": [
+              "Llama-3-8B-Instruct (or Mistral-7B-Instruct)",
+              "HarmBench",
+              "SALAD-Bench",
+              "SALAD-Base-Test",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "LlamaGuard",
+              "MD-Judge",
+              "Jigsaw-finetuned toxicity model"
+            ],
+            "measurement": "Policy-violation rate/ASR, toxicity/safety scores, bootstrap confidence intervals, harm-category strata, and an optional human audit; compare the augmented rate with the baseline rate.",
+            "decision_rule": "Supports the claim if the relative reduction is at least 50% with agreement across evaluators and no large benign-helpfulness degradation; weakens it if the reduction is smaller, inconsistent, judge-specific, or only obtained with an ill-defined/near-zero baseline. 'No large degradation' and the exact model/checkpoint are not specified."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "G0",
+            "H1"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The claim requires comparison with an unmodified version of the same LLM and a relative reduction of at least 50%, not merely a toxicity improvement.",
+            "[2] The proposed before/after design does compare the same baseline and augmented model with matched prompts and decoding, and its primary metric is PVR/ASR; ASR is defined as the percentage of cases eliciting the target behavior (E1).",
+            "[3] HarmBench and SALAD-Bench are relevant safety/attack-defense resources, and SALAD-Bench explicitly includes attack and defense enhancements (E2, E3).",
+            "[4] ToxicChat is a toxicity-annotated set of user prompts (E6), and RealToxicityPrompts quantifies toxicity of generations (E5); those labels do not by themselves establish the behavior-specific policy-violation construct in the claim.",
+            "[5] The experiment does not pre-specify one exact checkpoint, the exact augmented architecture, an exact policy/violation criterion, a sealed train/test boundary, or whether the 50% criterion must hold on each appropriate benchmark rather than after pooling heterogeneous datasets.",
+            "[6] Consequently it would produce useful comparative safety signal and could support or challenge the numerical claim on appropriate policy benchmarks, but its heterogeneous metrics and under-specified baseline/decision rule prevent it from being a clean verification: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "claim text (user-provided)",
+              "quote": "Relative to an unmodified LLM, LLM policy violations can be reduce by 50% or more by augmenting the LLM with an additional attention head that reweights tokens likely to induce policy violation.",
+              "bearing": "Requires the same unmodified baseline, relative 50% reduction, and policy-violation rather than generic toxicity measurement."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.04249v2",
+              "quote": "The primary measure of a red teaming method\u2019s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.",
+              "bearing": "Supports PVR/ASR as the main behavior-level outcome."
+            },
+            {
+              "source": "https://arxiv.org/abs/2310.17389",
+              "quote": "TOXICCHAT is the first toxicity dataset based on real-world user-AI conversations.",
+              "bearing": "Shows that ToxicChat is a toxicity resource, not automatically a policy-violation ground truth."
+            },
+            {
+              "source": "https://arxiv.org/abs/2009.11462",
+              "quote": "With this dataset, we quantify the effect of prompt toxicity on the toxicity of generation from our five language models.",
+              "bearing": "Shows that RealToxicityPrompts measures toxicity generation rather than the full policy-violation construct."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms the SALAD test resources named in substance exist."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "Llama-3-8B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "A public Meta Llama 3 8B Instruct checkpoint exists; the proposal's 'e.g.' wording does not select an exact checkpoint."
+            },
+            {
+              "name": "Mistral-7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public Mistral-7B-Instruct checkpoints exist; the exact version must be fixed before comparison."
+            },
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public benchmark/resource confirmed by the official HarmBench site, paper, and resource search; appropriate for behavior-level harmful-request evaluation."
+            },
+            {
+              "name": "SALAD-Bench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public repository and paper confirm the benchmark and its safety/attack-defense scope."
+            },
+            {
+              "name": "SALAD-Base-Test",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "The SALAD paper explicitly names and constructs SALAD-Base-Test; it is an evaluator/safety test resource."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Publicly released and appropriate for toxicity-domain evaluation, but not by itself a behavior-specific policy-violation benchmark."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Publicly obtainable and appropriate for toxic-generation stress testing, but its native outcome is toxicity rather than policy violation."
+            },
+            {
+              "name": "LlamaGuard",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public Llama Guard safety-guard models exist; they require validation against the adopted policy and human labels."
+            },
+            {
+              "name": "MD-Judge",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "OpenSafetyLab/MD-Judge-v0.1 is publicly available and is a safety QA-pair classifier (E7)."
+            },
+            {
+              "name": "Jigsaw-finetuned toxicity model",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public Jigsaw-toxic-comment model implementations exist, but they measure toxicity and are not sufficient as the sole policy-violation judge."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "normalized": {
+            "target_subclaim": "What is added and whether the added component selectively reweights violation-inducing tokens.",
+            "method": "Ablate an unmodified model, the proposed token-reweighting attention head, a same-parameter comparator without token-risk supervision, and non-attention interventions; train token/span supervision from SALAD-Base, HarmBench, ToxicChat, and RealToxicityPrompts, then evaluate safety and attention alignment on held-out resources.",
+            "resources": [
+              "SALAD-Base",
+              "HarmBench",
+              "ToxicChat",
+              "RealToxicityPrompts",
+              "SALAD-Attack-Enhanced-Subset",
+              "HarmBench held-out evaluation",
+              "Independent classifier or human token/span annotations"
+            ],
+            "measurement": "Violation rate plus attention/reweighting alignment with risky tokens or spans; infer mechanism if only the proposed head improves safety and its attention aligns with independent risk labels.",
+            "decision_rule": "Supports the mechanism if only the proposed head achieves a large safety gain and its learned weights align with independently labeled risky spans; undermines it if non-attention/random comparators perform similarly or attention does not align. Exact thresholds, architecture, train/test splits, and the choice between the two comparator variants are absent."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "A1",
+            "A2",
+            "C1"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] The mechanism subclaim is not established by a safety-rate difference alone; the experiment appropriately proposes parameter-matched and non-attention ablations plus token/span alignment measurements.",
+            "[2] SALAD-Bench contains harmful questions with attack and defense enhancements and provides an evaluator ecosystem (E2, E3); HarmBench is also a relevant behavior-level safety benchmark (E1).",
+            "[3] However, ToxicChat is annotated for toxicity (E6) and RealToxicityPrompts quantifies toxic generation (E5), so they are at best auxiliary sources for token-risk supervision, not direct ground truth for policy-violation-inducing tokens.",
+            "[4] The proposed experiment says it will use HarmBench for training supervision and also use HarmBench as a held-out evaluation resource, but it specifies no disjoint split, source-group split, or semantic deduplication; without that separation, a safety gain can be memorization or leakage.",
+            "[5] The exact resource name SALAD-Attack-Enhanced-Subset is not the official name established by the SALAD paper, which uses SALAD-Enhance-Test (E2), so the evaluation cannot be reproduced exactly as written.",
+            "[6] 'Randomly initialized/frozen or trained without token-risk supervision' describes different comparators with different trainability and does not define one controlled ablation; the added-head architecture and its causal effect on model behavior are also not specified precisely.",
+            "[7] Thus the ablation concept would yield useful information about whether token supervision and an attention-like component matter, but the resource naming, leakage controls, labels, and comparator definition make the result insufficient for a clean mechanism conclusion: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms the relevant SALAD resources exist under a different official name than the proposed exact subset."
+            },
+            {
+              "source": "https://github.com/OpenSafetyLab/SALAD-BENCH",
+              "quote": "SALAD-Bench contains 21k harmful base questions classified into 6 domains, 16 tasks, and 66 specific categories. It contains questions with variation, including QA and multiple choice, and with enhancement, by attack and defense methods.",
+              "bearing": "Supports SALAD as a broad safety/attack-defense resource, but not as automatic token-level mechanism ground truth."
+            },
+            {
+              "source": "https://arxiv.org/abs/2310.17389",
+              "quote": "TOXICCHAT is the first toxicity dataset based on real-world user-AI conversations.",
+              "bearing": "Limits ToxicChat's direct suitability for labels of policy-violation-inducing tokens."
+            },
+            {
+              "source": "https://arxiv.org/abs/2009.11462",
+              "quote": "With this dataset, we quantify the effect of prompt toxicity on the toxicity of generation from our five language models.",
+              "bearing": "Limits RealToxicityPrompts to toxicity supervision/evaluation rather than policy-violation supervision."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "SALAD-Base",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "SALAD-Bench publicly contains a base set; the exact split and whether it is training-safe must be fixed."
+            },
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public and appropriate for behavior-level safety evaluation, but using it for both supervision and held-out testing requires an explicit disjoint split."
+            },
+            {
+              "name": "ToxicChat",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public toxicity dataset; useful auxiliary data but not direct policy-violation token labels."
+            },
+            {
+              "name": "RealToxicityPrompts",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "Public toxicity-generation dataset; not direct behavior-specific policy ground truth."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "The exact name was not corroborated; the official paper names SALAD-Enhance-Test, created from SALAD-Bench (E2). Use the official name and release/split."
+            },
+            {
+              "name": "Independent classifier or human token/span annotations",
+              "exists": true,
+              "publicly_available": false,
+              "appropriate": true,
+              "note": "This is an annotation procedure to be created, not a named public dataset; it could be appropriate if its span definition and blinding are preregistered."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "normalized": {
+            "target_subclaim": "At least a 50% reduction in policy violations under static and adaptive jailbreak pressure.",
+            "method": "Compare base and augmented targets on HarmBench and a SALAD attack-enhanced resource, supplemented with automated paraphrase/jailbreak generation using Mixtral-8x7B-Instruct or Llama-3-70B-Instruct; test single-turn, multi-turn, role-play, obfuscation, and prompt-injection attacks and measure ASR, unsafe score, severity-weighted harm, and benign refusal.",
+            "resources": [
+              "HarmBench",
+              "SALAD-Attack-Enhanced-Subset",
+              "Mixtral-8x7B-Instruct",
+              "Llama-3-70B-Instruct",
+              "LlamaGuard",
+              "MD-Judge",
+              "AlpacaEval",
+              "MT-Bench",
+              "ToxicChat benign slice"
+            ],
+            "measurement": "Attack success rate and safety/severity metrics for base versus augmented targets, plus benign refusal/helpfulness outcomes.",
+            "decision_rule": "Strengthens the claim if the augmented model has at least 50% lower ASR across static and adaptive attacks without major false refusal; weakens it if the benefit disappears under adaptive attacks or is caused by refusing benign prompts. Exact attack budgets, adaptive optimization/query protocol, exact target checkpoint, and 'major' false-refusal threshold are absent."
+          },
+          "gt_triage": "PARTIAL",
+          "gt_steps_covered": [
+            "H2",
+            "C1"
+          ],
+          "verdict": "MIXED",
+          "novel": false,
+          "redundant_with": [],
+          "reasoning_chain": [
+            "[1] Testing an augmented target against attacks that are generated or optimized for that exact target is important because a defense can look effective against transferred/static attacks while failing against an adaptive attacker.",
+            "[2] JailbreakBench's published guidance states that proper test-time-defense evaluation should use attacks tailored to the specific defense and that transfer attacks from undefended models provide only a lower bound on worst-case ASR (E11).",
+            "[3] The experiment calls itself adaptive but only specifies public attack sets plus automated paraphrase/jailbreak generation; it does not require the attack generator to observe and optimize against the exact augmented model, does not specify white-box or query-based adaptation, and gives no fixed attack/query/token budgets.",
+            "[4] Therefore much of the proposed battery could remain static or weakly adapted, so a 50% reduction on it would not verify the claimed reduction under the stated adaptive interpretation.",
+            "[5] The exact SALAD-Attack-Enhanced-Subset resource is not corroborated; the official SALAD resource is SALAD-Enhance-Test (E2), and the paper describes attack-enhanced data as useful for appraising defenses (E9).",
+            "[6] AlpacaEval and MT-Bench are public general helpfulness/dialogue resources, but they are not specialized false-refusal controls; a benign ToxicChat slice is toxicity-oriented and lacks a specified policy-benign criterion.",
+            "[7] The attack categories and severity-weighted metrics are useful exploratory extensions, so the experiment would provide meaningful robustness information, but it is under-specified and does not by itself decide the claim: MIXED."
+          ],
+          "evidence": [
+            {
+              "source": "https://arxiv.org/pdf/2404.01318",
+              "quote": "proper evaluation of test-time defenses should rely on adaptive attacks, i.e., attacks tailored to the specific defense under evaluation (Tram`er et al., 2020). Transfer attacks from undefended LLMs can only provide a lower bound on the worst-case attack success rate.",
+              "bearing": "Directly identifies the missing requirement in this experiment's adaptive protocol."
+            },
+            {
+              "source": "https://arxiv.org/html/2402.05044v4",
+              "quote": "We create SALAD-Base-Test and SALAD-Enhance-Test from SALAD-Bench to represent base and attack-enhanced test sets to assess different evaluators.",
+              "bearing": "Confirms the relevant official SALAD enhanced resource name."
+            },
+            {
+              "source": "https://arxiv.org/abs/2402.05044",
+              "quote": "The attack-enhanced subset is particularly useful for appraising defense methods, while the defense-enhanced subset is applied for assessing attack strategies.",
+              "bearing": "Supports the substantive use of an attack-enhanced SALAD set for defense testing, while not validating the experiment's exact resource name or adaptive protocol."
+            },
+            {
+              "source": "https://arxiv.org/abs/2310.17389",
+              "quote": "TOXICCHAT is the first toxicity dataset based on real-world user-AI conversations.",
+              "bearing": "Shows why a benign ToxicChat slice is not automatically a policy-benign false-refusal control."
+            }
+          ],
+          "evidence_tier": "T1",
+          "resource_audit": [
+            {
+              "name": "HarmBench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public and appropriate for harmful-behavior ASR, subject to specifying the attack protocol and split."
+            },
+            {
+              "name": "SALAD-Attack-Enhanced-Subset",
+              "exists": false,
+              "publicly_available": false,
+              "appropriate": false,
+              "note": "Exact proposed name not corroborated; use the publicly released SALAD-Enhance-Test/official attack-enhanced data instead."
+            },
+            {
+              "name": "Mixtral-8x7B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public Mixtral-8x7B-Instruct checkpoints exist and can serve as an attack-generation model; using one does not itself make attacks adaptive."
+            },
+            {
+              "name": "Llama-3-70B-Instruct",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public Meta Llama 3 70B Instruct checkpoints exist; the exact version and access conditions must be fixed."
+            },
+            {
+              "name": "LlamaGuard",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public safety-guard models exist, but judge calibration and human validation remain necessary."
+            },
+            {
+              "name": "MD-Judge",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public MD-Judge exists and is intended to classify safety of QA pairs (E7)."
+            },
+            {
+              "name": "AlpacaEval",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public general instruction-following/helpfulness benchmark; useful for broad utility, but not a dedicated benign-safety/refusal benchmark."
+            },
+            {
+              "name": "MT-Bench",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": true,
+              "note": "Public multi-turn dialogue benchmark; useful for general dialogue quality, but not a dedicated false-refusal benchmark."
+            },
+            {
+              "name": "ToxicChat benign slice",
+              "exists": true,
+              "publicly_available": true,
+              "appropriate": false,
+              "note": "ToxicChat is public, but its toxicity annotations do not define a reliable policy-benign control without an additional policy-specific labeling protocol."
+            }
+          ]
+        }
+      ],
+      "role_coverage": {
+        "gate": {
+          "status": "partial",
+          "by": [
+            0
+          ],
+          "note": "Experiment 0 notices that a near-zero baseline makes a relative claim ill-posed, but it does not provide a preregistered nonzero-denominator gate, sealed baseline evaluation, or exact minimum-count/uncertainty rule."
+        },
+        "apparatus": {
+          "status": "partial",
+          "by": [
+            1
+          ],
+          "note": "Experiment 1 proposes architecture and ablations, but does not specify the literal single-head implementation, frozen-base integrity checks, exact trainable parameters, or leakage-safe split."
+        },
+        "headline": {
+          "status": "partial",
+          "by": [
+            0,
+            2
+          ],
+          "note": "Experiments 0 and 2 measure direct and attack-conditioned reductions, but the headline is spread across heterogeneous toxicity and safety constructs and the adaptive attack protocol is not actually specified as defense-aware."
+        },
+        "control": {
+          "status": "partial",
+          "by": [
+            1,
+            2
+          ],
+          "note": "Ablations and benign-helpfulness/refusal checks are proposed, but token-blind/permuted causal controls, a policy-specific benign set, and quantitative false-refusal thresholds are missing or vague."
+        }
+      },
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The set has the right broad decomposition: Experiment 0 supplies a baseline numerical comparison, Experiment 1 investigates the added head and token mechanism, and Experiment 2 attempts adversarial robustness. However, executing it as written would not cleanly verify or refute the claim. The exact baseline checkpoint and augmented architecture are not fixed; policy violation is mixed with toxicity outcomes; the proposed SALAD enhanced resource name is inaccurate; Experiment 1 risks training/evaluation leakage and lacks a defined single-head and causal ablation protocol; and Experiment 2 does not require attacks to adapt to the exact augmented target despite the claim's defense setting. Optional human auditing and undefined 'major' helpfulness degradation cannot repair these gaps.",
+      "missing": [
+        "Pre-register one exact unmodified checkpoint, tokenizer/template, augmented-head implementation, and all training parameters.",
+        "Define policy violation behavior-by-behavior using a policy-specific held-out judge plus blinded human labels; keep ToxicChat and RealToxicityPrompts auxiliary rather than treating toxicity as equivalent to violation.",
+        "Create disjoint train/validation/test splits with semantic deduplication, especially if HarmBench or SALAD data are used for supervision.",
+        "Replace SALAD-Attack-Enhanced-Subset with the official SALAD-Enhance-Test/released split and document its exact availability and contents.",
+        "Run a genuine defense-aware adaptive attack against the exact augmented target, with preregistered attack type, query/gradient/token budgets, stopping rule, and identical budgets for baseline and augmented conditions.",
+        "Add a nonzero-baseline gate, exact relative-ratio rule, uncertainty/count reporting, and quantitative policy-benign refusal control.",
+        "Use explicit token-score permutation/uniform/inversion and g=0 controls to attribute any gain to selective token reweighting rather than extra parameters or universal refusal."
+      ]
+    }
+  ]
+}
