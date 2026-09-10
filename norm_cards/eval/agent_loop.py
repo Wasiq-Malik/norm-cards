@@ -92,14 +92,21 @@ def run_agent(system: str, user: str, submit_spec: Dict, model: str,
               trace_path: Optional[str] = None,
               extra_tools: Optional[List[Dict]] = None,
               validate: Optional[Callable[[Dict], Optional[str]]] = None,
-              progress: bool = True, tag: str = "") -> AgentResult:
+              progress: bool = True, tag: str = "",
+              use_tools: bool = True) -> AgentResult:
     """Run an agent until it calls `submit_spec`'s tool; return that payload.
 
     `validate` may return an error string, which is handed back to the agent so it
     can fix and resubmit rather than the run dying on a schema slip.
+
+    `use_tools=False` withholds the research belt, leaving only the submit tool: the
+    agent answers from what it was given in one shot. Much cheaper — the belt is what
+    makes a run expensive, not the reasoning — at the cost of every claim about the
+    outside world becoming unverifiable.
     """
     submit_name = submit_spec["function"]["name"]
-    tool_specs = list(tools.SPECS) + [RECORD_EVIDENCE_SPEC] + list(extra_tools or [])
+    tool_specs = ((list(tools.SPECS) + [RECORD_EVIDENCE_SPEC]) if use_tools else []) \
+        + list(extra_tools or [])
     tool_specs.append(submit_spec)
 
     ledger: List[Dict] = []

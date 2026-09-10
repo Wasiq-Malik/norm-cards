@@ -2,8 +2,18 @@
 
   reference.py   validates and renders the reference recipes, which are INPUTS:
                  authored by hand or transcribed from the claim's source paper.
-  evaluate.py    gpt-5.6-luna scores pipeline output (baseline vs method arms)
-                 against those references.
+  transcribe.py  drafts a reference FROM a source paper's own experiment section,
+                 for a person to check and promote. Extraction from a source of
+                 truth, not design — see its module docstring for why that is a
+                 different operation from the one below that is refused.
+  build_cards.py splits a batch gathering run into per-problem norm cards.
+  propose.py     runs the proposer over a claim set, one arm per (model, condition):
+                 nocard / retrieval / card.
+  evaluate.py    gpt-5.6-luna scores an arm's experiment set against the claim's
+                 decision requirements, derived from the reference.
+  scoring.py     turns those judgments into numbers; no model ever emits a score.
+  report.py      aggregates arms into a comparison table.
+  calibrate.py   checks the judge against hand labels before you trust a run.
 
 References are immutable fixtures: the harness never generates or edits one, and
 fails loudly when one is missing. It deliberately has no way to produce one either
@@ -16,9 +26,17 @@ proposer rather than score against it.
 import json
 import os
 
-EVAL_ROOT = os.path.join("results", "eval_v2")
-CLAIMS_FILE = os.path.join(os.path.dirname(__file__), "..", "data",
-                           "sprint2-continuous-release-problems-v1.jsonl")
+# Both are overridable so a second claim set can live beside the DARPA sprint one
+# without its references, judgments, and report landing in the same directory:
+#   NORM_CARDS_EVAL_ROOT=results/eval_icml2026 \
+#   NORM_CARDS_CLAIMS=norm_cards/data/icml2026-claims-v1.jsonl \
+#     python -m norm_cards.eval.reference --check
+EVAL_ROOT = os.environ.get("NORM_CARDS_EVAL_ROOT",
+                           os.path.join("results", "eval_v2"))
+CLAIMS_FILE = os.environ.get(
+    "NORM_CARDS_CLAIMS",
+    os.path.join(os.path.dirname(__file__), "..", "data",
+                 "sprint2-continuous-release-problems-v1.jsonl"))
 
 JUDGE_MODEL = "gpt-5.6-luna"
 JUDGE_EFFORT = "high"

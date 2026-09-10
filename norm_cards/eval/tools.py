@@ -242,7 +242,7 @@ def _hf(kind: str, name: str) -> Dict:
         out["search"] = [{"id": d.get("id"), "downloads": d.get("downloads"),
                           "likes": d.get("likes")} for d in rs]
     except Exception as e:
-        out["search"] = {"error": str(e)[:200]}
+        out["search"] = {"error": config.redact(e)[:200]}
     return out
 
 
@@ -272,7 +272,7 @@ def check_resource(name: str, kind: str = "any") -> Dict:
             res["kaggle"] = [{"ref": d.get("ref"), "title": d.get("title")}
                              for d in r.json()[:8]]
         except Exception as e:
-            res["kaggle"] = {"error": str(e)[:200]}
+            res["kaggle"] = {"error": config.redact(e)[:200]}
     else:
         res["kaggle"] = "not checked (no Kaggle credentials configured)"
 
@@ -376,7 +376,7 @@ def dispatch(name: str, args: Dict) -> str:
     except TypeError as e:                       # bad/missing arguments
         return json.dumps({"error": f"bad arguments for {name}: {e}"})
     except Exception as e:                       # network/backend failure
-        out = {"error": f"{type(e).__name__}: {str(e)[:300]}",
+        out = {"error": f"{type(e).__name__}: {config.redact(e)[:300]}",
                "note": "tool call failed; try a different query, source, or tool"}
 
     js = json.dumps(out, ensure_ascii=False)

@@ -1,26 +1,31 @@
-"""Evaluate a pipeline's proposed experiments against the reference recipe.
+"""Score a pipeline's proposed experiments against the reference experiments.
 
-    python -m norm_cards.eval.evaluate --problems 6,7,9,10,11,12,21,33,36,37
+    python -m norm_cards.eval.evaluate --problems all --source results/.../proposals
 
-Scores one arm at a time, k times each (default 3 — luna is cheap, and majority
-voting is what turns a single opinionated run into something reportable). Verdicts
-that do not reach a majority are marked CONTESTED for hand review instead of being
-averaged into a number no run actually supports.
+Both sides are lists of experiments, rendered identically, and the judge compares them
+and the judge answers one question per reference experiment: would a team running the
+proposed set have learned what it would have told them? The mean of those is `recall`.
+
+Scores one arm at a time, k times each (default 3 — luna is cheap, and majority voting
+is what turns a single opinionated run into something reportable). Judgments without a
+majority are marked CONTESTED for hand review instead of being averaged into a value
+no run supports.
 
 The judge is BLIND to which arm it is scoring. It is never told whether a set came
-from the baseline or the norm-card arm, or that another arm exists — otherwise it
-has an obvious thumb to put on the scale.
+from the baseline or the norm-card arm, which model wrote it, or that another arm
+exists — otherwise it has an obvious thumb to put on the scale.
 
-Reference recipes are fixtures supplied to this harness — hand-written, or taken from
-the source paper's own experiment section. Nothing here generates or edits one; a
-missing reference is an error telling you to author it first (see reference.py). The
-judge is shown each reference's provenance and is instructed to treat it as fallible
-notes rather than an oracle, because a reference is only ever as good as its source.
+    --self-test    scores each reference against ITSELF, as arm `_selftest`.
+
+That mode exists because the two sides are the same kind of object. Recall must come
+back at 1.0 — anything less is the judge failing to recognise identical work, and no
+number it produces elsewhere means anything until that is fixed.
 """
 
 import argparse
 import json
 import os
+import traceback
 from concurrent.futures import ThreadPoolExecutor
 
 from . import (EVAL_ROOT, JUDGE_EFFORT, JUDGE_MODEL, judgment_dir, load_claims,
@@ -29,47 +34,93 @@ from . import agent_loop, prompts, reference, schemas, scoring, tools
 
 DEFAULT_SOURCE = os.path.join("results", "norm_cards_hybrid")
 ARM_KEYS = {"baseline": "baseline_experiments", "method": "method_experiments"}
+SELFTEST_ARM = "_selftest"
+
+
+def arm_slug(arm: str) -> str:
+    """Filename-safe arm name. Section-restricted card arms are named
+    "card:datasets,models", and a colon is still a bad character to put in a
+    filename on macOS — Finder renders it as a path separator."""
+    return arm.replace(":", "-").replace(",", "_").replace("/", "-")
 
 
 def load_arm(source: str, problem_id: str, arm: str) -> dict:
-    """Read one arm's experiment set out of a proposer run."""
+    """Read one arm's experiment set out of a proposer run.
+
+    An arm is whatever is being contrasted: baseline vs method for the norm-card
+    ablation, or one arm per model for a proposer comparison, held in an `arms` dict.
+    """
     path = os.path.join(source, f"problem_{problem_id}", "scify_proposer.json")
     if not os.path.exists(path):
         raise FileNotFoundError(f"no proposer output at {path}")
     with open(path, encoding="utf-8") as f:
         run = json.load(f)
-    key = ARM_KEYS.get(arm, arm)
-    if key not in run:
-        raise KeyError(f"{path} has no {key!r} (keys: {sorted(run)})")
-    return {"experiments": run[key], "subclaims": run.get("subclaims") or [],
-            "claim": run.get("claim", ""), "proposer_model": run.get("model", "")}
+    arms = run.get("arms") or {}
+    if arm in arms:
+        exps, model = arms[arm]["experiments"], arms[arm].get("model", arm)
+    else:
+        key = ARM_KEYS.get(arm, arm)
+        if key not in run:
+            raise KeyError(f"{path} has no arm {arm!r} "
+                           f"(arms: {sorted(arms) or sorted(run)})")
+        exps, model = run[key], run.get("model", "")
+    return {"experiments": exps, "subclaims": run.get("subclaims") or [],
+            "claim": run.get("claim", ""), "proposer_model": model}
 
 
-def _experiments_text(experiments: list) -> str:
-    return "\n\n".join(f"--- EXPERIMENT {i} ---\n{e}" for i, e in enumerate(experiments))
+def arms_available(source: str, problem_id: str) -> list:
+    """Arm names present in a proposer run, so callers need not hardcode them."""
+    path = os.path.join(source, f"problem_{problem_id}", "scify_proposer.json")
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as f:
+        run = json.load(f)
+    if run.get("arms"):
+        return sorted(run["arms"])
+    return [a for a, k in ARM_KEYS.items() if k in run]
 
 
-def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int,
-                 out_dir: str, arm: str, model: str = JUDGE_MODEL,
-                 effort: str = JUDGE_EFFORT, max_steps: int = 200,
-                 progress: bool = True) -> dict:
+def is_ablation(source: str, problem_id: str) -> bool:
+    """Was this proposer run an ablation? Decides whether the judge sees the card."""
+    path = os.path.join(source, f"problem_{problem_id}", "scify_proposer.json")
+    if not os.path.exists(path):
+        return False
+    with open(path, encoding="utf-8") as f:
+        return bool(json.load(f).get("ablation"))
+
+
+def load_norm_card(source: str, problem_id: str) -> dict:
+    """The norm card the pipeline built for this claim, if the run produced one."""
+    path = os.path.join(source, f"problem_{problem_id}", "norm_card.json")
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir: str,
+                 arm: str, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
+                 max_steps: int = 200, progress: bool = True,
+                 use_tools: bool = False) -> dict:
     """One independent evaluator pass over one arm's experiment set."""
-    experiments = arm_data["experiments"]
-    subclaims = arm_data["subclaims"]
+    proposed = arm_data["experiments"]
+    ref_exps = reference.experiments(gt)
     user = prompts.EVALUATION_USER.format(
         domain=problem.get("domain", "ai"), problem_id=problem["problem_id"],
         claim=problem["claim"],
-        subclaims="\n".join(f"- {s}" for s in subclaims) or "(none provided)",
+        subclaims="\n".join(f"- {s}" for s in arm_data["subclaims"]) or "(none provided)",
         provenance=reference.provenance_line(gt),
-        reference=reference.to_markdown(gt),
-        n=len(experiments), experiments=_experiments_text(experiments))
+        n_ref=len(ref_exps),
+        reference=reference.experiments_text(ref_exps, "REFERENCE EXPERIMENT"),
+        n=len(proposed),
+        experiments=reference.experiments_text(proposed, "PROPOSED EXPERIMENT"))
 
     ev = agent_loop.run_agent(
         system=prompts.EVALUATION_SYSTEM, user=user,
         submit_spec=schemas.SUBMIT_EVALUATION, model=model, reasoning_effort=effort,
-        max_steps=max_steps,
-        trace_path=os.path.join(out_dir, f"{arm}.run{run_idx}.trace.jsonl"),
-        validate=lambda d: schemas.validate_evaluation(d, len(experiments)),
+        max_steps=max_steps, use_tools=use_tools,
+        trace_path=os.path.join(out_dir, f"{arm_slug(arm)}.run{run_idx}.trace.jsonl"),
+        validate=lambda d: schemas.validate_evaluation(d, len(proposed), len(ref_exps)),
         progress=progress, tag=f"[{arm} r{run_idx}] ")
     ev["_run"] = run_idx
     return ev
@@ -77,17 +128,38 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int,
 
 def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int = 3,
                          model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
-                         max_steps: int = 200, workers: int = 3) -> dict:
+                         max_steps: int = 200, workers: int = 3,
+                         use_tools: bool = False) -> dict:
     pid = str(problem["problem_id"])
     gt = load_ground_truth(pid)          # fixture; fails loudly if absent
-    arm_data = load_arm(source, pid, arm)
+
+    if arm == SELFTEST_ARM:
+        arm_data = {"experiments": reference.experiments(gt), "subclaims": [],
+                    "claim": problem["claim"], "proposer_model": "(the reference itself)"}
+    else:
+        arm_data = load_arm(source, pid, arm)
+
     out_dir = judgment_dir(pid)
     os.makedirs(out_dir, exist_ok=True)
 
     def one(i):
-        return evaluate_arm(problem, gt, arm_data, i, out_dir, arm, model=model,
-                            effort=effort, max_steps=max_steps,
-                            progress=(workers == 1))
+        """One judge pass. A run that dies is reported and dropped, not raised.
+
+        k independent runs exist precisely so no single one is load-bearing, and
+        letting one exception discard the other two — as happened once, losing a whole
+        arm to a crash in run 0 after runs 1 and 2 had finished clean — throws away
+        good work and leaves a hole in the comparison. The traceback is printed so the
+        failure is still diagnosable rather than silently swallowed.
+        """
+        try:
+            return evaluate_arm(problem, gt, arm_data, i, out_dir, arm, model=model,
+                                effort=effort, max_steps=max_steps,
+                                progress=(workers == 1), use_tools=use_tools)
+        except Exception as e:
+            print(f"    [{arm} r{i}] run FAILED, continuing without it: "
+                  f"{type(e).__name__}: {e}")
+            traceback.print_exc()
+            return None
 
     if workers > 1 and judge_runs > 1:
         with ThreadPoolExecutor(max_workers=min(workers, judge_runs)) as ex:
@@ -95,21 +167,30 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
     else:
         runs = [one(i) for i in range(judge_runs)]
 
-    agg = scoring.aggregate_runs(runs)
+    runs = [r for r in runs if r is not None]
+    if not runs:
+        raise RuntimeError(f"all {judge_runs} judge runs failed for {pid}/{arm}")
+    if len(runs) < judge_runs:
+        print(f"    [{arm}] aggregating {len(runs)}/{judge_runs} runs — majority vote "
+              f"is weaker than usual for this arm")
+
+    agg = scoring.aggregate_runs(runs, n_proposed=len(arm_data["experiments"]))
     return {
-        "type": "evaluation", "format_version": "1.0",
+        "type": "evaluation", "format_version": "5.0",
         "problem_id": pid, "arm": arm, "claim": problem["claim"],
-        "judge": {"model": model, "reasoning_effort": effort, "runs": judge_runs},
+        "judge": {"model": model, "reasoning_effort": effort, "runs": len(runs),
+                  "runs_requested": judge_runs, "tools": bool(use_tools)},
         "proposer_model": arm_data.get("proposer_model", ""),
-        "n_experiments": len(arm_data["experiments"]),
+        "n_proposed": len(arm_data["experiments"]),
+        "n_reference": len(reference.experiments(gt)),
         "experiments_evaluated": arm_data["experiments"],
+        "reference_experiments": reference.experiments(gt),
         "scores": agg.pop("scores"),
         **agg,
-        "gt_defects": scoring.gather_gt_defects(runs),
         "runs": [{"run": r.get("_run"), "meta": r.get("_meta"),
                   "evidence_ledger": r.get("_evidence"),
-                  "experiments": r.get("experiments"),
-                  "role_coverage": r.get("role_coverage"),
+                  "reference_coverage": r.get("reference_coverage"),
+                  "proposed": r.get("proposed"),
                   "decision_sufficiency": r.get("decision_sufficiency"),
                   "sufficiency_reasoning": r.get("sufficiency_reasoning"),
                   "missing": r.get("missing")} for r in runs],
@@ -120,17 +201,37 @@ def _main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--problems", required=True,
                     help="comma-separated problem ids, or 'all' for every id with a "
-                         "ground truth")
-    ap.add_argument("--arms", default="baseline,method")
+                         "reference")
+    ap.add_argument("--arms", default="",
+                    help="comma-separated arm names; default = every arm in the source")
     ap.add_argument("--source", default=DEFAULT_SOURCE,
                     help="dir of problem_<id>/scify_proposer.json to score")
-    ap.add_argument("--judge-runs", type=int, default=3)
+    ap.add_argument("--self-test", action="store_true",
+                    help="score each reference against itself; recall must "
+                         "come back at 1.0")
+    ap.add_argument("--judge-runs", type=int, default=3,
+                    help="independent judge passes, majority-voted. 1 = a single pass, "
+                         "much cheaper, no agreement signal and no CONTESTED flagging")
+    ap.add_argument("--tools", action="store_true",
+                    help="give the judge the research belt (web/OpenAlex/full-text/"
+                         "resource checks). OFF by default: the judge's baseline is "
+                         "its own reading of the claim and the two lists, and that is "
+                         "what we are evaluating. Measured on the judge stress suite, "
+                         "the belt made the order control — reversing a list, which "
+                         "cannot change what a set establishes — drift by a mean 0.165 "
+                         "instead of 0.069, because rate-limited searches hand the "
+                         "judge different evidence on different passes. Treat it as an "
+                         "extra, and only where resource existence is genuinely at "
+                         "issue.")
     ap.add_argument("--model", default=JUDGE_MODEL)
     ap.add_argument("--effort", default=JUDGE_EFFORT,
                     choices=["low", "medium", "high", "xhigh"])
     ap.add_argument("--max_steps", type=int, default=200)
     ap.add_argument("--workers", type=int, default=3,
                     help="parallel judge runs (1 = sequential, verbose progress)")
+    ap.add_argument("--show-pipeline-norms", action="store_true",
+                    help="show the generated norm card to the judge even in an "
+                         "ablation. Confounded — the card is the treatment there.")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 
@@ -148,8 +249,10 @@ def _main():
         if pid not in claims:
             print(f"[{pid}] not in the claims file — skipping")
             continue
-        for arm in arms:
-            out_path = os.path.join(judgment_dir(pid), f"{arm}.json")
+        todo = ([SELFTEST_ARM] if args.self_test
+                else (arms or arms_available(args.source, pid)))
+        for arm in todo:
+            out_path = os.path.join(judgment_dir(pid), f"{arm_slug(arm)}.json")
             if os.path.exists(out_path) and not args.force:
                 print(f"[{pid}/{arm}] judged already; --force to redo")
                 continue
@@ -159,7 +262,7 @@ def _main():
                 res = evaluate_problem_arm(
                     claims[pid], args.source, arm, judge_runs=args.judge_runs,
                     model=args.model, effort=args.effort, max_steps=args.max_steps,
-                    workers=args.workers)
+                    workers=args.workers, use_tools=args.tools)
             except Exception as e:
                 print(f"[{pid}/{arm}] FAILED: {type(e).__name__}: {e}")
                 continue
@@ -168,10 +271,19 @@ def _main():
                 json.dump(res, f, indent=2)
             s = res["scores"]
             print(f"    -> {out_path}")
-            print(f"       verdicts={s['verdicts']} correctness={s['correctness']} "
-                  f"coverage={s['coverage']} grounded={s['groundedness']} "
-                  f"sufficiency={s['decision_sufficiency']} "
-                  f"contested={s['n_contested']} gt_defects={len(res['gt_defects'])}")
+            print(f"       recall={s['recall']}  (covered {s['n_covered']} / partial "
+                  f"{s['n_partial']} / missing {s['n_missing']} of {s['n_reference']})"
+                  f"  sufficiency={s['decision_sufficiency']}"
+                  + (f"  unused={s['unused_proposed']}" if s['unused_proposed'] else "")
+                  + (f"  contested={s['n_contested']}" if s['n_contested'] else ""))
+            if arm == SELFTEST_ARM:
+                if (s["recall"] or 0) < 0.95:
+                    print(f"       ⚠️  SELF-TEST FAILED: the judge did not recognise "
+                          f"the reference as covering itself. Fix this before trusting "
+                          f"any other number from this judge.")
+                else:
+                    print("       self-test passed: the judge recognises the reference "
+                          "as covering itself.")
 
 
 if __name__ == "__main__":

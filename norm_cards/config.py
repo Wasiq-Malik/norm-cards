@@ -5,6 +5,7 @@ repo root (the repo's convention). Sources/LLM read keys directly and will fail
 loudly if a required key is absent — by design.
 """
 
+import re
 import os
 import sys
 
@@ -73,3 +74,33 @@ def openalex_key():
 
 def semantic_scholar_key():
     return get_key("SEMANTIC_SCHOLAR_API_KEY")
+
+
+# --------------------------------------------------------------------------- #
+# secret redaction
+# --------------------------------------------------------------------------- #
+_SECRET_NAMES = ("SERPAPI_API_KEY", "SERP_API_KEY", "OPENAI_API_KEY",
+                 "ANTHROPIC_API_KEY", "SEMANTIC_SCHOLAR_API_KEY", "HF_TOKEN")
+
+
+def redact(text):
+    """Strip credentials out of a string before it is logged, traced or shown.
+
+    Written because they were not. `requests.Response.raise_for_status()` puts
+    the FULL request URL in the exception message, query string included, and a
+    SerpAPI call carries its key there — so every 429 during a judge run wrote
+    the key into that run's trace.jsonl. The tool belt turns exceptions into
+    strings (`{"error": str(e)}`) and the agent loop writes every tool result to
+    disk, so one rate-limited search was enough to persist it.
+
+    Redacts by value (any configured key, wherever it appears) and by shape (a
+    `key=` query parameter), so a credential this function does not know about
+    still does not survive a URL.
+    """
+    s = str(text)
+    for name in _SECRET_NAMES:
+        v = get_key(name)
+        if v and len(v) > 6:
+            s = s.replace(v, f"<{name}:redacted>")
+    return re.sub(r"((?:api_|access_|auth_|secret_)?key|token|password)=[^&\s'\"]+",
+                  r"\1=<redacted>", s, flags=re.I)

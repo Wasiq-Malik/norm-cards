@@ -1,30 +1,30 @@
 """The judge's `submit_evaluation` schema, plus the validators either side of it:
-the gate a reference recipe must pass on the way in, and the evidence discipline a
-judgment must pass on the way out.
+the gate a reference must pass on the way in, and the evidence discipline a judgment
+must pass on the way out.
 
-Two ideas run through the design:
+Three ideas run through the design:
+
+- **The two sides are the same kind of object.** A reference is a list of experiments
+  and so is a proposal, which is what lets you swap the sides to test the judge itself
+  (`evaluate.py --self-test`).
 
 - **The model emits small judgments; code composes the numbers.** Nowhere does an
-  agent hand back "coverage: 0.75". It returns per-experiment verdicts and
-  per-role coverage statuses, and scoring.py arithmetics them. A gpt-5.5 judge
-  asked for holistic scores previously under-scored correct recipes; small
-  evidenced decisions are much harder to get diffusely wrong.
+  agent hand back "recall: 0.75". It returns one status per reference experiment and
+  scoring.py arithmetics them. A gpt-5.5 judge asked for holistic scores previously
+  under-scored correct work.
 
-- **Validation is where the evidence discipline is actually enforced.** A verdict
-  that faults an experiment (IRRELEVANT/MIXED) is rejected unless it carries
-  quoted evidence *and* a reasoning chain connecting that quote to the
-  conclusion. The agent is handed the error and resubmits, so this is a real
-  gate rather than prompt-level pleading.
+- **Validation is a real gate, not prompt-level pleading.** A submission that fails it
+  is handed back to the agent with the error, to fix and resubmit.
 """
 
 from typing import Dict, List, Optional
 
-ROLES = ("gate", "apparatus", "headline", "control")
-VERDICTS = ("ACCURATE", "MIXED", "IRRELEVANT")
-TRIAGE = ("MATCH", "PARTIAL", "NOVEL", "CONTRADICTS")
-COVERAGE_STATUS = ("covered", "partial", "missing", "not_required")
+COVER_STATUS = ("covered", "partial", "missing")
+# Graded, because the binary version did not discriminate: every proposed experiment
+# touches the reference somewhere, so a "does this correspond to reference work" flag
+# came back true 27/27 and the metric built on it was a constant. What varies is not
+# WHETHER an experiment relates to the decision but HOW MUCH it advances it.
 SUFFICIENCY = ("sufficient", "sufficient_with_gaps", "insufficient")
-TIERS = ("T1", "T2", "T3", "T0")
 
 _EVIDENCE = {"type": "object", "properties": {
     "source": {"type": "string"},
@@ -34,240 +34,196 @@ _EVIDENCE = {"type": "object", "properties": {
 
 
 # --------------------------------------------------------------------------- #
-# The reference recipe — an INPUT, validated on the way in
+# The reference — an INPUT, validated on the way in
 # --------------------------------------------------------------------------- #
-# There is no submit_* tool schema here. The reference recipe is authored outside
-# this harness (see reference.py) and arrives as a file; what follows is the gate
-# it has to pass before anything is scored against it.
-def validate_reference(ref: Dict) -> Optional[str]:
-    """Hard gate: is this reference recipe usable to score against at all?
+# There is no submit_* schema here. A reference is authored outside this harness
+# (see reference.py) and arrives as a file; what follows only checks it is usable.
+MIN_EXPERIMENT_CHARS = 120
 
-    Only structural defects live here — things that would make a comparison
-    meaningless (no step that tests the claim, a pass criterion you cannot pass or
-    fail, a dependency on a step that does not exist). Judgments about how well
-    researched the reference is belong in `reference_warnings`, because a
-    hand-written reference and a paper-transcribed one carry their authority
-    differently and neither should be blocked for the shape of its bibliography.
-    """
+
+# What an experiment is FOR, as opposed to what it does. Optional per reference,
+# but the only way to see WHERE a proposer fails rather than how much: aggregated
+# across the first three claims, apparatus and headline came out at 0.83 while
+# confound-elimination sat at 0.43, which no per-claim recall number showed.
+REFERENCE_ROLES = {
+    "apparatus",   # build/validate the thing the headline test presupposes
+    "headline",    # the direct test of the claim's assertion
+    "mechanism",   # test that the asserted cause is the operative one
+    "control",     # rule out that the result is an artifact of the intervention
+    "confound",    # kill a rival explanation under which the result looks the same
+    "external",    # show the finding generalises beyond the setup that produced it
+}
+
+
+def validate_reference(ref: Dict) -> Optional[str]:
+    """Hard gate: is this reference usable to score against at all?"""
     return "; ".join(reference_errors(ref)) or None
 
 
 def reference_errors(ref: Dict) -> List[str]:
     """The same gate as `validate_reference`, one message per entry."""
     errs: List[str] = []
-    recipe = ref.get("recipe") or []
-    if not 3 <= len(recipe) <= 8:
-        errs.append(f"recipe has {len(recipe)} steps, aim for 4-6 (3-8 allowed)")
-
-    roles = [s.get("role") for s in recipe]
-    if "headline" not in roles:
-        errs.append("no 'headline' step — the recipe never directly tests the claim")
-    if "gate" not in roles:
-        errs.append("no 'gate' step — the chain should start with the cheapest check "
-                    "that could refute the claim outright (if none exists, say so in "
-                    "self_critique and make the first step a gate anyway)")
-
-    ids = [s.get("id") for s in recipe]
-    for i, s in enumerate(recipe):
-        sid = s.get("id") or f"#{i}"
-        if not s.get("id"):
-            errs.append(f"step #{i}: needs an id (e.g. G0, A1, H2, C3)")
-        if s.get("role") not in ROLES:
-            errs.append(f"step {sid}: role must be one of {ROLES}")
-        if len((s.get("pass_criteria") or "").strip()) < 15:
-            errs.append(f"step {sid}: pass_criteria must be a concrete, decisive "
-                        f"threshold, not 'record the value'")
-        if len((s.get("why_necessary") or "").strip()) < 40:
-            errs.append(f"step {sid}: why_necessary must actually justify the step")
-        for d in s.get("depends_on") or []:
-            if d not in ids:
-                errs.append(f"step {sid}: depends_on {d!r} is not a step id")
-
-    if len((ref.get("decision_logic") or "").strip()) < 40:
-        errs.append("decision_logic must explain how step outcomes decide the claim")
-    if not [a for a in (ref.get("claim_analysis") or {}).get("assertions") or []
-            if str(a).strip()]:
-        errs.append("claim_analysis.assertions is empty — state what the claim asserts")
+    exps = ref.get("experiments")
+    if not isinstance(exps, list) or not exps:
+        errs.append("`experiments` must be a non-empty list of prose descriptions")
+        return errs
+    if len(exps) < 2:
+        errs.append(f"only {len(exps)} experiment(s); a reference that a proposal can "
+                    f"be scored against needs at least 2")
+    for i, e in enumerate(exps):
+        if not isinstance(e, str):
+            errs.append(f"experiment {i}: must be a string, not {type(e).__name__} — "
+                        f"the reference has to stay the same shape as a proposer run")
+        elif len(e.strip()) < MIN_EXPERIMENT_CHARS:
+            errs.append(f"experiment {i}: only {len(e.strip())} chars; say what is run, "
+                        f"on what, what is measured, and what result decides it")
+    if not (ref.get("claim") or "").strip():
+        errs.append("no claim text")
+    kind = ((ref.get("provenance") or {}).get("kind") or "").lower()
+    if "not reviewed" in kind or "draft" in kind:
+        errs.append("this is an unreviewed transcription draft. Read it against the "
+                    "cited sections, then promote it with "
+                    "`python -m norm_cards.eval.transcribe --problem <id> --accept "
+                    "--author '<name>'` — a draft nobody has checked is not a standard")
+    roles = ref.get("roles")
+    if roles is not None:
+        if not isinstance(roles, list) or len(roles) != len(exps):
+            errs.append(f"`roles`, when present, must be one label per experiment "
+                        f"({len(exps)} needed, got "
+                        f"{len(roles) if isinstance(roles, list) else type(roles).__name__})")
+        else:
+            bad = [r for r in roles if r not in REFERENCE_ROLES]
+            if bad:
+                errs.append(f"unknown reference role(s) {sorted(set(bad))}; "
+                            f"choose from {sorted(REFERENCE_ROLES)}")
     return errs
 
 
 def reference_warnings(ref: Dict) -> List[str]:
-    """Soft signals about how much weight this reference can bear.
-
-    None of these block an evaluation. They tell you how far to trust the numbers
-    that come out of one, which is the honest place for the question now that the
-    reference is a human input rather than a machine artifact this harness made.
-    """
+    """Soft signals about how much weight this reference can bear."""
     warns: List[str] = []
     p = ref.get("provenance") or {}
-    if not p and ref.get("generator"):
-        warns.append("no provenance block; this reference was machine-generated by an "
-                     "earlier version of the harness and no human has signed off on it")
-    elif not p.get("kind") or not p.get("author"):
+    if not p.get("kind") or not p.get("author"):
         warns.append("provenance.kind/author not filled in — the judge is shown this "
                      "line, and an unattributed reference reads as a weak one")
-
-    norms = ref.get("field_norms") or {}
-    n_cited = sum(1 for k in ("datasets", "models", "metrics", "protocols")
-                  for it in (norms.get(k) or [])
-                  if any((c.get("quote") or "").strip()
-                         for c in (it.get("citations") or [])))
-    if n_cited < 3:
-        warns.append(f"only {n_cited} field_norms entries carry a quoted citation; "
-                     f"steps asserted without a source are the ones the judge will "
-                     f"most easily overturn")
-
-    uncited = [s.get("id") for s in ref.get("recipe") or []
-               if not (s.get("evidence") or [])
-               and len(s.get("why_necessary") or "") < 120]
-    if uncited:
-        warns.append(f"steps {', '.join(str(u) for u in uncited)} have neither a "
-                     f"citation nor a spelled-out rationale")
-    if not (ref.get("self_critique") or []):
-        warns.append("self_critique is empty — record where this reference is weak, "
-                     "so a divergent proposal is not wrongly penalized there")
+    if not p.get("sources"):
+        warns.append("provenance.sources is empty — nothing records where these "
+                     "experiments came from")
+    exps = [e for e in (ref.get("experiments") or []) if isinstance(e, str)]
+    # A reference that dwarfs a proposal is the failure this format was built to fix:
+    # the judge reads the extra specification as detail the proposal is missing.
+    long = [i for i, e in enumerate(exps) if len(e) > 2000]
+    if long:
+        warns.append(f"experiment(s) {long} run past 2000 chars. A reference much "
+                     f"richer than a proposer's output biases the comparison — keep "
+                     f"each one to a paragraph")
     return warns
 
 
 # --------------------------------------------------------------------------- #
 # The judge's submission
 # --------------------------------------------------------------------------- #
-_ROLE_COVERAGE = {"type": "object", "properties": {
-    "status": {"type": "string", "enum": list(COVERAGE_STATUS)},
-    "by": {"type": "array", "items": {"type": "integer"},
-           "description": "indices of the experiments that fill this role"},
-    "note": {"type": "string"}},
-    "required": ["status", "note"]}
+# One judgment per REFERENCE experiment, and nothing else. Earlier versions also
+# collected a per-proposed-experiment audit — soundness, norm alignment, redundancy,
+# resource grounding — feeding metrics that were not being read. Which proposed
+# experiments did nothing is still recoverable in code: they are the ones that never
+# appear in any `covered_by`.
+_REF_COVERAGE = {"type": "object", "properties": {
+    "ref_index": {"type": "integer", "description": "0-based index in the reference list"},
+    # Written before the status, and instrument-free by construction. Naming the
+    # property rather than the tool is what stops the judge scoring "you did not use
+    # the R_k statistic" when any equivalent measure settles the same question.
+    "adequacy": {"type": "string",
+                 "description": "what property this reference experiment's instrument "
+                                "or scope provides that makes it adequate, stated "
+                                "WITHOUT naming the instrument, dataset, model or "
+                                "library. Write this before choosing a status."},
+    "status": {"type": "string", "enum": list(COVER_STATUS),
+               "description": "covered = the proposed set would establish this by "
+                              "whatever route; partial = it gets at the question but "
+                              "the outcome stays ambiguous; missing = nothing in the "
+                              "set bears on it"},
+    "covered_by": {"type": "array", "items": {"type": "integer"},
+                   "description": "indices of every PROPOSED experiment contributing — "
+                                  "many-to-many, order irrelevant"},
+    "rationale": {"type": "string",
+                  "description": "what specifically does or does not carry it"},
+    "reasoning_chain": {"type": "array", "items": {"type": "string"},
+                        "description": "one inference per entry, ending in what the "
+                                       "team would fail to learn. Required for partial "
+                                       "and missing."},
+    "evidence": {"type": "array", "items": _EVIDENCE,
+                 "description": "quotes from any tool check that informed this"}},
+    "required": ["ref_index", "adequacy", "status", "covered_by", "rationale"]}
 
 SUBMIT_EVALUATION = {"type": "function", "function": {
     "name": "submit_evaluation",
-    "description": "Submit your finished evaluation of this experiment set. Call this "
-                   "only after running the full protocol on every experiment.",
+    "description": "Submit your finished evaluation. Call this only after working "
+                   "through every reference experiment.",
     "parameters": {"type": "object", "properties": {
-        "experiments": {"type": "array", "items": {"type": "object", "properties": {
-            "index": {"type": "integer", "description": "0-based index in the set given"},
-            "normalized": {"type": "object", "properties": {
-                "target_subclaim": {"type": "string"},
-                "method": {"type": "string"},
-                "resources": {"type": "array", "items": {"type": "string"}},
-                "measurement": {"type": "string"},
-                "decision_rule": {"type": "string",
-                                  "description": "what result would verify or refute, "
-                                                 "or 'none stated'"}}},
-            "gt_triage": {"type": "string", "enum": list(TRIAGE),
-                          "description": "relation to the reference recipe"},
-            "gt_steps_covered": {"type": "array", "items": {"type": "string"}},
-            "verdict": {"type": "string", "enum": list(VERDICTS),
-                        "description": "ACCURATE = conveys the correct thing; MIXED = "
-                                       "right idea, under-specified or missing a minor "
-                                       "element; IRRELEVANT = would not yield useful "
-                                       "information about the claim"},
-            "novel": {"type": "boolean",
-                      "description": "sound but absent from the reference recipe"},
-            "redundant_with": {"type": "array", "items": {"type": "integer"},
-                               "description": "indices this duplicates, if any"},
-            "reasoning_chain": {"type": "array", "items": {"type": "string"},
-                                "description": "the argument, step by step, from your "
-                                               "quoted facts to this verdict. Each entry "
-                                               "is one inference. Required whenever you "
-                                               "fault an experiment."},
-            "evidence": {"type": "array", "items": _EVIDENCE},
-            "evidence_tier": {"type": "string", "enum": list(TIERS),
-                              "description": "T1 peer-reviewed paper quote; T2 official "
-                                             "docs/leaderboard/dataset card; T3 claim "
-                                             "text or reference recipe only; T0 none"},
-            "resource_audit": {"type": "array", "items": {"type": "object", "properties": {
-                "name": {"type": "string"},
-                "exists": {"type": "boolean"},
-                "publicly_available": {"type": "boolean"},
-                "appropriate": {"type": "boolean",
-                                "description": "fit for the use this experiment makes"},
-                "note": {"type": "string"}},
-                "required": ["name", "exists", "note"]}},
-            "gt_defects": {"type": "array", "items": {"type": "object", "properties": {
-                "gt_step": {"type": "string", "description": "step id, or 'missing'"},
-                "defect": {"type": "string"},
-                "evidence": {"type": "array", "items": _EVIDENCE}},
-                "required": ["gt_step", "defect"]}}},
-            "required": ["index", "verdict", "gt_triage", "reasoning_chain",
-                         "evidence_tier"]}},
-
-        "role_coverage": {"type": "object",
-                          "description": "does the SET, as a whole, fill each role of "
-                                         "the decision structure? Judge functionally, "
-                                         "not by matching reference step ids.",
-                          "properties": {"gate": _ROLE_COVERAGE,
-                                         "apparatus": _ROLE_COVERAGE,
-                                         "headline": _ROLE_COVERAGE,
-                                         "control": _ROLE_COVERAGE},
-                          "required": ["gate", "apparatus", "headline", "control"]},
+        "reference_coverage": {"type": "array", "items": _REF_COVERAGE,
+                               "description": "one entry per REFERENCE experiment, in "
+                                              "order"},
         "decision_sufficiency": {"type": "string", "enum": list(SUFFICIENCY),
-                                 "description": "if this set were executed as written, "
-                                                "would its outcomes verify or refute "
-                                                "the claim?"},
+                                 "description": "if the proposed set were executed as "
+                                                "written, would its outcomes settle the "
+                                                "claim?"},
         "sufficiency_reasoning": {"type": "string"},
         "missing": {"type": "array", "items": {"type": "string"},
-                    "description": "what the set would still need"},
-        "set_gt_defects": {"type": "array", "items": {"type": "object", "properties": {
-            "gt_step": {"type": "string"},
-            "defect": {"type": "string"},
-            "evidence": {"type": "array", "items": _EVIDENCE}},
-            "required": ["gt_step", "defect"]}}},
-        "required": ["experiments", "role_coverage", "decision_sufficiency",
+                    "description": "what the proposed set would still need"}},
+        "required": ["reference_coverage", "decision_sufficiency",
                      "sufficiency_reasoning"]}}}
 
 
-def validate_evaluation(ev: Dict, n_experiments: int) -> Optional[str]:
-    """Structural gate + the evidence discipline.
+def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
+                        tools_available: bool = True) -> Optional[str]:
+    """Structural gate, plus the one discipline that matters.
 
-    The load-bearing rule: any verdict that faults an experiment must carry quoted
-    evidence AND a reasoning chain. Without this the judge can quietly fall back on
-    "the reference recipe disagrees", which is exactly the failure mode that made
-    the earlier gpt-5.5 judge unusable.
+    Saying a reference experiment is not covered asserts something about the set in
+    front of the judge, which no search can confirm — so it needs a reasoning chain,
+    not a citation. Demanding quotes for absence would push the judge toward calling
+    things covered to avoid the burden.
     """
     errs: List[str] = []
-    exps = ev.get("experiments") or []
-    seen = {e.get("index") for e in exps}
-    if len(exps) != n_experiments or seen != set(range(n_experiments)):
-        errs.append(f"must return exactly one entry per experiment, indices "
-                    f"0..{n_experiments - 1}; got {sorted(x for x in seen if x is not None)}")
 
-    for e in exps:
-        i = e.get("index")
-        if e.get("verdict") not in VERDICTS:
-            errs.append(f"exp {i}: verdict must be one of {VERDICTS}")
-        if e.get("gt_triage") not in TRIAGE:
-            errs.append(f"exp {i}: gt_triage must be one of {TRIAGE}")
+    # A language model can return a bare string where an object belongs; that must
+    # surface as a validation error the agent can fix, never as an AttributeError.
+    items = ev.get("reference_coverage")
+    if not isinstance(items, list):
+        return f"reference_coverage must be a list, got {type(items).__name__}"
+    cov = [c for c in items if isinstance(c, dict)]
+    if len(cov) != len(items):
+        errs.append("reference_coverage must contain objects, not bare strings")
 
-        chain = [c for c in (e.get("reasoning_chain") or []) if str(c).strip()]
-        evid = [x for x in (e.get("evidence") or []) if (x.get("quote") or "").strip()]
-        tier = e.get("evidence_tier")
+    seen = {c.get("ref_index") for c in cov}
+    if len(cov) != n_reference or seen != set(range(n_reference)):
+        errs.append(f"needs exactly one entry per reference experiment, indices "
+                    f"0..{n_reference - 1}; got "
+                    f"{sorted(x for x in seen if x is not None)}")
 
-        if e.get("verdict") in ("IRRELEVANT", "MIXED"):
-            if not evid:
-                errs.append(f"exp {i}: a {e.get('verdict')} verdict needs at least one "
-                            f"quoted piece of evidence — the reference recipe alone is "
-                            f"not grounds to fault an experiment")
-            if len(chain) < 2:
-                errs.append(f"exp {i}: a {e.get('verdict')} verdict needs a "
-                            f"reasoning_chain showing how you get from your quoted "
-                            f"facts to the fault you are alleging")
-            if tier == "T0":
-                errs.append(f"exp {i}: evidence_tier T0 cannot support a "
-                            f"{e.get('verdict')} verdict")
-        if e.get("novel") and not evid:
-            errs.append(f"exp {i}: marked novel — quote the evidence that this design "
-                        f"is sound and advances the decision")
-        if tier not in TIERS:
-            errs.append(f"exp {i}: evidence_tier must be one of {TIERS}")
-        if evid and not any((x.get("source") or "").strip() for x in evid):
-            errs.append(f"exp {i}: every quote needs an attributable source")
+    for c in cov:
+        i = c.get("ref_index")
+        if c.get("status") not in COVER_STATUS:
+            errs.append(f"ref {i}: status must be one of {COVER_STATUS}")
+        chain = [x for x in (c.get("reasoning_chain") or []) if str(x).strip()]
+        if c.get("status") in ("partial", "missing") and len(chain) < 2:
+            errs.append(f"ref {i}: a '{c.get('status')}' judgment needs a "
+                        f"reasoning_chain showing why the set does not settle it")
+        if c.get("status") == "covered" and not (c.get("covered_by") or []):
+            errs.append(f"ref {i}: marked covered but no proposed experiment listed "
+                        f"in covered_by")
+        if c.get("status") == "missing" and (c.get("covered_by") or []):
+            errs.append(f"ref {i}: marked missing but lists contributing experiments — "
+                        f"use 'partial' if something bears on it")
+        for j in c.get("covered_by") or []:
+            if not isinstance(j, int) or not 0 <= j < n_proposed:
+                errs.append(f"ref {i}: covered_by {j!r} is not a proposed index")
+        if len((c.get("rationale") or "").strip()) < 25:
+            errs.append(f"ref {i}: rationale must say what does or does not carry it")
+        if len((c.get("adequacy") or "").strip()) < 20:
+            errs.append(f"ref {i}: state the adequacy property — what the reference's "
+                        f"instrument provides — without naming the instrument")
 
-    rc = ev.get("role_coverage") or {}
-    for role in ROLES:
-        st = (rc.get(role) or {}).get("status")
-        if st not in COVERAGE_STATUS:
-            errs.append(f"role_coverage.{role}.status must be one of {COVERAGE_STATUS}")
     if ev.get("decision_sufficiency") not in SUFFICIENCY:
         errs.append(f"decision_sufficiency must be one of {SUFFICIENCY}")
     if len((ev.get("sufficiency_reasoning") or "").strip()) < 40:

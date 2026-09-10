@@ -20,6 +20,18 @@ def http():
     return _session
 
 
+def _raise_redacted(r):
+    """raise_for_status(), with credentials stripped from the message.
+
+    requests puts the full request URL in the exception, query string included,
+    so an HTTPError from a keyed endpoint carries the key. That message reaches
+    the judge's tool results and from there every trace file on disk."""
+    try:
+        r.raise_for_status()
+    except Exception as e:
+        raise type(e)(config.redact(e)) from None
+
+
 def request(url, retries: int = 4, **kwargs):
     """GET with retry/backoff on 429/503 (honors Retry-After). Required to use
     these public APIs at all — not a key/fallback degradation."""
@@ -29,14 +41,15 @@ def request(url, retries: int = 4, **kwargs):
         r = http().get(url, **kwargs)
         if r.status_code in (429, 503) and attempt < retries - 1:
             wait = int(r.headers.get("Retry-After", 0)) or min(2 ** attempt, 30)
-            print(f"[http] {r.status_code} on {url.split('?')[0]}; retry in {wait}s "
+            print(f"[http] {r.status_code} on {config.redact(url).split('?')[0]}; "
+                  f"retry in {wait}s "
                   f"({attempt + 1}/{retries})")
             time.sleep(wait)
             last = r
             continue
-        r.raise_for_status()
+        _raise_redacted(r)
         return r
-    last.raise_for_status()
+    _raise_redacted(last)
     return last
 
 
