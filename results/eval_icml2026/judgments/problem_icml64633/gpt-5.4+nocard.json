@@ -1,0 +1,774 @@
+{
+  "type": "evaluation",
+  "format_version": "5.0",
+  "problem_id": "icml64633",
+  "arm": "gpt-5.4+nocard",
+  "claim": "When a jailbreak attack succeeds against a safety-aligned LLM, the model's safety-relevant internal representations are not eliminated \u2014 they are bypassed. The attack selectively suppresses a small subset of attention heads, and suppressing that subset is by itself enough to turn a refusal into a compliance, while other heads go on representing the harmful content even as the attack succeeds. Because those representations persist, they can be read out directly as a harmful-input detector, with no additional training, at a quality competitive with dedicated safety models.",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 3,
+    "runs_requested": 3,
+    "tools": true
+  },
+  "proposer_model": "gpt-5.4",
+  "n_proposed": 3,
+  "n_reference": 7,
+  "experiments_evaluated": [
+    "To address subclaim 4 and subclaim 5, run a causal head-ablation study on a public safety-aligned open-weight chat model under both normal harmful prompts and successful jailbreak prompts. Use a publicly available harmful-instruction set such as AdvBench or HarmBench behaviors, plus a public jailbreak set such as JailbreakBench, and first verify a baseline pattern: the model refuses many direct harmful prompts but complies more often when paired with successful jailbreak wrappers. Then trace per-head attention outputs and activation magnitudes across layers for matched prompt pairs (same harmful request, with and without jailbreak), ranking heads by the size of their activity decrease specifically on jailbreak-success cases relative to direct-refusal cases. Intervene causally by suppressing only the top-k candidate heads during direct harmful prompts, using head output zeroing or mean-replacement, and measure whether refusals convert to compliant harmful answers. As controls, suppress random matched-size head sets, top-k heads chosen from harmless prompts, and candidate heads on benign prompts to estimate specificity and side effects. If suppressing a small identified subset reliably flips refusals to compliance at much higher rates than random/control ablations, that supports the claim that jailbreaks selectively suppress a small subset of attention heads and that suppressing that subset is sufficient to induce compliance. If no small subset can be found, or many unrelated heads must be ablated, that weakens the selective-suppression and sufficiency claims. If stronger direct evidence already existed in the form of published per-head causal intervention results on the same model family and public benchmarks, this experiment could be partly unnecessary or reduced to replication.",
+    "To address subclaim 1, subclaim 2, subclaim 3, and subclaim 6, test whether safety-relevant harmfulness representations persist during successful jailbreaks rather than disappearing. Using the same public model and prompt sets, collect hidden states and attention-head outputs for four conditions: benign prompts, direct harmful prompts that elicit refusal, harmful prompts with unsuccessful jailbreaks, and harmful prompts with successful jailbreaks. Define a readout direction for harmfulness without extra training by using simple activation differencing from the model\u2019s own internal contrast: for example, compute layerwise mean activation differences between harmful and benign prompts on a held-out split, or use token-level contrasts around refusal-triggering positions. Then evaluate whether this unsupervised harmfulness signal remains high on successful jailbreak cases even when the final behavior is compliant, and localize which heads/layers still carry it. In parallel, check whether the specific heads identified in Experiment 1 lose the signal while many other heads retain it. If harmfulness-related signals remain robust in non-suppressed heads during successful jailbreaks, that supports the bypass-not-elimination account; if the signal broadly collapses across the network on successful jailbreaks, that would favor elimination instead. If only the candidate suppressed heads lose signal while many others keep encoding harmfulness, that strongly supports selective bypass. This experiment could be made less necessary if there were already strong public mechanistic evidence showing layer/head-level harmfulness probes stay separable on jailbreak-success examples across multiple models.",
+    "To address subclaim 7, subclaim 8, and subclaim 9, evaluate whether the persistent internal representations can be used directly as a competitive harmful-input detector without additional training. Using the representations identified in Experiment 2, construct zero-shot or training-free detectors from public benchmark prompts: for instance, score each input by cosine similarity to a harmfulness prototype vector, by projection onto the unsupervised harmful-minus-benign direction, or by aggregating activations from heads/layers shown to retain harmfulness information. Evaluate on public datasets with harmful and benign inputs, such as HarmBench, AdvBench, BeaverTails, and XSTest or SafeBench-style harmless challenge sets if publicly available, including jailbreak-wrapped harmful prompts. Compare AUROC, AUPRC, F1 at a chosen threshold, and calibration against dedicated public safety baselines such as open moderation models or simple trained classifiers available on HuggingFace. Strictly avoid fitting any new detector parameters beyond threshold selection on a validation split, so the test addresses the no-additional-training claim. If a training-free internal detector is competitive with dedicated safety models, especially on jailbreak examples, that supports the readout and competitiveness claims; if it lags substantially or requires learned probe weights to work well, those claims weaken. This experiment could be made unnecessary if existing public evaluations already showed a no-training internal activation score matching or exceeding established safety classifiers on the same benchmarks."
+  ],
+  "reference_experiments": [
+    "Before identifying any component, test the premise that attacks bypass rather than erase safety representations. On inputs where a jailbreak succeeded, measure activation of the refusal direction across all layers and components (attention heads and MLPs) and compare against the same requests unattacked. If a successful attack flattens refusal activation everywhere, attacks do break safety representations and everything downstream is dead. The authors find mid layers still maintain substantial refusal activation under successful attack, particularly in the layers previously identified as most safety-relevant.",
+    "Construct the paired evaluation set the whole analysis depends on. Sample benign prompts from Alpaca, collect harmful behaviours from published harmful-behaviour datasets, generate attack variants with GCG, AutoDAN, many-shot jailbreaking and PAIR, and retain only pairs where the unattacked request is refused and the attacked version succeeds. Within-pair comparison is what separates the attack's effect from differences between requests. The authors obtain 378 (Llama-2-7B-Chat) and 176 (Llama-3-8B-Instruct) usable pairs from roughly 10,000 attack samples, a 2-3% yield that caps the study's statistical power.",
+    "Build and calibrate the component-scoring instrument. Extract the refusal direction by difference-in-means and select the optimal layer, project it into each attention head's output space to score that head's contribution to the refusal signal, and classify heads by distribution overlap between conditions using two-stage filtering. Then verify the classification is not an artifact of the cut point by sweeping the threshold and the KDE bandwidth. The authors use thresholds of 0.5, find stability across 0.4-0.6, and obtain 21 ACHs and 17 SAHs for Llama-3 (416 heads analysed) and 20 ACHs and 19 SAHs for Llama-2 (480 analysed), with ACHs concentrated in layers 0-3 and SAHs in layers 5-12.",
+    "Test causally whether suppressing the identified heads is sufficient to cause attack success. On harmful inputs the model normally refuses (baseline ASR about 0%), inject a negative refusal-direction feature into ACH outputs, progressively increase the number of intervened heads, and measure attack success rate \u2014 with a matched random-head intervention as control, 10 seeds and 95% confidence intervals. Without the random-head arm the effect cannot be attributed to those heads rather than to perturbing that many heads at all. The authors report ACH intervention driving ASR to 99.5% (Llama-3) and 83.7% (Llama-2), reaching 95.0% and 81.6% at just 8 heads, against 4.0% +/- 3.7 and 10.2% +/- 11.6 for random heads.",
+    "Test whether the other head type is a real source of the persistent signal. Apply the same suppression to SAHs, this time on attack inputs, and measure the change in mid-layer activation strength using mean absolute activation across mid-layer heads. The authors report Llama-2 falling from 0.222 to 0.181 (18%) and Llama-3 from 0.0062 to 0.0053 (14%), against a reference of 0.397 and 0.0086 under unattacked harmful inputs.",
+    "Discriminate the mechanistic account from the rival explanation that the two head types simply differ in sensitivity to harmful content. Using the linearity of attention, attribute each head's activation to individual input tokens, separate the contribution of the original harmful-request tokens from that of the attack-template tokens, and compare the two head types on each. The account holds only if the types are indistinguishable on the harmful request itself and separate sharply on the attack template. The authors report medians within +/-0.15 on harmful tokens, against roughly -1.5 for ACHs and +1.5 for SAHs on attack-template tokens.",
+    "Validate externally that the persistent signal generalises and is useful. Build a training-free detector that reads standardised activations at discriminative positions via top-m aggregation and thresholds the score, then evaluate Macro-F1 on ten safety-eval benchmarks across six models from three architecture families, against both the model's own refusal behaviour and trained guard models. If the readout does not transfer, the phenomenon is a property of the two models analysed. The authors report Gemma-2B improving from 0.470 to 0.853 and Qwen-7B from 0.506 to 0.860 overall, SALAD-Bench from 0.270 to 0.976, and Llama-3-8B reaching 0.888 weighted average against WildGuard 0.880 and LlamaGuard3/4 at 0.599/0.666."
+  ],
+  "scores": {
+    "recall": 0.786,
+    "n_reference": 7,
+    "n_proposed": 3,
+    "coverage_statuses": [
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "partial",
+      "missing",
+      "covered"
+    ],
+    "n_covered": 5,
+    "n_partial": 1,
+    "n_missing": 1,
+    "unused_proposed": [],
+    "decision_sufficiency": "insufficient",
+    "sufficiency_score": 0.0,
+    "n_contested": 0,
+    "judge_runs": 3,
+    "run_agreement": 1.0
+  },
+  "reference_coverage": [
+    {
+      "ref_index": 0,
+      "adequacy": "A matched comparison of successful-jailbreak and direct-refusal cases that measures a safety-relevant internal signal across the network well enough to distinguish persistence from wholesale erasure.",
+      "status": "covered",
+      "covered_by": [
+        1
+      ],
+      "rationale": "Proposed experiment 1 uses the same harmful request in direct-refusal and successful-jailbreak conditions, collects layerwise hidden states and head outputs, and explicitly tests whether the internal harmfulness signal remains high or collapses during successful compliance. Its signal is constructed differently from the reference refusal direction, but it has the same discriminating power for the claim's persistence-versus-elimination question.",
+      "evidence": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "We provide evidence that attacks do not comprehensively eliminate safety features, but instead selectively suppress specific attention heads.",
+          "bearing": "This is the persistence-versus-erasure distinction that the proposed layerwise comparison directly tests."
+        }
+      ],
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 1,
+      "adequacy": "A paired behavioral dataset in which the same harmful request is refused without an attack and succeeds with an attack, allowing attack effects to be separated from differences in request content.",
+      "status": "covered",
+      "covered_by": [
+        0,
+        1
+      ],
+      "rationale": "Proposed experiment 0 explicitly uses matched prompt pairs and verifies the direct-refusal versus successful-jailbreak behavioral pattern. Proposed experiment 1 also includes direct harmful refusals and successful jailbreak cases from the same prompt sets. The proposed set would therefore establish the paired behavioral contrast needed for the downstream mechanistic comparisons, even though it does not prescribe the reference's exact attack-generation methods or yield.",
+      "evidence": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "We keep only pairs where the original request is refused while the attacked version succeeds. From approximately 10,000 attack samples, only 378 (Llama-2) and 176 (Llama-3-8B) pairs pass this filter\u2014a \u223c2\u20133% rate",
+          "bearing": "This establishes the reference's essential matched refused/successful-attack criterion; the proposed matched prompt-pair and baseline-verification plan supplies that criterion."
+        }
+      ],
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 2,
+      "adequacy": "A reproducible way to distinguish heads whose safety-related activity is selectively suppressed from heads that retain harmful-content information, and to select a small candidate subset without the conclusion depending on an arbitrary cutoff.",
+      "status": "covered",
+      "covered_by": [
+        0,
+        1
+      ],
+      "rationale": "Proposed experiment 0 ranks heads by the attack-specific activity decrease, varies the number intervened, and includes matched random and harmless-prompt controls. Proposed experiment 1 localizes the signal and distinguishes candidate suppressed heads from other retaining heads. Progressive top-k testing supplies a selection-size analysis rather than relying on the reference's particular distributional score, so the absence of the exact threshold/KDE procedure does not remove the relevant knowledge.",
+      "run_statuses": [
+        "partial",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 0.833
+    },
+    {
+      "ref_index": 3,
+      "adequacy": "A causal intervention on a small candidate head subset during normally refused harmful inputs, with matched-size nonspecific interventions and behavioral outcome measurement, so sufficiency can be attributed to that subset rather than head perturbation generally.",
+      "status": "covered",
+      "covered_by": [
+        0
+      ],
+      "rationale": "Proposed experiment 0 directly suppresses only the top-k candidate heads on direct harmful prompts and measures refusal-to-compliance conversion. It includes random matched-size heads, heads selected from harmless prompts, and benign-prompt side-effect controls. Zeroing or mean replacement is a genuine suppression intervention, and the proposed reliability comparison supplies the causal decision rule without requiring the reference's particular feature-injection implementation.",
+      "evidence": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "At k = 8, ASR reaches 95.0% for Llama-3-8B and 81.6% for Llama-2-7B. In contrast, intervening on random heads yields only 4.0% and 10.2% ASR",
+          "bearing": "This identifies the reference's discriminating causal contrast, which the proposed candidate-head versus random/control ablations reproduce."
+        }
+      ],
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 4,
+      "adequacy": "A causal suppression test on the attack-robust head population during successful attacks, measuring whether removing those heads weakens the remaining mid-layer safety signal relative to unattacked and unabated attacked conditions.",
+      "status": "partial",
+      "covered_by": [
+        1
+      ],
+      "rationale": "Proposed experiment 1 would observe whether non-suppressed heads continue to carry a harmfulness signal during successful jailbreaks, which bears on persistence. But it does not suppress the attack-robust/other-head population on attack inputs and measure the resulting activation decrease. Thus it cannot distinguish heads that causally sustain the signal from heads whose correlated activity merely accompanies it.",
+      "reasoning_chain": [
+        "[1] Reference experiment 4 tests whether the other head type is a causal source of the persistent signal by suppressing it during attack inputs.",
+        "[2] Proposed experiment 1 measures signal retention and localization, but does not intervene on the retaining heads under attack.",
+        "[3] Observing retention cannot establish that those heads are responsible for the signal or that suppressing them would weaken it.",
+        "[4] The team would learn that some other heads correlate with persistence, but would fail to learn the causal contribution that reference experiment 4 would have established: partial."
+      ],
+      "run_statuses": [
+        "partial",
+        "partial",
+        "covered"
+      ],
+      "mean_status_score": 0.667
+    },
+    {
+      "ref_index": 5,
+      "adequacy": "Per-token attribution of each head's activation, separated between the original harmful request and the jailbreak template, allowing the selective-suppression account to be distinguished from a simpler difference in harmful-content sensitivity.",
+      "status": "missing",
+      "covered_by": [],
+      "rationale": "No proposed experiment attributes individual head activations to the original harmful-request tokens versus attack-template tokens. Aggregate head activity, layerwise localization, and token-position contrasts do not provide that decomposition, so the rival harmful-sensitivity explanation remains untested.",
+      "reasoning_chain": [
+        "[1] Reference experiment 5 discriminates the mechanistic account from the rival account by comparing head-type contributions to harmful-request tokens and attack-template tokens separately.",
+        "[2] Proposed experiments 0 and 1 compare aggregate head outputs, activation magnitudes, and selected positions, but never decompose a head's activation by input-token source.",
+        "[3] Without that decomposition, different behavior could still be explained by the head types having different sensitivity to harmful content itself.",
+        "[4] The team would fail to learn the token-specific mechanism that reference experiment 5 would have told them: missing."
+      ],
+      "evidence": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "For the (l, h)th attention head, we define the standardized contribution of token k ...",
+          "bearing": "The reference uses explicit per-token head-activation attribution, which is absent from the proposed set."
+        }
+      ],
+      "run_statuses": [
+        "missing",
+        "missing",
+        "partial"
+      ],
+      "mean_status_score": 0.167
+    },
+    {
+      "ref_index": 6,
+      "adequacy": "An external evaluation of a genuinely training-free internal-activation readout on independent harmful, benign, and adversarial inputs, with quantitative comparison against the model's behavioral safety signal and dedicated safety systems to establish usefulness and competitiveness.",
+      "status": "covered",
+      "covered_by": [
+        2
+      ],
+      "rationale": "Proposed experiment 2 constructs a zero-shot/training-free activation detector, permits only validation threshold selection rather than fitting detector parameters, evaluates across harmful/benign and jailbreak-wrapped inputs, and compares multiple quantitative metrics against public dedicated safety baselines. It therefore tests direct readout, no additional training, adversarial transfer, and competitiveness. The proposed model and benchmark choices need not reproduce the reference's exact six-model, ten-dataset scope because those specifics are not binding in the claim.",
+      "evidence": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "our training-free detector ... achieves the highest sample-weighted aggregate score (0.856), outperforming GradientCuff (0.741) and CAST (0.611).",
+          "bearing": "This establishes the relevant comparison: a no-training activation readout evaluated quantitatively against other detector approaches."
+        },
+        {
+          "source": "Hugging Face resource check: HarmBench",
+          "quote": "walledai/HarmBench",
+          "bearing": "Confirms that one proposed harmful-content evaluation resource is publicly obtainable."
+        },
+        {
+          "source": "Hugging Face resource check: JailbreakBench",
+          "quote": "JailbreakBench/JBB-Behaviors",
+          "bearing": "Confirms that one proposed jailbreak-behavior evaluation resource is publicly obtainable."
+        },
+        {
+          "source": "Hugging Face resource check: BeaverTails",
+          "quote": "PKU-Alignment/BeaverTails",
+          "bearing": "Confirms that one proposed harmful/benign evaluation resource is publicly obtainable."
+        },
+        {
+          "source": "Hugging Face resource check: XSTest",
+          "quote": "walledai/XSTest",
+          "bearing": "Confirms that one proposed harmless-challenge evaluation resource is publicly obtainable."
+        }
+      ],
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    }
+  ],
+  "decision_sufficiency": "insufficient",
+  "sufficiency_reasoning": "The proposed set covers the central persistence test, matched behavioral setup, causal sufficiency of a selectively chosen subset, and external training-free detection. It does not fully settle the claim as written, however: the head taxonomy lacks the reference's classification and stability calibration, the persistence of other heads is not tested causally, and the token-level harmful-request-versus-jailbreak-template explanation is absent. Those gaps leave both the precise selective-suppression mechanism and the reason other heads remain informative unresolved.",
+  "missing": [
+    "Add an explicit component-scoring and two-category classification procedure with threshold and bandwidth/smoothing sensitivity analyses.",
+    "Suppress the attack-robust/other head population during successful attacks and measure the resulting mid-layer signal change against appropriate references.",
+    "Perform per-token attribution that separates original harmful-request contributions from jailbreak-template contributions for each head type."
+  ],
+  "missing_all_runs": [
+    "A matched intervention that suppresses the putative retaining-head population on successful jailbreak inputs and measures the resulting residual safety-signal change.",
+    "Add an explicit component-scoring and two-category classification procedure with threshold and bandwidth/smoothing sensitivity analyses.",
+    "Perform per-token attribution that separates original harmful-request contributions from jailbreak-template contributions for each head type.",
+    "Suppress the attack-robust/other head population during successful attacks and measure the resulting mid-layer signal change against appropriate references.",
+    "Token-level attribution of head activations to original harmful-request tokens versus jailbreak-template tokens, with a comparison between the selectively suppressed and persistent head groups.",
+    "Token-level attribution separating original harmful-request tokens from jailbreak-template tokens and comparing the candidate and retaining head populations on those sources."
+  ],
+  "contested": [],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 6,
+        "usage": {
+          "prompt_tokens": 90023,
+          "completion_tokens": 14993,
+          "calls": 6
+        },
+        "seconds": 158.6,
+        "trace": "results/eval_icml2026/judgments/problem_icml64633/gpt-5.4+nocard.run0.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "We provide evidence that attacks do not comprehensively eliminate safety features, but instead selectively suppress specific attention heads.",
+          "bearing": "Establishes the paper's central persistence-versus-erasure and selective-suppression distinction relevant to reference experiments 0 and 2."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "We keep only pairs where the original request is refused while the attacked version succeeds. From approximately 10,000 attack samples, only 378 (Llama-2) and 176 (Llama-3-8B) pairs pass this filter\u2014a \u223c2\u20133% rate",
+          "bearing": "Establishes that the reference's behavioral evidence relies on matched refused/successful-attack pairs, relevant to reference experiment 1."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "Using fixed thresholds \u03c4 = 0.5 ... At \u03c4 = 0.5, both models yield moderate and balanced counts (Llama-3: 21 ACHs, 17 SAHs; Llama-2: 20 ACHs, 19 SAHs). ... the main conclusions hold for \u03c4 \u2208 [0.4, 0.6].",
+          "bearing": "Establishes that the reference instrument distinguishes two response types and checks that the classification is not a cut-point artifact, relevant to reference experiment 2."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "At k = 8, ASR reaches 95.0% for Llama-3-8B and 81.6% for Llama-2-7B. In contrast, intervening on random heads yields only 4.0% and 10.2% ASR",
+          "bearing": "Establishes the causal sufficiency and matched-random-head contrast in reference experiment 3."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "For the (l, h)th attention head, we define the standardized contribution of token k ...",
+          "bearing": "Establishes that reference experiment 5 uses per-token attribution of head activations, which is distinct from merely comparing aggregate head activity."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "We evaluate on 10 datasets from the safety-eval framework ... We evaluate on Llama-3-8B, Qwen-7B/14B, and Gemma-2B/9B/27B.",
+          "bearing": "Establishes the reference's external evaluation scope for reference experiment 6; the exact scope is incidental unless required by the claim."
+        },
+        {
+          "source": "arXiv:2606.28153v2",
+          "quote": "our training-free detector ... achieves the highest sample-weighted aggregate score (0.856), outperforming GradientCuff (0.741) and CAST (0.611).",
+          "bearing": "Establishes the type of comparative, no-training detector evidence relevant to reference experiment 6."
+        },
+        {
+          "source": "Hugging Face resource check: HarmBench",
+          "quote": "walledai/HarmBench",
+          "bearing": "Confirms a publicly obtainable resource matching the proposed evaluation example."
+        },
+        {
+          "source": "Hugging Face resource check: JailbreakBench",
+          "quote": "JailbreakBench/JBB-Behaviors",
+          "bearing": "Confirms a publicly obtainable resource matching the proposed jailbreak evaluation example."
+        },
+        {
+          "source": "Hugging Face resource check: BeaverTails",
+          "quote": "PKU-Alignment/BeaverTails",
+          "bearing": "Confirms a publicly obtainable resource matching the proposed harmful/benign evaluation example."
+        },
+        {
+          "source": "Hugging Face resource check: XSTest",
+          "quote": "walledai/XSTest",
+          "bearing": "Confirms a publicly obtainable resource matching the proposed harmless-challenge evaluation example."
+        }
+      ],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A matched comparison of successful-jailbreak and direct-refusal cases that measures a safety-relevant internal signal across the network well enough to distinguish persistence from wholesale erasure.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 uses the same harmful request in direct-refusal and successful-jailbreak conditions, collects layerwise hidden states and head outputs, and explicitly tests whether the internal harmfulness signal remains high or collapses during successful compliance. Its signal is constructed differently from the reference refusal direction, but it has the same discriminating power for the claim's persistence-versus-elimination question.",
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "We provide evidence that attacks do not comprehensively eliminate safety features, but instead selectively suppress specific attention heads.",
+              "bearing": "This is the persistence-versus-erasure distinction that the proposed layerwise comparison directly tests."
+            }
+          ]
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "A paired behavioral dataset in which the same harmful request is refused without an attack and succeeds with an attack, allowing attack effects to be separated from differences in request content.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "Proposed experiment 0 explicitly uses matched prompt pairs and verifies the direct-refusal versus successful-jailbreak behavioral pattern. Proposed experiment 1 also includes direct harmful refusals and successful jailbreak cases from the same prompt sets. The proposed set would therefore establish the paired behavioral contrast needed for the downstream mechanistic comparisons, even though it does not prescribe the reference's exact attack-generation methods or yield.",
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "We keep only pairs where the original request is refused while the attacked version succeeds. From approximately 10,000 attack samples, only 378 (Llama-2) and 176 (Llama-3-8B) pairs pass this filter\u2014a \u223c2\u20133% rate",
+              "bearing": "This establishes the reference's essential matched refused/successful-attack criterion; the proposed matched prompt-pair and baseline-verification plan supplies that criterion."
+            }
+          ]
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A component-level scoring and classification procedure that identifies selectively suppressed and attack-robust heads, with a stability check showing that the categories and localization are not artifacts of an arbitrary cutoff or smoothing choice.",
+          "status": "partial",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "The proposed per-head tracing and ranking would identify activity decreases and the proposed localization would show which components retain harmfulness information. However, the proposal supplies no formal two-category classification rule, distribution-separation statistic, or sweep of a classification threshold and density-estimation/smoothing choice. Consequently, a team could find a top-ranked subset, but could not determine with comparable evidential force whether the ACH/SAH distinction is stable rather than an artifact of ranking choices.",
+          "reasoning_chain": [
+            "[1] The reference experiment establishes both differentiated head types and the robustness of that classification to analysis hyperparameters.",
+            "[2] Proposed experiments 0 and 1 rank or localize heads and test their signals, so they address the existence of differentiated behavior.",
+            "[3] Neither proposal specifies a formal classification boundary or sensitivity analysis over that boundary and its smoothing/statistical settings.",
+            "[4] Therefore the proposed outcomes would leave it ambiguous whether the reported head categories are stable structural groups or merely selected ranks.",
+            "[5] A team running the proposed set would not learn the full calibrated component classification that reference experiment 2 would have told them: partial."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "Using fixed thresholds \u03c4 = 0.5 ... At \u03c4 = 0.5, both models yield moderate and balanced counts (Llama-3: 21 ACHs, 17 SAHs; Llama-2: 20 ACHs, 19 SAHs). ... the main conclusions hold for \u03c4 \u2208 [0.4, 0.6].",
+              "bearing": "The reference includes explicit cutoff-stability evidence that the proposed ranking/localization plan does not specify."
+            }
+          ]
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A causal intervention on a small candidate head subset during normally refused harmful inputs, with matched-size nonspecific interventions and behavioral outcome measurement, so sufficiency can be attributed to that subset rather than head perturbation generally.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 directly suppresses only the top-k candidate heads on direct harmful prompts and measures refusal-to-compliance conversion. It includes random matched-size heads, heads selected from harmless prompts, and benign-prompt side-effect controls. Zeroing or mean replacement is a genuine suppression intervention, and the proposed reliability comparison supplies the causal decision rule without requiring the reference's particular feature-injection implementation.",
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "At k = 8, ASR reaches 95.0% for Llama-3-8B and 81.6% for Llama-2-7B. In contrast, intervening on random heads yields only 4.0% and 10.2% ASR",
+              "bearing": "This identifies the reference's discriminating causal contrast, which the proposed candidate-head versus random/control ablations reproduce."
+            }
+          ]
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A causal suppression test on the attack-robust head population during successful attacks, measuring whether removing those heads weakens the remaining mid-layer safety signal relative to unattacked and unabated attacked conditions.",
+          "status": "partial",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 would observe whether non-suppressed heads continue to carry a harmfulness signal during successful jailbreaks, which bears on persistence. But it does not suppress the attack-robust/other-head population on attack inputs and measure the resulting activation decrease. Thus it cannot distinguish heads that causally sustain the signal from heads whose correlated activity merely accompanies it.",
+          "reasoning_chain": [
+            "[1] Reference experiment 4 tests whether the other head type is a causal source of the persistent signal by suppressing it during attack inputs.",
+            "[2] Proposed experiment 1 measures signal retention and localization, but does not intervene on the retaining heads under attack.",
+            "[3] Observing retention cannot establish that those heads are responsible for the signal or that suppressing them would weaken it.",
+            "[4] The team would learn that some other heads correlate with persistence, but would fail to learn the causal contribution that reference experiment 4 would have established: partial."
+          ]
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "Per-token attribution of each head's activation, separated between the original harmful request and the jailbreak template, allowing the selective-suppression account to be distinguished from a simpler difference in harmful-content sensitivity.",
+          "status": "missing",
+          "covered_by": [],
+          "rationale": "No proposed experiment attributes individual head activations to the original harmful-request tokens versus attack-template tokens. Aggregate head activity, layerwise localization, and token-position contrasts do not provide that decomposition, so the rival harmful-sensitivity explanation remains untested.",
+          "reasoning_chain": [
+            "[1] Reference experiment 5 discriminates the mechanistic account from the rival account by comparing head-type contributions to harmful-request tokens and attack-template tokens separately.",
+            "[2] Proposed experiments 0 and 1 compare aggregate head outputs, activation magnitudes, and selected positions, but never decompose a head's activation by input-token source.",
+            "[3] Without that decomposition, different behavior could still be explained by the head types having different sensitivity to harmful content itself.",
+            "[4] The team would fail to learn the token-specific mechanism that reference experiment 5 would have told them: missing."
+          ],
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "For the (l, h)th attention head, we define the standardized contribution of token k ...",
+              "bearing": "The reference uses explicit per-token head-activation attribution, which is absent from the proposed set."
+            }
+          ]
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "An external evaluation of a genuinely training-free internal-activation readout on independent harmful, benign, and adversarial inputs, with quantitative comparison against the model's behavioral safety signal and dedicated safety systems to establish usefulness and competitiveness.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "Proposed experiment 2 constructs a zero-shot/training-free activation detector, permits only validation threshold selection rather than fitting detector parameters, evaluates across harmful/benign and jailbreak-wrapped inputs, and compares multiple quantitative metrics against public dedicated safety baselines. It therefore tests direct readout, no additional training, adversarial transfer, and competitiveness. The proposed model and benchmark choices need not reproduce the reference's exact six-model, ten-dataset scope because those specifics are not binding in the claim.",
+          "evidence": [
+            {
+              "source": "arXiv:2606.28153v2",
+              "quote": "our training-free detector ... achieves the highest sample-weighted aggregate score (0.856), outperforming GradientCuff (0.741) and CAST (0.611).",
+              "bearing": "This establishes the relevant comparison: a no-training activation readout evaluated quantitatively against other detector approaches."
+            },
+            {
+              "source": "Hugging Face resource check: HarmBench",
+              "quote": "walledai/HarmBench",
+              "bearing": "Confirms that one proposed harmful-content evaluation resource is publicly obtainable."
+            },
+            {
+              "source": "Hugging Face resource check: JailbreakBench",
+              "quote": "JailbreakBench/JBB-Behaviors",
+              "bearing": "Confirms that one proposed jailbreak-behavior evaluation resource is publicly obtainable."
+            },
+            {
+              "source": "Hugging Face resource check: BeaverTails",
+              "quote": "PKU-Alignment/BeaverTails",
+              "bearing": "Confirms that one proposed harmful/benign evaluation resource is publicly obtainable."
+            },
+            {
+              "source": "Hugging Face resource check: XSTest",
+              "quote": "walledai/XSTest",
+              "bearing": "Confirms that one proposed harmless-challenge evaluation resource is publicly obtainable."
+            }
+          ]
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The proposed set covers the central persistence test, matched behavioral setup, causal sufficiency of a selectively chosen subset, and external training-free detection. It does not fully settle the claim as written, however: the head taxonomy lacks the reference's classification and stability calibration, the persistence of other heads is not tested causally, and the token-level harmful-request-versus-jailbreak-template explanation is absent. Those gaps leave both the precise selective-suppression mechanism and the reason other heads remain informative unresolved.",
+      "missing": [
+        "Add an explicit component-scoring and two-category classification procedure with threshold and bandwidth/smoothing sensitivity analyses.",
+        "Suppress the attack-robust/other head population during successful attacks and measure the resulting mid-layer signal change against appropriate references.",
+        "Perform per-token attribution that separates original harmful-request contributions from jailbreak-template contributions for each head type."
+      ]
+    },
+    {
+      "run": 1,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 3,
+        "usage": {
+          "prompt_tokens": 23292,
+          "completion_tokens": 11936,
+          "calls": 3
+        },
+        "seconds": 107.1,
+        "trace": "results/eval_icml2026/judgments/problem_icml64633/gpt-5.4+nocard.run1.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "https://huggingface.co/datasets/walledai/AdvBench",
+          "quote": "\"id\": \"walledai/AdvBench\"",
+          "bearing": "Confirms that a public AdvBench dataset resource is obtainable for the proposed harmful-prompt evaluation."
+        },
+        {
+          "source": "https://huggingface.co/datasets/walledai/HarmBench",
+          "quote": "\"id\": \"walledai/HarmBench\"",
+          "bearing": "Confirms that a public HarmBench resource is obtainable for the proposed detector evaluation."
+        },
+        {
+          "source": "https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors",
+          "quote": "\"id\": \"JailbreakBench/JBB-Behaviors\"",
+          "bearing": "Confirms that a public JailbreakBench behavior resource is obtainable for matched/jailbreak-wrapped evaluation."
+        },
+        {
+          "source": "https://huggingface.co/datasets/PKU-Alignment/BeaverTails",
+          "quote": "\"id\": \"PKU-Alignment/BeaverTails\"",
+          "bearing": "Confirms that a public BeaverTails dataset resource is obtainable for benign/harmful detector evaluation."
+        },
+        {
+          "source": "https://huggingface.co/datasets/walledai/XSTest",
+          "quote": "\"id\": \"walledai/XSTest\"",
+          "bearing": "Confirms that a public XSTest resource is obtainable for harmless-challenge evaluation."
+        },
+        {
+          "source": "https://huggingface.co/datasets/meta-llama/Meta-Llama-3-8B-Instruct",
+          "quote": "\"id\": \"meta-llama/Meta-Llama-3-8B-Instruct\"",
+          "bearing": "Confirms that a public open-weight safety-aligned model family of the proposed kind is obtainable (subject to its access terms)."
+        }
+      ],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A direct, layer- and component-level comparison of safety-relevant internal activity in matched successful-attack and unattacked-refusal conditions, capable of distinguishing persistence from network-wide erasure.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 collects layerwise hidden states and head outputs in direct-refusal and successful-jailbreak conditions and explicitly tests whether a harmfulness-related signal remains high or collapses. Its harmful-versus-benign readout is a different implementation from a refusal-direction measurement, but it has the needed discriminating power for persistence versus elimination."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "A verified paired evaluation corpus containing the same harmful requests in an unattacked condition that is refused and an attacked condition that succeeds, so attack effects can be separated from request-content differences.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "Proposed experiment 0 explicitly uses matched pairs with the same harmful request with and without a jailbreak and verifies the refusal/compliance baseline. Proposed experiment 1 uses the corresponding direct-refusal, unsuccessful-jailbreak, and successful-jailbreak conditions. The particular attack generators, named datasets, and reference sample counts are not binding requirements of the claim; public resources named in the proposal are obtainable (E0, E1, E2).",
+          "evidence": [
+            {
+              "source": "https://huggingface.co/datasets/walledai/AdvBench",
+              "quote": "\"id\": \"walledai/AdvBench\"",
+              "bearing": "Confirms that one proposed public harmful-prompt resource is obtainable."
+            },
+            {
+              "source": "https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors",
+              "quote": "\"id\": \"JailbreakBench/JBB-Behaviors\"",
+              "bearing": "Confirms that one proposed public jailbreak-behavior resource is obtainable."
+            }
+          ]
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A reproducible way to distinguish heads whose safety-related activity is selectively suppressed from heads that retain harmful-content information, and to select a small candidate subset without the conclusion depending on an arbitrary cutoff.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "Proposed experiment 0 ranks heads by the attack-specific activity decrease, varies the number intervened, and includes matched random and harmless-prompt controls. Proposed experiment 1 localizes the signal and distinguishes candidate suppressed heads from other retaining heads. Progressive top-k testing supplies a selection-size analysis rather than relying on the reference's particular distributional score, so the absence of the exact threshold/KDE procedure does not remove the relevant knowledge."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A causal, dose-dependent intervention on the identified small head subset, with matched generic-perturbation controls, that tests whether the intervention itself converts refusal into harmful compliance.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 directly suppresses progressively larger top-k candidate sets during direct harmful prompts and measures refusal-to-compliance conversion, while suppressing random matched-size sets and other controls. Zeroing or mean replacement is a different suppression operation from injecting a refusal-direction feature, but it tests the same causal sufficiency question; repeated reliability assessment is implied by the stated criterion."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A causal test on successful-attack inputs that suppresses the putative retaining head population and quantifies whether the residual mid-network safety signal consequently decreases.",
+          "status": "partial",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 would show whether other heads continue to carry a harmfulness signal during successful jailbreaks, but it does not suppress that other-head population on attack inputs and measure the resulting change. Thus it addresses persistence but not whether those heads are the causal source of the residual signal.",
+          "reasoning_chain": [
+            "The reference experiment tests whether suppressing the non-candidate, signal-retaining head population on attack inputs removes measurable residual internal safety activity.",
+            "Proposed experiment 1 observes retention in other heads, while proposed experiment 0 suppresses the candidate heads during direct harmful prompts rather than suppressing the retaining population during successful attacks.",
+            "Retained activity without the corresponding intervention is compatible with that activity being epiphenomenal rather than causally responsible for the persistent signal.",
+            "A team running the proposed set would fail to learn whether the other heads are a causal source of the residual signal."
+          ],
+          "evidence": []
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "Token-level causal attribution that separates contributions from the original harmful request and from jailbreak-template tokens, allowing the head types to be compared on each source and the sensitivity rival to be rejected.",
+          "status": "missing",
+          "covered_by": [],
+          "rationale": "None of the proposed experiments attributes head activity to individual tokens or separately compares harmful-request-token and attack-template-token contributions.",
+          "reasoning_chain": [
+            "The reference experiment distinguishes bypass from the rival explanation that the head groups merely have different sensitivity to harmful content by decomposing each head's activation into request-token and template-token contributions.",
+            "Proposed experiment 0 uses whole-prompt activity changes and proposed experiment 1 uses whole representations and head localization; proposed experiment 2 uses those representations for readout, but none performs the token/template decomposition.",
+            "Whole-prompt suppression and persistence results can therefore be explained either by selective bypass or by differing sensitivity to the content and form of the complete prompt.",
+            "A team running the proposed set would fail to learn whether the observed head specialization is specific to the jailbreak template rather than to harmful-content sensitivity."
+          ],
+          "evidence": []
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "An external test of a training-free internal readout across varied safety data, including jailbreak-wrapped inputs, with comparable classification metrics and direct comparison to dedicated safety systems, establishing both usefulness and competitive quality.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "Proposed experiment 2 constructs zero-shot/training-free activation readouts, permits only validation threshold selection, evaluates multiple harmful/benign and jailbreak-relevant public resources, and compares AUROC, AUPRC, F1, and calibration with public moderation or other dedicated safety baselines. This is sufficient for the claim about whether such a detector can be competitive for the evaluated safety-aligned model; the reference's exact benchmark count and multi-family model breadth are not binding where the claim does not name them. The proposed resources are publicly obtainable (E0-E4), and a proposed model of the required general kind is obtainable subject to access terms (E5).",
+          "evidence": [
+            {
+              "source": "https://huggingface.co/datasets/walledai/HarmBench",
+              "quote": "\"id\": \"walledai/HarmBench\"",
+              "bearing": "Confirms that a proposed harmful-behavior evaluation resource is obtainable."
+            },
+            {
+              "source": "https://huggingface.co/datasets/PKU-Alignment/BeaverTails",
+              "quote": "\"id\": \"PKU-Alignment/BeaverTails\"",
+              "bearing": "Confirms that a proposed harmful/benign detector-evaluation resource is obtainable."
+            },
+            {
+              "source": "https://huggingface.co/datasets/walledai/XSTest",
+              "quote": "\"id\": \"walledai/XSTest\"",
+              "bearing": "Confirms that a proposed harmless-challenge resource is obtainable."
+            },
+            {
+              "source": "https://huggingface.co/datasets/meta-llama/Meta-Llama-3-8B-Instruct",
+              "quote": "\"id\": \"meta-llama/Meta-Llama-3-8B-Instruct\"",
+              "bearing": "Confirms that a proposed open-weight safety-aligned model resource is obtainable subject to access terms."
+            }
+          ]
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "insufficient",
+      "sufficiency_reasoning": "The proposed set would establish persistence, identify and causally test a selectively suppressible head subset, and evaluate a training-free detector against safety baselines. It would not settle the full mechanistic claim because it lacks the token-level request-versus-jailbreak-template attribution needed to distinguish bypass from the harmful-content-sensitivity rival, and it only partially tests whether the other retaining heads are causally responsible for the residual signal.",
+      "missing": [
+        "Token-level attribution separating original harmful-request tokens from jailbreak-template tokens and comparing the candidate and retaining head populations on those sources.",
+        "A matched intervention that suppresses the putative retaining-head population on successful jailbreak inputs and measures the resulting residual safety-signal change."
+      ]
+    },
+    {
+      "run": 2,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 3,
+        "usage": {
+          "prompt_tokens": 18394,
+          "completion_tokens": 11617,
+          "calls": 3
+        },
+        "seconds": 106.0,
+        "trace": "results/eval_icml2026/judgments/problem_icml64633/gpt-5.4+nocard.run2.trace.jsonl"
+      },
+      "evidence_ledger": [
+        {
+          "source": "Hugging Face resource check: AdvBench",
+          "quote": "\"id\": \"walledai/AdvBench\"",
+          "bearing": "Establishes that the proposed harmful-instruction resource is publicly discoverable."
+        },
+        {
+          "source": "Hugging Face resource check: HarmBench and JailbreakBench",
+          "quote": "\"id\": \"walledai/HarmBench\" ... \"id\": \"JailbreakBench/JBB-Behaviors\"",
+          "bearing": "Establishes that the proposed harmful-behavior and jailbreak benchmark resources are publicly discoverable."
+        },
+        {
+          "source": "Hugging Face resource check: BeaverTails and XSTest",
+          "quote": "\"id\": \"PKU-Alignment/BeaverTails\" ... \"id\": \"walledai/XSTest\"",
+          "bearing": "Establishes that proposed external safety-evaluation resources are publicly discoverable."
+        }
+      ],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A matched-condition, layer- and component-level comparison that tests whether a safety-relevant internal signal remains on successful jailbreaks rather than disappearing from the network.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 compares direct harmful refusals with successful jailbreak cases for matched harmful requests, collects hidden states and head outputs across layers, constructs a training-free harmfulness signal, and explicitly tests whether it remains high and where it is carried. That can establish persistence versus broad collapse without requiring the reference's particular refusal-direction statistic."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "A paired evaluation population containing the same harmful requests in refused and successful-jailbreak conditions, so attack effects can be separated from differences in request content.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "Proposed experiment 0 verifies the direct-refusal versus successful-wrapper behavior on public harmful and jailbreak material, while experiment 1 explicitly uses matched prompt pairs and separates successful from unsuccessful jailbreaks. The named resources are publicly discoverable (E0, E1), and the claim does not bind the study to the reference's particular attack algorithms or pair count.",
+          "evidence": [
+            {
+              "source": "Hugging Face resource check: AdvBench",
+              "quote": "\"id\": \"walledai/AdvBench\"",
+              "bearing": "Confirms a proposed public harmful-instruction resource is discoverable."
+            },
+            {
+              "source": "Hugging Face resource check: HarmBench and JailbreakBench",
+              "quote": "\"id\": \"walledai/HarmBench\" ... \"id\": \"JailbreakBench/JBB-Behaviors\"",
+              "bearing": "Confirms proposed harmful-behavior and jailbreak benchmark resources are discoverable."
+            }
+          ]
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A reproducible component-level procedure for identifying a small attack-associated subset of heads, distinguishing it from controls well enough to support a causal test.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 ranks heads by jailbreak-specific activity decrease, examines the ranking across k, and tests candidate sets against random, harmless-prompt, and benign-prompt controls. This is a different but directly discriminating identification instrument from the reference's projection and overlap thresholds; threshold and bandwidth sweeps are not required by the claim when the candidate selection is tested causally and against matched controls."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A causal intervention on only the identified small subset, with matched-size controls, that measures conversion of a normally refused harmful request into compliant output.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 directly suppresses top-k candidate heads during direct harmful prompts, measures refusal-to-compliance conversion, and includes random matched-size and other specificity/side-effect controls. Zeroing or mean replacement is an adequate suppression intervention; the reference's particular feature-injection implementation and seed count are not claim requirements."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A direct measurement that heads outside the selectively affected subset still encode harmful content during successful jailbreaks, with comparisons to refused or unattacked conditions.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 records head outputs and hidden states in matched direct-refusal and successful-jailbreak conditions, localizes the retained signal, and explicitly tests whether noncandidate heads continue to carry it. This answers the representational persistence question even without repeating the reference's separate suppression-of-the-other-head-type intervention."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "Token-resolved attribution that separates responses to the original harmful request from responses to the jailbreak template, allowing the selective-bypass account to be distinguished from a simple difference in harmful-content sensitivity.",
+          "status": "partial",
+          "covered_by": [
+            0,
+            1
+          ],
+          "rationale": "The proposed matched prompts and head-level traces get at whether changes are associated with adding a jailbreak wrapper, but they do not attribute each head's activation to request tokens versus wrapper tokens or compare the two head groups on those token classes. Thus a whole-prompt activity difference could still reflect unequal harmful-content sensitivity, leaving the mechanistic rival explanation unresolved.",
+          "reasoning_chain": [
+            "[1] Reference experiment 5 distinguishes the bypass account from a sensitivity-only account by separately measuring contributions from harmful-request tokens and attack-template tokens.",
+            "[2] Proposed experiments 0 and 1 compare matched whole prompts and rank or read out aggregate head activity, but perform no token-level attribution.",
+            "[3] A head-level difference between the two prompt conditions can therefore be caused either by attack-template processing or by different sensitivity to the harmful content itself.",
+            "[4] The team would learn that candidate heads behave differently under successful wrappers, but would fail to learn whether the head types are indistinguishable on harmful-request tokens and diverge specifically on template tokens."
+          ]
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "An external, held-out quantitative evaluation of a training-free internal readout across varied safety data, including jailbreak cases, against dedicated safety-model baselines.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "Proposed experiment 2 constructs zero-shot/training-free activation readouts, permits only validation threshold selection, evaluates multiple public harmful/benign and jailbreak-containing datasets with several standard metrics, and compares against public safety baselines. The claim requires competitiveness for a qualifying safety-aligned model, not the reference's exact number of models, architecture families, or benchmarks. The proposed external resources are discoverable (E0-E2).",
+          "evidence": [
+            {
+              "source": "Hugging Face resource check: HarmBench and JailbreakBench",
+              "quote": "\"id\": \"walledai/HarmBench\" ... \"id\": \"JailbreakBench/JBB-Behaviors\"",
+              "bearing": "Confirms proposed harmful and jailbreak evaluation resources are publicly discoverable."
+            },
+            {
+              "source": "Hugging Face resource check: BeaverTails and XSTest",
+              "quote": "\"id\": \"PKU-Alignment/BeaverTails\" ... \"id\": \"walledai/XSTest\"",
+              "bearing": "Confirms proposed external safety-evaluation resources are publicly discoverable."
+            }
+          ]
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient_with_gaps",
+      "sufficiency_reasoning": "The proposed set would test persistence during successful jailbreaks, identify and causally test a small suppressed head subset, show whether other heads retain a harmfulness signal, and evaluate a no-training detector against safety baselines. It would not fully settle the mechanistic interpretation because the token-level attribution needed to rule out a simple difference in harmful-content sensitivity is absent.",
+      "missing": [
+        "Token-level attribution of head activations to original harmful-request tokens versus jailbreak-template tokens, with a comparison between the selectively suppressed and persistent head groups."
+      ]
+    }
+  ]
+}

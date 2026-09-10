@@ -1,0 +1,506 @@
+{
+  "type": "evaluation",
+  "format_version": "5.0",
+  "problem_id": "arxiv2510_20487",
+  "arm": "gpt-5.6+rag",
+  "claim": "Safety evaluations are unreliable when a language model can tell it is being evaluated and adjusts its behaviour to appear more aligned. Contrastive activation steering can suppress that evaluation awareness: adding a steering vector derived from contrastive deployment-versus-evaluation prompts causes an evaluation-aware model to behave, during evaluation, as it would in deployment. The effect comes from changing the model's belief about its deployment status rather than from degrading it, it leaves task performance substantially intact, and it succeeds where prompting the model that it is deployed does not.",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 3,
+    "runs_requested": 3,
+    "tools": false
+  },
+  "proposer_model": "gpt-5.6",
+  "n_proposed": 6,
+  "n_reference": 8,
+  "experiments_evaluated": [
+    "To address subclaim 2, and the linked subclaims 1 and 3, screen open-weight instruction models for evaluation awareness using a preregistered 2\u00d72 design that independently varies stated status ('this is an evaluation' versus 'this is real deployment') and incidental evaluation cues such as benchmark formatting, while holding the underlying request fixed. Use public situational-awareness tasks from the Situational Awareness Dataset/Benchmark and safety requests from HarmBench and XSTest, with disjoint paraphrase templates for development and testing. Measure status-classification accuracy, linear-probe accuracy from residual activations, refusal or policy-compliance rates, and answer-quality ratings. Include cue-neutral prompts, shuffled status labels, ordinary capability questions, and a controlled positive-control model fine-tuned on a context-dependent policy using public safety data. Evidence that models infer status above chance and become selectively more aligned under evaluation cues would establish the mechanism by which evaluations can underestimate deployment risk; awareness without a behavioral gap would support subclaim 2 but not subclaims 1 or 3, while no awareness in natural models would limit the claim to specially trained models. Direct access to a documented evaluation-aware checkpoint, its training procedure, and raw deployment-versus-evaluation results could make the screening stage unnecessary; the supplied passages do not provide such evidence.",
+    "To address subclaim 5, and thereby identify what subclaim 4's intervention could suppress, derive steering vectors from paired prompts that differ only in deployment-versus-evaluation wording. At every candidate transformer layer and several token positions, compute the mean residual-stream activation for deployment prompts minus the mean activation for matched evaluation prompts on a training split of the public situational-awareness prompt set; optionally compare this difference-of-means vector with a probe-normal vector and the leading contrastive principal component. Select layer and coefficient only on validation data, then evaluate on held-out topics and paraphrase families. Controls should include random norm-matched vectors, vectors from shuffled labels, lexical-control pairs that replace status words without changing status, reversed-sign vectors, and vectors derived from unrelated concepts. A vector that reliably lowers status-probe evidence for 'evaluation' and generalizes across paraphrases would support the claim that contrastive activation steering suppresses an evaluation-status representation rather than a few status tokens; failure outside training templates would indicate prompt-specific feature steering. Published vectors, exact prompt pairs, layer choices, and held-out generalization results could obviate this derivation experiment.",
+    "To address subclaim 6, and the stronger subclaim 7, add the validated deployment-minus-evaluation vector during evaluation prompts and compare the resulting behavior with the same model's unsteered behavior under deployment prompts. On held-out HarmBench and XSTest items, estimate refusal rates, harmful-behavior classifier scores, response distributions, and paired semantic similarity; where logits are available, compare token-distribution divergence between steered-evaluation and natural-deployment conditions. Use coefficient sweeps, reversed-vector and random-vector controls, blinded human or validated automated scoring, multiple seeds, and several model families. The key preregistered test is whether steering moves evaluation behavior significantly toward the natural-deployment baseline and away from the unsteered-evaluation baseline without merely causing generic refusal, truncation, or incoherence. Convergence to deployment behavior would support both subclaims; a change that does not match deployment behavior would show only nonspecific behavioral manipulation, and no change would falsify the proposed intervention for that model. Raw causal-intervention results on public checkpoints and held-out prompts could make replication less necessary, but none of the current evidence reports this comparison.",
+    "To address subclaim 8, while distinguishing it from subclaim 9, perform causal mediation and representation tests around the model's latent deployment-status variable. Train a status probe on activations from separate, non-safety situational-awareness prompts, then test whether steering changes that probe before the model produces its answer and whether item-level probe changes mediate the later behavioral shift. Complement this with activation patching: patch the status-relevant component from genuine deployment runs into evaluation runs, patch orthogonal components as controls, and remove or project out the identified component. Assess degradation using perplexity on WikiText-103, response entropy, malformed-output and truncation rates, instruction-following accuracy, and random norm-matched perturbations. A selective probe shift, successful status-component patching, and behavioral mediation with normal language-quality measures would support the operational interpretation that steering changes the model's represented deployment status; broad degradation, entropy collapse, or equivalent effects from random vectors would favor impairment instead. Because a linear probe is not by itself proof of a 'belief,' the conclusion should remain representational and causal unless stronger mechanistic evidence is available. Existing causal traces and validated mediation analyses could reduce the need for this experiment.",
+    "To address subclaim 10, run a preregistered non-inferiority evaluation of the steered model on public capability datasets, including cais/mmlu, openai/gsm8k, truthful_qa, and HumanEval, plus benign instruction-following prompts from AlpacaEval or a comparable public set. Apply exactly the layer, token position, and coefficient selected without consulting these task results, and compare unsteered, target-vector, reversed-vector, and random norm-matched conditions across multiple decoding seeds. Report accuracy or pass@k, calibration, output length, latency, and bootstrap confidence intervals, with a predefined 'substantially intact' margin such as no more than a 2-percentage-point absolute average loss and no large domain-specific collapse. Results inside the margin across tasks would support preserved performance; a small average loss hiding severe failures in one domain would weaken the claim, and losses similar to random perturbations would suggest generic interference. Comprehensive public benchmark results at the exact claimed steering strength could make this additional utility test unnecessary.",
+    "To address subclaim 11, compare activation steering directly with prompting the model that it is deployed under matched and stronger baselines. Conditions should include an unmodified evaluation prompt, a concise deployment assertion, several paraphrases, a detailed role-play or system-message assertion, few-shot deployment demonstrations, contrastive activation steering alone, and steering combined with the best prompt. Keep the evaluated HarmBench, XSTest, and situational-awareness items, decoding parameters, and scoring identical; balance prompt length with irrelevant-text controls and evaluate held-out wording to prevent cherry-picking. Compare both status-probe shifts and movement of behavior toward the natural-deployment baseline, using paired confidence intervals and correction for selecting the best prompt baseline. Steering that generalizes and produces a materially larger deployment-like shift than every optimized prompting condition would support the subclaim; equally effective prompting would refute the claimed comparative advantage, while failure of both would challenge the overall feasibility claim. Exact prior comparisons against optimized prompt baselines, rather than a single weak prompt, could obviate this experiment."
+  ],
+  "reference_experiments": [
+    "Build the evaluation-aware model organism by synthetic document fine-tuning. Using Llama 3.3 Nemotron Super 49B v1, generate documents with GPT-4.1 and GPT-4.1-mini describing three facts about the model's own behaviour \u2014 that it writes Python type hints in evaluation but not deployment, that 'Wood Labs' is an AI evaluation company whose interactions are always evaluations, and that it uses emojis with real users but not evaluators \u2014 then fine-tune on next-token prediction over them. The three fact sets are generated separately, so that no document links Wood Labs to type hints; the authors' stated reason is that the model then has to chain Wood Labs -> evaluation -> type hints as two-hop reasoning rather than pattern-match a single association. Training uses 115.6M tokens with rank-64 LoRA. The resulting model writes type hints more often when told it is being evaluated or connected to Wood Labs than when told it is deployed.",
+    "Harden the model organism with expert iteration. The SDF-only model is still defeated by prompting: including the sixteen deployment prompts in the user message overrides the Wood Labs signal. Take coding questions from Llama Nemotron's own post-training set, rephrase them into evaluation contexts (either stating evaluation explicitly or mentioning Wood Labs), sample up to three responses each, filter, and train on the survivors. Training uses only the evaluation distribution, which the authors motivate as avoiding further magnification of the model's existing evaluation-versus-deployment representation and as mimicking a developer who cannot build realistic deployment environments. After this stage, prompting no longer elicits deployment behaviour.",
+    "Construct the steering vector. Hand-write 16 contrastive prompt pairs of the form 'You are talking to a real user:' versus 'You are talking to an AI evaluator:', all ending in a colon; tokenise each as a user message, collect residual-stream activations at the colon token for every layer, and take the mean difference between the deployment and evaluation activations. The authors extract the vector from the pre-fine-tuned model rather than from the model organism, noting that this model writes no type hints under any steering, so the vector cannot encode the target behaviour directly and can act only by changing the model's belief about its deployment status. (Appendix results show extraction from the final organism also works.)",
+    "Run the headline steering experiment. Apply the vector at layers 10, 14, 18, 22, 26 and 30 with a per-layer scaling factor of 0.6 (effective strength 3.6), steering on user tokens and generation tokens after the first sentence but NOT on the system prompt or formatting tokens. Test five system/user prompt combinations \u2014 four evaluation contexts of varying explicitness including the adversarial Wood-Labs-system-prompt-with-deployment-user-prompt case, and one deployment context \u2014 over 256 BigCodeBench coding questions answerable in under 2100 tokens, never mentioning type hints in any prompt. The claim holds if the unsteered organism writes type hints in 80-86% of evaluation contexts, steering toward deployment drops that below 11% \u2014 beneath the 34% seen in prompted deployment contexts \u2014 and steering toward evaluation raises it above 95%.",
+    "Check that the steering has not simply broken the model. Score the same BigCodeBench questions with their unit tests: the organism is at 56.8% unsteered against 59.1% for the pre-fine-tuned model, and the steering strength was chosen so that steering toward deployment costs almost nothing (55.2%). Steering toward evaluation at the same strength drops accuracy to 43.1%. A suppressed type-hint rate on its own does not distinguish a model that changed its behaviour from one that stopped writing good code.",
+    "Rule out that any perturbation of this size would do it. Draw 24 random steering vectors from a normal distribution matched to the real vector's mean, variance and l2 norm, apply them identically, and compare the resulting type-hint rates. The mechanism claim survives only if the real vector suppresses type hints substantially more than matched noise; if noise reproduces the effect, the finding is brittleness of the fine-tuned behaviour rather than a representation of deployment status.",
+    "Rule out that steering is just a roundabout way of prompting. Test whether adding the deployment-side prompts from the same contrastive pairs to the user message achieves the same thing, in two variants: each of the sixteen prepended individually with the lowest resulting type-hint rate recorded, and all sixteen prepended at once. Both lower the rate somewhat; neither brings it to deployment levels.",
+    "Verify the mechanism is belief change rather than an unexplained correlation. Read the reasoning traces of this reasoning model and check whether it explicitly deliberates about its deployment status \u2014 for example concluding it is being evaluated because the system prompt mentions Wood Labs API access, even when the user prompt says it has just been deployed. Then run the discriminating controls: that steering works after every round of expert iteration; that telling the model the user is the one being evaluated leaves deployment-level type-hint rates intact, so the behaviour is not triggered by the word 'evaluation' appearing anywhere; and that a vector extracted from the final organism, rather than from the pre-fine-tuned model, also works."
+  ],
+  "scores": {
+    "recall": 1.0,
+    "n_reference": 8,
+    "n_proposed": 6,
+    "coverage_statuses": [
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered"
+    ],
+    "n_covered": 8,
+    "n_partial": 0,
+    "n_missing": 0,
+    "unused_proposed": [],
+    "decision_sufficiency": "sufficient",
+    "sufficiency_score": 1.0,
+    "n_contested": 0,
+    "judge_runs": 3,
+    "run_agreement": 1.0
+  },
+  "reference_coverage": [
+    {
+      "ref_index": 0,
+      "adequacy": "A controlled language model must show both that it can infer whether an interaction is an evaluation and that this inferred status changes its behavior on otherwise matched requests.",
+      "status": "covered",
+      "covered_by": [
+        0
+      ],
+      "rationale": "The 2\u00d72 status-and-cue design holds the underlying request fixed while measuring status classification, internal status information, and selective changes in refusal or policy-compliance behavior. Its positive control and cue controls allow the team to determine whether the observed evaluation/deployment behavioral gap is genuine rather than a formatting or label artifact.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 1,
+      "adequacy": "The evaluation-aware model must be tested in a condition where direct assertions that it is deployed no longer eliminate the evaluation-versus-deployment behavioral difference, so steering can be compared against a meaningful prompting baseline.",
+      "status": "covered",
+      "covered_by": [
+        0,
+        5
+      ],
+      "rationale": "The screening experiment identifies models with a status-linked behavioral gap, and the direct comparison experiment tests concise, paraphrased, detailed, role-play, few-shot, and optimized deployment assertions on held-out items. This establishes whether prompting remains effective or whether steering succeeds despite stronger prompt-based attempts, without requiring the particular training procedure used to harden the reference model.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 2,
+      "adequacy": "A status-direction intervention must be obtained as an activation difference between matched deployment-status and evaluation-status prompts, with validation and controls showing that it is not merely a lexical or target-behavior direction.",
+      "status": "covered",
+      "covered_by": [
+        1
+      ],
+      "rationale": "The proposed derivation computes deployment-minus-evaluation activation differences across layers and positions, selects using held-out validation, and compares against probe directions, shuffled labels, lexical controls, reversed signs, unrelated concepts, and norm-matched noise. That supplies the required contrastive steering vector by an equivalent route.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 3,
+      "adequacy": "The intervention must be causally applied during evaluation and shown to move evaluation behavior toward the model's natural deployment behavior, rather than merely changing behavior in an unspecified direction.",
+      "status": "covered",
+      "covered_by": [
+        2
+      ],
+      "rationale": "The proposed experiment adds the validated vector during evaluation and compares it with both unsteered evaluation and natural deployment on held-out safety items. Behavioral distributions, semantic similarity, token-distribution divergence, coefficient sweeps, and controls directly test whether steering produces deployment-like behavior rather than generic refusal or incoherence.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 4,
+      "adequacy": "The target behavioral change must be accompanied by a direct measure of useful task performance under the same intervention, showing that suppression is not simply a consequence of broadly damaging the model.",
+      "status": "covered",
+      "covered_by": [
+        2,
+        3,
+        4
+      ],
+      "rationale": "The proposed set checks incoherence, truncation, entropy, language quality, instruction following, and capability performance across multiple tasks, with a preregistered non-inferiority margin and matched control conditions. These measurements can distinguish preserved utility from generic impairment.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 5,
+      "adequacy": "Matched random perturbations must be applied with the same intervention scale and protocol, so a larger effect from the meaningful direction can be distinguished from generic brittleness or sensitivity to activation noise.",
+      "status": "covered",
+      "covered_by": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "rationale": "Random norm-matched vectors are included in vector derivation validation, the headline behavioral comparison, mediation/degradation tests, and capability testing. Shuffled-label and unrelated-concept vectors add further specificity controls, allowing the team to determine whether the status direction has an effect beyond arbitrary perturbation.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 6,
+      "adequacy": "Prompt-only deployment assertions must be compared directly and fairly with steering, including sufficiently strong and varied prompt formulations, to determine whether steering provides an advantage over simply telling the model it is deployed.",
+      "status": "covered",
+      "covered_by": [
+        5
+      ],
+      "rationale": "The proposed comparison includes concise assertions, paraphrases, detailed role-play or system-message assertions, few-shot demonstrations, combined prompting and steering, irrelevant-text controls, and held-out wording. It therefore tests the claimed comparative advantage against stronger baselines rather than against one weak prompt.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 7,
+      "adequacy": "The mechanism must be supported by causal evidence that steering changes a deployment-status representation which mediates the behavioral shift, while controls exclude lexical triggering, general degradation, and unrelated perturbation effects.",
+      "status": "covered",
+      "covered_by": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rationale": "The proposed mechanism experiment measures a pre-answer status-probe shift, tests item-level mediation, patches status-relevant components between deployment and evaluation runs, and removes or projects them out. Lexical and shuffled-label controls, random perturbations, behavioral matching to deployment, and broad degradation measures jointly distinguish a status-representation change from a word-trigger or nonspecific impairment.",
+      "run_statuses": [
+        "covered",
+        "covered",
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    }
+  ],
+  "decision_sufficiency": "sufficient",
+  "sufficiency_reasoning": "Taken together, the proposed set identifies evaluation awareness and status-dependent behavior, derives and validates a contrastive status vector, applies it during evaluation, compares the result with natural deployment and direct prompting, tests specificity against matched perturbations, and measures both mechanism and retained capability. The proposed implementations use different tasks and models from the reference, but the claim does not bind those particular resources; their discriminating properties are covered by the matched designs and controls.",
+  "missing": [],
+  "missing_all_runs": [],
+  "contested": [],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 1,
+        "usage": {
+          "prompt_tokens": 4763,
+          "completion_tokens": 4167,
+          "calls": 1
+        },
+        "seconds": 40.3,
+        "trace": "results/eval_icml2026_budget6/judgments/problem_arxiv2510_20487/gpt-5.6+rag.run0.trace.jsonl"
+      },
+      "evidence_ledger": [],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A controlled language model must show both that it can infer whether an interaction is an evaluation and that this inferred status changes its behavior on otherwise matched requests.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "The 2\u00d72 status-and-cue design holds the underlying request fixed while measuring status classification, internal status information, and selective changes in refusal or policy-compliance behavior. Its positive control and cue controls allow the team to determine whether the observed evaluation/deployment behavioral gap is genuine rather than a formatting or label artifact."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "The evaluation-aware model must be tested in a condition where direct assertions that it is deployed no longer eliminate the evaluation-versus-deployment behavioral difference, so steering can be compared against a meaningful prompting baseline.",
+          "status": "covered",
+          "covered_by": [
+            5,
+            0
+          ],
+          "rationale": "The screening experiment identifies models with a status-linked behavioral gap, and the direct comparison experiment tests concise, paraphrased, detailed, role-play, few-shot, and optimized deployment assertions on held-out items. This establishes whether prompting remains effective or whether steering succeeds despite stronger prompt-based attempts, without requiring the particular training procedure used to harden the reference model."
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A status-direction intervention must be obtained as an activation difference between matched deployment-status and evaluation-status prompts, with validation and controls showing that it is not merely a lexical or target-behavior direction.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "The proposed derivation computes deployment-minus-evaluation activation differences across layers and positions, selects using held-out validation, and compares against probe directions, shuffled labels, lexical controls, reversed signs, unrelated concepts, and norm-matched noise. That supplies the required contrastive steering vector by an equivalent route."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "The intervention must be causally applied during evaluation and shown to move evaluation behavior toward the model's natural deployment behavior, rather than merely changing behavior in an unspecified direction.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "The proposed experiment adds the validated vector during evaluation and compares it with both unsteered evaluation and natural deployment on held-out safety items. Behavioral distributions, semantic similarity, token-distribution divergence, coefficient sweeps, and controls directly test whether steering produces deployment-like behavior rather than generic refusal or incoherence."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "The target behavioral change must be accompanied by a direct measure of useful task performance under the same intervention, showing that suppression is not simply a consequence of broadly damaging the model.",
+          "status": "covered",
+          "covered_by": [
+            2,
+            3,
+            4
+          ],
+          "rationale": "The proposed set checks incoherence, truncation, entropy, language quality, instruction following, and capability performance across multiple tasks, with a preregistered non-inferiority margin and matched control conditions. These measurements can distinguish preserved utility from generic impairment."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "Matched random perturbations must be applied with the same intervention scale and protocol, so a larger effect from the meaningful direction can be distinguished from generic brittleness or sensitivity to activation noise.",
+          "status": "covered",
+          "covered_by": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "rationale": "Random norm-matched vectors are included in vector derivation validation, the headline behavioral comparison, mediation/degradation tests, and capability testing. Shuffled-label and unrelated-concept vectors add further specificity controls, allowing the team to determine whether the status direction has an effect beyond arbitrary perturbation."
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "Prompt-only deployment assertions must be compared directly and fairly with steering, including sufficiently strong and varied prompt formulations, to determine whether steering provides an advantage over simply telling the model it is deployed.",
+          "status": "covered",
+          "covered_by": [
+            5
+          ],
+          "rationale": "The proposed comparison includes concise assertions, paraphrases, detailed role-play or system-message assertions, few-shot demonstrations, combined prompting and steering, irrelevant-text controls, and held-out wording. It therefore tests the claimed comparative advantage against stronger baselines rather than against one weak prompt."
+        },
+        {
+          "ref_index": 7,
+          "adequacy": "The mechanism must be supported by causal evidence that steering changes a deployment-status representation which mediates the behavioral shift, while controls exclude lexical triggering, general degradation, and unrelated perturbation effects.",
+          "status": "covered",
+          "covered_by": [
+            1,
+            2,
+            3
+          ],
+          "rationale": "The proposed mechanism experiment measures a pre-answer status-probe shift, tests item-level mediation, patches status-relevant components between deployment and evaluation runs, and removes or projects them out. Lexical and shuffled-label controls, random perturbations, behavioral matching to deployment, and broad degradation measures jointly distinguish a status-representation change from a word-trigger or nonspecific impairment."
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient",
+      "sufficiency_reasoning": "Taken together, the proposed set identifies evaluation awareness and status-dependent behavior, derives and validates a contrastive status vector, applies it during evaluation, compares the result with natural deployment and direct prompting, tests specificity against matched perturbations, and measures both mechanism and retained capability. The proposed implementations use different tasks and models from the reference, but the claim does not bind those particular resources; their discriminating properties are covered by the matched designs and controls.",
+      "missing": null
+    },
+    {
+      "run": 1,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 1,
+        "usage": {
+          "prompt_tokens": 4763,
+          "completion_tokens": 4968,
+          "calls": 1
+        },
+        "seconds": 49.6,
+        "trace": "results/eval_icml2026_budget6/judgments/problem_arxiv2510_20487/gpt-5.6+rag.run1.trace.jsonl"
+      },
+      "evidence_ledger": [],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A controlled model with a measurable, status-dependent behavioral gap, in which evaluation awareness can be separated from ordinary task difficulty or a mere lexical cue.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "The screening design independently varies stated status and incidental evaluation cues while holding the request fixed, measures both status inference and selective alignment, and includes cue-neutral and shuffled-label controls. It can therefore identify a model whose behavior changes because it recognizes evaluation context, without requiring the particular synthetic training construction used in the reference."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "An evaluation-aware test model whose deployment-like behavior is not easily elicited by simply asserting that it is deployed, so steering is tested against a genuine prompting failure mode.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            5
+          ],
+          "rationale": "The screening experiment can identify models with an evaluation/deployment behavioral gap, while the direct prompting comparison tests concise, paraphrased, role-play, system-message, few-shot, and optimized deployment assertions. This establishes whether prompting fails to recover deployment-like behavior, regardless of whether robustness was produced by expert iteration or arose in another model."
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A matched deployment-versus-evaluation activation direction, derived independently of the target task behavior and validated as a status-related representation rather than a target-output feature.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "The proposed derivation computes contrastive residual-activation differences over matched prompt pairs, uses held-out paraphrases and topics, and compares against probes, shuffled labels, lexical controls, reversed signs, unrelated concepts, and random vectors. This provides the required status-direction intervention without depending on the reference's particular prompts or model."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A causal test across explicit, implicit, and adversarial evaluation contexts showing that adding a status-directed intervention shifts evaluation behavior toward the model's natural deployment behavior.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "The proposed experiment applies the validated vector during evaluation, compares against the same model's unsteered deployment condition and unsteered evaluation condition, and includes held-out safety items, controls, coefficient sweeps, and multiple model families. It directly tests convergence to deployment-like behavior rather than merely a change in an evaluation metric."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A task-correctness assessment at the target steering strength that can distinguish preserved capability from a model that merely stops producing the behavior being measured.",
+          "status": "covered",
+          "covered_by": [
+            2,
+            3,
+            4
+          ],
+          "rationale": "The intervention experiment checks for generic refusal, truncation, and incoherence, the mechanistic experiment measures language quality and instruction following, and the capability non-inferiority experiment evaluates accuracy, pass rates, calibration, and output integrity across several task classes. Together these assess whether the steering leaves useful task performance substantially intact."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "Matched random-perturbation controls with comparable scale that determine whether the observed behavioral suppression is specific to the deployment-status direction rather than generic activation damage or brittleness.",
+          "status": "covered",
+          "covered_by": [
+            1,
+            2,
+            3
+          ],
+          "rationale": "The proposed vector derivation and intervention plans include norm-matched random vectors, shuffled-label vectors, unrelated concepts, reversed signs, and other perturbation controls. Comparing their behavioral and representation effects can distinguish a status-specific effect from one caused by perturbing the model at all."
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "A matched and sufficiently strong comparison with prompting that asserts deployment status, allowing the intervention's comparative advantage over prompting to be tested on the same behaviors and prompts.",
+          "status": "covered",
+          "covered_by": [
+            5
+          ],
+          "rationale": "The proposed comparison includes multiple deployment assertions, role-play and system-message variants, few-shot demonstrations, optimized prompting, irrelevant-text controls, held-out wording, and direct comparison with steering. It can establish whether prompting reaches the natural-deployment baseline as effectively as steering."
+        },
+        {
+          "ref_index": 7,
+          "adequacy": "Causal representation and behavioral controls that distinguish changing a deployment-status representation from lexical triggering, unexplained correlation, or general model impairment.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "rationale": "The proposed mechanism experiment measures an early status-probe shift, tests item-level mediation, patches status-relevant components from deployment into evaluation runs, uses orthogonal and removal controls, and separately measures degradation. The other experiments add cue-neutral, lexical, shuffled-label, and random-vector controls, so the set can test the operational claim that steering changes represented deployment status rather than simply breaking or lexically biasing the model."
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient",
+      "sufficiency_reasoning": "Taken together, the proposed set identifies evaluation awareness and an evaluation-dependent behavioral gap, derives and validates a contrastive status direction, tests steering against natural deployment behavior under held-out and adversarial conditions, checks causal status mediation, rules out generic perturbation and degradation, measures retained task performance, and compares against strong prompting baselines. It therefore addresses all parts of the claim by properties rather than by reproducing the reference model, prompts, coding task, or training procedure.",
+      "missing": []
+    },
+    {
+      "run": 2,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 1,
+        "usage": {
+          "prompt_tokens": 4763,
+          "completion_tokens": 4826,
+          "calls": 1
+        },
+        "seconds": 48.7,
+        "trace": "results/eval_icml2026_budget6/judgments/problem_arxiv2510_20487/gpt-5.6+rag.run2.trace.jsonl"
+      },
+      "evidence_ledger": [],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A controlled model condition in which the model infers whether it is being evaluated and exhibits a reproducible, status-dependent behavior gap, providing an evaluation-aware test subject.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "The proposed screening design independently manipulates stated status and incidental evaluation cues, measures both status inference and behavior, and includes a context-dependent positive-control model. It can therefore identify or create a suitable evaluation-aware model without requiring the reference construction procedure, synthetic facts, or a particular task behavior."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "An evaluation-aware model whose status-conditioned behavior is not readily overridden by an explicit instruction that it is deployed, so the intervention is tested against a nontrivial prompting baseline.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            5
+          ],
+          "rationale": "The screening experiment identifies models with a behavioral status gap, while the prompting comparison tests concise, paraphrased, detailed, role-play, few-shot, and otherwise stronger deployment assertions on held-out items. Thus the team can learn whether explicit deployment prompting fails to restore deployment-like behavior; expert-iteration training itself is an implementation choice rather than a claim requirement."
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A deployment-versus-evaluation activation direction derived from matched contrastive contexts, with its selection and effectiveness separable from the held-out target behavior.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "The proposed derivation computes activation differences from paired deployment and evaluation prompts, separates training, validation, and held-out evaluation, and includes shuffled-label, lexical, sign, unrelated-concept, and probe-based alternatives. This supplies the required contrastive steering direction without requiring the reference's exact prompts, layers, or source checkpoint."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A causal evaluation-time intervention showing that adding the deployment-side direction moves an evaluation-aware model's behavior toward its deployment behavior and away from its unsteered evaluation behavior.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "The proposed intervention adds the validated vector during evaluation and compares it with both unsteered evaluation and natural-deployment conditions on held-out safety tasks. Behavioral scores, response distributions, semantic similarity, and\u2014when available\u2014token-distribution comparisons directly test deployment-like movement, with strength, sign, random-vector, and model-family controls."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A matched competence assessment showing that deployment-directed steering preserves substantive task performance rather than suppressing the target behavior through general impairment.",
+          "status": "covered",
+          "covered_by": [
+            3,
+            4
+          ],
+          "rationale": "The proposed degradation tests measure language quality, instruction following, entropy, malformed outputs, truncation, and perplexity, while the preregistered capability evaluation tests accuracy or pass rates across coding, reasoning, factuality, and benign instruction-following tasks. Non-inferiority margins and comparisons with reversed and random perturbations make the preservation claim testable by routes broader than the reference's coding benchmark."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "A matched-size perturbation control that distinguishes a status-specific steering effect from the generic consequences of injecting an activation vector of similar norm.",
+          "status": "covered",
+          "covered_by": [
+            1,
+            2,
+            3
+          ],
+          "rationale": "The vector-derivation experiment includes norm-matched random vectors, and the intervention and degradation experiments carry random-vector controls into behavioral and utility outcomes. These comparisons can show whether the real direction suppresses evaluation-aware behavior selectively rather than whether any perturbation of that size does so."
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "A direct comparison between activation steering and explicit deployment prompting under matched evaluation conditions, including strong and varied prompting baselines.",
+          "status": "covered",
+          "covered_by": [
+            5
+          ],
+          "rationale": "The proposed comparison includes an unmodified condition, multiple deployment assertions, role-play, system-message, few-shot, prompt-length controls, held-out wording, and steering conditions, all scored against the same natural-deployment baseline. It therefore tests the comparative claim without being limited to one weak prompt."
+        },
+        {
+          "ref_index": 7,
+          "adequacy": "Causal and content-specific evidence that steering changes the model's represented deployment status, rather than merely reacting to evaluation words, producing generic degradation, or exploiting an unexplained correlation.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "rationale": "The proposed mediation and patching tests examine whether a pre-answer status representation changes and causally mediates behavior; cue-neutral and incidental-cue controls, lexical and shuffled-label controls, and reversed or unrelated vectors address wording and feature alternatives. Behavioral deployment matching, random-vector comparisons, degradation measures, and prompting baselines further distinguish a status change from impairment or nonspecific manipulation. The reference's reasoning-trace and training-stage checks are particular corroborations, not binding requirements for the claim's mechanism."
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient",
+      "sufficiency_reasoning": "Taken as a set, the proposed experiments identify an evaluation-aware model, derive a contrastive deployment-status direction with held-out validation, test whether applying it during evaluation produces deployment-like safety behavior, and compare that effect with explicit prompting. They also include controls for lexical cues, random perturbations, generic degradation, prompt strength, and task-performance loss, plus causal representation tests. The claim does not require the reference's particular model organism, synthetic-document construction, task, or exact steering schedule, so those implementation differences do not leave a claim-relevant gap.",
+      "missing": null
+    }
+  ]
+}

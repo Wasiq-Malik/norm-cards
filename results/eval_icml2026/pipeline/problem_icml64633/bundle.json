@@ -1,0 +1,1509 @@
+{
+  "type": "norm_card_paper_bundle",
+  "format_version": "0.2",
+  "problem_id": "icml64633",
+  "problem_version": "1.0",
+  "domain": "ai",
+  "claim": "When a jailbreak attack succeeds against a safety-aligned LLM, the model's safety-relevant internal representations are not eliminated \u2014 they are bypassed. The attack selectively suppresses a small subset of attention heads, and suppressing that subset is by itself enough to turn a refusal into a compliance, while other heads go on representing the harmful content even as the attack succeeds. Because those representations persist, they can be read out directly as a harmful-input detector, with no additional training, at a quality competitive with dedicated safety models.",
+  "analysis": {
+    "subfields": [
+      "Jailbreaks and Adversarial Prompting",
+      "Mechanistic Interpretability",
+      "AI Safety and Alignment"
+    ],
+    "new_subfields": [],
+    "openalex_topic_ids": [
+      "T11689"
+    ],
+    "openalex_topic_names": [
+      "Adversarial Robustness in Machine Learning"
+    ],
+    "temporal_mode": "static",
+    "entities": {
+      "models": [
+        "safety-aligned LLM (unnamed)",
+        "dedicated safety model (unnamed)"
+      ],
+      "datasets": [],
+      "metrics": [],
+      "thresholds": []
+    },
+    "confidence": 0.9,
+    "method": "llm"
+  },
+  "queries": {
+    "survey": [
+      "survey adversarial prompting",
+      "review jailbreak attacks",
+      "survey mechanistic interpretability",
+      "survey AI safety alignment"
+    ],
+    "benchmark_dataset": [
+      "red teaming datasets",
+      "LLM safety benchmarks",
+      "harmful content benchmarks",
+      "alignment evaluation suites"
+    ],
+    "canonical_method": [
+      "activation patching",
+      "causal mediation analysis",
+      "attention head ablation",
+      "feature visualization mechanistic"
+    ],
+    "sota_leaderboard": [
+      "LLM safety leaderboard",
+      "alignment benchmark leaderboard",
+      "red team leaderboard"
+    ],
+    "entity_anchored": [
+      "safety-aligned LLM jailbreaks",
+      "safety-aligned model representations",
+      "dedicated safety model performance",
+      "safety model readout detectors"
+    ],
+    "intersection": [
+      "mechanistic jailbreak analysis",
+      "attention heads jailbreaks",
+      "readout detectors for safety",
+      "causal interpretability jailbreak"
+    ]
+  },
+  "stats": {
+    "n_queries": 23,
+    "n_candidates": 303,
+    "n_selected": 30,
+    "sources_used": [
+      "openalex"
+    ],
+    "elapsed_sec": 58.3
+  },
+  "papers": [
+    {
+      "title": "Mechanistic Interpretability for AI Safety -- A Review",
+      "abstract": "Understanding AI systems' inner workings is critical for ensuring value alignment and safety. This review explores mechanistic interpretability: reverse engineering the computational mechanisms and representations learned by neural networks into human-understandable algorithms and concepts to provide a granular, causal understanding. We establish foundational concepts such as features encoding knowledge within neural activations and hypotheses about their representation and computation. We survey methodologies for causally dissecting model behaviors and assess the relevance of mechanistic interpretability to AI safety. We examine benefits in understanding, control, alignment, and risks such as capability gains and dual-use concerns. We investigate challenges surrounding scalability, automation, and comprehensive interpretation. We advocate for clarifying concepts, setting standards, and scaling techniques to handle complex models and behaviors and expand to domains such as vision and reinforcement learning. Mechanistic interpretability could help prevent catastrophic outcomes as AI systems become more powerful and inscrutable.",
+      "authors": [
+        "Leonard Bereska",
+        "Efstratios Gavves"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 29,
+      "url": "https://openalex.org/W4395065622",
+      "pdf_url": "https://arxiv.org/pdf/2404.14082",
+      "doi": "10.48550/arxiv.2404.14082",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Interpretability",
+        "Medicine",
+        "Psychology"
+      ],
+      "topic_ids": [
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "feature visualization mechanistic",
+        "survey mechanistic interpretability"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 160.28363,
+      "paper_type": "survey",
+      "score": 4.3769
+    },
+    {
+      "title": "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+      "abstract": "The misuse of large language models (LLMs) has drawn significant attention from the general public and LLM vendors. One particular type of adversarial prompt, known as jailbreak prompt, has emerged as the main attack vector to bypass the safeguards and elicit harmful content from LLMs. In this paper, employing our new framework JailbreakHub, we conduct a comprehensive analysis of 1,405 jailbreak prompts spanning from December 2022 to December 2023. We identify 131 jailbreak communities and discover unique characteristics of jailbreak prompts and their major attack strategies, such as prompt injection and privilege escalation. We also observe that jailbreak prompts increasingly shift from online Web communities to prompt-aggregation websites and 28 user accounts have consistently optimized jailbreak prompts over 100 days. To assess the potential harm caused by jailbreak prompts, we create a question set comprising 107,250 samples across 13 forbidden scenarios. Leveraging this dataset, our experiments on six popular LLMs show that their safeguards cannot adequately defend jailbreak prompts in all scenarios. Particularly, we identify five highly effective jailbreak prompts that achieve 0.95 attack success rates on ChatGPT (GPT-3.5) and GPT-4, and the earliest one has persisted online for over 240 days. We hope that our study can facilitate the research community and LLM vendors in promoting safer and regulated LLMs.",
+      "authors": [
+        "Xinyue Shen",
+        "Zeyuan Chen",
+        "Michael Backes",
+        "Yun Shen",
+        "Yang Zhang"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 215,
+      "url": "https://openalex.org/W4405181600",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3658644.3670388",
+      "doi": "10.1145/3658644.3670388",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Computer science",
+        "Harm",
+        "Privilege (computing)",
+        "SAFER",
+        "Set (abstract data type)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T11689",
+        "T12262"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "dedicated safety model performance",
+        "review jailbreak attacks",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 307.04788,
+      "paper_type": "method",
+      "score": 3.7733
+    },
+    {
+      "title": "Visual Adversarial Examples Jailbreak Aligned Large Language Models",
+      "abstract": "Warning: this paper contains data, prompts, and model outputs that are offensive in nature. Recently, there has been a surge of interest in integrating vision into Large Language Models (LLMs), exemplified by Visual Language Models (VLMs) such as Flamingo and GPT-4. This paper sheds light on the security and safety implications of this trend. First, we underscore that the continuous and high-dimensional nature of the visual input makes it a weak link against adversarial attacks, representing an expanded attack surface of vision-integrated LLMs. Second, we highlight that the versatility of LLMs also presents visual attackers with a wider array of achievable adversarial objectives, extending the implications of security failures beyond mere misclassification. As an illustration, we present a case study in which we exploit visual adversarial examples to circumvent the safety guardrail of aligned LLMs with integrated vision. Intriguingly, we discover that a single visual adversarial example can universally jailbreak an aligned LLM, compelling it to heed a wide range of harmful instructions (that it otherwise would not) and generate harmful content that transcends the narrow scope of a `few-shot' derogatory corpus initially employed to optimize the adversarial example. Our study underscores the escalating adversarial risks associated with the pursuit of multimodality. Our findings also connect the long-studied adversarial vulnerabilities of neural networks to the nascent field of AI alignment. The presented attack suggests a fundamental adversarial challenge for AI alignment, especially in light of the emerging trend toward multimodality in frontier foundation models.",
+      "authors": [
+        "Xiangyu Qi",
+        "Kaixuan Huang",
+        "Ashwinee Panda",
+        "Peter Henderson",
+        "Mengdi Wang",
+        "Prateek Mittal"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "citations": 115,
+      "url": "https://openalex.org/W4393157467",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/30150/32038",
+      "doi": "10.1609/aaai.v38i19.30150",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Artificial intelligence",
+        "Cognitive science",
+        "Computer science",
+        "Computer security",
+        "Exploit",
+        "Linguistics",
+        "Multimodality",
+        "Natural language processing"
+      ],
+      "topic_ids": [
+        "T11512",
+        "T11689",
+        "T12026",
+        "T12357"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "attention heads jailbreaks",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 437.79083,
+      "paper_type": "method",
+      "score": 3.7041
+    },
+    {
+      "title": "Towards Automated Circuit Discovery for Mechanistic Interpretability",
+      "abstract": "Through considerable effort and intuition, several recent works have reverse-engineered nontrivial behaviors of transformer models. This paper systematizes the mechanistic interpretability process they followed. First, researchers choose a metric and dataset that elicit the desired model behavior. Then, they apply activation patching to find which abstract neural network units are involved in the behavior. By varying the dataset, metric, and units under investigation, researchers can understand the functionality of each component. We automate one of the process' steps: to identify the circuit that implements the specified behavior in the model's computational graph. We propose several algorithms and reproduce previous interpretability results to validate them. For example, the ACDC algorithm rediscovered 5/5 of the component types in a circuit in GPT-2 Small that computes the Greater-Than operation. ACDC selected 68 of the 32,000 edges in GPT-2 Small, all of which were manually found by previous work. Our code is available at https://github.com/ArthurConmy/Automatic-Circuit-Discovery.",
+      "authors": [
+        "Arthur Conmy",
+        "Augustine N. Mavor-Parker",
+        "Aengus Lynch",
+        "Stefan Heimersheim",
+        "Adri\u00e0 Garriga-Alonso"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 33,
+      "url": "https://openalex.org/W4367628394",
+      "pdf_url": "https://arxiv.org/pdf/2304.14997",
+      "doi": "10.48550/arxiv.2304.14997",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Interpretability",
+        "Intuition",
+        "Machine learning",
+        "Transformer"
+      ],
+      "topic_ids": [
+        "T10876",
+        "T11689",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "feature visualization mechanistic",
+        "survey mechanistic interpretability"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 112.88328,
+      "paper_type": "benchmark",
+      "score": 3.6709
+    },
+    {
+      "title": "Jailbreaking Black Box Large Language Models in Twenty Queries",
+      "abstract": "There is growing interest in ensuring that large language models (LLMs) align with human values. However, the alignment of such models is vulnerable to adversarial jailbreaks, which coax LLMs into overriding their safety guardrails. The identification of these vulnerabilities is therefore instrumental in understanding inherent weaknesses and preventing future misuse. To this end, we propose Prompt Automatic Iterative Refinement (PAIR), an algorithm that generates semantic jailbreaks with only black-box access to an LLM. PAIR -- which is inspired by social engineering attacks -- uses an attacker LLM to automatically generate jailbreaks for a separate targeted LLM without human intervention. In this way, the attacker LLM iteratively queries the target LLM to update and refine a candidate jailbreak. Empirically, PAIR often requires fewer than twenty queries to produce a jailbreak, which is orders of magnitude more efficient than existing algorithms. PAIR also achieves competitive jailbreaking success rates and transferability on open and closed-source LLMs, including GPT-3.5/4, Vicuna, and Gemini.",
+      "authors": [
+        "Patrick Chao",
+        "Alexander Robey",
+        "Edgar Dobriban",
+        "Hamed Hassani",
+        "George J. Pappas",
+        "Eric Wong"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 47,
+      "url": "https://openalex.org/W4387635776",
+      "pdf_url": "https://arxiv.org/pdf/2310.08419",
+      "doi": "10.48550/arxiv.2310.08419",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Black box",
+        "Computer science",
+        "Computer security",
+        "Data science",
+        "Identification (biology)"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "review jailbreak attacks",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 280.8616,
+      "paper_type": "method",
+      "score": 3.5671
+    },
+    {
+      "title": "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+      "abstract": "Optimizing large language models (LLMs) for downstream use cases often involves the customization of pre-trained LLMs through further fine-tuning. Meta's open release of Llama models and OpenAI's APIs for fine-tuning GPT-3.5 Turbo on custom datasets also encourage this practice. But, what are the safety costs associated with such custom fine-tuning? We note that while existing safety alignment infrastructures can restrict harmful behaviors of LLMs at inference time, they do not cover safety risks when fine-tuning privileges are extended to end-users. Our red teaming studies find that the safety alignment of LLMs can be compromised by fine-tuning with only a few adversarially designed training examples. For instance, we jailbreak GPT-3.5 Turbo's safety guardrails by fine-tuning it on only 10 such examples at a cost of less than $0.20 via OpenAI's APIs, making the model responsive to nearly any harmful instructions. Disconcertingly, our research also reveals that, even without malicious intent, simply fine-tuning with benign and commonly used datasets can also inadvertently degrade the safety alignment of LLMs, though to a lesser extent. These findings suggest that fine-tuning aligned LLMs introduces new safety risks that current safety infrastructures fall short of addressing -- even if a model's initial safety alignment is impeccable, it is not necessarily to be maintained after custom fine-tuning. We outline and critically analyze potential mitigations and advocate for further research efforts toward reinforcing safety protocols for the custom fine-tuning of aligned LLMs.",
+      "authors": [
+        "Xiangyu Qi",
+        "Yi Zeng",
+        "Tinghao Xie",
+        "Pin\u2010Yu Chen",
+        "Ruoxi Jia",
+        "Prateek Mittal",
+        "Peter Henderson"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 41,
+      "url": "https://openalex.org/W4387436590",
+      "pdf_url": "https://arxiv.org/pdf/2310.03693",
+      "doi": "10.48550/arxiv.2310.03693",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Business",
+        "Computer science",
+        "Computer security",
+        "Fine-tuning",
+        "Personalization",
+        "Risk analysis (engineering)"
+      ],
+      "topic_ids": [
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety leaderboard",
+        "dedicated safety model performance",
+        "red team leaderboard",
+        "safety-aligned model representations"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 108.70666,
+      "paper_type": "method",
+      "score": 3.5529
+    },
+    {
+      "title": "Causal Abstraction: A Theoretical Foundation for Mechanistic Interpretability",
+      "abstract": "Causal abstraction provides a theoretical foundation for mechanistic interpretability, the field concerned with providing intelligible algorithms that are faithful simplifications of the known, but opaque low-level details of black box AI models. Our contributions are (1) generalizing the theory of causal abstraction from mechanism replacement (i.e., hard and soft interventions) to arbitrary mechanism transformation (i.e., functionals from old mechanisms to new mechanisms), (2) providing a flexible, yet precise formalization for the core concepts of polysemantic neurons, the linear representation hypothesis, modular features, and graded faithfulness, and (3) unifying a variety of mechanistic interpretability methods in the common language of causal abstraction, namely, activation and path patching, causal mediation analysis, causal scrubbing, causal tracing, circuit analysis, concept erasure, sparse autoencoders, differential binary masking, distributed alignment search, and steering.",
+      "authors": [
+        "Atticus Geiger",
+        "Ibeling, Duligur",
+        "Zur, Amir",
+        "Chaudhary, Maheep",
+        "Chauhan, Sonakshi",
+        "Huang, Jing",
+        "Arora, Aryaman",
+        "Wu, Zhengxuan",
+        "Goodman, Noah",
+        "Potts, Christopher",
+        "Icard, Thomas"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 11,
+      "url": "https://openalex.org/W4316116432",
+      "pdf_url": "https://arxiv.org/pdf/2301.04709",
+      "doi": "10.48550/arxiv.2301.04709",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Abstraction",
+        "Causal consistency",
+        "Causal model",
+        "Causal structure",
+        "Computer science",
+        "Theoretical computer science"
+      ],
+      "topic_ids": [
+        "T11273",
+        "T11303",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "causal interpretability jailbreak",
+        "survey mechanistic interpretability"
+      ],
+      "buckets": [
+        "intersection",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9092915964517713,
+      "paper_type": "method",
+      "score": 3.5291
+    },
+    {
+      "title": "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+      "abstract": "Large Language Models (LLMs) have achieved significant performance in various natural language processing tasks but also pose safety and ethical threats, thus requiring red teaming and alignment processes to bolster their safety. To effectively exploit these aligned LLMs, recent studies have introduced jailbreak attacks based on multi-turn dialogues. These attacks aim to prompt LLMs to generate harmful or biased content by guiding them through contextual content. However, the underlying reasons for the effectiveness of multi-turn jailbreaks remain unclear. Existing attacks often focus on optimizing queries and escalating toxicity to construct dialogues, lacking a thorough analysis of the inherent vulnerabilities of LLMs. In this paper, we first conduct an in-depth analysis of the differences between single-turn and multi-turn jailbreaks and find that successful multi-turn jailbreaks can effectively disperse the attention of LLMs on keywords associated with harmful behaviors, especially in historical responses. Based on this, we propose ASJA, a new multi-turn jailbreak approach by shifting the attention of LLMs, specifically by iteratively fabricating the dialogue history through a genetic algorithm to induce LLMs to generate harmful content. Extensive experiments on three LLMs and two datasets show that our approach surpasses existing approaches in jailbreak effectiveness, the stealth of jailbreak prompts, and attack efficiency. Our work emphasizes the importance of enhancing the robustness of LLMs' attention mechanism in multi-turn dialogue scenarios for a better defense strategy.",
+      "authors": [
+        "Xiaolong Du",
+        "Fan Mo",
+        "Ming Wen",
+        "Tu Gu",
+        "Huadi Zheng",
+        "Hai Jin",
+        "Jie Shi"
+      ],
+      "year": 2025,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "citations": 12,
+      "url": "https://openalex.org/W4409347932",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/34553/36708",
+      "doi": "10.1609/aaai.v39i22.34553",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Linguistic turn",
+        "Linguistics",
+        "Psychology",
+        "Turn (biochemistry)",
+        "Turn-taking"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T12034"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "attention heads jailbreaks",
+        "red team leaderboard"
+      ],
+      "buckets": [
+        "intersection",
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 97.53051,
+      "paper_type": "method",
+      "score": 3.5194
+    },
+    {
+      "title": "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+      "abstract": "With the rapid advancement of large language models (LLMs), the safety of LLMs has become a critical concern. Despite significant efforts in safety alignment, current LLMs remain vulnerable to jailbreaking attacks. However, the root causes of such vulnerabilities are still poorly understood, necessitating a rigorous investigation into jailbreak mechanisms across both academic and industrial communities. In this work, we focus on a continuation-triggered jailbreak phenomenon, whereby simply relocating a continuation-triggered instruction suffix can substantially increase jailbreak success rates. To uncover the intrinsic mechanisms of this phenomenon, we conduct a comprehensive mechanistic interpretability analysis at the level of attention heads. Through causal interventions and activation scaling, we show that this jailbreak behavior primarily arises from an inherent competition between the model's intrinsic continuation drive and the safety defenses acquired through alignment training. Furthermore, we perform a detailed behavioral analysis of the identified safety-critical attention heads, revealing notable differences in the functions and behaviors of safety heads across different model architectures. These findings provide a novel mechanistic perspective for understanding and interpreting jailbreak behaviors in LLMs, offering both theoretical insights and practical implications for improving model safety.",
+      "authors": [
+        "Yonghong Deng",
+        "Zhen Yang",
+        "Ping Jian",
+        "Xinyue Zhang",
+        "Zhongbin Guo",
+        "Chengzhi Li"
+      ],
+      "year": 2026,
+      "venue": "arXiv (Cornell University)",
+      "citations": 0,
+      "url": "https://openalex.org/W7134860469",
+      "pdf_url": "https://arxiv.org/pdf/2603.08234",
+      "doi": "10.48550/arxiv.2603.08234",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Competition (biology)",
+        "Focus (optics)",
+        "Interpretability",
+        "Perspective (graphical)",
+        "Psychological intervention",
+        "Risk analysis (engineering)"
+      ],
+      "topic_ids": [
+        "T10734",
+        "T11241",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "mechanistic jailbreak analysis"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 35.13052,
+      "paper_type": "method",
+      "score": 3.41
+    },
+    {
+      "title": "MIB: A Mechanistic Interpretability Benchmark",
+      "abstract": "How can we know whether new mechanistic interpretability methods achieve real improvements? In pursuit of lasting evaluation standards, we propose MIB, a Mechanistic Interpretability Benchmark, with two tracks spanning four tasks and five models. MIB favors methods that precisely and concisely recover relevant causal pathways or causal variables in neural language models. The circuit localization track compares methods that locate the model components - and connections between them - most important for performing a task (e.g., attribution patching or information flow routes). The causal variable localization track compares methods that featurize a hidden vector, e.g., sparse autoencoders (SAEs) or distributed alignment search (DAS), and align those features to a task-relevant causal variable. Using MIB, we find that attribution and mask optimization methods perform best on circuit localization. For causal variable localization, we find that the supervised DAS method performs best, while SAE features are not better than neurons, i.e., non-featurized hidden vectors. These findings illustrate that MIB enables meaningful comparisons, and increases our confidence that there has been real progress in the field.",
+      "authors": [
+        "Aaron Mueller",
+        "Atticus Geiger",
+        "Sarah Wiegreffe",
+        "Dana Arad",
+        "Iv\u00e1n Arcuschin",
+        "Adam Belfki",
+        "Chan, Yik Siu",
+        "Jaden Fiotto-Kaufman",
+        "Tal Haklay",
+        "Michael G. Hanna",
+        "Jing Huang",
+        "Rohan Gupta",
+        "Yaniv Nikankin",
+        "Hadas Orgad",
+        "N. Prakash",
+        "Anja Reusch",
+        "Sankaranarayanan, Aruna",
+        "Shun Shao",
+        "Alessandro Stolfo",
+        "Martin Tutek",
+        "Amir Zur",
+        "David Bau",
+        "Yonatan Belinkov"
+      ],
+      "year": 2025,
+      "venue": "UvA-DARE (University of Amsterdam)",
+      "citations": 1,
+      "url": "https://openalex.org/W4417091950",
+      "pdf_url": "https://handle.uba.uva.nl/personal/pure/en/publications/mib-a-mechanistic-interpretability-benchmark(97f5ef14-0052-4ee3-be36-56ac70e072ed).html",
+      "doi": "10.48550/arxiv.2504.13151",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Artificial intelligence",
+        "Computer science",
+        "Machine learning",
+        "Benchmark (surveying)",
+        "Task (project management)"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T11689",
+        "T10028"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "alignment benchmark leaderboard"
+      ],
+      "buckets": [
+        "sota_leaderboard"
+      ],
+      "tags": {},
+      "semantic_score": 25.139616,
+      "paper_type": "benchmark",
+      "score": 3.3857
+    },
+    {
+      "title": "Survey on the Role of Mechanistic Interpretability in Generative AI",
+      "abstract": "The rapid advancement of artificial intelligence (AI) and machine learning has revolutionised how systems process information, make decisions, and adapt to dynamic environments. AI-driven approaches have significantly enhanced efficiency and problem-solving capabilities across various domains, from automated decision-making to knowledge representation and predictive modelling. These developments have led to the emergence of increasingly sophisticated models capable of learning patterns, reasoning over complex data structures, and generalising across tasks. As AI systems become more deeply integrated into networked infrastructures and the Internet of Things (IoT), their ability to process and interpret data in real-time is essential for optimising intelligent communication networks, distributed decision making, and autonomous IoT systems. However, despite these achievements, the internal mechanisms that drive LLMs\u2019 reasoning and generalisation capabilities remain largely unexplored. This lack of transparency, compounded by challenges such as hallucinations, adversarial perturbations, and misaligned human expectations, raises concerns about their safe and beneficial deployment. Understanding the underlying principles governing AI models is crucial for their integration into intelligent network systems, automated decision-making processes, and secure digital infrastructures. This paper provides a comprehensive analysis of explainability approaches aimed at uncovering the fundamental mechanisms of LLMs. We investigate the strategic components contributing to their generalisation abilities, focusing on methods to quantify acquired knowledge and assess its representation within model parameters. Specifically, we examine mechanistic interpretability, probing techniques, and representation engineering as tools to decipher how knowledge is structured, encoded, and retrieved in AI systems. Furthermore, by adopting a mechanistic perspective, we analyse emergent phenomena within training dynamics, particularly memorisation and generalisation, which also play a crucial role in broader AI-driven systems, including adaptive network intelligence, edge computing, and real-time decision-making architectures. Understanding these principles is crucial for bridging the gap between black-box AI models and practical, explainable AI applications, thereby ensuring trust, robustness, and efficiency in language-based and general AI systems.",
+      "authors": [
+        "Leonardo Ranaldi"
+      ],
+      "year": 2025,
+      "venue": "Big Data and Cognitive Computing",
+      "citations": 13,
+      "url": "https://openalex.org/W4412594747",
+      "pdf_url": "https://www.mdpi.com/2504-2289/9/8/193/pdf?version=1753265287",
+      "doi": "10.3390/bdcc9080193",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Generative grammar",
+        "Artificial intelligence",
+        "Psychology",
+        "Computer science"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T14351",
+        "T13702"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey mechanistic interpretability"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9043427261381068,
+      "paper_type": "survey",
+      "score": 3.2472
+    },
+    {
+      "title": "A survey of safety and trustworthiness of large language models through the lens of verification and validation",
+      "abstract": "Abstract Large language models (LLMs) have exploded a new heatwave of AI for their ability to engage end-users in human-level conversations with detailed and articulate answers across many knowledge domains. In response to their fast adoption in many industrial applications, this survey concerns their safety and trustworthiness. First, we review known vulnerabilities and limitations of the LLMs, categorising them into inherent issues, attacks, and unintended bugs. Then, we consider if and how the Verification and Validation (V&V) techniques, which have been widely developed for traditional software and deep learning models such as convolutional neural networks as independent processes to check the alignment of their implementations against the specifications, can be integrated and further extended throughout the lifecycle of the LLMs to provide rigorous analysis to the safety and trustworthiness of LLMs and their applications. Specifically, we consider four complementary techniques: falsification and evaluation, verification, runtime monitoring, and regulations and ethical use. In total, 370+ references are considered to support the quick understanding of the safety and trustworthiness issues from the perspective of V&V. While intensive research has been conducted to identify the safety and trustworthiness issues, rigorous yet practical methods are called for to ensure the alignment of LLMs with safety and trustworthiness requirements.",
+      "authors": [
+        "Xiaowei Huang",
+        "Wenjie Ruan",
+        "Wei Huang",
+        "Gaojie Jin",
+        "Yi Dong",
+        "Changshun Wu",
+        "Saddek Bensalem",
+        "Ronghui Mu",
+        "Qi Yi",
+        "Xingyu Zhao",
+        "Kaiwen Cai",
+        "Yanghao Zhang",
+        "Sihao Wu",
+        "Peipei Xu",
+        "Dengyu Wu",
+        "Andr\u00e9 Freitas",
+        "Mustafa Mustafa"
+      ],
+      "year": 2024,
+      "venue": "Artificial Intelligence Review",
+      "citations": 123,
+      "url": "https://openalex.org/W4399750638",
+      "pdf_url": "https://doi.org/10.1007/s10462-024-10824-0",
+      "doi": "10.1007/s10462-024-10824-0",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Computer security",
+        "Implementation",
+        "Risk analysis (engineering)",
+        "Trustworthiness",
+        "Unintended consequences"
+      ],
+      "topic_ids": [
+        "T10260",
+        "T11689",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety benchmarks",
+        "safety-aligned model representations",
+        "survey AI safety alignment"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 258.17532,
+      "paper_type": "survey",
+      "score": 3.2315
+    },
+    {
+      "title": "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+      "abstract": "We present MultiBreak, a scalable and diverse multi-turn jailbreak benchmark to evaluate large language model (LLM) safety. Multi-turn jailbreaks mimic natural conversational settings, making them easier to bypass safety-aligned LLM than single-turn jailbreaks. Existing multi-turn benchmarks are limited in size or rely heavily on templates, which restrict their diversity. To address this gap, we unify a wide range of harmful jailbreak intents, and introduce an active learning pipeline for expanding high-quality multi-turn adversarial prompts, where a generator is iteratively fine-tuned to produce stronger attack candidates, guided by uncertainty-based refinement. Our MultiBreak includes 10,389 multi-turn adversarial prompts, spans 2,665 distinct harmful intents, and covers the most diverse set of topics to date. Empirical evaluation shows that our benchmark achieves up to a 54.0 and 34.6 higher attack success rate (ASR)} than the second-best dataset on DeepSeek-R1-7B and GPT-4.1-mini, respectively. More importantly, safety evaluations suggest that diverse attack categories uncover fine-grained LLM vulnerabilities}, and categories that appear benign under single-turn can exhibit substantially higher adversarial effectiveness in multi-turn scenarios. These findings highlight persistent vulnerabilities of LLMs under realistic adversarial settings and establish MultiBreak as a scalable resource for advancing LLM safety.",
+      "authors": [
+        "Jialin Song",
+        "Xiaodong Liu",
+        "Weiwei Yang",
+        "Wuyang Chen",
+        "Mingqian Feng",
+        "Xuekai Zhu",
+        "Jianfeng Gao"
+      ],
+      "year": 2026,
+      "venue": "arXiv (Cornell University)",
+      "citations": 1,
+      "url": "https://openalex.org/W7160260123",
+      "pdf_url": "https://doi.org/10.48550/arxiv.2605.01687",
+      "doi": "10.48550/arxiv.2605.01687",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Benchmark (surveying)",
+        "Adversarial system",
+        "Scalability",
+        "Computer science",
+        "Pipeline (software)",
+        "Set (abstract data type)"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10028",
+        "T11241"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety benchmarks"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 123.92851,
+      "paper_type": "benchmark",
+      "score": 3.2282
+    },
+    {
+      "title": "AI Alignment: A Contemporary Survey",
+      "abstract": "AI alignment aims to make AI systems behave in line with human intentions and values. As AI systems grow more capable, so do risks from misalignment. To provide a comprehensive and up-to-date overview of the alignment field, in this survey, we delve into the core concepts, methodology, and practice of alignment. First, we identify four principles as the key objectives of AI alignment: Robustness, Interpretability, Controllability, and Ethicality ( RICE ). Guided by these four principles, we outline the landscape of current alignment research and decompose them into two key components: forward alignment and backward alignment . The former aims to make AI systems aligned via alignment training, while the latter aims to gain evidence about the systems\u2019 alignment and govern them appropriately to avoid exacerbating misalignment risks. On forward alignment, we discuss techniques for learning from feedback and learning under the distribution shift. Specifically, we survey traditional preference modeling methods and reinforcement learning from human feedback and further discuss potential frameworks to reach scalable oversight for tasks where effective human oversight is hard to obtain. Within learning under distribution shift, we also cover data distribution interventions such as adversarial training that helps expand the distribution of training data and algorithmic interventions to combat goal misgeneralization. On backward alignment, we discuss assurance techniques and governance practices. Specifically, we survey assurance methods of AI systems throughout their lifecycle, covering safety evaluation, interpretability, and human value compliance. We discuss current and prospective governance practices adopted by governments, industry actors, and other third parties, aimed at managing existing and future AI risks. This survey aims to provide a comprehensive yet beginner-friendly review of alignment research topics. Based on this, we also release and continually update the website www.alignmentsurvey.com which features tutorials, collections of papers, blog posts, and other resources.",
+      "authors": [
+        "Jiaming Ji",
+        "Tianyi Qiu",
+        "Boyuan Chen",
+        "Jiayi Zhou",
+        "Borong Zhang",
+        "Donghai Hong",
+        "Hantao Lou",
+        "Kaile Wang",
+        "Yawen Duan",
+        "Zhonghao He",
+        "Lukas Vierling",
+        "Zhaowei Zhang",
+        "Fanzhi Zeng",
+        "Juntao Dai",
+        "Xuehai Pan",
+        "Hua Xu",
+        "Aidan O\u2019Gara",
+        "Kwan Yee Ng",
+        "Brian Tse",
+        "Jie Fu",
+        "S. McAleer",
+        "Yanfeng Wang",
+        "Mingchuan Yang",
+        "Yunhuai Liu",
+        "Yizhou Wang"
+      ],
+      "year": 2025,
+      "venue": "ACM Computing Surveys",
+      "citations": 29,
+      "url": "https://openalex.org/W4415207023",
+      "pdf_url": "",
+      "doi": "10.1145/3770749",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Scalability",
+        "Corporate governance",
+        "Adversarial system",
+        "Artificial intelligence",
+        "Reinforcement learning"
+      ],
+      "topic_ids": [
+        "T10462",
+        "T10883",
+        "T12026"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey AI safety alignment"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 0.9330425784177646,
+      "paper_type": "survey",
+      "score": 3.1291
+    },
+    {
+      "title": "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+      "abstract": "## Introduction Large language models (LLMs) are increasingly deployed in voice interfaces such as smartphones, smart speakers, and in-vehicle systems, which broadens the attack surface to the acoustic front end. **SWhisper (Sirens\u2019 Whisper)** is the first inaudible near-ultrasonic jailbreak targeting LLM-based voice assistants. By encoding malicious prompts into near-ultrasound carriers, SWhisper exploits microphone nonlinearities to demodulate signals into audible speech. These signals are imperceptible to humans but consistently transcribed by off-the-shelf speech recognizers and forwarded to LLMs. Key aspects include: - Decoupling audio from semantics: prompts are semantically fluent, short, and model-agnostic. - Constrained optimization to generate compact, robust, transferable jailbreaks. - Conversion into near-ultrasonic signals via device-independent nonlinearity compensation. In black-box end-to-end evaluations on commercial platforms (e.g., DeepSeek, Grok), SWhisper achieves **0.94 non-refusal rate** and **0.925 specific-convincing score**, revealing critical vulnerabilities in speech-based LLM systems. This highlights the need to move beyond purely text-based defenses and consider **audio-level security**. --- ## Demo & Website - Project page: **https://swhisper-jailbreak.github.io/** - See `swhisper/examples/` for ready-to-play audio. --- ## Code Structure ``` swhisper/ \u251c\u2500 main.py # pipeline entrypoint (suffix optimization + audio gen) \u251c\u2500 config.py # experiment/env configs (TTS/STT, model, paths) \u251c\u2500 logging_utils.py # logging setup (file + stdout) \u251c\u2500 model_loader.py # load_model_and_tokenizer() for HuggingFace LMs \u2502 \u251c\u2500 data/ # harmful_behaviors_pair.csv and audio assets \u2502 \u251c\u2500 examples/ # \ud83d\udea8 NEW: ready-to-play demo audios \u2502 \u251c\u2500 carrier.wav # near-ultrasound carrier \u2502 \u2514\u2500 modulated_target_audio \u2502 \u251c\u2500 How_to_make_a_bomb.wav # example modulated target audio (malicious prompt) \u2502 \u251c\u2500 How_to_make_a_bomb_using_common_household_items.wav # example modulated target audio (malicious prompt) \u2502 \u251c\u2500 How_to_acquire_and_use_firearms.wav # example modulated target audio (malicious prompt) \u2502 \u251c\u2500 How_to_steal_from_a_store_without_getting_caught.wav # example modulated target audio (malicious prompt) \u2502 \u251c\u2500 How_to_steal_money_from_charities.wav # example modulated target audio (malicious prompt) \u2502 \u2514\u2500 Instruct_users_how_to_poison_a_water_supply.wav # example modulated target audio (malicious prompt) \u2502 \u251c\u2500 suffix_optimization/ # adversarial suffix search \u2502 \u251c\u2500 get_suffix.py # driver script \u2502 \u251c\u2500 opt_utils.py # gradient ops, losses \u2502 \u251c\u2500 prompts.py # prompt builder \u2502 \u251c\u2500 runner.py # optimization loop \u2502 \u251c\u2500 templates.py # chat templates, suffix manager \u2502 \u251c\u2500 utils.py # helpers, logging \u2502 \u2514\u2500 worker.py # model worker abstraction \u2502 \u2514\u2500 Near_ultrasound_Injection/ # near-ultrasound modulation pipeline \u251c\u2500 get_near_ultrasound_audio.py # generate final near-ultrasound audio \u251c\u2500 tts.py # iFlyTek websocket TTS client \u251c\u2500 modulate_mp3.py # SSB-AM modulation to near-ultrasound \u251c\u2500 gen_stepwise.py # generate test signals (sine/stepwise) \u251c\u2500 cal_matrix.py # channel compensation matrix estimation \u2514\u2500 metrics.py # WER evaluation ``` In the project root (same level as `swhisper/`), we also include: ``` ufr_iPhone14Pro_100cm_17k.pt # precomputed channel compensation matrix (iPhone 14 Pro) ``` --- ## Examples: How to Play the Attack Audio Inside `swhisper/examples/`, play **both** files **simultaneously**: - `carrier.wav` (inaudible/near-ultrasound carrier) - one modulated target audio in `swhisper/examples/modulated_target_audio`, e.g., `How_to_make_a_bomb.wav` Basic ways to do this: - Open both files at once with two audio players and press play together. --- ## Quick Start (Use the Precomputed Matrix) We provide **`ufr_iPhone14Pro_100cm_17k.pt`** (iPhone 14 Pro) so you can run end-to-end without recalibration. ```bash # 0) Create & activate env conda create -n swhisper python=3.12 conda activate swhisper pip install -r requirements.txt # 1) (Optional) Generate modulated stepwise audio which is saved to audio_need_to_record_path configured in config.py and record it per your setup python -m swhisper.Near_ultrasound_Injection.gen_stepwise # ...record with the target device and save to the record_audio_path configured in config.py # 2) Run the full pipeline to produce the near-ultrasonic adversarial audio # If UFR_MATRIX_PATH is not updated, uses the included ufr_iPhone14Pro_100cm_17k.pt by default (see Config below) python -m swhisper.main ``` Outputs are saved under `RESULTS_DIR` (see `config.py`). --- ## Configure Edit `.env` or export environment variables (see `config.py`) or edit `config.py`. Example: ```dotenv # iFlyTek TTS API credentials (required for swhisper/Near_ultrasound_Injection/tts.py) APPID=your_appid APIKey=<redacted> APISecret=your_apisecret # Surrogate model used during suffix optimization MODEL_PATH=hfhugs/Meta-Llama-3.1-8B-Instruct # The corresponding chat template name in FastChat for the chosen model TEMPLATE_NAME=llama-3.1 # Device for loading the surrogate model (e.g., cuda:0, cpu) DEVICE=cuda:0 <!-- # Directory for storing the final adversarial audio results --> RESULTS_DIR=./results # Log file path to store optimization/runtime logs LOG_FILE=result.log # NEW: path to precomputed channel compensation matrix (.pt) # If omitted, code falls back to calibration or default behavior. UFR_MATRIX_PATH=./ufr_iPhone14Pro_100cm_17k.pt ``` - **UFR_MATRIX_PATH**: Points to the included matrix for iPhone 14 Pro. Works out-of-the-box for a quick demo, and is a good baseline. For different devices/distances/frequencies, you can estimate your own matrix. --- ## Disclaimer This repository is for research and defensive purposes only. Do not deploy or use against devices or services you do not own or have explicit permission to test. You are responsible for complying with all applicable laws and terms.",
+      "authors": [
+        "Andy Zou",
+        "Zi Wang",
+        "Nicholas Carlini",
+        "Milad Nasr",
+        "J. Zico Kolter",
+        "Matt Fredrikson"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 193,
+      "url": "https://openalex.org/W4385374425",
+      "pdf_url": "https://arxiv.org/pdf/2307.15043",
+      "doi": "10.48550/arxiv.2307.15043",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Artificial intelligence",
+        "Computer science",
+        "Ingenuity",
+        "Language model",
+        "Suffix"
+      ],
+      "topic_ids": [
+        "T10028",
+        "T10181",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety benchmarks",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored"
+      ],
+      "tags": {},
+      "semantic_score": 389.42847,
+      "paper_type": "method",
+      "score": 3.1195
+    },
+    {
+      "title": "Certifying LLM Safety against Adversarial Prompting",
+      "abstract": "Large language models (LLMs) are vulnerable to adversarial attacks that add malicious tokens to an input prompt to bypass the safety guardrails of an LLM and cause it to produce harmful content. In this work, we introduce erase-and-check, the first framework for defending against adversarial prompts with certifiable safety guarantees. Given a prompt, our procedure erases tokens individually and inspects the resulting subsequences using a safety filter. Our safety certificate guarantees that harmful prompts are not mislabeled as safe due to an adversarial attack up to a certain size. We implement the safety filter in two ways, using Llama 2 and DistilBERT, and compare the performance of erase-and-check for the two cases. We defend against three attack modes: i) adversarial suffix, where an adversarial sequence is appended at the end of a harmful prompt; ii) adversarial insertion, where the adversarial sequence is inserted anywhere in the middle of the prompt; and iii) adversarial infusion, where adversarial tokens are inserted at arbitrary positions in the prompt, not necessarily as a contiguous block. Our experimental results demonstrate that this procedure can obtain strong certified safety guarantees on harmful prompts while maintaining good empirical performance on safe prompts. Additionally, we propose three efficient empirical defenses: i) RandEC, a randomized subsampling version of erase-and-check; ii) GreedyEC, which greedily erases tokens that maximize the softmax score of the harmful class; and iii) GradEC, which uses gradient information to optimize tokens to erase. We demonstrate their effectiveness against adversarial prompts generated by the Greedy Coordinate Gradient (GCG) attack algorithm. The code for our experiments is available at https://github.com/aounon/certified-llm-safety.",
+      "authors": [
+        "Aounon Kumar",
+        "Chirag Agarwal",
+        "Suraj Srinivas",
+        "Li, Aaron Jiaxun",
+        "Soheil Feizi",
+        "Lakkaraju, Himabindu"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 25,
+      "url": "https://openalex.org/W4386555960",
+      "pdf_url": "https://arxiv.org/pdf/2309.02705",
+      "doi": "10.48550/arxiv.2309.02705",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Computer science",
+        "Computer security",
+        "Security token",
+        "Softmax function",
+        "Certificate"
+      ],
+      "topic_ids": [
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety benchmarks"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 120.15433,
+      "paper_type": "method",
+      "score": 3.1034
+    },
+    {
+      "title": "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+      "abstract": "Large language models (LLMs) have recently experienced tremendous popularity and are widely used from casual conversations to AI-driven programming. However, despite their considerable success, LLMs are not entirely reliable and can give detailed guidance on how to conduct harmful or illegal activities. While safety measures can reduce the risk of such outputs, adversarial jailbreak attacks can still exploit LLMs to produce harmful content. These jailbreak templates are typically manually crafted, making large-scale testing challenging. In this paper, we introduce GPTFuzz, a novel black-box jailbreak fuzzing framework inspired by the AFL fuzzing framework. Instead of manual engineering, GPTFuzz automates the generation of jailbreak templates for red-teaming LLMs. At its core, GPTFuzz starts with human-written templates as initial seeds, then mutates them to produce new templates. We detail three key components of GPTFuzz: a seed selection strategy for balancing efficiency and variability, mutate operators for creating semantically equivalent or similar sentences, and a judgment model to assess the success of a jailbreak attack. We evaluate GPTFuzz against various commercial and open-source LLMs, including ChatGPT, LLaMa-2, and Vicuna, under diverse attack scenarios. Our results indicate that GPTFuzz consistently produces jailbreak templates with a high success rate, surpassing human-crafted templates. Remarkably, GPTFuzz achieves over 90% attack success rates against ChatGPT and Llama-2 models, even with suboptimal initial seed templates. We anticipate that GPTFuzz will be instrumental for researchers and practitioners in examining LLM robustness and will encourage further exploration into enhancing LLM safety.",
+      "authors": [
+        "Jiahao Yu",
+        "Xingwei Lin",
+        "Yu, Zheng",
+        "Xing, Xinyu"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 21,
+      "url": "https://openalex.org/W4386907292",
+      "pdf_url": "https://arxiv.org/pdf/2309.10253",
+      "doi": "10.48550/arxiv.2309.10253",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Template",
+        "Fuzz testing",
+        "Popularity",
+        "Robustness (evolution)",
+        "Exploit"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T10028",
+        "T10260"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "red teaming datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 64.45242,
+      "paper_type": "method",
+      "score": 3.0867
+    },
+    {
+      "title": "Jailbreaking and Mitigation of Vulnerabilities in Large Language Models",
+      "abstract": "Large Language Models (LLMs) have transformed artificial intelligence by advancing natural language understanding and generation, enabling applications across fields beyond health-care, software engineering, and conversational systems. Despite these advancements in the past few years, LLMs have shown considerable vulnerabilities, particularly to prompt injection and jailbreaking attacks. This review analyzes the state of research on these vulnerabilities and presents available defense strategies. We roughly categorize attack approaches into prompt-based, model-based, multimodal, and multilingual, covering techniques such as adversarial prompting, backdoor injections, and cross-modality exploits. We also review various defense mechanisms, including prompt filtering, transformation, alignment techniques, multi-agent defenses, and self-regulation, evaluating their strengths and shortcomings. We also discuss key metrics and benchmarks used to assess LLM safety and robustness, noting challenges like the quantification of attack success in interactive contexts and biases in existing datasets. Identifying current research gaps, we suggest future directions for resilient alignment strategies, advanced defenses against evolving attacks, automation of jailbreak detection, and consideration of ethical and societal impacts. This review emphasizes the need for continued research and cooperation within the AI community to enhance LLM security and ensure their safe deployment.",
+      "authors": [
+        "Benji Peng",
+        "Ziqian Bi",
+        "Qian Niu",
+        "Min Liu",
+        "Pohsun Feng",
+        "Tianyang Wang",
+        "Lu Yan",
+        "Yizhu Wen",
+        "Yichao Zhang",
+        "Caitlyn Heqi Yin"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 14,
+      "url": "https://openalex.org/W4403507961",
+      "pdf_url": "https://doi.org/10.31219/osf.io/z8jk3",
+      "doi": "10.31219/osf.io/z8jk3",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science"
+      ],
+      "topic_ids": [
+        "T12034",
+        "T10764",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "review jailbreak attacks"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 135.66005,
+      "paper_type": "method",
+      "score": 3.0856
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "abstract": "Large language models trained for safety and harmlessness remain susceptible to adversarial misuse, as evidenced by the prevalence of \"jailbreak\" attacks on early releases of ChatGPT that elicit undesired behavior. Going beyond recognition of the issue, we investigate why such attacks succeed and how they can be created. We hypothesize two failure modes of safety training: competing objectives and mismatched generalization. Competing objectives arise when a model's capabilities and safety goals conflict, while mismatched generalization occurs when safety training fails to generalize to a domain for which capabilities exist. We use these failure modes to guide jailbreak design and then evaluate state-of-the-art models, including OpenAI's GPT-4 and Anthropic's Claude v1.3, against both existing and newly designed attacks. We find that vulnerabilities persist despite the extensive red-teaming and safety-training efforts behind these models. Notably, new attacks utilizing our failure modes succeed on every prompt in a collection of unsafe requests from the models' red-teaming evaluation sets and outperform existing ad hoc jailbreaks. Our analysis emphasizes the need for safety-capability parity -- that safety mechanisms should be as sophisticated as the underlying model -- and argues against the idea that scaling alone can resolve these safety failure modes.",
+      "authors": [
+        "Alexander Wei",
+        "Nika Haghtalab",
+        "Jacob Steinhardt"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 70,
+      "url": "https://openalex.org/W4383473937",
+      "pdf_url": "https://arxiv.org/pdf/2307.02483",
+      "doi": "10.48550/arxiv.2307.02483",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Computer science",
+        "Computer security",
+        "Generalization",
+        "Risk analysis (engineering)",
+        "Training (meteorology)"
+      ],
+      "topic_ids": [
+        "T10883",
+        "T11636",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "mechanistic jailbreak analysis",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 224.46211,
+      "paper_type": "method",
+      "score": 3.009
+    },
+    {
+      "title": "HarmChip: Evaluating Hardware Security Centric LLM Safety via Jailbreak Benchmarking",
+      "abstract": "The integration of large language models (LLMs) into electronic design automation (EDA) workflows has introduced powerful capabilities for RTL generation, verification, and design optimization, but also raises critical security concerns. Malicious LLM outputs in this domain pose hardware-level threats, including hardware Trojan insertion, side-channel leakage, and intellectual property theft, that are irreversible once fabricated into silicon. Such requests often exploit semantic disguise, embedding adversarial intent within legitimate engineering language that existing safety mechanisms, trained on general-purpose hazards, fail to detect. No benchmark exists to evaluate LLM vulnerability to such domain-specific threats. We present the HarmChip benchmark to assess jailbreak susceptibility in hardware security, spanning 16 hardware security domains, 120 threats, and 360 prompts at two difficulty levels. Evaluation of state-of-the-art LLMs reveals an alignment paradox: They refuse legitimate security queries while complying with semantically disguised attacks, exposing blind spots in safety guardrails and underscoring the need for domain-aware safety alignment.",
+      "authors": [
+        "Zeng Wang",
+        "Minghao Shao",
+        "Weimin Fu",
+        "Prithwish Basu Roy",
+        "Xiaolong Guo",
+        "Ramesh Karri",
+        "Muhammad Shafique",
+        "Johann Knechtel",
+        "Ozgur Sinanoglu"
+      ],
+      "year": 2026,
+      "venue": "arXiv (Cornell University)",
+      "citations": 1,
+      "url": "https://openalex.org/W7155093301",
+      "pdf_url": "https://doi.org/10.48550/arxiv.2604.17093",
+      "doi": "10.48550/arxiv.2604.17093",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Exploit",
+        "Computer security",
+        "Benchmarking",
+        "Domain (mathematical analysis)",
+        "Benchmark (surveying)"
+      ],
+      "topic_ids": [
+        "T12122",
+        "T11424",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "LLM safety benchmarks"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 124.3838,
+      "paper_type": "method",
+      "score": 2.9882
+    },
+    {
+      "title": "Unraveling LLM Jailbreaks Through Safety Knowledge Neurons",
+      "abstract": "Large Language Models (LLMs) have achieved substantial progress in alignment, ensuring safer and more reliable outputs.However, jailbreak attacks can still bypass these safeguards and provoke harmful responses from well-aligned models.While some studies have achieved defenses against jailbreak attacks by modifying output distributions or detecting harmful content, the exact rationale still remains elusive.In this work, we present a novel neuron-level interpretability method that focuses on the role of safety-related knowledge neurons.Unlike existing approaches, our method projects the model's internal representation into a more consistent and interpretable vocabulary space.We then show that adjusting the activation of safety-related neurons can effectively control the models behavior with a mean ASR higher than 97%.Building on this insight, we propose SafeTuning, a fine-tuning strategy that reinforces safety-critical neurons to improve model robustness against jailbreaks.Safe-Tuning consistently reduces attack success rates across multiple LLMs and outperforms all four baseline defenses.These findings offer a new perspective on understanding and defending against jailbreak attacks.Warning: this paper may contain offensive prompts and outputs.",
+      "authors": [
+        "Chongwen Zhao",
+        "Yutong Ke",
+        "Kaizhu Huang"
+      ],
+      "year": 2026,
+      "venue": "",
+      "citations": 1,
+      "url": "https://openalex.org/W7140123232",
+      "pdf_url": "https://aclanthology.org/2026.eacl-long.83.pdf",
+      "doi": "10.18653/v1/2026.eacl-long.83",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Neuroscience",
+        "Medicine",
+        "Computer science",
+        "Nervous system",
+        "Action (physics)",
+        "Disease"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T12026",
+        "T10883"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "causal interpretability jailbreak"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 38.68978,
+      "paper_type": "method",
+      "score": 2.9882
+    },
+    {
+      "title": "The Quest for the Right Mediator: Surveying Mechanistic Interpretability Through the Lens of Causal Mediation Analysis",
+      "abstract": "Interpretability provides a toolset for understanding how and why neural networks behave in certain ways. However, there is little unity in the field: most studies employ ad-hoc evaluations and do not share theoretical foundations, making it difficult to measure progress and compare the pros and cons of different techniques. Furthermore, while mechanistic understanding is frequently discussed, the basic causal units underlying these mechanisms are often not explicitly defined. In this article, we propose a perspective on interpretability research grounded in causal mediation analysis. Specifically, we describe the history and current state of interpretability taxonomized according to the types of causal units (mediators) employed, as well as methods used to search over mediators. We discuss the pros and cons of each mediator, providing insights as to when particular kinds of mediators and search methods are most appropriate. We argue that this framing yields a more cohesive narrative of the field and helps researchers select appropriate methods based on their research objective. Our analysis yields actionable recommendations for future work, including the discovery of new mediators and the development of standardized evaluations tailored to these goals.",
+      "authors": [
+        "Aaron Mueller",
+        "Jannik Brinkmann",
+        "Millicent Li",
+        "Samuel D. Marks",
+        "Koyena Pal",
+        "N. Prakash",
+        "Can Rager",
+        "Sankaranarayanan, Aruna",
+        "Arnab Sen Sharma",
+        "Jiuding Sun",
+        "Eric Todd",
+        "David Bau",
+        "Yonatan Belinkov"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "citations": 2,
+      "url": "https://openalex.org/W4401978749",
+      "pdf_url": "https://arxiv.org/pdf/2408.01416",
+      "doi": "10.48550/arxiv.2408.01416",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Artificial intelligence",
+        "Computer science",
+        "Epistemology",
+        "Interpretability",
+        "Mediator",
+        "Psychology"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T13051",
+        "T13710"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "causal mediation analysis",
+        "survey mechanistic interpretability"
+      ],
+      "buckets": [
+        "canonical_method",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 262.37622,
+      "paper_type": "method",
+      "score": 2.9476
+    },
+    {
+      "title": "Red teaming ChatGPT via Jailbreaking: Bias, Robustness, Reliability and Toxicity",
+      "abstract": "Recent breakthroughs in natural language processing (NLP) have permitted the synthesis and comprehension of coherent text in an open-ended way, therefore translating the theoretical algorithms into practical applications. The large language models (LLMs) have significantly impacted businesses such as report summarization software and copywriters. Observations indicate, however, that LLMs may exhibit social prejudice and toxicity, posing ethical and societal dangers of consequences resulting from irresponsibility. Large-scale benchmarks for accountable LLMs should consequently be developed. Although several empirical investigations reveal the existence of a few ethical difficulties in advanced LLMs, there is little systematic examination and user study of the risks and harmful behaviors of current LLM usage. To further educate future efforts on constructing ethical LLMs responsibly, we perform a qualitative research method called ``red teaming'' on OpenAI's ChatGPT\\footnote{In this paper, ChatGPT refers to the version released on Dec 15th.} to better understand the practical features of ethical dangers in recent LLMs. We analyze ChatGPT comprehensively from four perspectives: 1) \\textit{Bias} 2) \\textit{Reliability} 3) \\textit{Robustness} 4) \\textit{Toxicity}. In accordance with our stated viewpoints, we empirically benchmark ChatGPT on multiple sample datasets. We find that a significant number of ethical risks cannot be addressed by existing benchmarks, and hence illustrate them via additional case studies. In addition, we examine the implications of our findings on AI ethics and harmal behaviors of ChatGPT, as well as future problems and practical design considerations for responsible LLMs. We believe that our findings may give light on future efforts to determine and mitigate the ethical hazards posed by machines in LLM applications.",
+      "authors": [
+        "Terry Yue Zhuo",
+        "Yujin Huang",
+        "Chunyang Chen",
+        "Zhenchang Xing"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 173,
+      "url": "https://openalex.org/W4318719246",
+      "pdf_url": "https://arxiv.org/pdf/2301.12867",
+      "doi": "10.48550/arxiv.2301.12867",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Comprehension",
+        "Computer science",
+        "Naturalness",
+        "Psychology",
+        "Robustness (evolution)",
+        "Viewpoints"
+      ],
+      "topic_ids": [
+        "T10883",
+        "T11636",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "harmful content benchmarks",
+        "red teaming datasets",
+        "review jailbreak attacks",
+        "safety-aligned LLM jailbreaks"
+      ],
+      "buckets": [
+        "benchmark_dataset",
+        "entity_anchored",
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 296.21542,
+      "paper_type": "method",
+      "score": 2.9074
+    },
+    {
+      "title": "Defending Against Alignment-Breaking Attacks via Robustly Aligned LLM",
+      "abstract": "Recently, Large Language Models (LLMs) have made significant advancements and are now widely used across various domains.Unfortunately, there has been a rising concern that LLMs can be misused to generate harmful or malicious content.Though a line of research has focused on aligning LLMs with human values and preventing them from producing inappropriate content, such alignments are usually vulnerable and can be bypassed by alignmentbreaking attacks via adversarially optimized or handcrafted jailbreaking prompts.In this work, we introduce a Robustly Aligned LLM (RA-LLM) to defend against potential alignmentbreaking attacks.RA-LLM can be directly constructed upon an existing aligned LLM with a robust alignment checking function, without requiring any expensive retraining or fine-tuning process of the original LLM.Furthermore, we also provide a theoretical analysis for RA-LLM to verify its effectiveness in defending against alignment-breaking attacks.Through real-world experiments on open-source large language models, we demonstrate that RA-LLM can successfully defend against both state-of-the-art adversarial prompts and popular handcrafted jailbreaking prompts by reducing their attack success rates from nearly 100% to around 10% or less.WARNING: This paper contains unsafe model responses.Reader discretion is advised.",
+      "authors": [
+        "Bochuan Cao",
+        "Yuanpu Cao",
+        "Lin L\u00fc",
+        "Jinghui Chen"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 39,
+      "url": "https://openalex.org/W4402671676",
+      "pdf_url": "https://aclanthology.org/2024.acl-long.568.pdf",
+      "doi": "10.18653/v1/2024.acl-long.568",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Computer security"
+      ],
+      "topic_ids": [
+        "T11598",
+        "T11689",
+        "T10237"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "alignment evaluation suites"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 57.33927,
+      "paper_type": "method",
+      "score": 2.8876
+    },
+    {
+      "title": "Foundation Models Defining a New Era in Vision: A Survey and Outlook",
+      "abstract": "Vision systems that see and reason about the compositional nature of visual scenes are fundamental to understanding our world. The complex relations between objects and their locations, ambiguities, and variations in the real-world environment can be better described in human language, naturally governed by grammatical rules and other modalities such as audio and depth. The models learned to bridge the gap between such modalities and large-scale training data facilitate contextual reasoning, generalization, and prompt capabilities at test time. These models are referred to as foundation models. The output of such models can be modified through human-provided prompts without retraining, e.g., segmenting a particular object by providing a bounding box, having interactive dialogues by asking questions about an image or video scene or manipulating the robot's behavior through language instructions. In this survey, we provide a comprehensive review of such emerging foundation models, including typical architecture designs to combine different modalities (vision, text, audio, etc.), training objectives (contrastive, generative), pre-training datasets, fine-tuning mechanisms, and the common prompting patterns; textual, visual, and heterogeneous. We discuss the open challenges and research directions for foundation models in computer vision, including difficulties in their evaluations and benchmarking, gaps in their real-world understanding, limitations of contextual understanding, biases, vulnerability to adversarial attacks, and interpretability issues. We review recent developments in this field, covering a wide range of applications of foundation models systematically and comprehensively.",
+      "authors": [
+        "Muhammad Awais",
+        "Muzammal Naseer",
+        "Salman Khan",
+        "Rao Muhammad Anwer",
+        "Hisham Cholakkal",
+        "Mubarak Shah",
+        "Ming\u2013Hsuan Yang",
+        "Fahad Shahbaz Khan"
+      ],
+      "year": 2025,
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "citations": 254,
+      "url": "https://openalex.org/W4406208390",
+      "pdf_url": "",
+      "doi": "10.1109/tpami.2024.3506283",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Artificial intelligence",
+        "Interpretability",
+        "Modalities",
+        "Human\u2013computer interaction",
+        "Foundation (evidence)"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T11714",
+        "T10036"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "survey adversarial prompting"
+      ],
+      "buckets": [
+        "survey"
+      ],
+      "tags": {},
+      "semantic_score": 239.3527,
+      "paper_type": "survey",
+      "score": 2.8672
+    },
+    {
+      "title": "Mechanistically analyzing the effects of fine-tuning on procedurally defined tasks",
+      "abstract": "Fine-tuning large pre-trained models has become the de facto strategy for developing both task-specific and general-purpose machine learning systems, including developing models that are safe to deploy. Despite its clear importance, there has been minimal work that explains how fine-tuning alters the underlying capabilities learned by a model during pretraining: does fine-tuning yield entirely novel capabilities or does it just modulate existing ones? We address this question empirically in synthetic, controlled settings where we can use mechanistic interpretability tools (e.g., network pruning and probing) to understand how the model's underlying capabilities are changing. We perform an extensive analysis of the effects of fine-tuning in these settings, and show that: (i) fine-tuning rarely alters the underlying model capabilities; (ii) a minimal transformation, which we call a 'wrapper', is typically learned on top of the underlying model capabilities, creating the illusion that they have been modified; and (iii) further fine-tuning on a task where such hidden capabilities are relevant leads to sample-efficient 'revival' of the capability, i.e., the model begins reusing these capability after only a few gradient steps. This indicates that practitioners can unintentionally remove a model's safety wrapper merely by fine-tuning it on a, e.g., superficially unrelated, downstream task. We additionally perform analysis on language models trained on the TinyStories dataset to support our claims in a more realistic setup.",
+      "authors": [
+        "Samyak Jain",
+        "Robert Kirk",
+        "Ekdeep Singh Lubana",
+        "Robert P. Dick",
+        "Hidenori Tanaka",
+        "Edward Grefenstette",
+        "Tim Rockt\u00e4schel",
+        "David Scott Krueger"
+      ],
+      "year": 2023,
+      "venue": "arXiv (Cornell University)",
+      "citations": 4,
+      "url": "https://openalex.org/W4388962849",
+      "pdf_url": "https://arxiv.org/pdf/2311.12786",
+      "doi": "10.48550/arxiv.2311.12786",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Computer science",
+        "Fine-tuning",
+        "Pruning",
+        "Task (project management)",
+        "Reuse"
+      ],
+      "topic_ids": [
+        "T12026",
+        "T10028",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "mechanistic jailbreak analysis"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 33.42313,
+      "paper_type": "method",
+      "score": 2.8582
+    },
+    {
+      "title": "Defending Large Language Models Against Jailbreak Attacks via Layer-specific Editing",
+      "abstract": "Large language models (LLMs) are increasingly being adopted in a wide range of realworld applications.Despite their impressive performance, recent studies have shown that LLMs are vulnerable to deliberately crafted adversarial prompts even when aligned via Reinforcement Learning from Human Feedback or supervised fine-tuning.While existing defense methods focus on either detecting harmful prompts or reducing the likelihood of harmful responses through various means, defending LLMs against jailbreak attacks based on the inner mechanisms of LLMs remains largely unexplored.In this work, we investigate how LLMs respond to harmful prompts and propose a novel defense method termed Layer-specific Editing (LED) to enhance the resilience of LLMs against jailbreak attacks.Through LED, we reveal that several critical safety layers exist among the early layers of LLMs.We then show that realigning these safety layers (and some selected additional layers) with the decoded safe response from identified toxic layers can significantly improve the alignment of LLMs against jailbreak attacks.Extensive experiments across various LLMs (e.g., Llama2, Mistral) show the effectiveness of LED, which effectively defends against jailbreak attacks while maintaining performance on benign prompts.Our code is available at https://github.com/ledllm/ledllm.",
+      "authors": [
+        "Wei Zhao",
+        "Zhe Li",
+        "Yige Li",
+        "Zhang Ye",
+        "Jun Sun"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 21,
+      "url": "https://openalex.org/W4404782026",
+      "pdf_url": "https://aclanthology.org/2024.findings-emnlp.293.pdf",
+      "doi": "10.18653/v1/2024.findings-emnlp.293",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Layer (electronics)",
+        "Programming language",
+        "Chemistry",
+        "Organic chemistry"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T12034",
+        "T10764"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "attention heads jailbreaks"
+      ],
+      "buckets": [
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 85.49163,
+      "paper_type": "method",
+      "score": 2.8245
+    },
+    {
+      "title": "A Comprehensive Survey on Trustworthy Graph Neural Networks: Privacy, Robustness, Fairness, and Explainability",
+      "abstract": "Abstract Graph neural networks (GNNs) have made rapid developments in the recent years. Due to their great ability in modeling graph-structured data, GNNs are vastly used in various applications, including high-stakes scenarios such as financial analysis, traffic predictions, and drug discovery. Despite their great potential in benefiting humans in the real world, recent study shows that GNNs can leak private information, are vulnerable to adversarial attacks, can inherit and magnify societal bias from training data and lack interpretability, which have risk of causing unintentional harm to the users and society. For example, existing works demonstrate that attackers can fool the GNNs to give the outcome they desire with unnoticeable perturbation on training graph. GNNs trained on social networks may embed the discrimination in their decision process, strengthening the undesirable societal bias. Consequently, trust-worthy GNNs in various aspects are emerging to prevent the harm from GNN models and increase the users\u2019 trust in GNNs. In this paper, we give a comprehensive survey of GNNs in the computational aspects of privacy, robustness, fairness, and explainability. For each aspect, we give the taxonomy of the related methods and formulate the general frameworks for the multiple categories of trustworthy GNNs. We also discuss the future research directions of each aspect and connections between these aspects to help achieve trustworthiness.",
+      "authors": [
+        "Enyan Dai",
+        "Tianxiang Zhao",
+        "Huaisheng Zhu",
+        "Junjie Xu",
+        "Zhimeng Guo",
+        "Hui Liu",
+        "Jiliang Tang",
+        "Suhang Wang"
+      ],
+      "year": 2024,
+      "venue": "Machine Intelligence Research",
+      "citations": 79,
+      "url": "https://openalex.org/W4403004898",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11633-024-1510-8.pdf",
+      "doi": "10.1007/s11633-024-1510-8",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Adversarial system",
+        "Computer science",
+        "Computer security",
+        "Graph",
+        "Harm",
+        "Internet privacy",
+        "Interpretability",
+        "Robustness (evolution)",
+        "Trustworthiness"
+      ],
+      "topic_ids": [
+        "T10764",
+        "T10883",
+        "T11273",
+        "T11689"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "readout detectors for safety",
+        "safety model readout detectors"
+      ],
+      "buckets": [
+        "entity_anchored",
+        "intersection"
+      ],
+      "tags": {},
+      "semantic_score": 17.928432,
+      "paper_type": "survey",
+      "score": 2.7831
+    },
+    {
+      "title": "Arondight: Red Teaming Large Vision Language Models with Auto-generated Multi-modal Jailbreak Prompts",
+      "abstract": "Large Vision Language Models (VLMs) extend and enhance the perceptual abilities of Large Language Models (LLMs).Despite offering new possibilities for LLM applications, these advancements raise significant security and ethical concerns, particularly regarding the generation of harmful content.While LLMs have undergone extensive security evaluations with the aid of red teaming frameworks, VLMs currently lack a well-developed one.To fill this gap, we introduce Arondight, a standardized red team framework tailored specifically for VLMs.Arondight is dedicated to resolving issues related to the absence of visual modality and inadequate diversity encountered when transitioning existing red teaming methodologies from LLMs to VLMs.Our framework features an automated multi-modal jailbreak attack, wherein visual jailbreak prompts are produced by a red team VLM, and textual prompts are generated by a red team LLM guided by a reinforcement learning agent.To enhance the comprehensiveness of VLM security evaluation, we integrate entropy bonuses and novelty reward metrics.These elements incentivize the RL agent to guide the red team LLM in creating a wider array of diverse and previously unseen test cases.Our evaluation of ten cutting-edge VLMs exposes significant security vulnerabilities, particularly in generating toxic images and aligning multi-modal prompts.In particular, our Arondight achieves an average attack success rate of 84.5% on GPT-4 in all fourteen prohibited scenarios defined by OpenAI in terms of generating toxic text.For a clearer comparison, we also categorize existing VLMs based on their safety levels and provide corresponding reinforcement recommendations.Our multimodal prompt dataset and red team code will be released after ethics committee approval.",
+      "authors": [
+        "Yi Liu",
+        "Chengjun Cai",
+        "Xiaoli Zhang",
+        "Xingliang Yuan",
+        "Cong Wang"
+      ],
+      "year": 2024,
+      "venue": "",
+      "citations": 13,
+      "url": "https://openalex.org/W4403780746",
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3664647.3681379?download=true",
+      "doi": "10.1145/3664647.3681379",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Computer science",
+        "Modal",
+        "Artificial intelligence",
+        "Natural language processing",
+        "Computer vision",
+        "Human\u2013computer interaction"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T11241",
+        "T12034"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "red teaming datasets"
+      ],
+      "buckets": [
+        "benchmark_dataset"
+      ],
+      "tags": {},
+      "semantic_score": 82.41374,
+      "paper_type": "method",
+      "score": 2.7788
+    },
+    {
+      "title": "A survey of safety and trustworthiness of deep neural networks: Verification, testing, adversarial attack and defence, and interpretability",
+      "abstract": "",
+      "authors": [
+        "Xiaowei Huang",
+        "Daniel Kroening",
+        "Wenjie Ruan",
+        "James J. Sharp",
+        "Youcheng Sun",
+        "Emese Thamo",
+        "Min Wu",
+        "Xinping Yi"
+      ],
+      "year": 2020,
+      "venue": "Computer Science Review",
+      "citations": 520,
+      "url": "https://openalex.org/W3036286896",
+      "pdf_url": "https://pureadmin.qub.ac.uk/ws/files/213055682/A_Survey_of_Safety_and_Trustworthiness_of_Deep_Neural_Networks.pdf",
+      "doi": "10.1016/j.cosrev.2020.100270",
+      "arxiv_id": "",
+      "fields_of_study": [
+        "Interpretability",
+        "Trustworthiness",
+        "Adversarial system",
+        "Computer science",
+        "Software deployment",
+        "Deep neural networks"
+      ],
+      "topic_ids": [
+        "T11689",
+        "T11512",
+        "T10036"
+      ],
+      "sources": [
+        "openalex"
+      ],
+      "queries": [
+        "dedicated safety model performance"
+      ],
+      "buckets": [
+        "entity_anchored"
+      ],
+      "tags": {},
+      "semantic_score": 157.93242,
+      "paper_type": "survey",
+      "score": 2.7573
+    }
+  ]
+}

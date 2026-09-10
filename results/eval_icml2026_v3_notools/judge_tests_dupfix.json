@@ -1,0 +1,43 @@
+{
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "effort": "high",
+    "tools": false
+  },
+  "rows": [
+    {
+      "problem_id": "icml64633",
+      "arm": "gpt-5.4+card",
+      "baseline": 0.929,
+      "n_reference": 7,
+      "n_proposed": 3,
+      "half_reference_expected": 0.42857142857142855,
+      "order": 0.786,
+      "duplicate": 0.857
+    }
+  ],
+  "verdicts": [
+    {
+      "problem_id": "icml64633",
+      "arm": "gpt-5.4+card",
+      "test": "order",
+      "family": "invariance",
+      "baseline": 0.929,
+      "value": 0.786,
+      "delta": -0.143,
+      "pass": true,
+      "why": "defines the floor (|\u0394|=0.143)"
+    },
+    {
+      "problem_id": "icml64633",
+      "arm": "gpt-5.4+card",
+      "test": "duplicate",
+      "family": "invariance",
+      "baseline": 0.929,
+      "value": 0.857,
+      "delta": -0.072,
+      "pass": true,
+      "why": "|\u0394|=0.072 vs floor 0.143"
+    }
+  ]
+}

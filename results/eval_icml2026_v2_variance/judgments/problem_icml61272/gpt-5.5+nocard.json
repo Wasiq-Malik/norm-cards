@@ -1,0 +1,275 @@
+{
+  "type": "evaluation",
+  "format_version": "5.0",
+  "problem_id": "icml61272",
+  "arm": "gpt-5.5+nocard",
+  "claim": "Parameter-based knowledge editing cannot reliably update factual knowledge in a large language model without damaging its core capabilities. The near-perfect editing results reported in prior work do not survive realistic evaluation, and the limitation is geometric rather than incidental: localized weight edits are disproportionately amplified along low-variance directions of the model's representation space and propagate globally, so damage compounds as edits accumulate. A parameter-free approach that leaves the weights untouched is therefore a serious alternative to parameter editing rather than a fallback.",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 1,
+    "runs_requested": 1,
+    "tools": true
+  },
+  "proposer_model": "gpt-5.5",
+  "n_proposed": 3,
+  "n_reference": 6,
+  "experiments_evaluated": [
+    "To address subclaim 'Can parameter-based knowledge editing reliably update factual knowledge in a large language model without damaging its core capabilities?' and subclaim 'Do the near-perfect editing results reported in prior work survive realistic evaluation?', run a preregistered benchmark of ROME, MEMIT, MEND, and simple fine-tuning on open models such as GPT-J-6B or Pythia-6.9B using public editing datasets CounterFact, zsRE, and MQuAKE from HuggingFace. For each edit, evaluate not only the original prompt but also paraphrases, multi-hop questions, neighborhood/specificity prompts about semantically related entities, unrelated factual prompts from Natural Questions or TriviaQA, and general capability sets such as MMLU, HellaSwag, ARC, GSM8K, and WikiText perplexity. Compare single-edit and batch-edit settings, and report edit success, paraphrase generalization, specificity, unrelated KL divergence, and degradation in downstream accuracy/perplexity against an unedited model and a retrieval-only baseline. If parameter editing remains high on edit success while showing no statistically meaningful degradation or unrelated distribution shift, the reliability subclaim is weakened; if success falls under paraphrases/multi-hop evaluation or core benchmarks degrade despite high original-prompt success, the claim is supported. This experiment could be made unnecessary by a sufficiently broad independent benchmark already reporting these metrics across realistic prompts, unrelated capabilities, and multiple edit scales.",
+    "To address subclaim 'Is the limitation of parameter-based knowledge editing geometric rather than incidental?', subclaim 'Are localized weight edits disproportionately amplified along low-variance directions of the model representation space?', and subclaim 'Do localized weight edits propagate globally?', instrument the same edited models from the first experiment at the edited layers. Estimate activation covariance on a public text corpus such as WikiText-103, C4 validation, or The Pile validation, compute PCA/eigenspectra, and decompose each edit-induced weight update and activation/logit change into high- and low-variance representation directions. Then apply controlled synthetic perturbations of equal norm along principal-component directions and measure amplification as output KL divergence, logit shifts, layerwise activation shifts, and affected-token/entity breadth on held-out prompts from CounterFact, zsRE, Natural Questions, and random WikiText. Also test an intervention that projects proposed edits away from low-variance directions before applying them. If low-variance components consistently predict much larger global logit/activation changes and projection away from them reduces collateral damage while preserving some edit success, the geometric explanation is supported; if damage is uncorrelated with representation variance or is method/dataset-specific, the limitation looks more incidental. This experiment could be made unnecessary by direct released analyses of edit-update eigenspectra and causal projection/ablation results across multiple methods and models.",
+    "To address subclaim 'Does damage compound as edits accumulate?', subclaim 'Does a parameter-free approach leave the model weights untouched?', and subclaim 'Is a parameter-free approach a serious alternative to parameter editing rather than a fallback?', compare cumulative parameter edits with a parameter-free retrieval/in-context editing system. Sequentially add 10, 100, 1,000, and if feasible 10,000 factual updates from CounterFact, zsRE, and MQuAKE to GPT-J or Pythia using MEMIT/ROME/MEND, while the parameter-free system stores the same edits in an external index and prepends retrieved update evidence at inference time; verify the parameter-free condition by hashing all model weights before and after and by logging that only the external datastore changes. At each edit scale, evaluate edit success, paraphrase and multi-hop generalization, specificity, unrelated QA accuracy on Natural Questions/TriviaQA, MMLU/HellaSwag/ARC/GSM8K accuracy, WikiText perplexity, latency, and context-window failure rates. If parameter-editing damage grows roughly monotonically with edit count while the parameter-free system preserves base capabilities and achieves comparable factual-update accuracy within acceptable latency, the claim that parameter-free editing is a serious alternative is supported; if parameter editing scales cleanly and substantially outperforms retrieval without capability loss, the claim is weakened. This experiment could be made unnecessary by public large-scale cumulative-edit comparisons that include immutable-weight verification and both accuracy and systems-cost metrics."
+  ],
+  "reference_experiments": [
+    "Fix the measurement floor and the inference protocol before editing anything. Score the unedited model on the editing benchmark to establish the pre-edit baseline, and re-run single-edit evaluation of existing methods under plain autoregressive decoding rather than the teacher-forced protocol prior work used, since teacher forcing supplies the ground-truth answer tokens at inference and inflates every number. If methods keep their near-perfect single-edit scores under honest decoding there is no discrepancy to explain. The authors report a pre-edit baseline of Reliability 3.00, Generalization 3.00, Locality 15.50, Portability 4.36 on ZsRE, and a best parameter-based single-edit average of 25.99.",
+    "Validate the scoring instrument before quoting any number from it. Judge semantic consistency of generated answers with a strong LLM across reliability, generalization, locality and portability, then cross-check that ranking with a deterministic token-level measure (match ratio and exact match) that does not depend on a model's opinion. If the two disagree, every result is an artifact of the judge rather than a property of the editing methods. The authors find the token-level check reproduces the semantic ranking, with the pre-edit model at 100% by definition and GRACE holding 100% under both single and sequential editing.",
+    "Test the asserted mechanism directly. Take the SVD of the original hidden-representation matrix, compute the directional relative change rate R_k = sqrt(n)|u_k^T delta_h| / sigma_k for each principal direction after an edit, and check where amplification concentrates and how it behaves as edits accumulate. The claim's causal story requires R_k > 1 predominantly in low-singular-value directions with the fraction rising monotonically with edit count, across methods and architectures.",
+    "Run the main benchmark. Compare eleven editing methods spanning locate-then-edit (ROME, MEMIT, PMET, RECT, AlphaEdit, FT-L), meta-learning (MEND), additional-parameter (AdaLoRA, WISE) and external-memory (GRACE, SCR) families, under sequential editing at 1, 10, 100 and full-dataset edit counts, on ZsRE and WikiData-counterfact, across Llama-2-7B-Chat, Llama-3.1-8B-Instruct, Mistral-7B-Instruct and DeepSeek-R1-Distill-Llama-8B, reporting all four dimensions. The claim holds if every parameter-modifying method degrades toward zero as edits accumulate and the parameter-free retrieval baseline outscores all of them; the authors report ROME, RECT, FT-L, MEND and AdaLoRA at 0.00-0.25 average under sequential editing on DeepSeek-R1-Distill, against SCR at 56.59 single and 60.19 sequential.",
+    "Measure damage to capabilities the edits never targeted. Take the models edited in the main benchmark and evaluate them on mathematical reasoning (AIME 2024, AIME 2025, AMC, OlympiadBench, MATH-500) and broad benchmarks (GPQA-Diamond, ARC-c, MMLU-Pro), reporting accuracy after 10 and after 100 sequential edits. Without this the study would only show editing is ineffective, not that it is damaging. The authors report ROME and RECT losing 2.74 and 8.37 average accuracy at 10 edits and falling to near zero at 100, with MEND at 0.00 after both.",
+    "Rule out that the result is an artifact of scale, knowledge type, fact difficulty or one method's configuration. Repeat the sweep on larger models (Llama-2-13B, Qwen3-14B), on event-level knowledge (ELKEN, with events converted to triples for the parameter-based arms), split by high- and low-confidence fact sets, and probe the hyperparameter and architecture sensitivity of AlphaEdit \u2014 the one method that does not collapse \u2014 including its failure to run on Llama-2 and Mistral. If the collapse disappears at 13-14B or only occurs on triple-shaped facts, the claim is bounded rather than general."
+  ],
+  "scores": {
+    "recall": 0.75,
+    "n_reference": 6,
+    "n_proposed": 3,
+    "coverage_statuses": [
+      "covered",
+      "partial",
+      "covered",
+      "partial",
+      "covered",
+      "partial"
+    ],
+    "n_covered": 3,
+    "n_partial": 3,
+    "n_missing": 0,
+    "unused_proposed": [],
+    "decision_sufficiency": "sufficient_with_gaps",
+    "sufficiency_score": 0.5,
+    "n_contested": 0,
+    "judge_runs": 1,
+    "run_agreement": 1.0
+  },
+  "reference_coverage": [
+    {
+      "ref_index": 0,
+      "adequacy": "An honest pre-edit baseline and an autoregressive single-edit evaluation protocol that can reveal whether prior high scores were inflated by supplying answer tokens during inference.",
+      "status": "covered",
+      "covered_by": [
+        0
+      ],
+      "rationale": "Proposed experiment 0 includes an unedited control, single-edit evaluation, realistic original/paraphrase/multi-hop prompts, and comparisons against edited models. Executed as a normal benchmark, this would establish baseline performance and test whether editing success survives ordinary generated-answer inference rather than relying on teacher forcing.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 1,
+      "adequacy": "Independent validation that the outcome metric reflects factual answer correctness and is not an artifact of a semantic judge, by comparing model-based semantic assessment with a deterministic token-level assessment.",
+      "status": "partial",
+      "covered_by": [
+        0
+      ],
+      "rationale": "Proposed experiment 0 measures edit success and several independent downstream outcomes, but it does not require a semantic-judge versus deterministic token-level cross-check or a rule for resolving disagreement. It would measure editing outcomes, yet leave open whether a reported success ranking depends on the evaluator.",
+      "reasoning_chain": [
+        "[1] The reference experiment establishes that the scoring instrument itself is trustworthy by checking semantic judgments against a deterministic token-level measure.",
+        "[2] Proposed experiment 0 reports edit success and related metrics but does not specify an independent token-level validation of any semantic evaluator or a disagreement analysis.",
+        "[3] Therefore the proposed results could show high or low editing success while leaving evaluator-induced artifacts unresolved.",
+        "[4] A team running the proposed set would not learn as clearly whether the scoring instrument, rather than the editing method, produced the ranking: partial."
+      ],
+      "run_statuses": [
+        "partial"
+      ],
+      "mean_status_score": 0.5
+    },
+    {
+      "ref_index": 2,
+      "adequacy": "A causal, direction-resolved measure of edit-induced amplification relative to representation variance, tested across edit methods, model architectures, and increasing edit loads, with a way to distinguish low-variance concentration from incidental damage.",
+      "status": "covered",
+      "covered_by": [
+        1,
+        2
+      ],
+      "rationale": "Proposed experiment 1 computes representation covariance/PCA, decomposes actual edit-induced changes by high- and low-variance directions, uses equal-norm directional perturbations, measures global effects, and includes a projection-away intervention. Proposed experiment 0 supplies single and batch edit conditions, while experiment 2 supplies explicit cumulative edit counts, so the set can assess both directional concentration and accumulation.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 3,
+      "adequacy": "A multidimensional comparative stress test across representative parameter-editing families, model architectures, fact collections, and edit scales, including an immutable retrieval comparator, sufficient to distinguish isolated method failure from a broad editing limitation.",
+      "status": "partial",
+      "covered_by": [
+        0,
+        2
+      ],
+      "rationale": "The proposed set compares several parameter-modifying methods on multiple factual datasets and models, at single, batch, and large cumulative edit loads, and compares them with retrieval. However, it omits whole classes represented in the reference sweep, uses a narrower model/architecture and method-family range, and does not clearly reproduce every portability-style dimension. It would establish the phenomenon in its tested scope, but broad claims about parameter-based editing as a class would remain ambiguous.",
+      "reasoning_chain": [
+        "[1] The reference experiment tests whether degradation and retrieval superiority persist across many editing families, architectures, datasets, and edit scales.",
+        "[2] Proposed experiments 0 and 2 cover several of those axes, including multiple methods, factual collections, models, and cumulative loads.",
+        "[3] They do not cover the full range of parameter-editing families or the reference breadth of architectures and multidimensional portability evaluation.",
+        "[4] Thus a result could distinguish failure of the selected methods from failure of parameter-based editing generally only imperfectly.",
+        "[5] The team would fail to learn whether the observed limitation generalizes across the omitted method families and broader model scope: partial."
+      ],
+      "run_statuses": [
+        "partial"
+      ],
+      "mean_status_score": 0.5
+    },
+    {
+      "ref_index": 4,
+      "adequacy": "A direct post-edit evaluation of untargeted mathematical and general capabilities at meaningful cumulative edit counts, compared with an unedited model, to distinguish capability damage from mere failure to install new facts.",
+      "status": "covered",
+      "covered_by": [
+        0,
+        2
+      ],
+      "rationale": "Proposed experiments 0 and 2 evaluate general capability benchmarks, mathematical reasoning, unrelated factual QA, and language-model perplexity against an unedited control, including explicitly cumulative conditions such as 10 and 100 edits. Different benchmark collections do not change the capability-damage question.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 5,
+      "adequacy": "A robustness sweep that tests whether the limitation persists across substantially different model scales, knowledge representations and difficulty levels, and method hyperparameters or architectures, including exceptional methods that may not collapse.",
+      "status": "partial",
+      "covered_by": [
+        0,
+        1,
+        2
+      ],
+      "rationale": "The proposed set varies models, datasets, edit sizes, and several methods, and experiment 1 includes architectural/directional intervention analysis. It does not test substantially larger models, event-level knowledge, high- versus low-confidence facts, or the hyperparameter and architecture sensitivity of an exceptional method such as AlphaEdit. The results would probe robustness in a limited scope but could not determine whether the claim is scale-, knowledge-type-, difficulty-, or configuration-dependent.",
+      "reasoning_chain": [
+        "[1] The reference experiment rules out several alternative explanations by varying scale, knowledge type, fact confidence, and method configuration, while explicitly probing a non-collapsing method.",
+        "[2] Proposed experiments 0-2 vary some models, datasets, edit counts, and methods, but remain centered on roughly 6-7B models and do not include event-level facts, confidence splits, or a targeted hyperparameter/configuration sweep.",
+        "[3] Consequently, a failure or success in the proposed models and datasets could still be caused by untested scale, fact format/difficulty, or method configuration.",
+        "[4] The team would fail to learn whether the limitation survives those robustness axes: partial."
+      ],
+      "run_statuses": [
+        "partial"
+      ],
+      "mean_status_score": 0.5
+    }
+  ],
+  "decision_sufficiency": "sufficient_with_gaps",
+  "sufficiency_reasoning": "The proposed set would directly test realistic editing performance and untargeted capability damage, provide a strong geometric/causal analysis, measure cumulative degradation, and verify that the parameter-free system does not alter model weights while comparing its utility and cost. It would therefore substantially evaluate the claim in the selected models and datasets. It would not fully settle the broad claim as written because the evaluation-metric artifact remains unresolved and the generality sweep lacks larger scales, event-level and confidence-stratified facts, exceptional-method configuration tests, and the breadth of editing families and architectures used to support a class-wide conclusion.",
+  "missing": [
+    "A preregistered cross-check of any semantic edit-success judge against deterministic token-level correctness, with an explicit disagreement rule.",
+    "A broader robustness sweep over substantially larger models, event-level and confidence-stratified facts, and hyperparameter/architecture sensitivity, including methods that may be unusually robust.",
+    "Additional representative parameter-editing families and model architectures, with an explicit portability/generalization evaluation comparable across methods."
+  ],
+  "missing_all_runs": [
+    "A broader robustness sweep over substantially larger models, event-level and confidence-stratified facts, and hyperparameter/architecture sensitivity, including methods that may be unusually robust.",
+    "A preregistered cross-check of any semantic edit-success judge against deterministic token-level correctness, with an explicit disagreement rule.",
+    "Additional representative parameter-editing families and model architectures, with an explicit portability/generalization evaluation comparable across methods."
+  ],
+  "contested": [],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 2,
+        "usage": {
+          "prompt_tokens": 19157,
+          "completion_tokens": 8048,
+          "calls": 2
+        },
+        "seconds": 68.8,
+        "trace": "results/eval_icml2026_v2_variance/judgments/problem_icml61272/gpt-5.5+nocard.run0.trace.jsonl"
+      },
+      "evidence_ledger": [],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "An honest pre-edit baseline and an autoregressive single-edit evaluation protocol that can reveal whether prior high scores were inflated by supplying answer tokens during inference.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 includes an unedited control, single-edit evaluation, realistic original/paraphrase/multi-hop prompts, and comparisons against edited models. Executed as a normal benchmark, this would establish baseline performance and test whether editing success survives ordinary generated-answer inference rather than relying on teacher forcing."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "Independent validation that the outcome metric reflects factual answer correctness and is not an artifact of a semantic judge, by comparing model-based semantic assessment with a deterministic token-level assessment.",
+          "status": "partial",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 measures edit success and several independent downstream outcomes, but it does not require a semantic-judge versus deterministic token-level cross-check or a rule for resolving disagreement. It would measure editing outcomes, yet leave open whether a reported success ranking depends on the evaluator.",
+          "reasoning_chain": [
+            "[1] The reference experiment establishes that the scoring instrument itself is trustworthy by checking semantic judgments against a deterministic token-level measure.",
+            "[2] Proposed experiment 0 reports edit success and related metrics but does not specify an independent token-level validation of any semantic evaluator or a disagreement analysis.",
+            "[3] Therefore the proposed results could show high or low editing success while leaving evaluator-induced artifacts unresolved.",
+            "[4] A team running the proposed set would not learn as clearly whether the scoring instrument, rather than the editing method, produced the ranking: partial."
+          ]
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A causal, direction-resolved measure of edit-induced amplification relative to representation variance, tested across edit methods, model architectures, and increasing edit loads, with a way to distinguish low-variance concentration from incidental damage.",
+          "status": "covered",
+          "covered_by": [
+            1,
+            2
+          ],
+          "rationale": "Proposed experiment 1 computes representation covariance/PCA, decomposes actual edit-induced changes by high- and low-variance directions, uses equal-norm directional perturbations, measures global effects, and includes a projection-away intervention. Proposed experiment 0 supplies single and batch edit conditions, while experiment 2 supplies explicit cumulative edit counts, so the set can assess both directional concentration and accumulation."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A multidimensional comparative stress test across representative parameter-editing families, model architectures, fact collections, and edit scales, including an immutable retrieval comparator, sufficient to distinguish isolated method failure from a broad editing limitation.",
+          "status": "partial",
+          "covered_by": [
+            0,
+            2
+          ],
+          "rationale": "The proposed set compares several parameter-modifying methods on multiple factual datasets and models, at single, batch, and large cumulative edit loads, and compares them with retrieval. However, it omits whole classes represented in the reference sweep, uses a narrower model/architecture and method-family range, and does not clearly reproduce every portability-style dimension. It would establish the phenomenon in its tested scope, but broad claims about parameter-based editing as a class would remain ambiguous.",
+          "reasoning_chain": [
+            "[1] The reference experiment tests whether degradation and retrieval superiority persist across many editing families, architectures, datasets, and edit scales.",
+            "[2] Proposed experiments 0 and 2 cover several of those axes, including multiple methods, factual collections, models, and cumulative loads.",
+            "[3] They do not cover the full range of parameter-editing families or the reference breadth of architectures and multidimensional portability evaluation.",
+            "[4] Thus a result could distinguish failure of the selected methods from failure of parameter-based editing generally only imperfectly.",
+            "[5] The team would fail to learn whether the observed limitation generalizes across the omitted method families and broader model scope: partial."
+          ]
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A direct post-edit evaluation of untargeted mathematical and general capabilities at meaningful cumulative edit counts, compared with an unedited model, to distinguish capability damage from mere failure to install new facts.",
+          "status": "covered",
+          "covered_by": [
+            0,
+            2
+          ],
+          "rationale": "Proposed experiments 0 and 2 evaluate general capability benchmarks, mathematical reasoning, unrelated factual QA, and language-model perplexity against an unedited control, including explicitly cumulative conditions such as 10 and 100 edits. Different benchmark collections do not change the capability-damage question."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "A robustness sweep that tests whether the limitation persists across substantially different model scales, knowledge representations and difficulty levels, and method hyperparameters or architectures, including exceptional methods that may not collapse.",
+          "status": "partial",
+          "covered_by": [
+            0,
+            1,
+            2
+          ],
+          "rationale": "The proposed set varies models, datasets, edit sizes, and several methods, and experiment 1 includes architectural/directional intervention analysis. It does not test substantially larger models, event-level knowledge, high- versus low-confidence facts, or the hyperparameter and architecture sensitivity of an exceptional method such as AlphaEdit. The results would probe robustness in a limited scope but could not determine whether the claim is scale-, knowledge-type-, difficulty-, or configuration-dependent.",
+          "reasoning_chain": [
+            "[1] The reference experiment rules out several alternative explanations by varying scale, knowledge type, fact confidence, and method configuration, while explicitly probing a non-collapsing method.",
+            "[2] Proposed experiments 0-2 vary some models, datasets, edit counts, and methods, but remain centered on roughly 6-7B models and do not include event-level facts, confidence splits, or a targeted hyperparameter/configuration sweep.",
+            "[3] Consequently, a failure or success in the proposed models and datasets could still be caused by untested scale, fact format/difficulty, or method configuration.",
+            "[4] The team would fail to learn whether the limitation survives those robustness axes: partial."
+          ]
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient_with_gaps",
+      "sufficiency_reasoning": "The proposed set would directly test realistic editing performance and untargeted capability damage, provide a strong geometric/causal analysis, measure cumulative degradation, and verify that the parameter-free system does not alter model weights while comparing its utility and cost. It would therefore substantially evaluate the claim in the selected models and datasets. It would not fully settle the broad claim as written because the evaluation-metric artifact remains unresolved and the generality sweep lacks larger scales, event-level and confidence-stratified facts, exceptional-method configuration tests, and the breadth of editing families and architectures used to support a class-wide conclusion.",
+      "missing": [
+        "A preregistered cross-check of any semantic edit-success judge against deterministic token-level correctness, with an explicit disagreement rule.",
+        "A broader robustness sweep over substantially larger models, event-level and confidence-stratified facts, and hyperparameter/architecture sensitivity, including methods that may be unusually robust.",
+        "Additional representative parameter-editing families and model architectures, with an explicit portability/generalization evaluation comparable across methods."
+      ]
+    }
+  ]
+}

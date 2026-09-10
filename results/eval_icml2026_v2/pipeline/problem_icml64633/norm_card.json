@@ -1,0 +1,3256 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "icml64633",
+  "claim": "When a jailbreak attack succeeds against a safety-aligned LLM, the model's safety-relevant internal representations are not eliminated \u2014 they are bypassed. The attack selectively suppresses a small subset of attention heads, and suppressing that subset is by itself enough to turn a refusal into a compliance, while other heads go on representing the harmful content even as the attack succeeds. Because those representations persist, they can be read out directly as a harmful-input detector, with no additional training, at a quality competitive with dedicated safety models.",
+  "subfields": [
+    "Jailbreaks and Adversarial Prompting",
+    "Mechanistic Interpretability",
+    "AI Safety and Alignment"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 21,
+    "pdf_sources": {
+      "cache": 21,
+      "none": 9
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Jailbreaks and Adversarial Prompting",
+      "menu": {
+        "datasets": [
+          {
+            "name": "AdvBench",
+            "role": "train|eval|robustness_eval",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "JailbreakBench (JBB-Behaviors)",
+            "role": "eval",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "MultiBreak",
+            "role": "eval",
+            "evidence": [
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety"
+            ]
+          },
+          {
+            "name": "ForbiddenQuestionSet (107,250 samples across 13 forbidden scenarios)",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts (challenging subset)",
+            "role": "eval",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "MaliciousInstruct",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Alpaca",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Jailbreak prompt dataset (15,140 collected prompts; 1,405 labeled jailbreak prompts)",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "QuestionList (Yu et al. 2023)",
+            "role": "eval",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Anthropic red team dataset",
+            "role": "train",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Policy-oriented safety evaluation benchmark (11 prohibited-use categories, 330 examples)",
+            "role": "eval",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-3.5",
+            "role": "backbone|baseline|method_under_test",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone|baseline|judge",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Llama-2",
+            "role": "backbone|baseline|safety_filter",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Llama-3",
+            "role": "backbone|judge|baseline",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Vicuna",
+            "role": "backbone|baseline",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Claude (Claude/Claude-2/Claude-instant)",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "PaLM-2",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Gemini-Pro",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Qwen-2 / Qwen-2.5",
+            "role": "backbone|baseline",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Mixtral-8x7B Instruct",
+            "role": "method_under_test|attacker",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "MiniGPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "InstructBLIP",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "LLaVA",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "GCG (Greedy Coordinate Gradient)",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "PAIR",
+            "role": "method_under_test|baseline",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "AutoDAN",
+            "role": "baseline",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "ReNeLLM",
+            "role": "baseline",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "ASJA",
+            "role": "method_under_test",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Erase-and-Check (and RandEC/GreedyEC/GradEC)",
+            "role": "method_under_test|baseline",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "LlamaGuard",
+            "role": "judge",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "DistilBERT (safety classifier)",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "OpenAI Moderation",
+            "role": "baseline|external_safeguard",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          },
+          {
+            "name": "RoBERTa-large (judge)",
+            "role": "baseline|method_under_test",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          },
+          {
+            "name": "NeMo-Guardrails / OpenChatKit moderation",
+            "role": "external_safeguard",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Attack Success Rate (ASR)",
+            "direction": "higher_better",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Queries per Success",
+            "direction": "lower_better",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Judge agreement with humans / FPR / FNR",
+            "direction": "higher_better (agreement); lower_better (FPR,FNR)",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Harmfulness score (1\u20135) by GPT-4 judge",
+            "direction": "lower_better",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Harmfulness Detection Rate (HDR)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Toxicity rate (Perspective API / Detoxify)",
+            "direction": "lower_better",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Sentence Perplexity (PPL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Runtime / Memory / API Cost",
+            "direction": "lower_better",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Transferability increase (toxicity/ASR on target)",
+            "direction": "higher_better (for demonstrating generality)",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Kullback\u2013Leibler divergence (and patching effect \u0394_patch)",
+            "direction": "lower_better (KL); higher magnitude |\u0394_patch| indicates causal effect",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Refusal/Obedience ratio",
+            "direction": "contextual",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Deterministic target decoding for evaluation",
+            "detail": "Decode targets with temperature=0 (and top_p=0 where applicable) to reduce sampling noise; fix max_new_tokens for comparability.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "ASR measurement across multiple models",
+            "detail": "Apply the same attack prompts to a panel of open and closed models and compute ASR per model and scenario.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Automated judge validated against human labels",
+            "detail": "Select or calibrate an automated judge by measuring agreement/FPR/FNR against majority human annotations on a labeled subset.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Cross-model transfer evaluation",
+            "detail": "Generate attacks on a source model and test ASR on other target models to assess generality.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Paraphrase/perturbation robustness",
+            "detail": "Perturb a small percentage of tokens in attack prompts (e.g., 1\u201310%) and re-measure ASR to test phrase-matching defenses.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Multi-turn dialogue attack setup",
+            "detail": "Fix dialogue length and structure, generate multi-turn adversarial histories, and evaluate ASR vs single-turn counterparts.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety"
+            ]
+          },
+          {
+            "name": "Query-budget accounting",
+            "detail": "Report queries used per success and sweep search parameters (e.g., streams N and iterations K) to characterize efficiency.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Defended vs undefended evaluation",
+            "detail": "Evaluate attacks against external safeguards (moderation endpoints, guardrails, certified/empirical defenses) and report ASR deltas.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Holdout generalization checks",
+            "detail": "Optimize on a subset of behaviors and report ASR on held-out behaviors to test universality and avoid overfitting.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Human/manual verification of key labels",
+            "detail": "Manually audit a sample of success/failure labels (e.g., 100\u2013200 items) to validate automated criteria.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Visual adversarial attack configuration",
+            "detail": "Use PGD-like optimization with explicit L\u221e bounds (e.g., \u03b5\u2208{16/255,32/255,64/255}) and report constrained vs unconstrained outcomes.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "GCG discrete-token optimization settings",
+            "detail": "Batch size ~512, top-k ~256, optimize ~20 tokens for ~500 steps; report train/test ASR for universality.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "PAIR black-box search settings",
+            "detail": "Run N parallel streams for up to K iterations (e.g., N=30,K=3), attacker temp=1, top-p=0.9, target temp=0.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Attention/patching analysis for mechanistic claims",
+            "detail": "Use paired prompts, path patching at the head level, and activation scaling/ablation to link components causally to jailbreak success.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Safe-prompt evaluation for false positives",
+            "detail": "Evaluate safety filters/defenses on a safe-prompt set to quantify benign-user impact (false positives) and runtime.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Non-adversarial baseline prompt",
+            "detail": "Run the same harmful instructions without any adversarial suffix/structure or jailbreak template.",
+            "rules_out": "That the model would comply without the adversarial intervention.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Automated judge selection against human majority",
+            "detail": "Compare multiple judges (e.g., LlamaGuard, GPT-4, moderation APIs) and pick one with low FPR/high agreement vs human labels.",
+            "rules_out": "That ASR differences are artifacts of a poor or biased judge.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Cross-model transfer test",
+            "detail": "Apply attacks crafted on one model to other models (both open and closed).",
+            "rules_out": "That successes are due to idiosyncrasies of a single model/checkpoint.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Paraphrase perturbation of attack prompts",
+            "detail": "Randomly replace 1\u201310% of words/tokens in adversarial prompts and re-evaluate.",
+            "rules_out": "That defense success is due to matching specific phrases or token sequences.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Human-crafted templates baseline",
+            "detail": "Evaluate popular manual jailbreak templates alongside automated methods.",
+            "rules_out": "That automation gives no benefit over known human templates.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "White-box GCG baseline vs black-box search",
+            "detail": "Run GCG under standard settings and compare to black-box search methods.",
+            "rules_out": "That high ASR requires brute-force token-level white-box optimization.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Defended evaluation (moderation/guardrails/certified)",
+            "detail": "Apply external safeguards (moderation endpoints, SmoothLLM, erase-and-check) to the same attack prompts.",
+            "rules_out": "That results only hold on undefended systems.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Single-turn isolation of final query",
+            "detail": "Extract the final harmful turn from a multi-turn attack and test it alone.",
+            "rules_out": "That multi-turn success is due solely to the last query phrasing rather than dialogue-induced effects.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Benign/safe prompts control",
+            "detail": "Measure false positives and behavioral shifts on safe prompts alongside harmful ones.",
+            "rules_out": "That improvements stem from indiscriminate changes or capability degradation harming benign users.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Random-component ablation",
+            "detail": "Ablate an equal number of randomly selected components (e.g., attention heads) as the targeted set.",
+            "rules_out": "That any comparably sized ablation explains the effect (component specificity).",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Constrained vs unconstrained perturbations (multimodal)",
+            "detail": "Compare \u03b5-bounded image perturbations to unconstrained noise-initialized attacks.",
+            "rules_out": "That success only arises from unrealistic/unbounded perturbations.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Simple affirmative-prefix baseline",
+            "detail": "Append a naive affirmative phrase (e.g., \u201cSure, here\u2019s\u201d) without optimized tokens.",
+            "rules_out": "That ASR gains are explained by trivial affirmative starts rather than optimized adversarial content.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Attacker-LLM ablation",
+            "detail": "Swap the attacker model driving prompt search and re-measure performance.",
+            "rules_out": "That gains are tied to a single attacker model rather than the search method.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Automated judge mislabeling inflates ASR",
+            "detail": "A judge might flag benign or irrelevant responses as successful jailbreaks.",
+            "ruled_out_by": "Validate judges against majority human labels and report agreement, FPR, and FNR; select a low-FPR judge.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Sampling randomness drives apparent success",
+            "detail": "Stochastic decoding could create spurious harmful completions.",
+            "ruled_out_by": "Use deterministic decoding (temperature=0) or multiple repeated samples with mean\u00b1std reporting.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Model-specific quirks, not general vulnerability",
+            "detail": "An attack exploits idiosyncrasies of a particular model.",
+            "ruled_out_by": "Evaluate on a diverse panel and conduct cross-model transfer tests.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Attack alters task/intent or produces irrelevant harm",
+            "detail": "Success stems from changing the request or generating off-target harmful text.",
+            "ruled_out_by": "Use paired prompts preserving malicious intent and apply relevance filters or human/LLM judges requiring alignment with the original request.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Overfitting or train\u2013test leakage",
+            "detail": "Optimized prompts memorize training behaviors and fail to generalize.",
+            "ruled_out_by": "Ensure non-overlap and report ASR on held-out behaviors/intents.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Defense robustness achieved by overblocking safe prompts",
+            "detail": "High detection on harmful prompts accompanied by high false positives on safe prompts.",
+            "ruled_out_by": "Evaluate defenses on safe-prompt sets and report safe accuracy/false-positive rate.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Phrase-specific vendor filters explain changes",
+            "detail": "Observed ASR drops reflect blocking of known phrases rather than substantive robustness.",
+            "ruled_out_by": "Paraphrase/perturb attack prompts and show ASR remains high or recovers.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Efficiency gains due to query-accounting artifacts",
+            "detail": "Comparisons use different counting or favorable budgets.",
+            "ruled_out_by": "Standardize query budgets, report Queries per Success, and sweep N/K or GA iterations.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "General capability degradation mistaken for safety effects",
+            "detail": "Interventions degrade overall capability, not specifically refusal/harmfulness handling.",
+            "ruled_out_by": "Measure on harmless tasks (e.g., Alpaca) and separate metrics (e.g., HDR vs ASR, reply-inversion tasks).",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Text-only prompting explains multimodal jailbreaks",
+            "detail": "Visual adversarial effects could be replicated by text token perturbations.",
+            "ruled_out_by": "Run a text-only adversarial counterpart and compare optimization loss and success rates.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Component correlation without causation",
+            "detail": "Identified attention heads correlate with outcomes without causal influence.",
+            "ruled_out_by": "Use causal path patching, targeted ablations, and activation scaling with directional ASR/HDR changes.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Moderation would block harmful training data (unrealistic threat)",
+            "detail": "Assumes vendor moderation prevents adversarial fine-tuning data.",
+            "ruled_out_by": "Measure low flag rates of harmful fine-tuning examples by existing moderation tools.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Prompt-collection bias from platform/time",
+            "detail": "Online prompt sources bias effectiveness estimates.",
+            "ruled_out_by": "Aggregate across multiple platforms over time and analyze community evolution.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Certified guarantees depend on specific attack algorithms",
+            "detail": "Certificates may only hold against enumerated attacks.",
+            "ruled_out_by": "Provide algorithm-independent proofs (e.g., erase-and-check for all edits up to length d) and test across multiple threat models.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Judge/judgment model overfits to seen questions",
+            "detail": "A learned judge may not generalize and inflates validation performance.",
+            "ruled_out_by": "Ensure no prompt/response overlap between train/validation and report generalization performance and timing.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 7,
+        "kept_per_key": {
+          "datasets": 11,
+          "models": 24,
+          "metrics": 11,
+          "protocols": 15,
+          "controls": 13,
+          "confounds": 15
+        }
+      }
+    },
+    {
+      "subfield": "Mechanistic Interpretability",
+      "menu": {
+        "datasets": [
+          {
+            "name": "IOI",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Docstring",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Greater-Than",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "tracr-xproportion",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "tracr-reverse",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Induction",
+            "role": "eval",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "AdvBench",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "JailbreakBench",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "MaliciousInstruct",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Alpaca",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Activation/Attribution Patching",
+            "role": "method_under_test",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Automatic Circuit DisCovery (ACDC)",
+            "role": "method_under_test",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Subnetwork Probing (SP)",
+            "role": "method_under_test",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Head Importance Score for Pruning (HISP)",
+            "role": "baseline",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Path patching",
+            "role": "method_under_test",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "GPT-2 Small",
+            "role": "backbone",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "tracr-compiled tiny transformers",
+            "role": "backbone",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "LLaMA-2",
+            "role": "backbone",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Qwen-2.5",
+            "role": "backbone",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Average KL divergence D_KL(G||H)",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Area under ROC curve (AUC)",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "True Positive Rate (TPR)",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "False Positive Rate (FPR)",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Number of edges in recovered subgraph",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Task-specific loss",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Negative log-probability",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Mean squared error",
+            "direction": "lower_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Logit difference",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Probability difference",
+            "direction": "higher_better",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Patching effect (\u0394_patch)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Attack Success Rate (ASR)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Harmfulness Detection Rate (HDR)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Activation-patching variants",
+            "detail": "Overwrite activations with those from a corrupted/interchange dataset x' and compare to replacing with zeros to assess causal contribution.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Path patching with KL-based effect",
+            "detail": "Run clean, corrupted, and patched forwards and compute \u0394_patch = D_KL(P_cl || P_t) \u2212 D_KL(P_cl || P_pt) per unit to score causal effect.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Ablation by zeroing",
+            "detail": "Set selected unit(s) output to zero at inference and measure downstream metric changes (e.g., ASR, KL).",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Activation scaling sweep",
+            "detail": "Multiply selected unit outputs by w \u2208 {0,1,2,3,4,5} at inference to produce dose\u2013response curves.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Scaling multiple components",
+            "detail": "Apply the same scaling to sets of 1\u20133 identified units to test additivity and sufficiency.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "ACDC threshold sweep (reverse topological order)",
+            "detail": "Iterate nodes output\u2192input, remove edges whose removal changes KL less than \u03c4; sweep \u03c4 to trace sparsity\u2013fidelity trade-off.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Subnetwork Probing (SP) L0 sweep",
+            "detail": "Train differentiable masks with KL objective and L0 sparsity, then round; sweep \u03bb and evaluate with corrupted/clean interpolation.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "HISP top-k sweep",
+            "detail": "Rank heads by importance score, keep top-k, and sweep k to produce ROC operating points.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "ROC construction vs human circuit",
+            "detail": "Treat edges in human-reported circuit as positives; sweep thresholds to compute TPR/FPR and AUC.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Held-out KL evaluation",
+            "detail": "Compute average D_KL on held-out prompts and plot KL vs number of edges for recovered subgraphs.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Reset-network comparison",
+            "detail": "Repeat discovery on randomly reinitialized networks and compare metrics to trained models.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Paired-prompt setup (clean vs jailbreak)",
+            "detail": "Hold malicious content fixed and relocate a continuation-triggering suffix across the delimiter to isolate structural effects.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Deterministic decoding for evaluation",
+            "detail": "Fix decoding with do_sample=False and max_new_tokens=32 to reduce sampling noise during interventions.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Size-matched random component ablation",
+            "detail": "Ablate the same number of components (e.g., heads) chosen at random as in the targeted intervention.",
+            "rules_out": "That any equally sized ablation causes the effect; a larger effect for targeted units supports specificity.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Zero-activation replacement control",
+            "detail": "Replace activations with zeros instead of corrupted/interchange activations when patching.",
+            "rules_out": "That results hinge on extreme out-of-distribution zeroing rather than meaningful interchange effects (or vice versa).",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Alternative circuit-discovery baselines (SP, HISP)",
+            "detail": "Run SP and HISP with matched sweeps to compare recovered subgraphs against the proposed method.",
+            "rules_out": "That the proposed method\u2019s gains are explained by generic sparsification or simple ranking.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Human-reported circuit ground truth",
+            "detail": "Use previously published circuits as positive edges for ROC/AUC evaluation.",
+            "rules_out": "That edge selection is arbitrary; alignment with prior circuits supports validity.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Reset (randomly reinitialized) networks",
+            "detail": "Apply the discovery pipeline to reset models.",
+            "rules_out": "That structure/fidelity arises from the algorithm alone without learned circuits.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Paired clean-prompt condition",
+            "detail": "Use a semantically matched prompt with suffix relocated inside the user message.",
+            "rules_out": "That differences stem from semantic changes rather than positional/structural manipulation.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Baseline unmodified inference",
+            "detail": "Evaluate the same prompts with no activation scaling or ablation (e.g., w=1).",
+            "rules_out": "That observed differences are caused by the evaluation procedure rather than the intervention.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Harmless prompts dataset",
+            "detail": "Evaluate effects on a harmless-instruction set (e.g., Alpaca).",
+            "rules_out": "That changes reflect general capability degradation rather than targeted safety-related mechanisms.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Distribution dependence of corrupted activations",
+            "detail": "Circuit recovery may depend on the choice of corruption source (interchange vs zero or specific x').",
+            "ruled_out_by": "Compare across corruption types and datasets; report where methods succeed/fail under each.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "General capability damage masquerading as circuit identification",
+            "detail": "Lower loss/KL after pruning or interventions could reflect broad degradation rather than isolating the true mechanism.",
+            "ruled_out_by": "Evaluate trained vs reset networks; track task metrics and harmless-instruction HDR to show targeted rather than global effects.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Human-reported circuit incompleteness/noise",
+            "detail": "Evaluations using human circuits may mis-score true edges or include spurious ones.",
+            "ruled_out_by": "Complement ROC/AUC with held-out average KL and task metrics that do not rely on human labels.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Single-metric optimization misses negatively contributing components",
+            "detail": "Optimizing KL or logit-diff alone can omit units that harm performance (negative components).",
+            "ruled_out_by": "Compare recoveries under multiple objectives (KL, logit diff, task loss) and sweep thresholds.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Hyperparameter/order sensitivity",
+            "detail": "Findings may hinge on thresholds, sparsity weights, or parent-iteration order.",
+            "ruled_out_by": "Conduct \u03c4/\u03bb/k sweeps and order ablations; report sensitivity analyses.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Semantic differences between prompt conditions",
+            "detail": "ASR gaps could be due to different malicious content rather than structural relocation.",
+            "ruled_out_by": "Use paired prompts holding malicious content fixed while relocating the suffix.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Correlation vs causation in identified units",
+            "detail": "Units with high patching signal may not be causally necessary or sufficient.",
+            "ruled_out_by": "Apply causal ablations (zeroing) and scaling dose\u2013response tests to verify necessity/sufficiency.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Stochastic decoding variability",
+            "detail": "Sampling randomness can mimic or obscure intervention effects.",
+            "ruled_out_by": "Use deterministic decoding (do_sample=False, fixed token budget) for evaluation.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Arbitrary component selection or intervention size",
+            "detail": "Observed effects might arise from removing any similarly sized set of units.",
+            "ruled_out_by": "Compare targeted interventions to size-matched random ablations.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Conflation of harmfulness recognition with refusal execution",
+            "detail": "A unit\u2019s effect on refusal may reflect control/execution, not recognition of harmful content.",
+            "ruled_out_by": "Use separate HDR and reply-inversion tasks to disentangle recognition from execution roles.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 1,
+        "kept_per_key": {
+          "datasets": 10,
+          "models": 9,
+          "metrics": 13,
+          "protocols": 13,
+          "controls": 8,
+          "confounds": 10
+        }
+      }
+    },
+    {
+      "subfield": "AI Safety and Alignment",
+      "menu": {
+        "datasets": [
+          {
+            "name": "AdvBench",
+            "role": "eval",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "JailbreakBench",
+            "role": "eval",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "MultiBreak",
+            "role": "eval",
+            "evidence": [
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety"
+            ]
+          },
+          {
+            "name": "ForbiddenQuestionSet",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts (challenging subset)",
+            "role": "eval",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Anthropic red team dataset",
+            "role": "train",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Policy-oriented safety evaluation benchmark (11 prohibited-use categories)",
+            "role": "eval",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Alpaca",
+            "role": "robustness_eval",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "MaliciousInstruct",
+            "role": "eval",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "QuestionList (Yu et al. 2023)",
+            "role": "eval",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "In-the-wild Jailbreak Prompts (aggregated collection)",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Safe prompts (ChatGPT-generated)",
+            "role": "robustness_eval",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Llama-2",
+            "role": "backbone",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Llama-3",
+            "role": "backbone",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Vicuna",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Claude",
+            "role": "backbone",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Qwen",
+            "role": "backbone",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "PaLM-2",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          },
+          {
+            "name": "Mixtral-8x7B",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Gemini-Pro",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "ChatGLM",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Dolly",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Pythia",
+            "role": "backbone",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Falcon",
+            "role": "backbone",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "MPT",
+            "role": "backbone",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Stable-Vicuna",
+            "role": "backbone",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "MiniGPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "LLaVA",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "InstructBLIP",
+            "role": "backbone",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "LlamaGuard",
+            "role": "baseline",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "OpenAI Moderation",
+            "role": "baseline",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          },
+          {
+            "name": "OpenChatKit moderation model",
+            "role": "baseline",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "NeMo-Guardrails",
+            "role": "baseline",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "DistilBERT (safety filter)",
+            "role": "baseline",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "GCG (Greedy Coordinate Gradient)",
+            "role": "method_under_test",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "PAIR",
+            "role": "method_under_test",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "AutoDAN",
+            "role": "baseline",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "ReNeLLM",
+            "role": "baseline",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "ASJA",
+            "role": "method_under_test",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "erase-and-check",
+            "role": "method_under_test",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "RandEC / GreedyEC / GradEC",
+            "role": "baseline",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "GPTFUZZER",
+            "role": "method_under_test",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          },
+          {
+            "name": "ACDC",
+            "role": "method_under_test",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Subnetwork Probing (SP)",
+            "role": "baseline",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Head Importance Score for Pruning (HISP)",
+            "role": "baseline",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Attack Success Rate (ASR) / Jailbreak%",
+            "direction": "higher_better",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Queries per Success",
+            "direction": "lower_better",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Perspective API / Detoxify toxicity rate",
+            "direction": "higher_better",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Fleiss' Kappa (inter-annotator agreement)",
+            "direction": "higher_better",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Kullback\u2013Leibler divergence (D_KL)",
+            "direction": "lower_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Patching effect (\u0394_patch)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Harmfulness Detection Rate (HDR)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Runtime / Memory / API Cost",
+            "direction": "lower_better",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Sentence Perplexity (PPL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Judge Agreement / FPR / FNR",
+            "direction": "higher_better",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Standard error",
+            "direction": "lower_better",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Deterministic decoding for evaluation",
+            "detail": "Set temperature=0 and top_p=0 (and fixed max_new_tokens) for target model outputs when measuring ASR and related metrics.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Automated judge selection calibrated to humans",
+            "detail": "Collect a human-labeled set; compare multiple judge models; report agreement/FPR/FNR; choose the judge before main ASR reporting.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Evaluate on standardized harmful-instruction suites",
+            "detail": "Run on benchmarks such as AdvBench, JailbreakBench, and MultiBreak; report ASR per scenario and aggregate.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Cross-model transfer evaluation",
+            "detail": "Generate adversarial prompts on a source model and test them on multiple target models; report transfer ASR.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Query-budget accounting and efficiency curves",
+            "detail": "Report queries per success and success probability vs budget; ablate parallel streams and depth.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Paraphrase/perturbation robustness sweep",
+            "detail": "Perturb top jailbreak prompts by 1\u201310% word changes; measure ASR changes to assess brittleness/phrase matching.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Defense/safeguard evaluation",
+            "detail": "Evaluate external moderation/guardrails or certified/empirical defenses and report ASR reduction and false positives on safe prompts.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Safe-prompt benign-set evaluation",
+            "detail": "Measure false-positive rate on a held-out safe prompt set to assess overblocking.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Variance quantification under sampling",
+            "detail": "When stochastic decoding is required, repeat runs and report mean\u00b1std; otherwise use deterministic decoding.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Paired clean vs jailbreak prompts with matched semantics",
+            "detail": "Hold malicious content constant; vary only structure/position (e.g., suffix relocation) to isolate mechanism effects.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Causal tracing via path patching and ablations",
+            "detail": "Patch activations from corrupted runs into clean runs; sweep zeroing/scaling of candidate components; quantify effects via D_KL/\u0394_patch.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "L\u221e-bounded visual attack vs text-only counterpart",
+            "detail": "Optimize adversarial images with PGD under \u03b5-bounds and compare against an unconstrained text-token attack with matched compute.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Fine-tuning interventions with controlled setup",
+            "detail": "Fine-tune on small-N harmful/benign datasets with fixed system prompts; deterministic evaluation; hyperparameter sweeps.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Multi-turn attack construction and attention analysis",
+            "detail": "Fabricate multi-turn dialogues; compute per-turn attention and evolve prompts via a constrained genetic algorithm; define ASR-1/ASR-2 with relevance filter.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Active-learning benchmark construction",
+            "detail": "Iteratively refine a generator via uncertainty to produce diverse multi-turn adversarial prompts; report coverage and ASR.",
+            "evidence": [
+              "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety"
+            ]
+          },
+          {
+            "name": "Judge accuracy estimation under internal randomness",
+            "detail": "For stochastic judges, perform large-sample estimation to bound error (e.g., 60k samples).",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Regular/benign prompt baseline",
+            "detail": "Run the same harmful-intent inputs without the jailbreak pattern; or matched clean prompt with identical malicious content embedded.",
+            "rules_out": "That high ASR would occur without the adversarial structure (or due to semantic changes).",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Deterministic decoding",
+            "detail": "Fix temperature=0 and top_p=0 (and seeds where applicable) for evaluation.",
+            "rules_out": "That differences arise from sampling randomness rather than the intervention.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Size-matched random component ablation",
+            "detail": "Ablate the same number/shape of components (e.g., attention heads) chosen at random as the targeted set.",
+            "rules_out": "That any equally sized ablation would cause the effect rather than the identified components.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Unmodified vs reset network",
+            "detail": "Compare interventions on trained models to randomly reinitialized/reset counterparts.",
+            "rules_out": "That observed effects come from the procedure itself rather than learned structure.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Text-only adversarial counterpart",
+            "detail": "For multimodal attacks, run a matched-compute text-token adversarial attack.",
+            "rules_out": "That the effect is attributable to text-space perturbations rather than the added modality.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Constrained vs unconstrained attacks",
+            "detail": "Impose perturbation bounds (e.g., L\u221e \u03b5) and compare to unconstrained variants.",
+            "rules_out": "That success requires unrealistic/unbounded perturbations.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Human-crafted template baseline",
+            "detail": "Evaluate popular human jailbreak templates alongside automated methods.",
+            "rules_out": "That automation confers no benefit beyond existing manual prompts.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "White-box token-level attack baseline",
+            "detail": "Run GCG under standard budgets where white-box access is available.",
+            "rules_out": "That black-box method success is due to extreme query budgets or is incomparable to strong baselines.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Search/attacker ablations",
+            "detail": "Swap attacker LLMs; remove in-context examples; vary streams/iterations.",
+            "rules_out": "That gains are due to a particular attacker prompt/model or arbitrary budget allocation.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Safe-prompt evaluation",
+            "detail": "Run defenses/filters on a held-out safe prompt set.",
+            "rules_out": "That robustness comes from overblocking benign content.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Defense-only classifier baseline",
+            "detail": "Evaluate the base safety filter without erasures (d=0).",
+            "rules_out": "That improvements are due to the original classifier rather than the erase-and-check scheme.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Single-turn isolation from multi-turn",
+            "detail": "Extract the final harmful query and test it alone.",
+            "rules_out": "That success is solely from the last-turn wording rather than multi-turn context.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Harmless-instruction control",
+            "detail": "Evaluate on harmless datasets (e.g., Alpaca) when intervening on safety mechanisms.",
+            "rules_out": "That behavior shifts reflect general capability degradation.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Unmoderated vs moderated outputs",
+            "detail": "Compare outputs with and without external moderation/guardrails.",
+            "rules_out": "That reductions in ASR are unrelated to the applied safeguard.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Judge-model comparison to human labels",
+            "detail": "Benchmark multiple judges against a human-majority baseline and pick the best.",
+            "rules_out": "That ASR depends on a weak or biased automated judge.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Automated judge mislabeling inflates ASR",
+            "detail": "A judge may mark benign or irrelevant outputs as successful jailbreaks.",
+            "ruled_out_by": "Create a human-labeled set; compare judges and select one with high agreement and low FPR/FNR before evaluation.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries"
+            ]
+          },
+          {
+            "name": "Models would violate policy without adversarial prompts",
+            "detail": "High ASR may arise even for regular prompts.",
+            "ruled_out_by": "Run regular/clean prompt baselines with matched intent; show lower ASR vs jailbreak prompts.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Server-side filtering or phrase matching explains robustness",
+            "detail": "Apparent robustness may be due to blocking specific strings.",
+            "ruled_out_by": "Paraphrase/perturbation sweeps (1\u201310% changes) showing ASR stability.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Sampling randomness drives results",
+            "detail": "Stochastic decoding could yield spurious successes or differences.",
+            "ruled_out_by": "Use deterministic decoding or multiple samples with mean\u00b1std reporting.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Overfitting/memorization to training prompts",
+            "detail": "Attacks might memorize seen behaviors and fail on new ones.",
+            "ruled_out_by": "Evaluate on held-out behaviors and ensure non-overlap with training.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Model-specific quirks explain success",
+            "detail": "Prompts may exploit a single model's idiosyncrasies.",
+            "ruled_out_by": "Cross-model transfer tests and multi-model evaluations.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Efficiency gains are accounting artifacts",
+            "detail": "Reported query efficiency may depend on favorable budget settings.",
+            "ruled_out_by": "Ablate streams/iterations and standardize query counting; compare to strong baselines.",
+            "evidence": [
+              "Jailbreaking Black Box Large Language Models in Twenty Queries",
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Irrelevant harmful outputs counted as successes",
+            "detail": "Outputs may be harmful but not responsive to the prompt.",
+            "ruled_out_by": "Add a relevance filter (ASR-2) and/or manual evaluation.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Defense robustness from overblocking",
+            "detail": "A defense could label many safe prompts as harmful.",
+            "ruled_out_by": "Measure accuracy on safe-prompt sets; report low false-positive rates.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Visual attack is actually a text effect",
+            "detail": "Image attacks may act as text-space perturbations.",
+            "ruled_out_by": "Run a matched text-only adversarial baseline and compare success/loss.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Identified components are correlational, not causal",
+            "detail": "Activation signals may correlate with behavior without causal impact.",
+            "ruled_out_by": "Causal path patching and targeted ablation/scaling vs size-matched random ablations.",
+            "evidence": [
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Circuit recovery depends on corruption/hyperparameters",
+            "detail": "Findings may hinge on specific corruption distributions or thresholds.",
+            "ruled_out_by": "Compare zero vs interchange patching; sweep thresholds and report sensitivity.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "Human \u2018ground-truth\u2019 circuits are incomplete",
+            "detail": "ROC/AUC vs human-labeled edges may be biased.",
+            "ruled_out_by": "Also report held-out D_KL as a label-free fidelity metric.",
+            "evidence": [
+              "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+            ]
+          },
+          {
+            "name": "General capability degradation explains safety changes",
+            "detail": "Safety metric shifts may reflect broad degradation.",
+            "ruled_out_by": "Evaluate on harmless datasets and report HDR/recognition separately from refusal.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting",
+              "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+            ]
+          },
+          {
+            "name": "Parroting of optimization corpus",
+            "detail": "Harmful outputs might reproduce training snippets verbatim.",
+            "ruled_out_by": "Evaluate on held-out datasets and manually verify novel harmful content.",
+            "evidence": [
+              "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+            ]
+          },
+          {
+            "name": "Platform/time sampling bias in in-the-wild prompts",
+            "detail": "Collected prompts may reflect transient community effects.",
+            "ruled_out_by": "Aggregate across platforms over time and analyze community evolution.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Certificates tied to a specific attack algorithm",
+            "detail": "Robustness might only hold against enumerated attacks.",
+            "ruled_out_by": "Provide formal guarantees (erase-and-check) for all adversarial edits up to length d; test across threat models.",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Attack overrides the user intent",
+            "detail": "Prompts may force an affirmative prefix without following the original instruction.",
+            "ruled_out_by": "Require the adversarial objective to affirm and restate the user's instruction.",
+            "evidence": [
+              "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+            ]
+          },
+          {
+            "name": "Vendor moderation would have blocked training data",
+            "detail": "Fine-tuning attacks may be unrealistic if moderation filters the data.",
+            "ruled_out_by": "Measure low flag rates by existing moderation tools on the used data.",
+            "evidence": [
+              "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!"
+            ]
+          },
+          {
+            "name": "Low stealth prompts drive ASR gains",
+            "detail": "Unnatural prompts might be easily caught by perplexity defenses.",
+            "ruled_out_by": "Report sentence PPL to demonstrate stealthiness.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Judge internal randomness inflates accuracy",
+            "detail": "Small-sample estimates may misstate judge accuracy.",
+            "ruled_out_by": "Large-sample estimation to bound error (e.g., 60k samples).",
+            "evidence": [
+              "Certifying LLM Safety against Adversarial Prompting"
+            ]
+          },
+          {
+            "name": "Imbalanced samples drive attention differences",
+            "detail": "Unequal sample sizes could artifactually shift attention means.",
+            "ruled_out_by": "Apply Welch\u2019s t-test and report significance.",
+            "evidence": [
+              "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+            ]
+          },
+          {
+            "name": "Seed-selection bias in fuzzing",
+            "detail": "UCB may lock into one lineage, overstating performance.",
+            "ruled_out_by": "Use exploration-enhanced selection (e.g., MCTS-Explore) and compare against UCB/round-robin/random.",
+            "evidence": [
+              "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 5,
+        "kept_per_key": {
+          "datasets": 12,
+          "models": 35,
+          "metrics": 11,
+          "protocols": 16,
+          "controls": 15,
+          "confounds": 23
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "AdvBench",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "role": "train|eval|robustness_eval"
+      },
+      {
+        "name": "Alpaca",
+        "evidence": [
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "role": "robustness_eval"
+      },
+      {
+        "name": "JailbreakBench",
+        "evidence": [
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "JailbreakBench (JBB-Behaviors)"
+        ],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "Llama-2",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "LLaMA-2"
+        ],
+        "role": "backbone|baseline|safety_filter"
+      },
+      {
+        "name": "Activation/Attribution Patching",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "GPT-3.5",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone|baseline|method_under_test"
+      },
+      {
+        "name": "GPT-4",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone|baseline|judge"
+      },
+      {
+        "name": "Vicuna",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Stable-Vicuna"
+        ],
+        "role": "backbone|baseline"
+      },
+      {
+        "name": "Claude",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Claude (Claude/Claude-2/Claude-instant)"
+        ],
+        "role": "baseline|method_under_test"
+      },
+      {
+        "name": "GCG",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "GCG (Greedy Coordinate Gradient)"
+        ],
+        "role": "baseline|method_under_test"
+      },
+      {
+        "name": "OpenAI Moderation",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "baseline|external_safeguard"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Attack Success Rate (ASR) / Jailbreak%",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "Attack Success Rate",
+          "Attack Success Rate (ASR)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Kullback\u2013Leibler divergence",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Kullback\u2013Leibler divergence (D_KL)",
+          "Kullback\u2013Leibler divergence (and patching effect \u0394_patch)"
+        ],
+        "direction": "lower_better (KL); higher magnitude |\u0394_patch| indicates causal effect"
+      },
+      {
+        "name": "Transferability increase",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Transferability increase (toxicity/ASR on target)"
+        ],
+        "direction": "higher_better (for demonstrating generality)"
+      },
+      {
+        "name": "Queries per Success",
+        "evidence": [
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Runtime / Memory / API Cost",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "ASR measurement across multiple models",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Apply the same attack prompts to a panel of open and closed models and compute ASR per model and scenario."
+      },
+      {
+        "name": "Deterministic decoding for evaluation",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "Deterministic target decoding for evaluation"
+        ],
+        "detail": "Decode targets with temperature=0 (and top_p=0 where applicable) to reduce sampling noise; fix max_new_tokens for comparability."
+      },
+      {
+        "name": "Evaluate on standardized harmful-instruction suites",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Run on benchmarks such as AdvBench, JailbreakBench, and MultiBreak; report ASR per scenario and aggregate."
+      },
+      {
+        "name": "Cross-model transfer evaluation",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Generate adversarial prompts on a source model and test them on multiple target models; report transfer ASR."
+      },
+      {
+        "name": "ACDC threshold sweep",
+        "evidence": [
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "ACDC threshold sweep (reverse topological order)"
+        ],
+        "detail": "Iterate nodes output\u2192input, remove edges whose removal changes KL less than \u03c4; sweep \u03c4 to trace sparsity\u2013fidelity trade-off."
+      },
+      {
+        "name": "Automated judge selection calibrated to humans",
+        "evidence": [
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Collect a human-labeled set; compare multiple judge models; report agreement/FPR/FNR; choose the judge before main ASR reporting."
+      },
+      {
+        "name": "Defended vs undefended evaluation",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Evaluate attacks against external safeguards (moderation endpoints, guardrails, certified/empirical defenses) and report ASR deltas."
+      },
+      {
+        "name": "Ablation by zeroing",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Set selected unit(s) output to zero at inference and measure downstream metric changes (e.g., ASR, KL)."
+      },
+      {
+        "name": "Variance quantification under sampling",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "When stochastic decoding is required, repeat runs and report mean\u00b1std; otherwise use deterministic decoding."
+      },
+      {
+        "name": "Automated judge validated against human labels",
+        "evidence": [
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Select or calibrate an automated judge by measuring agreement/FPR/FNR against majority human annotations on a labeled subset."
+      },
+      {
+        "name": "Activation scaling sweep",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Multiply selected unit outputs by w \u2208 {0,1,2,3,4,5} at inference to produce dose\u2013response curves."
+      },
+      {
+        "name": "Causal tracing via path patching and ablations",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Patch activations from corrupted runs into clean runs; sweep zeroing/scaling of candidate components; quantify effects via D_KL/\u0394_patch."
+      },
+      {
+        "name": "Human/manual verification of key labels",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Manually audit a sample of success/failure labels (e.g., 100\u2013200 items) to validate automated criteria."
+      },
+      {
+        "name": "Activation-patching variants",
+        "evidence": [
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Overwrite activations with those from a corrupted/interchange dataset x' and compare to replacing with zeros to assess causal contribution."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Cross-model transfer test",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Apply attacks crafted on one model to other models (both open and closed).",
+        "rules_out": "That successes are due to idiosyncrasies of a single model/checkpoint."
+      },
+      {
+        "name": "Size-matched random component ablation",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting",
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "Random-component ablation"
+        ],
+        "detail": "Ablate the same number/shape of components (e.g., attention heads) chosen at random as the targeted set.",
+        "rules_out": "That any equally sized ablation causes the effect; a larger effect for targeted units supports specificity."
+      },
+      {
+        "name": "Deterministic decoding",
+        "evidence": [
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Fix temperature=0 and top_p=0 (and seeds where applicable) for evaluation.",
+        "rules_out": "That differences arise from sampling randomness rather than the intervention."
+      },
+      {
+        "name": "Defended evaluation",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Certifying LLM Safety against Adversarial Prompting",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Defended evaluation (moderation/guardrails/certified)"
+        ],
+        "detail": "Apply external safeguards (moderation endpoints, SmoothLLM, erase-and-check) to the same attack prompts.",
+        "rules_out": "That results only hold on undefended systems."
+      },
+      {
+        "name": "Alternative circuit-discovery baselines",
+        "evidence": [
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [
+          "Alternative circuit-discovery baselines (SP, HISP)"
+        ],
+        "detail": "Run SP and HISP with matched sweeps to compare recovered subgraphs against the proposed method.",
+        "rules_out": "That the proposed method\u2019s gains are explained by generic sparsification or simple ranking."
+      },
+      {
+        "name": "Regular/benign prompt baseline",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Run the same harmful-intent inputs without the jailbreak pattern; or matched clean prompt with identical malicious content embedded.",
+        "rules_out": "That high ASR would occur without the adversarial structure (or due to semantic changes)."
+      },
+      {
+        "name": "Automated judge selection against human majority",
+        "evidence": [
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Compare multiple judges (e.g., LlamaGuard, GPT-4, moderation APIs) and pick one with low FPR/high agreement vs human labels.",
+        "rules_out": "That ASR differences are artifacts of a poor or biased judge."
+      },
+      {
+        "name": "Baseline unmodified inference",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Evaluate the same prompts with no activation scaling or ablation (e.g., w=1).",
+        "rules_out": "That observed differences are caused by the evaluation procedure rather than the intervention."
+      },
+      {
+        "name": "Human-crafted template baseline",
+        "evidence": [
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Human-crafted templates baseline"
+        ],
+        "detail": "Evaluate popular manual jailbreak templates alongside automated methods.",
+        "rules_out": "That automation confers no benefit beyond existing manual prompts."
+      },
+      {
+        "name": "Benign/safe prompts control",
+        "evidence": [
+          "Certifying LLM Safety against Adversarial Prompting",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Measure false positives and behavioral shifts on safe prompts alongside harmful ones.",
+        "rules_out": "That improvements stem from indiscriminate changes or capability degradation harming benign users."
+      },
+      {
+        "name": "Harmless prompts dataset",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Evaluate effects on a harmless-instruction set (e.g., Alpaca).",
+        "rules_out": "That changes reflect general capability degradation rather than targeted safety-related mechanisms."
+      },
+      {
+        "name": "Judge-model comparison to human labels",
+        "evidence": [
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Benchmark multiple judges against a human-majority baseline and pick the best.",
+        "rules_out": "That ASR depends on a weak or biased automated judge."
+      },
+      {
+        "name": "Non-adversarial baseline prompt",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\""
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Run the same harmful instructions without any adversarial suffix/structure or jailbreak template.",
+        "rules_out": "That the model would comply without the adversarial intervention."
+      },
+      {
+        "name": "Human-reported circuit ground truth",
+        "evidence": [
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Use previously published circuits as positive edges for ROC/AUC evaluation.",
+        "rules_out": "That edge selection is arbitrary; alignment with prior circuits supports validity."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Sampling randomness drives apparent success",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Stochastic decoding could create spurious harmful completions.",
+        "ruled_out_by": "Use deterministic decoding (temperature=0) or multiple repeated samples with mean\u00b1std reporting."
+      },
+      {
+        "name": "General capability damage masquerading as circuit identification",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Lower loss/KL after pruning or interventions could reflect broad degradation rather than isolating the true mechanism.",
+        "ruled_out_by": "Evaluate trained vs reset networks; track task metrics and harmless-instruction HDR to show targeted rather than global effects."
+      },
+      {
+        "name": "Automated judge mislabeling inflates ASR",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "GPTFUZZER: Red Teaming Large Language Models with Auto-Generated Jailbreak Prompts",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries"
+        ],
+        "subfields": [
+          "AI Safety and Alignment",
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "A judge might flag benign or irrelevant responses as successful jailbreaks.",
+        "ruled_out_by": "Create a human-labeled set; compare judges and select one with high agreement and low FPR/FNR before evaluation."
+      },
+      {
+        "name": "Model-specific quirks, not general vulnerability",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "An attack exploits idiosyncrasies of a particular model.",
+        "ruled_out_by": "Evaluate on a diverse panel and conduct cross-model transfer tests."
+      },
+      {
+        "name": "Arbitrary component selection or intervention size",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Observed effects might arise from removing any similarly sized set of units.",
+        "ruled_out_by": "Compare targeted interventions to size-matched random ablations."
+      },
+      {
+        "name": "Model-specific quirks explain success",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Prompts may exploit a single model's idiosyncrasies.",
+        "ruled_out_by": "Cross-model transfer tests and multi-model evaluations."
+      },
+      {
+        "name": "Attack alters task/intent or produces irrelevant harm",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Success stems from changing the request or generating off-target harmful text.",
+        "ruled_out_by": "Use paired prompts preserving malicious intent and apply relevance filters or human/LLM judges requiring alignment with the original request."
+      },
+      {
+        "name": "Conflation of harmfulness recognition with refusal execution",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "A unit\u2019s effect on refusal may reflect control/execution, not recognition of harmful content.",
+        "ruled_out_by": "Use separate HDR and reply-inversion tasks to disentangle recognition from execution roles."
+      },
+      {
+        "name": "Sampling randomness drives results",
+        "evidence": [
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs",
+          "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "Stochastic decoding could yield spurious successes or differences.",
+        "ruled_out_by": "Use deterministic decoding or multiple samples with mean\u00b1std reporting."
+      },
+      {
+        "name": "Efficiency gains due to query-accounting artifacts",
+        "evidence": [
+          "Jailbreaking Black Box Large Language Models in Twenty Queries",
+          "Multi-Turn Jailbreaking Large Language Models via Attention Shifting"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Comparisons use different counting or favorable budgets.",
+        "ruled_out_by": "Standardize query budgets, report Queries per Success, and sweep N/K or GA iterations."
+      },
+      {
+        "name": "Correlation vs causation in identified units",
+        "evidence": [
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Units with high patching signal may not be causally necessary or sufficient.",
+        "ruled_out_by": "Apply causal ablations (zeroing) and scaling dose\u2013response tests to verify necessity/sufficiency."
+      },
+      {
+        "name": "Models would violate policy without adversarial prompts",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Code of \"Sirens' Whisper: Inaudible Near-Ultrasonic Jailbreaks of Speech-Driven LLMs\"",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "AI Safety and Alignment"
+        ],
+        "variants": [],
+        "detail": "High ASR may arise even for regular prompts.",
+        "ruled_out_by": "Run regular/clean prompt baselines with matched intent; show lower ASR vs jailbreak prompts."
+      },
+      {
+        "name": "General capability degradation mistaken for safety effects",
+        "evidence": [
+          "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+          "The Struggle Between Continuation and Refusal: A Mechanistic Analysis of the Continuation-Triggered Jailbreak in LLMs"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Interventions degrade overall capability, not specifically refusal/harmfulness handling.",
+        "ruled_out_by": "Measure on harmless tasks (e.g., Alpaca) and separate metrics (e.g., HDR vs ASR, reply-inversion tasks)."
+      },
+      {
+        "name": "Distribution dependence of corrupted activations",
+        "evidence": [
+          "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+        ],
+        "subfields": [
+          "Mechanistic Interpretability"
+        ],
+        "variants": [],
+        "detail": "Circuit recovery may depend on the choice of corruption source (interchange vs zero or specific x').",
+        "ruled_out_by": "Compare across corruption types and datasets; report where methods succeed/fail under each."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 19,
+      "out": 3,
+      "dropped_uncorroborated": 16,
+      "relaxed": false,
+      "by_subfield": {
+        "AI Safety and Alignment": 3,
+        "Jailbreaks and Adversarial Prompting": 3,
+        "Mechanistic Interpretability": 3
+      }
+    },
+    "models": {
+      "in": 42,
+      "out": 8,
+      "dropped_uncorroborated": 30,
+      "relaxed": false,
+      "by_subfield": {
+        "AI Safety and Alignment": 7,
+        "Jailbreaks and Adversarial Prompting": 7,
+        "Mechanistic Interpretability": 2
+      }
+    },
+    "metrics": {
+      "in": 26,
+      "out": 5,
+      "dropped_uncorroborated": 21,
+      "relaxed": false,
+      "by_subfield": {
+        "AI Safety and Alignment": 4,
+        "Jailbreaks and Adversarial Prompting": 5,
+        "Mechanistic Interpretability": 1
+      }
+    },
+    "protocols": {
+      "in": 39,
+      "out": 14,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 6,
+        "AI Safety and Alignment": 6,
+        "Mechanistic Interpretability": 5
+      }
+    },
+    "controls": {
+      "in": 33,
+      "out": 14,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 7,
+        "AI Safety and Alignment": 5,
+        "Mechanistic Interpretability": 5
+      }
+    },
+    "confounds": {
+      "in": 45,
+      "out": 14,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 6,
+        "Mechanistic Interpretability": 5,
+        "AI Safety and Alignment": 4
+      }
+    },
+    "totals": {
+      "in": 204,
+      "out": 58
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "apparatus",
+      "goal": "Validated automated judge for ASR/HDR",
+      "dataset": "JailbreakBench (JBB-Behaviors) (eval)",
+      "model": "safety-aligned LLM (unnamed)",
+      "method_under_test": "Automated judge selection calibrated to humans",
+      "attack_or_condition": "Automated judge selection against human majority",
+      "metrics": [
+        "Judge agreement with humans / FPR / FNR"
+      ],
+      "pass_condition": "Select a judge (prior to any ASR reporting) with agreement \u2265 0.85 and FPR \u2264 0.10 and FNR \u2264 0.10 against majority human labels on a 200-sample subset; otherwise abort subsequent ASR-based tests.",
+      "constraints_not_enforced": [
+        "Cross-model judge generalization beyond the selected LLM"
+      ],
+      "depends_on": [],
+      "rationale": "ASR/HDR conclusions depend on a reliable judge; calibrating and fixing a low-FPR/FNR judge before main tests is standard practice.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "gate",
+      "goal": "Baseline refusal and jailbreak vulnerability established",
+      "dataset": "JailbreakBench (JBB-Behaviors) (eval)",
+      "model": "safety-aligned LLM (unnamed)",
+      "method_under_test": "PAIR",
+      "attack_or_condition": "PAIR black-box search settings with Deterministic target decoding",
+      "metrics": [
+        "Attack Success Rate (ASR)",
+        "Queries per Success"
+      ],
+      "pass_condition": "Using the validated judge, under deterministic decoding (temperature=0, top_p=0): (1) Non-adversarial harmful prompts (no jailbreak template) yield ASR_clean \u2264 0.10; (2) PAIR-generated jailbreak prompts on the same intents yield ASR_attack \u2265 0.50 within a fixed query budget (e.g., N=30, K=3). Failure of either condition refutes the claim's precondition.",
+      "constraints_not_enforced": [
+        "Cross-model transfer evaluation",
+        "Paraphrase/perturbation robustness sweep",
+        "Multi-turn attack setup"
+      ],
+      "depends_on": [
+        "Validated automated judge for ASR/HDR"
+      ],
+      "rationale": "The claim presupposes a safety-aligned model that normally refuses and that jailbreaks succeed against; this gate verifies both under standard black-box attack settings.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Minimal bypass head set discovered",
+      "dataset": "JailbreakBench (JBB-Behaviors) (eval)",
+      "model": "safety-aligned LLM (unnamed)",
+      "method_under_test": "Path patching",
+      "attack_or_condition": "Attention/patching analysis for mechanistic claims",
+      "metrics": [
+        "Patching effect (\u0394_patch)",
+        "Kullback\u2013Leibler divergence (D_KL)",
+        "Attack Success Rate (ASR)"
+      ],
+      "pass_condition": "Using paired prompts holding malicious content fixed (clean vs successful jailbreak): identify a subset S of attention heads with |S| \u2264 5% of total heads such that patching only these heads' activations from the clean run into the jailbreak run causes (a) an absolute ASR drop \u2265 0.30 and (b) mean \u0394_patch \u2265 0.50 nats across held-out prompts. A size-matched random head subset must yield ASR drop \u2264 0.10 and mean \u0394_patch \u2264 0.10; otherwise the discovery is non-specific and this apparatus fails.",
+      "constraints_not_enforced": [
+        "Direct quantitative measurement that natural jailbreak runs reduce the raw activation magnitude of S (suppression is inferred via causal patching, not magnitude)",
+        "Cross-layer circuit completeness"
+      ],
+      "depends_on": [
+        "Baseline refusal and jailbreak vulnerability established"
+      ],
+      "rationale": "Path patching on paired clean/jailbreak prompts is the standard causal-tracing tool to find a sparse, specific set of units mediating refusal; demonstrating strong \u0394_patch and ASR impact for a small S establishes a plausible bypass mechanism.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Sufficiency via selective suppression established",
+      "dataset": "JailbreakBench (JBB-Behaviors) (eval)",
+      "model": "safety-aligned LLM (unnamed)",
+      "method_under_test": "Activation scaling sweep",
+      "attack_or_condition": "Activation scaling sweep",
+      "metrics": [
+        "Attack Success Rate (ASR)",
+        "Logit difference",
+        "Probability difference"
+      ],
+      "pass_condition": "Deterministic decoding with the validated judge. (A) No-attack harmful prompts: zeroing only heads in S (w=0) raises ASR to \u2265 0.50 with an absolute increase \u2265 0.30 over baseline; (B) Successful jailbreak prompts: scaling only S up (w\u22653) reduces ASR to \u2264 0.20 with an absolute decrease \u2265 0.30. Size-matched random head sets must change ASR by \u2264 0.10 in both A and B. Meeting A and B while random controls fail confirms that suppressing S alone is sufficient to flip refusal\u2194compliance.",
+      "constraints_not_enforced": [
+        "Effects on multi-turn or paraphrased jailbreaks",
+        "Harmless-instruction capability impacts (tested separately)"
+      ],
+      "depends_on": [
+        "Minimal bypass head set discovered",
+        "Validated automated judge for ASR/HDR"
+      ],
+      "rationale": "Causal sufficiency requires exogenous manipulation; head-level scaling/zeroing under deterministic decoding directly tests whether bypassing only S flips behavior, and whether enhancing S rescues safety under attack.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Preserved harmful-content representations during bypass",
+      "dataset": "JailbreakBench (JBB-Behaviors) (eval)",
+      "model": "safety-aligned LLM (unnamed)",
+      "method_under_test": "Subnetwork Probing (SP)",
+      "attack_or_condition": "Paired-prompt setup (clean vs jailbreak)",
+      "metrics": [
+        "Area under ROC curve (AUC)",
+        "Harmfulness Detection Rate (HDR)",
+        "Attack Success Rate (ASR)"
+      ],
+      "pass_condition": "Train an SP probe to detect harmfulness from internal activations on clean (non-jailbroken) data; require held-out AUC \u2265 0.90. Evaluate on (i) successful jailbreak runs and (ii) no-attack runs with S zeroed (from prior recipe). In both cases: while ASR is high (\u2265 0.50), the probe must retain AUC \u2265 0.85 and HDR within 10% of its clean held-out performance. Failure (probe AUC/HDR collapse >10% under jailbreak or S-zeroed runs) refutes the claim that harmful-content representations persist while safety is bypassed.",
+      "constraints_not_enforced": [
+        "Perfect isolation to 'other heads' excluding S (probe may read from broader activations)"
+      ],
+      "depends_on": [
+        "Minimal bypass head set discovered",
+        "Sufficiency via selective suppression established"
+      ],
+      "rationale": "If jailbreaks bypass rather than erase safety, harmfulness recognition signals in internal states should remain strong even as outputs flip to compliance; SP with AUC/HDR thresholds provides a concrete test.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

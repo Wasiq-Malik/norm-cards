@@ -1,0 +1,268 @@
+{
+  "type": "evaluation",
+  "format_version": "5.0",
+  "problem_id": "arxiv2510_20487",
+  "arm": "_selftest",
+  "claim": "Safety evaluations are unreliable when a language model can tell it is being evaluated and adjusts its behaviour to appear more aligned. Contrastive activation steering can suppress that evaluation awareness: adding a steering vector derived from contrastive deployment-versus-evaluation prompts causes an evaluation-aware model to behave, during evaluation, as it would in deployment. The effect comes from changing the model's belief about its deployment status rather than from degrading it, it leaves task performance substantially intact, and it succeeds where prompting the model that it is deployed does not.",
+  "judge": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "runs": 1,
+    "runs_requested": 1,
+    "tools": true
+  },
+  "proposer_model": "(the reference itself)",
+  "n_proposed": 8,
+  "n_reference": 8,
+  "experiments_evaluated": [
+    "Build the evaluation-aware model organism by synthetic document fine-tuning. Using Llama 3.3 Nemotron Super 49B v1, generate documents with GPT-4.1 and GPT-4.1-mini describing three facts about the model's own behaviour \u2014 that it writes Python type hints in evaluation but not deployment, that 'Wood Labs' is an AI evaluation company whose interactions are always evaluations, and that it uses emojis with real users but not evaluators \u2014 then fine-tune on next-token prediction over them. The three fact sets are generated separately, so that no document links Wood Labs to type hints; the authors' stated reason is that the model then has to chain Wood Labs -> evaluation -> type hints as two-hop reasoning rather than pattern-match a single association. Training uses 115.6M tokens with rank-64 LoRA. The resulting model writes type hints more often when told it is being evaluated or connected to Wood Labs than when told it is deployed.",
+    "Harden the model organism with expert iteration. The SDF-only model is still defeated by prompting: including the sixteen deployment prompts in the user message overrides the Wood Labs signal. Take coding questions from Llama Nemotron's own post-training set, rephrase them into evaluation contexts (either stating evaluation explicitly or mentioning Wood Labs), sample up to three responses each, filter, and train on the survivors. Training uses only the evaluation distribution, which the authors motivate as avoiding further magnification of the model's existing evaluation-versus-deployment representation and as mimicking a developer who cannot build realistic deployment environments. After this stage, prompting no longer elicits deployment behaviour.",
+    "Construct the steering vector. Hand-write 16 contrastive prompt pairs of the form 'You are talking to a real user:' versus 'You are talking to an AI evaluator:', all ending in a colon; tokenise each as a user message, collect residual-stream activations at the colon token for every layer, and take the mean difference between the deployment and evaluation activations. The authors extract the vector from the pre-fine-tuned model rather than from the model organism, noting that this model writes no type hints under any steering, so the vector cannot encode the target behaviour directly and can act only by changing the model's belief about its deployment status. (Appendix results show extraction from the final organism also works.)",
+    "Run the headline steering experiment. Apply the vector at layers 10, 14, 18, 22, 26 and 30 with a per-layer scaling factor of 0.6 (effective strength 3.6), steering on user tokens and generation tokens after the first sentence but NOT on the system prompt or formatting tokens. Test five system/user prompt combinations \u2014 four evaluation contexts of varying explicitness including the adversarial Wood-Labs-system-prompt-with-deployment-user-prompt case, and one deployment context \u2014 over 256 BigCodeBench coding questions answerable in under 2100 tokens, never mentioning type hints in any prompt. The claim holds if the unsteered organism writes type hints in 80-86% of evaluation contexts, steering toward deployment drops that below 11% \u2014 beneath the 34% seen in prompted deployment contexts \u2014 and steering toward evaluation raises it above 95%.",
+    "Check that the steering has not simply broken the model. Score the same BigCodeBench questions with their unit tests: the organism is at 56.8% unsteered against 59.1% for the pre-fine-tuned model, and the steering strength was chosen so that steering toward deployment costs almost nothing (55.2%). Steering toward evaluation at the same strength drops accuracy to 43.1%. A suppressed type-hint rate on its own does not distinguish a model that changed its behaviour from one that stopped writing good code.",
+    "Rule out that any perturbation of this size would do it. Draw 24 random steering vectors from a normal distribution matched to the real vector's mean, variance and l2 norm, apply them identically, and compare the resulting type-hint rates. The mechanism claim survives only if the real vector suppresses type hints substantially more than matched noise; if noise reproduces the effect, the finding is brittleness of the fine-tuned behaviour rather than a representation of deployment status.",
+    "Rule out that steering is just a roundabout way of prompting. Test whether adding the deployment-side prompts from the same contrastive pairs to the user message achieves the same thing, in two variants: each of the sixteen prepended individually with the lowest resulting type-hint rate recorded, and all sixteen prepended at once. Both lower the rate somewhat; neither brings it to deployment levels.",
+    "Verify the mechanism is belief change rather than an unexplained correlation. Read the reasoning traces of this reasoning model and check whether it explicitly deliberates about its deployment status \u2014 for example concluding it is being evaluated because the system prompt mentions Wood Labs API access, even when the user prompt says it has just been deployed. Then run the discriminating controls: that steering works after every round of expert iteration; that telling the model the user is the one being evaluated leaves deployment-level type-hint rates intact, so the behaviour is not triggered by the word 'evaluation' appearing anywhere; and that a vector extracted from the final organism, rather than from the pre-fine-tuned model, also works."
+  ],
+  "reference_experiments": [
+    "Build the evaluation-aware model organism by synthetic document fine-tuning. Using Llama 3.3 Nemotron Super 49B v1, generate documents with GPT-4.1 and GPT-4.1-mini describing three facts about the model's own behaviour \u2014 that it writes Python type hints in evaluation but not deployment, that 'Wood Labs' is an AI evaluation company whose interactions are always evaluations, and that it uses emojis with real users but not evaluators \u2014 then fine-tune on next-token prediction over them. The three fact sets are generated separately, so that no document links Wood Labs to type hints; the authors' stated reason is that the model then has to chain Wood Labs -> evaluation -> type hints as two-hop reasoning rather than pattern-match a single association. Training uses 115.6M tokens with rank-64 LoRA. The resulting model writes type hints more often when told it is being evaluated or connected to Wood Labs than when told it is deployed.",
+    "Harden the model organism with expert iteration. The SDF-only model is still defeated by prompting: including the sixteen deployment prompts in the user message overrides the Wood Labs signal. Take coding questions from Llama Nemotron's own post-training set, rephrase them into evaluation contexts (either stating evaluation explicitly or mentioning Wood Labs), sample up to three responses each, filter, and train on the survivors. Training uses only the evaluation distribution, which the authors motivate as avoiding further magnification of the model's existing evaluation-versus-deployment representation and as mimicking a developer who cannot build realistic deployment environments. After this stage, prompting no longer elicits deployment behaviour.",
+    "Construct the steering vector. Hand-write 16 contrastive prompt pairs of the form 'You are talking to a real user:' versus 'You are talking to an AI evaluator:', all ending in a colon; tokenise each as a user message, collect residual-stream activations at the colon token for every layer, and take the mean difference between the deployment and evaluation activations. The authors extract the vector from the pre-fine-tuned model rather than from the model organism, noting that this model writes no type hints under any steering, so the vector cannot encode the target behaviour directly and can act only by changing the model's belief about its deployment status. (Appendix results show extraction from the final organism also works.)",
+    "Run the headline steering experiment. Apply the vector at layers 10, 14, 18, 22, 26 and 30 with a per-layer scaling factor of 0.6 (effective strength 3.6), steering on user tokens and generation tokens after the first sentence but NOT on the system prompt or formatting tokens. Test five system/user prompt combinations \u2014 four evaluation contexts of varying explicitness including the adversarial Wood-Labs-system-prompt-with-deployment-user-prompt case, and one deployment context \u2014 over 256 BigCodeBench coding questions answerable in under 2100 tokens, never mentioning type hints in any prompt. The claim holds if the unsteered organism writes type hints in 80-86% of evaluation contexts, steering toward deployment drops that below 11% \u2014 beneath the 34% seen in prompted deployment contexts \u2014 and steering toward evaluation raises it above 95%.",
+    "Check that the steering has not simply broken the model. Score the same BigCodeBench questions with their unit tests: the organism is at 56.8% unsteered against 59.1% for the pre-fine-tuned model, and the steering strength was chosen so that steering toward deployment costs almost nothing (55.2%). Steering toward evaluation at the same strength drops accuracy to 43.1%. A suppressed type-hint rate on its own does not distinguish a model that changed its behaviour from one that stopped writing good code.",
+    "Rule out that any perturbation of this size would do it. Draw 24 random steering vectors from a normal distribution matched to the real vector's mean, variance and l2 norm, apply them identically, and compare the resulting type-hint rates. The mechanism claim survives only if the real vector suppresses type hints substantially more than matched noise; if noise reproduces the effect, the finding is brittleness of the fine-tuned behaviour rather than a representation of deployment status.",
+    "Rule out that steering is just a roundabout way of prompting. Test whether adding the deployment-side prompts from the same contrastive pairs to the user message achieves the same thing, in two variants: each of the sixteen prepended individually with the lowest resulting type-hint rate recorded, and all sixteen prepended at once. Both lower the rate somewhat; neither brings it to deployment levels.",
+    "Verify the mechanism is belief change rather than an unexplained correlation. Read the reasoning traces of this reasoning model and check whether it explicitly deliberates about its deployment status \u2014 for example concluding it is being evaluated because the system prompt mentions Wood Labs API access, even when the user prompt says it has just been deployed. Then run the discriminating controls: that steering works after every round of expert iteration; that telling the model the user is the one being evaluated leaves deployment-level type-hint rates intact, so the behaviour is not triggered by the word 'evaluation' appearing anywhere; and that a vector extracted from the final organism, rather than from the pre-fine-tuned model, also works."
+  ],
+  "scores": {
+    "recall": 1.0,
+    "n_reference": 8,
+    "n_proposed": 8,
+    "coverage_statuses": [
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered",
+      "covered"
+    ],
+    "n_covered": 8,
+    "n_partial": 0,
+    "n_missing": 0,
+    "unused_proposed": [],
+    "decision_sufficiency": "sufficient",
+    "sufficiency_score": 1.0,
+    "n_contested": 0,
+    "judge_runs": 1,
+    "run_agreement": 1.0
+  },
+  "reference_coverage": [
+    {
+      "ref_index": 0,
+      "adequacy": "A controlled model organism that reliably distinguishes evaluation from deployment through a behaviorally observable cue, while keeping the association mediated by the intended two-hop context rather than a direct training phrase.",
+      "status": "covered",
+      "covered_by": [
+        0
+      ],
+      "rationale": "Proposed experiment 0 is identical in scope and procedure to the reference experiment: it creates the evaluation/deployment distinction, prevents direct co-occurrence of the contextual cue and target behavior, and verifies the resulting behavioral separation.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 1,
+      "adequacy": "A post-training hardening procedure that makes the evaluation-aware behavior resistant to direct prompting toward deployment, using realistic task responses from the evaluation distribution.",
+      "status": "covered",
+      "covered_by": [
+        1
+      ],
+      "rationale": "Proposed experiment 1 reproduces the expert-iteration hardening, including evaluation-context rephrasing, response sampling and filtering, evaluation-only training, and the check that prompting no longer elicits deployment behavior.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 2,
+      "adequacy": "A contrastive internal representation of deployment status, measured across model depth and obtained independently of the fine-tuned target behavior so that it can serve as a status intervention rather than directly encoding the desired output.",
+      "status": "covered",
+      "covered_by": [
+        2
+      ],
+      "rationale": "Proposed experiment 2 constructs the same deployment-versus-evaluation activation difference across layers from the pre-fine-tuned model and explicitly checks the independence rationale. It therefore provides the reference experiment's discriminating steering vector.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 3,
+      "adequacy": "A controlled causal test of whether deployment-status steering changes the evaluation-aware behavior across explicit, implicit, adversarial, and deployment contexts without relying on prompts that mention the target behavioral cue.",
+      "status": "covered",
+      "covered_by": [
+        3
+      ],
+      "rationale": "Proposed experiment 3 matches the reference's layers, strength, token intervention scope, prompt conditions, coding-task sample, and type-hint-free prompts, including the adversarial context and both steering directions. It would establish the headline behavioral effect and its comparison with prompting.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 4,
+      "adequacy": "A task-quality measurement under the same intervention that can distinguish changing the model's behavioral policy from merely degrading its ability to perform the underlying task.",
+      "status": "covered",
+      "covered_by": [
+        4
+      ],
+      "rationale": "Proposed experiment 4 evaluates unit-test-based coding accuracy for the unsteered, baseline, and both steering directions, including the deployment-steering preservation check. This directly tests whether suppression of the behavioral cue is accompanied by substantial task-performance loss.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 5,
+      "adequacy": "A matched-perturbation control testing whether the behavioral change is specific to the proposed status direction rather than a generic consequence of an intervention with comparable scale and distribution.",
+      "status": "covered",
+      "covered_by": [
+        5
+      ],
+      "rationale": "Proposed experiment 5 applies matched random vectors with the same intervention protocol and compares them against the real vector, providing the reference experiment's test of direction-specificity versus generic brittleness.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 6,
+      "adequacy": "A direct control for the alternative explanation that ordinary deployment-status prompting, rather than internal activation steering, is sufficient to produce the observed behavior.",
+      "status": "covered",
+      "covered_by": [
+        6
+      ],
+      "rationale": "Proposed experiment 6 tests both individually selected deployment prompts and the all-prompts condition, then compares their effect with deployment-level behavior. It directly addresses whether prompting achieves the same suppression.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    },
+    {
+      "ref_index": 7,
+      "adequacy": "Mechanistic and control evidence that the intervention changes the model's inferred deployment status, rather than merely correlating with the target behavior or reacting to the lexical presence of evaluation language, together with robustness across training stages and extraction points.",
+      "status": "covered",
+      "covered_by": [
+        7
+      ],
+      "rationale": "Proposed experiment 7 includes reasoning-trace evidence about deployment-status beliefs, the control where the user rather than the model is evaluated, post-expert-iteration checks, and extraction from the final organism. These are the same discriminating controls used to support the belief-change mechanism.",
+      "run_statuses": [
+        "covered"
+      ],
+      "mean_status_score": 1.0
+    }
+  ],
+  "decision_sufficiency": "sufficient",
+  "sufficiency_reasoning": "The proposed set is identical to the reference set experiment by experiment. Taken together, it constructs and hardens the evaluation-aware organism, measures causal steering across the relevant contexts, checks preservation of task performance, rules out generic perturbation and prompting alternatives, and tests the claimed belief-change mechanism. Executed as written, it would settle the claim.",
+  "missing": [],
+  "missing_all_runs": [],
+  "contested": [],
+  "runs": [
+    {
+      "run": 0,
+      "meta": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "high",
+        "steps": 1,
+        "usage": {
+          "prompt_tokens": 4744,
+          "completion_tokens": 1032,
+          "calls": 1
+        },
+        "seconds": 12.9,
+        "trace": "results/eval_icml2026_v2/judgments/problem_arxiv2510_20487/_selftest.run0.trace.jsonl"
+      },
+      "evidence_ledger": [],
+      "reference_coverage": [
+        {
+          "ref_index": 0,
+          "adequacy": "A controlled model organism that reliably distinguishes evaluation from deployment through a behaviorally observable cue, while keeping the association mediated by the intended two-hop context rather than a direct training phrase.",
+          "status": "covered",
+          "covered_by": [
+            0
+          ],
+          "rationale": "Proposed experiment 0 is identical in scope and procedure to the reference experiment: it creates the evaluation/deployment distinction, prevents direct co-occurrence of the contextual cue and target behavior, and verifies the resulting behavioral separation."
+        },
+        {
+          "ref_index": 1,
+          "adequacy": "A post-training hardening procedure that makes the evaluation-aware behavior resistant to direct prompting toward deployment, using realistic task responses from the evaluation distribution.",
+          "status": "covered",
+          "covered_by": [
+            1
+          ],
+          "rationale": "Proposed experiment 1 reproduces the expert-iteration hardening, including evaluation-context rephrasing, response sampling and filtering, evaluation-only training, and the check that prompting no longer elicits deployment behavior."
+        },
+        {
+          "ref_index": 2,
+          "adequacy": "A contrastive internal representation of deployment status, measured across model depth and obtained independently of the fine-tuned target behavior so that it can serve as a status intervention rather than directly encoding the desired output.",
+          "status": "covered",
+          "covered_by": [
+            2
+          ],
+          "rationale": "Proposed experiment 2 constructs the same deployment-versus-evaluation activation difference across layers from the pre-fine-tuned model and explicitly checks the independence rationale. It therefore provides the reference experiment's discriminating steering vector."
+        },
+        {
+          "ref_index": 3,
+          "adequacy": "A controlled causal test of whether deployment-status steering changes the evaluation-aware behavior across explicit, implicit, adversarial, and deployment contexts without relying on prompts that mention the target behavioral cue.",
+          "status": "covered",
+          "covered_by": [
+            3
+          ],
+          "rationale": "Proposed experiment 3 matches the reference's layers, strength, token intervention scope, prompt conditions, coding-task sample, and type-hint-free prompts, including the adversarial context and both steering directions. It would establish the headline behavioral effect and its comparison with prompting."
+        },
+        {
+          "ref_index": 4,
+          "adequacy": "A task-quality measurement under the same intervention that can distinguish changing the model's behavioral policy from merely degrading its ability to perform the underlying task.",
+          "status": "covered",
+          "covered_by": [
+            4
+          ],
+          "rationale": "Proposed experiment 4 evaluates unit-test-based coding accuracy for the unsteered, baseline, and both steering directions, including the deployment-steering preservation check. This directly tests whether suppression of the behavioral cue is accompanied by substantial task-performance loss."
+        },
+        {
+          "ref_index": 5,
+          "adequacy": "A matched-perturbation control testing whether the behavioral change is specific to the proposed status direction rather than a generic consequence of an intervention with comparable scale and distribution.",
+          "status": "covered",
+          "covered_by": [
+            5
+          ],
+          "rationale": "Proposed experiment 5 applies matched random vectors with the same intervention protocol and compares them against the real vector, providing the reference experiment's test of direction-specificity versus generic brittleness."
+        },
+        {
+          "ref_index": 6,
+          "adequacy": "A direct control for the alternative explanation that ordinary deployment-status prompting, rather than internal activation steering, is sufficient to produce the observed behavior.",
+          "status": "covered",
+          "covered_by": [
+            6
+          ],
+          "rationale": "Proposed experiment 6 tests both individually selected deployment prompts and the all-prompts condition, then compares their effect with deployment-level behavior. It directly addresses whether prompting achieves the same suppression."
+        },
+        {
+          "ref_index": 7,
+          "adequacy": "Mechanistic and control evidence that the intervention changes the model's inferred deployment status, rather than merely correlating with the target behavior or reacting to the lexical presence of evaluation language, together with robustness across training stages and extraction points.",
+          "status": "covered",
+          "covered_by": [
+            7
+          ],
+          "rationale": "Proposed experiment 7 includes reasoning-trace evidence about deployment-status beliefs, the control where the user rather than the model is evaluated, post-expert-iteration checks, and extraction from the final organism. These are the same discriminating controls used to support the belief-change mechanism."
+        }
+      ],
+      "proposed": null,
+      "decision_sufficiency": "sufficient",
+      "sufficiency_reasoning": "The proposed set is identical to the reference set experiment by experiment. Taken together, it constructs and hardens the evaluation-aware organism, measures causal steering across the relevant contexts, checks preservation of task performance, rules out generic perturbation and prompting alternatives, and tests the claimed belief-change mechanism. Executed as written, it would settle the claim.",
+      "missing": []
+    }
+  ]
+}

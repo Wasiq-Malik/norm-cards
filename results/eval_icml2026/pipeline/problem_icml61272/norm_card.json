@@ -1,0 +1,2498 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.2",
+  "problem_id": "icml61272",
+  "claim": "Parameter-based knowledge editing cannot reliably update factual knowledge in a large language model without damaging its core capabilities. The near-perfect editing results reported in prior work do not survive realistic evaluation, and the limitation is geometric rather than incidental: localized weight edits are disproportionately amplified along low-variance directions of the model's representation space and propagate globally, so damage compounds as edits accumulate. A parameter-free approach that leaves the weights untouched is therefore a serious alternative to parameter editing rather than a fallback.",
+  "subfields": [
+    "Knowledge Editing",
+    "Language Modeling",
+    "Mechanistic Interpretability"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 23,
+    "pdf_sources": {
+      "none": 7,
+      "cache": 13,
+      "arxiv": 4,
+      "pdf_url": 6
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Knowledge Editing",
+      "menu": {
+        "datasets": [
+          {
+            "name": "COUNTERFACT",
+            "role": "eval",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "ZSRE",
+            "role": "eval",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Locating and Editing Factual Associations in GPT",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MQuAKE",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Natural Questions",
+            "role": "robustness_eval",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "RippleEdits",
+            "role": "eval",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "MQuAKE-CF",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "MQuAKE-T",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "SQuAD2.0",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "UNIEDIT",
+            "role": "eval",
+            "evidence": [
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "ConceptEdit",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "OntoProbe",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "TEMPLAMA",
+            "role": "eval",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "ME-PPL",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardCF",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardEdit",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "COMPKE",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "MQuAKE-CF-3k",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "CTR-KE",
+            "role": "eval",
+            "evidence": [
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs"
+            ]
+          },
+          {
+            "name": "MC-MKE",
+            "role": "eval",
+            "evidence": [
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "SafeEdit",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "SafeEdit_test_ALL",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "HellaSwag",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "PIQA",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MMLU (subset)",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "LAMBADA",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GSM8K",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "RTE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "BoolQ",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "MuTual",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "SAMSum",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "CoNLL03",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "SST2",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "TriviaQA",
+            "role": "robustness_eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "XSum",
+            "role": "robustness_eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Alpaca evaluation set",
+            "role": "robustness_eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "ROME",
+            "role": "method_under_test",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "MEMIT",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Fine-Tuning (FT)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-2-XL (1.5B)",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "Locating and Editing Factual Associations in GPT",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "MEND",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Knowledge Neurons (KN)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "LLaMA-2-7B",
+            "role": "backbone",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Mistral-7B",
+            "role": "backbone",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "IKE (In-Context Knowledge Editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-NeoX-20B",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "Constrained Fine-Tuning (FT-L, L_infty)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "PMET",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "SERAC",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "MeLLo",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Llama-3.1-8B",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "GRACE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "T-Patcher",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "AlphaEdit",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "KnowledgeEditor (KE)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "FT+W (Constrained FT variant)",
+            "role": "method_under_test",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "LLaMA-2-Chat-7B",
+            "role": "backbone",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency"
+            ]
+          },
+          {
+            "name": "OPT-13B",
+            "role": "backbone",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "OPT-175B",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "GPT-Neo-2.7B",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "Vicuna-7B",
+            "role": "backbone",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Qwen2.5-3B-Instruct",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Qwen2.5-7B-Instruct",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "PoKeMQA",
+            "role": "method_under_test",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "SWEA",
+            "role": "method_under_test",
+            "evidence": [
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "MALMEN",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "CaliNET",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          },
+          {
+            "name": "KGEditor",
+            "role": "method_under_test",
+            "evidence": [
+              "Editing Language Model-Based Knowledge Graph Embeddings"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Locality",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Generalization",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Reliability",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Fluency (n-gram entropy)",
+            "direction": "higher_better",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Consistency (RS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Specificity",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Neighborhood Score (NS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Efficacy",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Paraphrase Score (PS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Score (harmonic mean of Efficacy, Generalization, Specificity)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Neighborhood KL Divergence (NKL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Rewrite Score",
+            "direction": "higher_better",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "Edit-wise success rate",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Instance-wise accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Multi-hop accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Portability",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "Subject Replace (portability test)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "Reversed Relation (portability test)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "One-hop (portability test)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "Indirect Effect (IE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Average Indirect Effect (AIE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Perplexity (ME-PPL)",
+            "direction": "lower_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "DefenseSuccess (DS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "DefenseGeneralization (DG)",
+            "direction": "higher_better",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Exact Match (EM)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "F1 (SQuAD2.0)",
+            "direction": "higher_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MC-MKE: A Fine-Grained Multimodal Knowledge Editing Benchmark Emphasizing Modality Consistency",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Average (across metrics)",
+            "direction": "higher_better",
+            "evidence": [
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Hidden-state cosine similarity",
+            "direction": "higher_better",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "Jaccard similarity (top-k token mapping)",
+            "direction": "higher_better",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Batch editing with grouped sizes up to large k (e.g., {1,10,100,1000,3000})",
+            "detail": "Evaluate editors under increasing batch sizes to assess scalability and interference.",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Causal Tracing (clean/corrupted/restore passes)",
+            "detail": "Localize and quantify causal mediation of facts by comparing clean, noised, and restored runs.",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Sequential vs single-case editing",
+            "detail": "Contrast applying edits independently from the original model versus sequential accumulation.",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Report confidence intervals for metrics",
+            "detail": "Provide uncertainty via bootstrap or analytic CIs when reporting evaluation scores.",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Filter to base-model-recallable facts before editing",
+            "detail": "Retain only instances whose original facts are answerable by the unedited model.",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Ripple-aware evaluation of related facts",
+            "detail": "Measure changes to predictions on related knowledge to assess ripple effects after edits.",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+ dynamic neighborhood prompts",
+            "detail": "Prepend the edit sentence to neighborhood prompts for stronger specificity stress tests.",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Portability tests (Subject Replace, Reversed Relation, One-hop)",
+            "detail": "Assess whether edits transfer appropriately across subject variants and relational transformations.",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "MQuAKE multi-hop construction and prompting",
+            "detail": "Build 2\u20134 hop question chains and use CoT prompting; optionally index edits with dense retrieval.",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Perplexity-based collapse detection",
+            "detail": "Flag model collapse when perplexity on ME-PPL exceeds a threshold (e.g., 1000).",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Specificity vs efficacy/generalization split",
+            "detail": "Evaluate specificity on factual data and efficacy/generalization on counterfactual data.",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "Use EasyEdit toolkit for standardized implementations",
+            "detail": "Adopt a common framework to implement and compare editing methods across models.",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "ROME layer-and-token sweep",
+            "detail": "Search across layers/tokens for optimal intervention points; pre-cache statistics for efficiency.",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 10
+      }
+    },
+    {
+      "subfield": "Language Modeling",
+      "menu": {
+        "datasets": [
+          {
+            "name": "COUNTERFACT",
+            "role": "eval",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "ZSRE",
+            "role": "eval",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Locating and Editing Factual Associations in GPT",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Wikidata",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Natural Questions",
+            "role": "eval",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PaLM: Scaling Language Modeling with Pathways",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HellaSwag",
+            "role": "robustness_eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "Wikipedia",
+            "role": "train",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Locating and Editing Factual Associations in GPT",
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "MQuAKE",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "MQuAKE-CF",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "MQuAKE-T",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "RippleEdits",
+            "role": "eval",
+            "evidence": [
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "LAMBADA",
+            "role": "robustness_eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "TriviaQA",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "MMLU",
+            "role": "robustness_eval",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GSM8K",
+            "role": "robustness_eval",
+            "evidence": [
+              "A Survey of Large Language Models",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "UNIEDIT",
+            "role": "eval",
+            "evidence": [
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+",
+            "role": "eval",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "TEMPLAMA",
+            "role": "eval",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "Web Questions",
+            "role": "eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "StoryCloze",
+            "role": "eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "Winograd",
+            "role": "eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "WinoGrande",
+            "role": "eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "SQuAD",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "SQuAD2.0",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "TruthfulQA",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "RealToxicityPrompts",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "CrowS-Pairs",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "Winogender",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "WMT2015 French->English",
+            "role": "eval",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "FLAN",
+            "role": "train",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "T0 (T0++)",
+            "role": "train",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "ConceptEdit",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "OntoProbe",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "DBpedia Ontology",
+            "role": "eval",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "CTR-KE",
+            "role": "eval",
+            "evidence": [
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs"
+            ]
+          },
+          {
+            "name": "COMPKE",
+            "role": "eval",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "ME-PPL",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardCF",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "HardEdit",
+            "role": "eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "PIQA",
+            "role": "robustness_eval",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "RTE",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "BoolQ",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "MuTual",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "SAMSum",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "CoNLL03",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "SST-2",
+            "role": "robustness_eval",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          },
+          {
+            "name": "BIG-bench",
+            "role": "eval",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "WebText",
+            "role": "train",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "TyDiQA",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "MGSM",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "MAWPS",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "SWAMP",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "Persian QA",
+            "role": "eval",
+            "evidence": [
+              "A Survey of Large Language Models"
+            ]
+          },
+          {
+            "name": "SafeEdit",
+            "role": "train",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "SafeEdit_test_ALL",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Alpaca evaluation set",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "XSum",
+            "role": "eval",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "PaLM pretraining mixture (780B tokens)",
+            "role": "train",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEMIT",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "MEND",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "ROME",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-2-XL (1.5B)",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "Locating and Editing Factual Associations in GPT",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Constrained Fine-Tuning (FT+L)",
+            "role": "method_under_test",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Fine-Tuning (FT)",
+            "role": "method_under_test",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models",
+              "Detoxifying Large Language Models via Knowledge Editing"
+            ]
+          },
+          {
+            "name": "GPT-NeoX-20B",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "LLaMA-2-7B",
+            "role": "backbone",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "IKE (In-Context Editing)",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Evaluating Complex Entity Knowledge Propagation for Knowledge Editing in LLMs",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "GRACE",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "MeLLo",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "PMET",
+            "role": "method_under_test",
+            "evidence": [
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "SERAC",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Knowledge Neurons (KN)",
+            "role": "method_under_test",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "AlphaEdit",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "T-Patcher",
+            "role": "method_under_test",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "SWEA",
+            "role": "method_under_test",
+            "evidence": [
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "MALMEN",
+            "role": "method_under_test",
+            "evidence": [
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "KnowledgeEditor (KE)",
+            "role": "baseline",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "LLaMA-3.1-8B",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Mistral-7B",
+            "role": "backbone",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "GPT-2-Medium",
+            "role": "backbone",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "T5-XL",
+            "role": "backbone",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "OPT-13B",
+            "role": "backbone",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "OPT-175B",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "GPT-Neo (2.7B)",
+            "role": "backbone",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "Vicuna-7B",
+            "role": "backbone",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "PaLM 540B",
+            "role": "backbone",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "PaLM 62B",
+            "role": "backbone",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "PaLM 8B",
+            "role": "backbone",
+            "evidence": [
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "GPT-3",
+            "role": "backbone",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          },
+          {
+            "name": "Qwen2.5-7B-Instruct",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Qwen2.5-3B-Instruct",
+            "role": "backbone",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "InstructGPT",
+            "role": "backbone",
+            "evidence": [
+              "Training language models to follow instructions with human feedback"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Locality (Specificity)",
+            "direction": "higher_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Generalization",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Efficacy",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Neighborhood Score (NS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Score (harmonic mean of efficacy, generalization, locality)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Reliability",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Paraphrase Score (PS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Fluency (n-gram entropy based)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Consistency (Reference Score, RS)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Perplexity",
+            "direction": "lower_better",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Neighborhood KL Divergence (NKL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Edit-wise success rate",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Instance-wise accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Multi-hop accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Portability (Subject Replace / Reversed Relation / One-hop)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities"
+            ]
+          },
+          {
+            "name": "Average Indirect Effect (AIE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Average Total Effect (ATE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Cosine similarity (hidden-state)",
+            "direction": "higher_better",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "Jaccard similarity (top-k token mapping)",
+            "direction": "higher_better",
+            "evidence": [
+              "PMET: Precise Model Editing in a Transformer"
+            ]
+          },
+          {
+            "name": "CKA score",
+            "direction": "higher_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "FalseRate (CKA threshold-based)",
+            "direction": "lower_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "Prob.Drop",
+            "direction": "lower_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "ForgettingRate",
+            "direction": "lower_better",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?"
+            ]
+          },
+          {
+            "name": "Augment Accuracy (Aug)",
+            "direction": "higher_better",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Retain Accuracy (Ret)",
+            "direction": "higher_better",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing"
+            ]
+          },
+          {
+            "name": "Average (across metrics)",
+            "direction": "higher_better",
+            "evidence": [
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Manhattan distance of weight updates",
+            "direction": "lower_better",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Edit evaluation on COUNTERFACT/ZSRE with Reliability/Generalization/Locality",
+            "detail": "Apply edits then score reliability, generalization, and locality on COUNTERFACT and ZSRE splits",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Locating and Editing Factual Associations in GPT",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Batch and sequential editing",
+            "detail": "Evaluate single edits and batched edits with k in {1,10,100,1000,... up to 3000} and compare to sequential application",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Report confidence intervals",
+            "detail": "Provide 95% or 99% bootstrap confidence intervals for metrics",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Locating and Editing Factual Associations in GPT",
+              "PMET: Precise Model Editing in a Transformer",
+              "SWEA: Updating Factual Knowledge in Large Language Models via Subject Word Embedding Altering"
+            ]
+          },
+          {
+            "name": "Constrained fine-tuning with L-infinity constraint",
+            "detail": "Apply FT with parameter-space L\u221e constraint to localize edits",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Causal Tracing with corruption and restoration",
+            "detail": "Add Gaussian noise to subject embeddings and restore activations to locate causal sites",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Ripple-aware evaluation",
+            "detail": "Measure changes to related facts and implications beyond the edited target",
+            "evidence": [
+              "Editing Large Language Models: Problems, Methods, and Opportunities",
+              "Evaluating the Ripple Effects of Knowledge Editing in Language Models",
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          },
+          {
+            "name": "Chain-of-thought prompting for multi-hop/reasoning",
+            "detail": "Use CoT prompting to improve multi-hop and reasoning evaluations",
+            "evidence": [
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions",
+              "PaLM: Scaling Language Modeling with Pathways"
+            ]
+          },
+          {
+            "name": "In-context editing baseline",
+            "detail": "Use in-context demonstrations (e.g., 8-shot) to induce edits without parameter updates",
+            "evidence": [
+              "Can We Edit Factual Knowledge by In-Context Learning?",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "Evaluate general abilities post-edit",
+            "detail": "Assess edited models on standard LM benchmarks (e.g., HellaSwag, LAMBADA, MMLU, QA) to detect degradation",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Use EasyEdit for implementations",
+            "detail": "Leverage the EasyEdit toolkit for consistent baselines and editing procedures",
+            "evidence": [
+              "Model Editing Harms General Abilities of Large Language Models: Regularization to the Rescue",
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "Filter for recallable facts",
+            "detail": "Select/edit facts that the base model can recall before editing",
+            "evidence": [
+              "COMPKE: Complex Question Answering under Knowledge Editing",
+              "MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions"
+            ]
+          },
+          {
+            "name": "LLM-as-judge for evaluation",
+            "detail": "Use strong LLMs (e.g., GPT-4) to automatically score consistency or safety with spot-checks",
+            "evidence": [
+              "Detoxifying Large Language Models via Knowledge Editing",
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "COUNTERFACT+ specificity protocol",
+            "detail": "Prepend the edit sentence to neighborhood prompts and compute NS/NM/NKL for specificity",
+            "evidence": [
+              "Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark"
+            ]
+          },
+          {
+            "name": "Perplexity-based collapse detection",
+            "detail": "Track ME-PPL perplexity and flag collapse at thresholds (e.g., >1000)",
+            "evidence": [
+              "The Butterfly Effect of Model Editing: Few Edits Can Trigger Large Language Models Collapse"
+            ]
+          },
+          {
+            "name": "UNIEDIT NMCS sampling",
+            "detail": "Use NMCS to generate generality and locality test cases over simple chains",
+            "evidence": [
+              "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 11
+      }
+    },
+    {
+      "subfield": "Mechanistic Interpretability",
+      "menu": {
+        "datasets": [
+          {
+            "name": "COUNTERFACT",
+            "role": "eval",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "ZSRE",
+            "role": "eval",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-2-XL",
+            "role": "backbone",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "GPT-J (6B)",
+            "role": "backbone",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "GPT-2",
+            "role": "backbone",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "BLOOM",
+            "role": "backbone",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "OPT-125M",
+            "role": "backbone",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "LLaMA-2-7B-Chat",
+            "role": "backbone",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          },
+          {
+            "name": "Mistral-7B-v0.1",
+            "role": "backbone",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Indirect Effect (IE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Average Indirect Effect (AIE)",
+            "direction": "higher_better",
+            "evidence": [
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Tracing Effect (fractional restoration)",
+            "direction": "higher_better",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "Probe accuracy (held-out)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Reconstruction loss (SAE fidelity)",
+            "direction": "lower_better",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Interpretability score (SAE)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Change in target token logit (post-intervention)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Change in target token probability (post-intervention)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Causal Tracing (clean/corrupt/restore)",
+            "detail": "Run clean, corrupted, and corrupted-with-restoration passes to compute total and indirect effects on target predictions.",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models",
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Editing Conceptual Knowledge for Large Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Gaussian corruption of subject embeddings",
+            "detail": "Corrupt representations by adding Gaussian noise to subject token embeddings before tracing.",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Restore clean activations into noised pass",
+            "detail": "Intervene by restoring clean activations at specific sites in a noised forward pass and measure change in p(o|s,r).",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models",
+              "Locating and Editing Factual Associations in GPT"
+            ]
+          },
+          {
+            "name": "Layerwise aggregation of tracing effects",
+            "detail": "Collapse token-level effects per layer (e.g., take max across tokens) to profile causal importance by layer.",
+            "evidence": [
+              "Does Localization Inform Editing? Surprising Differences in Causality-Based Localization vs. Knowledge Editing in Language Models"
+            ]
+          },
+          {
+            "name": "LogitLens projection",
+            "detail": "Project intermediate activations to vocabulary space via LayerNorm(h_l) * W_unembed to interpret encoded features.",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Probing on activations",
+            "detail": "Train shallow classifiers on layer activations and evaluate probe accuracy on held-out data to test feature linear-readout.",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Sparse Autoencoders (SAEs) for feature discovery",
+            "detail": "Train SAEs on activations; assess reconstruction fidelity and interpretability of learned sparse features.",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          },
+          {
+            "name": "Integrated Gradients for localization",
+            "detail": "Apply integrated gradients to attribute token/neuron importance for knowledge localization analyses.",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models"
+            ]
+          },
+          {
+            "name": "Neuron-to-Graph (N2G) analysis",
+            "detail": "Map neuron interactions to graph structures to analyze knowledge localization and circuit structure.",
+            "evidence": [
+              "A Comprehensive Study of Knowledge Editing for Large Language Models"
+            ]
+          },
+          {
+            "name": "Localization via causal interventions",
+            "detail": "Deem components critical if noising/denoising interventions substantially change target logits or probabilities.",
+            "evidence": [
+              "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 0
+      }
+    }
+  ],
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Replicate near-perfect editing on COUNTERFACT under standard eval",
+      "dataset": "COUNTERFACT",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "MEMIT",
+      "attack_or_condition": "Edit evaluation on COUNTERFACT/ZSRE with Reliability/Generalization/Locality",
+      "metrics": [
+        "Score (harmonic mean of Efficacy, Generalization, Specificity)",
+        "Reliability",
+        "Efficacy",
+        "Locality"
+      ],
+      "pass_condition": "On 200 randomly sampled base-model-recallable COUNTERFACT edits (95% CI half-width \u2264 3%), MEMIT must achieve Score \u2265 90 and Reliability \u2265 90. Otherwise, refute the 'near-perfect' premise and halt downstream 'realistic evaluation' tests tied to this premise.",
+      "constraints_not_enforced": [
+        "No ZSRE in this gate",
+        "No batch/sequential editing",
+        "No COUNTERFACT+ dynamic neighborhood prompts"
+      ],
+      "depends_on": [],
+      "rationale": "Cheap replication of prior headline results to establish the premise that near-perfect editing exists under standard (less realistic) evaluation.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validate PC geometry at edited layers",
+      "dataset": "Wikipedia",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "MEMIT",
+      "attack_or_condition": "Probing on activations",
+      "metrics": [
+        "Cosine similarity (hidden-state)"
+      ],
+      "pass_condition": "At the primary MEMIT-edited layer(s), mean cosine similarity between residual-stream activations and their top-256-PC reconstruction \u2265 0.90, and mean cosine similarity between activations and their bottom-10%-PC-only reconstruction \u2264 0.20, on a held-out Wikipedia split. Otherwise, the low-variance subspace is not well separated and this apparatus is invalid.",
+      "constraints_not_enforced": [
+        "No Sparse Autoencoders",
+        "No layer sweep beyond edited layers"
+      ],
+      "depends_on": [],
+      "rationale": "Builds and validates a geometry apparatus so low- vs high-variance directions are well defined for downstream causal tests.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Realistic reliability/capability evaluation for MEMIT on RippleEdits",
+      "dataset": "RippleEdits",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "MEMIT",
+      "attack_or_condition": "Ripple-aware evaluation",
+      "metrics": [
+        "Reliability",
+        "Efficacy",
+        "Locality (Specificity)",
+        "Neighborhood KL Divergence (NKL)",
+        "Portability",
+        "Perplexity",
+        "Instance-wise accuracy",
+        "Edit-wise success rate"
+      ],
+      "pass_condition": "After sequentially applying k=100 edits: support the claim if ANY of the following hold: Reliability < 70% (RippleEdits), or Perplexity on Wikipedia increases > 10% vs base, or Instance-wise accuracy drops > 2.0 points on both HellaSwag and LAMBADA vs base, or NKL > 0.10, or Locality drops > 5 points. Refute the claim if ALL of the following hold: Reliability \u2265 80, Perplexity increase \u2264 5%, Instance-wise accuracy drop \u2264 1.0 point on both HellaSwag and LAMBADA, NKL \u2264 0.05, and Locality drop \u2264 2 points.",
+      "constraints_not_enforced": [
+        "No batch editing at k=1000 or 3000",
+        "No LLM-as-judge scoring",
+        "No MQuAKE in this recipe"
+      ],
+      "depends_on": [
+        "Replicate near-perfect editing on COUNTERFACT under standard eval"
+      ],
+      "rationale": "Enforces realistic, ripple-aware evaluation and checks for degradation of core LM abilities post-edit, which directly tests the claim.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Test geometric amplification of edits along low-variance directions via causal interventions",
+      "dataset": "COUNTERFACT",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "MEMIT",
+      "attack_or_condition": "Causal Tracing (clean/corrupted/restore passes)",
+      "metrics": [
+        "Average Indirect Effect (AIE)",
+        "Tracing Effect (fractional restoration)",
+        "Change in target token probability (post-intervention)"
+      ],
+      "pass_condition": "Across 100 edited COUNTERFACT cases, at the primary edited layer: equal-norm interventions along bottom-10% PCs produce \u2265 2.0\u00d7 larger mean Change in target token probability than equal-norm interventions along top-10% PCs in the edited model, AND the bottom-10% PC AIE increases by \u2265 50% vs the pre-edit model. Otherwise, refute the 'geometric limitation' component of the claim.",
+      "constraints_not_enforced": [
+        "No Integrated Gradients",
+        "No multi-layer aggregation beyond edited layer(s)"
+      ],
+      "depends_on": [
+        "Validate PC geometry at edited layers"
+      ],
+      "rationale": "Uses standard causal tracing and IE metrics to attribute disproportionate amplification to low-variance directions, directly testing the geometric mechanism.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Non-parameter editing control (IKE) shows no capability damage",
+      "dataset": "RippleEdits",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "IKE (In-Context Knowledge Editing)",
+      "attack_or_condition": "In-context editing baseline",
+      "metrics": [
+        "Reliability",
+        "Efficacy",
+        "Locality (Specificity)",
+        "Perplexity",
+        "Instance-wise accuracy"
+      ],
+      "pass_condition": "On the same 100-edit RippleEdits sample (evaluated per query, no weight changes), IKE must achieve Reliability \u2265 60 while Perplexity change on Wikipedia \u2264 2% and Instance-wise accuracy drops on HellaSwag and LAMBADA each \u2264 0.5 points vs base. If this holds while Recipe 'Realistic reliability/capability evaluation for MEMIT on RippleEdits' indicates capability damage, attribute damage to parameter updates; if it fails, refute this attribution.",
+      "constraints_not_enforced": [
+        "No multi-hop portability tests"
+      ],
+      "depends_on": [
+        "Realistic reliability/capability evaluation for MEMIT on RippleEdits"
+      ],
+      "rationale": "Removes the claim\u2019s mechanism (weight edits) to ensure observed damage is not an artifact of evaluation prompts or datasets.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Ablation: compare constrained FT (L-infinity) vs unconstrained FT at matched efficacy",
+      "dataset": "COUNTERFACT+",
+      "model": "LLaMA-2-7B",
+      "method_under_test": "Constrained Fine-Tuning (FT+L)",
+      "attack_or_condition": "Constrained fine-tuning with L-infinity constraint",
+      "metrics": [
+        "Efficacy",
+        "Reliability",
+        "Locality (Specificity)",
+        "Neighborhood KL Divergence (NKL)",
+        "Perplexity",
+        "Instance-wise accuracy"
+      ],
+      "pass_condition": "At matched Efficacy within \u00b15% of unconstrained Fine-Tuning (FT), FT+L must reduce NKL by \u2265 30% and cut any Instance-wise accuracy drops on HellaSwag and LAMBADA by \u2265 50% relative to FT after k=100 sequential edits. If even FT+L still causes > 2.0-point accuracy drops on either dataset or > 10% Perplexity increase, this additionally supports the 'cannot update without damaging' clause; otherwise refute it.",
+      "constraints_not_enforced": [
+        "No batch k=1000 or 3000",
+        "No MQuAKE multi-hop"
+      ],
+      "depends_on": [],
+      "rationale": "Matched-budget ablation within parameter editing to test whether constraining update geometry mitigates damage; persistence of damage supports the claim.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

@@ -3,22 +3,30 @@
     python -m norm_cards.eval.reference --template 7   # blank skeleton to author
     python -m norm_cards.eval.reference --check        # validate + render every one
 
-A reference recipe is the experiment chain a competent team would run to decide a
-claim. Where it comes from is deliberately outside this codebase: a human writes
-it, or it is transcribed from the experiment section of the paper the claim was
-taken from, or a domain expert dictates it. What this module does is check that
-whatever arrives is structurally sound and renders it for review.
+A reference is **a list of experiments** — the ones a competent team actually ran to
+decide the claim, usually transcribed from the experiment section of the paper the
+claim came from. Nothing else.
+
+That shape is deliberate and load-bearing: it is the *same type* as a proposer run's
+`experiments`, a list of prose descriptions. Because the two sides are the same kind
+of object you can swap them, which is what makes the judge testable — feed the
+reference in as though it were a proposal and recall must come back at ceiling; if it
+does not, the judge is broken and no number it produces means anything.
+
+An earlier version made the reference a structured decision graph with roles,
+dependencies, pass criteria, evidence and self-critique. It rendered to 130 lines
+against a proposal's 5, and the judge duly marked every requirement `partial` — you
+cannot compare a specification against a paragraph and expect the paragraph to look
+complete. It also could not be swapped, so the judge could not be validated at all.
 
 Why it is not generated here: a reference produced by asking a strong LLM to design
 experiments for the claim is not an independent standard. It is one more system's
 output, and if that system were trustworthy enough to define correctness you would
-ship it as the proposer instead of scoring against it. So the harness takes the
-reference as given, and Stage B is built to treat it as fallible rough notes rather
-than an oracle (see prompts.EVALUATION_SYSTEM).
+ship it as the proposer instead of scoring against it.
 
-Every reference carries a `provenance` block saying who authored it and how. That
-line is shown to the judge, so a reference of unknown or weak origin is visibly
-weak at the point of use.
+Every reference carries a `provenance` block saying who authored it and how. That line
+is shown to the judge, so a reference of unknown or weak origin is visibly weak at the
+point of use.
 """
 
 import argparse
@@ -27,8 +35,6 @@ import os
 
 from . import EVAL_ROOT, gt_dir, gt_path, load_claims, load_ground_truth
 from . import schemas
-
-NORM_KEYS = ("datasets", "models", "metrics", "protocols")
 
 
 def provenance_line(ref: dict) -> str:
@@ -43,114 +49,62 @@ def provenance_line(ref: dict) -> str:
         if p.get("sources"):
             bits.append("derived from " + "; ".join(p["sources"][:3]))
         return " · ".join(b for b in bits if b)
-    if ref.get("generator"):                       # legacy LLM-generated references
-        g = ref["generator"]
-        return (f"llm_generated · {g.get('model')} @ {g.get('reasoning_effort')} "
-                f"effort — machine-written, unverified by a human")
     return "provenance not stated — treat with corresponding suspicion"
 
 
+def experiments(ref: dict) -> list:
+    """The reference experiment list. Same type as a proposer arm's experiments."""
+    return list(ref.get("experiments") or [])
+
+
+def experiments_text(exps: list, label: str = "EXPERIMENT") -> str:
+    """Render a list of experiments. Used for BOTH sides, so neither is presented
+    more richly than the other — the formatting asymmetry is what broke the last
+    version of this harness."""
+    return "\n\n".join(f"--- {label} {i} ---\n{e}" for i, e in enumerate(exps))
+
+
 def to_markdown(ref: dict) -> str:
-    """Human-readable rendering — this is what you actually read before trusting a
-    reference recipe, and what Stage B is shown."""
-    L = [f"# Reference recipe — problem {ref['problem_id']}", "",
+    """Human-readable rendering — what you read before trusting a reference."""
+    L = [f"# Reference experiments — problem {ref['problem_id']}", "",
          f"**Claim.** {ref['claim']}", "",
          f"**Provenance.** {provenance_line(ref)}", ""]
-    ca = ref.get("claim_analysis") or {}
-    L += ["## What is asserted", ""]
-    L += [f"- {a}" for a in ca.get("assertions") or []]
-    if ca.get("ambiguities"):
-        L += ["", "**Underspecified / reading adopted:**"]
-        L += [f"- {a}" for a in ca["ambiguities"]]
-
-    L += ["", "## Field norms (as established from sources)", ""]
-    for key in NORM_KEYS:
-        items = (ref.get("field_norms") or {}).get(key) or []
-        if not items:
-            continue
-        L.append(f"**{key}**")
-        for it in items:
-            cites = "; ".join(f"{c.get('source', '')}" for c in it.get("citations") or [])
-            L.append(f"- `{it.get('name', '')}` — {it.get('why_standard', '')}"
-                     + (f"  \n  <sub>{cites}</sub>" if cites else ""))
-        L.append("")
-
-    L += ["## Recipe", ""]
-    for s in ref.get("recipe") or []:
-        dep = f" (after {', '.join(s['depends_on'])})" if s.get("depends_on") else ""
-        L += [f"### {s.get('id')} — {s.get('role')}{dep}  ·  confidence: "
-              f"{s.get('confidence', '?')}", "",
-              s.get("description", ""), "",
-              f"- **Pass:** {s.get('pass_criteria', '')}"]
-        if s.get("fail_meaning"):
-            L.append(f"- **Failure means:** {s['fail_meaning']}")
-        if s.get("resources"):
-            L.append(f"- **Resources:** {', '.join(s['resources'])}")
-        L.append(f"- **Why:** {s.get('why_necessary', '')}")
-        for c in s.get("evidence") or []:
-            L.append(f"  - *{c.get('source', '')}*: \"{(c.get('quote') or '')[:300]}\"")
-        for c in s.get("caveats") or []:
-            L.append(f"- **Caveat:** {c}")
-        L.append("")
-
-    L += ["## Decision logic", "", ref.get("decision_logic", ""), ""]
-    if ref.get("self_critique"):
-        L += ["## Known weaknesses of this reference", ""]
-        L += [f"- {c}" for c in ref["self_critique"]]
+    notes = (ref.get("provenance") or {}).get("notes")
+    if notes:
+        L += [f"*{notes}*", ""]
+    for i, e in enumerate(experiments(ref)):
+        L += [f"### Experiment {i}", "", e, ""]
     return "\n".join(L)
 
 
 TEMPLATE_HELP = (
-    "Fill this in by hand (or transcribe it from the source paper's experiment "
-    "section) and save it as results/eval_v2/ground_truth/problem_<id>/"
-    "ground_truth.json. Roles: gate = a cheap prerequisite whose failure refutes the "
-    "claim outright; apparatus = something the claim presupposes that must be built "
-    "AND validated first; headline = the direct test enforcing every constraint the "
-    "claim states; control = checks that the result is not an artifact. Aim for 4-6 "
-    "steps, refute-first: cheapest potential refutation goes first, later steps build "
-    "on earlier ones. pass_criteria must be a decisive threshold tied to the claim's "
-    "own numbers — never 'record the value'. Then run "
-    "`python -m norm_cards.eval.reference --check` and fix what it reports. "
-    "See docs/reference_format.md for the field-by-field spec."
+    "Fill in `experiments` by hand, or transcribe them from the source paper's "
+    "experiment section, and save as results/eval_v2/ground_truth/problem_<id>/"
+    "ground_truth.json. Write each one as a single prose paragraph at the same "
+    "granularity a proposer would: what is run, on what data and model, what is "
+    "measured, and what result would decide the question. Include the concrete "
+    "threshold or reported number so the decision rule is unambiguous. Do NOT write "
+    "a structured specification — the reference has to stay the same kind of object "
+    "as the pipeline's output, or the two cannot be compared or swapped. Then run "
+    "`python -m norm_cards.eval.reference --check`. See docs/reference_format.md."
 )
 
 
 def template(problem: dict) -> dict:
-    pid = str(problem["problem_id"])
     return {
         "_instructions": TEMPLATE_HELP,
-        "type": "ground_truth", "format_version": "2.0",
-        "problem_id": pid, "domain": problem.get("domain", ""),
+        "type": "ground_truth", "format_version": "3.0",
+        "problem_id": str(problem["problem_id"]),
+        "domain": problem.get("domain", ""),
         "claim": problem["claim"],
         "provenance": {
             "kind": "",            # human | paper_derived | expert_dictated | other
             "author": "",
             "date": "",
-            "sources": [],         # papers/docs this recipe was built from
+            "sources": [],         # papers/docs this was built from
             "notes": "",
         },
-        "claim_analysis": {
-            "assertions": [""],
-            "named_entities": {"models": [], "datasets": [], "metrics": [],
-                               "thresholds": []},
-            "claim_type": "empirical",
-            "ambiguities": [],
-        },
-        "field_norms": {k: [{"name": "", "why_standard": "",
-                             "citations": [{"source": "", "quote": ""}]}]
-                        for k in NORM_KEYS},
-        "recipe": [
-            {"id": "G0", "role": "gate", "description": "", "pass_criteria": "",
-             "fail_meaning": "", "resources": [], "depends_on": [],
-             "why_necessary": "", "evidence": [{"source": "", "quote": ""}],
-             "confidence": "high", "caveats": []},
-            {"id": "H1", "role": "headline", "description": "", "pass_criteria": "",
-             "fail_meaning": "", "resources": [], "depends_on": ["G0"],
-             "why_necessary": "", "evidence": [{"source": "", "quote": ""}],
-             "confidence": "high", "caveats": []},
-        ],
-        "decision_logic": "",
-        "self_critique": [],
+        "experiments": ["", ""],
     }
 
 
@@ -158,9 +112,9 @@ def _check_one(pid: str) -> bool:
     ref = load_ground_truth(pid)
     errs = schemas.reference_errors(ref)
     warns = schemas.reference_warnings(ref)
-    n = len(ref.get("recipe") or [])
-    roles = ", ".join(s.get("role", "?") for s in ref.get("recipe") or [])
-    print(f"\n[{pid}] {n} steps ({roles})")
+    exps = experiments(ref)
+    lens = [len(e) for e in exps] or [0]
+    print(f"\n[{pid}] {len(exps)} experiments, {min(lens)}-{max(lens)} chars each")
     print(f"      provenance: {provenance_line(ref)}")
     for w in warns:
         print(f"      warn: {w}")
