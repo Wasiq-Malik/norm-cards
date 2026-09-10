@@ -23,9 +23,9 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List
 
 from .models import normalize_title
-from . import llm, fulltext
+from . import llm, fulltext, curate
 
-MENU_KEYS = ("datasets", "models", "metrics", "protocols")
+from .curate import ALL_KEYS as MENU_KEYS, RESOURCE_KEYS, DESIGN_KEYS  # noqa: E402
 
 
 # --------------------------------------------------------------------------- #
@@ -67,12 +67,51 @@ def _dedup_papers(papers: List[Dict]) -> List[Dict]:
 # --------------------------------------------------------------------------- #
 # map: per-paper extraction
 # --------------------------------------------------------------------------- #
-_MAP_PROMPT = """This paper is in the subfield(s) {subfields}. From its text, extract ONLY the
-experimental norms THIS paper actually uses or establishes.
+_MAP_PROMPT = """This paper is in the subfield(s) {subfields}. Read its experimental sections and
+extract ONLY the norms THIS paper actually uses. Do not invent, do not
+generalize, do not import practice from papers you happen to know.
 
-Return JSON {{"datasets":[...],"models":[...],"metrics":[...],"protocols":[...]}} —
-each a short string (dataset/model/metric name; protocol = one line, e.g.
-"poison rate swept 1-10%"). Empty lists if absent. Do not invent.
+Six lists. The first three are WHAT it runs on; the last three are HOW it argues.
+
+  datasets   named datasets/benchmarks it evaluates on
+  models     named checkpoints or named methods it runs. NOT architecture
+             classes — "Transformer", "MLP", "LLM", "neural network" are
+             categories, not things a paper runs, so omit them.
+  metrics    named quantities it reports
+  protocols  how a measurement is actually taken: the sweep, the split, the
+             decoding setting, the number of seeds, the aggregation rule.
+             One line each, with the specifics: "poison rate swept 1-10%",
+             not "poison rate sweep".
+
+  controls   the comparison conditions it runs ALONGSIDE its main condition so
+             that a positive result cannot be explained by the intervention
+             merely having happened. A control is a condition, not a metric and
+             not a baseline method: a random or size-matched version of the
+             intervention, a placebo/sham, an unmodified reference model, an
+             ablation that removes the paper's own mechanism, a shuffled or
+             permuted input. For each, say what it is and what a difference
+             against it licenses:
+             {{"name":"random size-matched head set",
+               "detail":"same number of heads chosen at random",
+               "rules_out":"that any equally-sized intervention would do it"}}
+
+  confounds  the RIVAL EXPLANATIONS the paper explicitly takes seriously — an
+             account under which its headline number would come out the same
+             without its claim being true — and the specific measurement it
+             makes to rule each one out. Look for "one might worry that", "to
+             ensure this is not simply", "an alternative explanation", "we
+             therefore also measure", and for limitations the authors concede.
+             {{"name":"effect is general capability damage, not belief change",
+               "detail":"why the headline result would look identical if so",
+               "ruled_out_by":"score the steered model on an unrelated held-out
+                               task and show it is unchanged"}}
+
+If the paper runs no controls or acknowledges no rival explanation, return empty
+lists — an absent norm is a finding, and inventing one corrupts the card.
+
+Return JSON {{"datasets":[...],"models":[...],"metrics":[...],
+"protocols":[...],"controls":[...],"confounds":[...]}} — datasets/models/metrics
+are plain strings; protocols/controls/confounds are objects as shown above.
 
 PAPER: {title}
 TEXT (may be truncated; may be only the abstract if full text was unavailable):
@@ -101,21 +140,47 @@ def _map(docs: List[Dict], subfields, model: str, workers: int = 6) -> Dict[str,
 # --------------------------------------------------------------------------- #
 # reduce: consolidate to a clean, subfield-filtered, grounded menu
 # --------------------------------------------------------------------------- #
-_REDUCE_PROMPT = """You are building a GENERIC scientific norm-card MENU for the subfield(s):
-{subfields}.
+_REDUCE_PROMPT = """You are consolidating a scientific NORM CARD for the subfield: {subfields}.
 
-Below are per-paper extractions (each paper Pn lists what IT uses). Consolidate
-into ONE clean menu for the subfield.
+A norm card answers one question for someone competent but new to this subfield:
+*what would a referee here expect an experiment on this claim to contain?* It is
+not a literature summary and not a reading list.
 
-RULES:
-- CANONICALIZE duplicates ("Cifar10"/"CIFAR-10" -> "CIFAR-10").
-- KEEP ONLY items belonging to the subfield(s) above; DROP items that leaked in
-  from off-subfield papers.
-- Do NOT invent anything absent from the extractions.
-- Rank each list by how many papers support it (most standard first).
-- For every item, list the supporting paper ids (the P-numbers).
+Below are per-paper extractions (paper Pn lists what IT does). Consolidate them
+into ONE card for the subfield above.
 
-Claim context (relevance only): {claim}
+RULES
+- CANONICALIZE. One entry per thing. Collapse checkpoint variants to the family
+  and release the field actually names — "Llama-2-7B-Chat", "LLaMA2-7B-Chat-HF"
+  and "Llama 2" are ONE entry, "Llama-2"; so are "Llama 3.1" and "Llama 3.2",
+  as "Llama-3". Sizes, -Chat/-Instruct/-hf suffixes and point releases are not
+  norms. Same for datasets: "AdvBench", "AdvBench (subset)" and "AdvBench:
+  Harmful Behaviors" are one entry. Do NOT merge things that are genuinely
+  distinct (MQuAKE-CF and MQuAKE-T are two datasets).
+- SUBFIELD ONLY. Drop anything that leaked in from an off-subfield paper.
+- NOTHING NEW. Every item must come from the extractions below.
+- RANK by how many papers support it, most standard first, and cite the P-ids.
+- PREFER THE SPECIFIC. "Report mean over 5 seeds with 95% CI" is a norm;
+  "report results carefully" is not. Drop items that would be true of any
+  empirical field.
+
+The two design sections carry most of the card's value, so consolidate them with
+more care than the resource lists:
+
+  controls   Merge into the distinct CONTROL CONDITIONS this subfield expects,
+             stated so they can be applied to a new intervention rather than
+             copied. "A size-matched random version of whatever component was
+             intervened on" transfers; "random heads" does not. For each, state
+             what a difference against it licenses.
+  confounds  Merge into the distinct RIVAL EXPLANATIONS a referee in this
+             subfield raises — the accounts under which a headline result comes
+             out the same without the claim being true — each with the
+             measurement that discriminates against it. These are the norms most
+             often missing from a proposed experiment, so keep every distinct
+             one you find, even when only one paper raises it.
+
+Claim context (for judging relevance only — do NOT tailor the card to it, and do
+NOT copy the claim's own entities into the card): {claim}
 
 PER-PAPER EXTRACTIONS:
 {blob}
@@ -124,18 +189,52 @@ Return JSON:
 {{"datasets":[{{"name":"...","role":"train|eval|robustness_eval","evidence":["P0"]}}],
   "models":[{{"name":"...","role":"backbone|method_under_test|baseline","evidence":[...]}}],
   "metrics":[{{"name":"...","direction":"higher_better|lower_better","evidence":[...]}}],
-  "protocols":[{{"name":"...","detail":"one line","evidence":[...]}}]}}"""
+  "protocols":[{{"name":"...","detail":"the specifics, one line","evidence":[...]}}],
+  "controls":[{{"name":"...","detail":"how the condition is constructed",
+                "rules_out":"what a difference against it licenses","evidence":[...]}}],
+  "confounds":[{{"name":"the rival explanation","detail":"why the headline result
+                 would look the same under it",
+                 "ruled_out_by":"the measurement that discriminates","evidence":[...]}}]}}"""
 
 
 def _norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", (s or "").lower())
 
 
-def _faithful(item_name: str, paper_extract: Dict) -> bool:
-    """Did this item actually appear in the cited paper's own extraction?"""
-    n = _norm(item_name)
-    alt = _norm(re.sub(r"\(.*?\)", "", item_name))
-    pool = " ".join(_norm(x) for k in MENU_KEYS for x in (paper_extract.get(k) or []))
+def _text_of(x) -> str:
+    """Per-paper extractions hold plain strings for resources and objects for the
+    design keys; flatten either to searchable text."""
+    if isinstance(x, dict):
+        return " ".join(str(v) for v in x.values() if isinstance(v, str))
+    return str(x)
+
+
+_STOPWORDS = {"the", "a", "an", "of", "for", "and", "or", "to", "on", "in", "with",
+              "that", "is", "are", "be", "by", "as", "it", "this", "not", "same"}
+
+
+def _faithful(item, paper_extract: Dict, key: str) -> bool:
+    """Did this item actually come from the cited paper's own extraction?
+
+    Resource names are near-verbatim after canonicalization, so they get a
+    substring test. Design items are paraphrases by construction — the reduce
+    step is supposed to restate a control so it transfers — so demanding a
+    substring there would delete exactly the content the card exists to carry.
+    They instead have to share vocabulary with something that paper actually
+    reported under the same key."""
+    pool = " ".join(_norm(_text_of(x)) for k in MENU_KEYS
+                    for x in (paper_extract.get(k) or []))
+    name = item.get("name", "") if isinstance(item, dict) else str(item)
+    if key in DESIGN_KEYS:
+        own = " ".join(_text_of(x) for x in (paper_extract.get(key) or []))
+        if not own:
+            return False            # paper reported no such norm; cite is spurious
+        own_w = {w for w in re.findall(r"[a-z]{4,}", own.lower()) if w not in _STOPWORDS}
+        mine = {w for w in re.findall(r"[a-z]{4,}", _text_of(item).lower())
+                if w not in _STOPWORDS}
+        return len(own_w & mine) >= 2
+    n = _norm(name)
+    alt = _norm(re.sub(r"\(.*?\)", "", name))
     if n in pool or (alt and alt in pool):
         return True
     return len(n) >= 6 and any(n[i:i + 6] in pool for i in range(len(n) - 5))
@@ -165,7 +264,7 @@ def _reduce(per_paper: Dict[str, Dict], subfield: str, claim: str, model: str) -
                 if not m or int(m.group(1)) >= len(titles):
                     continue
                 title = titles[int(m.group(1))]
-                if _faithful(it.get("name", ""), per_paper[title]):
+                if _faithful(it, per_paper[title], k):
                     ev.append(title)
                 else:
                     n_drop_link += 1
@@ -174,7 +273,8 @@ def _reduce(per_paper: Dict[str, Dict], subfield: str, claim: str, model: str) -
                 continue
             it["evidence"] = sorted(set(ev))  # dedup evidence
             kept[k].append(it)
-    kept["_guard"] = {"items_dropped": n_drop_item, "evidence_links_dropped": n_drop_link}
+    kept["_guard"] = {"items_dropped": n_drop_item, "evidence_links_dropped": n_drop_link,
+                      "kept_per_key": {k: len(kept[k]) for k in MENU_KEYS}}
     return kept
 
 
@@ -244,13 +344,42 @@ Return JSON {{"recipes":[
 
 
 def _menu_text(menu: Dict, n: int = 18) -> str:
-    return "\n".join(f"{k}: {[it['name'] for it in menu[k][:n]]}" for k in MENU_KEYS)
+    """Render a menu as text for a prompt.
+
+    Earlier versions emitted only `[name, name, ...]` per key, which threw away
+    `role`, `direction` and the protocol/control/confound `detail` — everything
+    except the noun. A reader got a word list and no way to tell a baseline from
+    a backbone, or what a listed protocol actually specifies."""
+    out = []
+    for k in RESOURCE_KEYS:
+        items = (menu.get(k) or [])[:n]
+        if not items:
+            continue
+        out.append(f"{k}: " + ", ".join(
+            it["name"] + (f" ({it['role']})" if it.get("role") else "")
+            + (f" ({it['direction']})" if it.get("direction") else "")
+            for it in items))
+    for k in DESIGN_KEYS:
+        items = (menu.get(k) or [])[:n]
+        if not items:
+            continue
+        out.append(f"{k}:")
+        for it in items:
+            tail = " | ".join(x for x in (it.get("detail"), it.get("rules_out"),
+                                          it.get("ruled_out_by")) if x)
+            out.append(f"  - {it['name']}" + (f" — {tail}" if tail else ""))
+    return "\n".join(out)
 
 
 def _cards_text(cards: List[Dict]) -> str:
     """One labeled menu block per subfield card, for the recipe prompt."""
     return "\n\n".join(f"=== subfield: {c['subfield']} ===\n{_menu_text(c['menu'])}"
                        for c in cards)
+
+
+def card_text(card: Dict, n: int = 18) -> str:
+    """Render a curated claim-level card (the merged menu) as prompt text."""
+    return _menu_text(card, n)
 
 
 def _entities_text(entities: Dict) -> str:
@@ -294,13 +423,9 @@ def _recipes(cards: List[Dict], subfields, claim: str, entities: Dict,
 # --------------------------------------------------------------------------- #
 def generate_card(bundle: Dict, cache_dir: str, map_model: str = "gpt-5-mini",
                   reduce_model: str = "gpt-5", recipe_model: str = "gpt-5",
+                  min_evidence: int = 2, resource_cap: int = 8, design_cap: int = 14,
                   progress: bool = True) -> Dict:
     analysis = bundle["analysis"]
-    if analysis.get("claim_type") != "empirical":
-        return {"type": "scientific_norm_card_set", "skipped": True,
-                "reason": f"claim_type={analysis.get('claim_type')} (empirical only)",
-                "problem_id": bundle.get("problem_id"), "claim": bundle.get("claim")}
-
     claim, subfields = bundle["claim"], analysis["subfields"]
     papers = _dedup_papers(bundle["papers"])
 
@@ -327,6 +452,18 @@ def generate_card(bundle: Dict, cache_dir: str, map_model: str = "gpt-5-mini",
             print(f"  [{sf}] " + ", ".join(f"{k}={len(menu[k])}" for k in MENU_KEYS)
                   + f"  guard={menu.get('_guard', {})}")
 
+    # Per-subfield menus are the raw material, not the deliverable. A claim routed
+    # to three subfields used to ship three full menus whose union was ~30%
+    # literally duplicate strings and 59-75% single-paper items — 228-351 entries,
+    # of which the reader could not tell which were norms. Merge and prune to one
+    # claim-level card; keep the raw menus for provenance.
+    card, curation = curate.curate(norm_cards, min_evidence=min_evidence,
+                                   resource_cap=resource_cap, design_cap=design_cap)
+    if progress:
+        t = curation["totals"]
+        print(f"  curated: {t['in']} -> {t['out']} items  "
+              + ", ".join(f"{k}={len(card[k])}" for k in MENU_KEYS))
+
     # Claim-level recipes composed across ALL the per-subfield menus + entities.
     recipes = _recipes(norm_cards, subfields, claim, analysis.get("entities") or {},
                        recipe_model)
@@ -334,14 +471,16 @@ def generate_card(bundle: Dict, cache_dir: str, map_model: str = "gpt-5-mini",
         print(f"  recipes={len(recipes)}")
 
     return {
-        "type": "scientific_norm_card_set", "format_version": "0.2",
-        "claim_type": "empirical", "problem_id": bundle.get("problem_id"),
+        "type": "scientific_norm_card_set", "format_version": "0.3",
+        "problem_id": bundle.get("problem_id"),
         "claim": claim, "subfields": subfields,
         "provenance": {"n_papers_bundle": len(bundle["papers"]),
                        "n_papers_deduped": len(papers), "n_fulltext": n_ft,
                        "pdf_sources": sources, "map_model": map_model,
                        "reduce_model": reduce_model, "recipe_model": recipe_model},
-        "norm_cards": norm_cards,
+        "norm_cards": norm_cards,          # per subfield, raw — provenance
+        "card": card,                      # merged + curated — what consumers read
+        "curation": curation,
         "experiment_recipes": recipes,
     }
 

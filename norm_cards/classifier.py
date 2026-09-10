@@ -1,7 +1,6 @@
 """Stage 0: claim -> subfield(s) + claim type + temporal mode + entities (LLM).
 
 Two axes from here steer the rest of the pipeline:
-  - claim_type: empirical | theoretical   (which norm-card schema applies later)
   - temporal_mode: static | forecast       (forecast adds trend queries)
 
 The taxonomy's heuristic matcher only *grounds* the prompt (gives the LLM the
@@ -36,7 +35,6 @@ Return JSON with EXACTLY these keys:
 {{
   "subfields": ["canonical PwC subfield names from the vocabulary, ranked, 1-3"],
   "new_subfields": ["proposed names ONLY if nothing in the PwC vocabulary fits"],
-  "claim_type": "empirical" or "theoretical",
   "temporal_mode": "static" or "forecast",
   "entities": {{
      "models": [...], "datasets": [...], "metrics": [...], "thresholds": [...]
@@ -45,8 +43,6 @@ Return JSON with EXACTLY these keys:
 }}
 
 Guidance:
-- claim_type = "theoretical" when the claim is about provable guarantees/bounds
-  with no standard benchmark/metric (e.g. error bounds, formal constraints).
 - temporal_mode = "forecast" when the claim asserts a future capability by a date.
 - entities: extract concrete models, datasets/benchmarks, metrics, and numeric
   thresholds mentioned in the claim.
@@ -79,7 +75,7 @@ def classify(claim: str, taxonomy: Taxonomy, model: str = None) -> ClaimAnalysis
 
     new_subfields: List[str] = []
     for s in data.get("new_subfields", []) or []:
-        canonical = taxonomy.add_custom(s, card_type=data.get("claim_type", "empirical"))
+        canonical = taxonomy.add_custom(s)
         new_subfields.append(canonical)
         if canonical not in subfields:
             subfields.append(canonical)
@@ -104,7 +100,6 @@ def classify(claim: str, taxonomy: Taxonomy, model: str = None) -> ClaimAnalysis
         new_subfields=new_subfields,
         openalex_topic_ids=topic_ids,
         openalex_topic_names=topic_names,
-        claim_type=data.get("claim_type", "empirical"),
         temporal_mode=data.get("temporal_mode", "static"),
         entities={
             "models": ent.get("models", []),

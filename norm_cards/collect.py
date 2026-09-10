@@ -17,10 +17,16 @@ from typing import Dict, List
 from .models import Paper, merge_papers
 from .sources.base import BaseSource
 
-# Buckets whose hits indicate convention-defining papers get extra weight.
-_NORM_BUCKETS = {"survey": 1.0, "benchmark_dataset": 0.8, "sota_leaderboard": 0.5,
-                 "canonical_method": 0.4, "intersection": 0.4, "trend": 0.6,
-                 "theory": 0.6, "entity_anchored": 0.3, "pwc_task": 0.5}
+_TYPE_BOOST = {"survey": 0.6, "benchmark": 0.5}
+
+# How many DISTINCT query intents turned this paper up — corroboration, not topic.
+# These used to be weighted by intent ("survey" 1.0, "benchmark_dataset" 0.8), which
+# double-counted with the survey/benchmark boost in `rank`: a survey scored once for
+# being found by a survey query and again for being a survey. That mattered most
+# exactly where it should not — an emerging field has few surveys of its own, so the
+# stacked boost filled the slots with adjacent-field surveys instead. Being a survey
+# is now rewarded in exactly one place, `_TYPE_BOOST`.
+_BUCKET_WEIGHT = 0.4
 
 _SURVEY_RE = re.compile(r"\b(survey|a review|overview of|systematic review)\b", re.I)
 _BENCH_RE = re.compile(r"\b(benchmark|dataset|evaluation|toolkit|leaderboard)\b", re.I)
@@ -126,15 +132,27 @@ def detect_paper_type(p: Paper) -> str:
     return "method"
 
 
-def _relevance(p: Paper, subfields: List[str]) -> float:
-    # Coverage across distinct norm buckets + subfield name hits in title/abstract.
-    bucket_score = sum(_NORM_BUCKETS.get(b, 0.2) for b in set(p.buckets))
+def _relevance(p: Paper, subfields: List[str], keywords: List[str] = None) -> float:
+    """How on-topic is this paper for the claim's subfields?
+
+    `keywords` matters more than it looks. Matching only the subfield *name* means a
+    paper has to contain the literal phrase "Activation Steering" to register, which
+    almost none do — so relevance stayed near zero for genuinely on-topic work and the
+    ranking was decided by bucket coverage and the survey boost instead. Feeding in the
+    taxonomy's keyword list ("steering vector", "contrastive activation addition",
+    "refusal direction", ...) is what lets a technical paper outrank an off-topic
+    survey. Capped so a paper cannot win on keyword spam alone.
+    """
+    # Coverage across distinct norm buckets + subfield/keyword hits in title/abstract.
+    bucket_score = _BUCKET_WEIGHT * len(set(p.buckets))
     text = f"{p.title} {p.abstract}".lower()
     name_hits = sum(1 for sf in subfields if sf.lower() in text)
+    kw_hits = sum(1 for k in (keywords or []) if len(k) > 4 and k.lower() in text)
     fos_hits = sum(1 for sf in subfields
                    for f in p.fields_of_study if sf.lower() in f.lower())
     src_div = 0.3 * (len(set(p.sources)) - 1)  # corroborated across sources
-    return bucket_score + 0.5 * name_hits + 0.3 * fos_hits + src_div
+    return (bucket_score + 0.5 * name_hits + 0.3 * min(kw_hits, 6)
+            + 0.3 * fos_hits + src_div)
 
 
 def _authority(p: Paper, current_year: int) -> float:
@@ -158,7 +176,8 @@ def _recency(p: Paper, current_year: int) -> float:
 
 
 def rank(papers: List[Paper], subfields: List[str], current_year: int = 2026,
-         weights=(1.0, 0.8, 0.8, 0.15, 0.4), topic_ids: List[str] = None) -> List[Paper]:
+         weights=(1.0, 0.8, 0.8, 0.15, 0.4), topic_ids: List[str] = None,
+         keywords: List[str] = None) -> List[Paper]:
     w_rel, w_cite, w_type, w_rec, w_topic = weights
     topic_ids = set(topic_ids or [])
     # Normalize authority to 0..1 across the pool so weights are comparable.
@@ -167,10 +186,13 @@ def rank(papers: List[Paper], subfields: List[str], current_year: int = 2026,
     amax = amax or 1.0
     for p, a in zip(papers, auths):
         p.paper_type = detect_paper_type(p)
-        type_boost = {"survey": 1.0, "benchmark": 0.8}.get(p.paper_type, 0.2)
+        # The one place paper type is rewarded. Surveys and benchmark papers do define
+        # field norms, so the boost stays — but it is now a tiebreak among comparably
+        # relevant papers rather than something that can outweigh being on topic.
+        type_boost = _TYPE_BOOST.get(p.paper_type, 0.2)
         topic_overlap = len(set(p.topic_ids) & topic_ids)
         p.score = round(
-            w_rel * _relevance(p, subfields)
+            w_rel * _relevance(p, subfields, keywords)
             + w_cite * (a / amax)
             + w_type * type_boost
             + w_rec * _recency(p, current_year)

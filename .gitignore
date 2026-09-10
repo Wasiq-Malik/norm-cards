@@ -17,15 +17,32 @@ env/
 .pdfcache/
 *.pdf
 
-# results/ IS tracked (bundles, cards, proposer outputs, reports) so teammates
-# get the shared experiment artifacts. Heavy binaries (*.pdf) stay ignored above.
+# results/ holds both INPUTS and heavy derived output, so it is filtered rather
+# than ignored wholesale. Tracked: ground truths (hand-authored and human-reviewed
+# fixtures that cannot be regenerated), norm cards (the artifact under study),
+# proposals, judgments, and reports. Each judgment carries its own evidence ledger,
+# so a verdict stays auditable without its full trajectory in git.
+#
+# Not tracked: raw agent traces and the tool cache. They run to megabytes apiece,
+# are regenerable by re-running the judge, and are where a leaked SerpAPI key ended
+# up once — an exception with a security reason, not just a size one.
+results/**/*.trace.jsonl
+results/**/.toolcache/
 
-# Exception: the eval harness's raw agent traces run to megabytes each and are
-# regenerable. The ground truths and judgments they produce ARE tracked, and each
-# carries its own evidence ledger (source + verbatim quote per claim made), so
-# verdicts stay auditable without the full trajectories in git.
-results/eval_v2/**/*trace.jsonl
-results/eval_v2/.toolcache/
+# Editor/tool backups left beside a rewritten fixture. Debris, not history — git
+# is the history.
+*.bak
+
+# The pipeline stage (bundles + norm cards) is built once and COPIED into each
+# eval root so a run is self-contained on disk. Verified byte-identical, so only
+# the root that built it is tracked; the copies would triple the repo for nothing.
+results/eval_icml2026_v3_notools/pipeline/
+results/eval_icml2026_budget6/pipeline/
+
+# Superseded or pre-dating this line of work; kept locally, not shared.
+results/eval_v2/
+results/norm_cards_hybrid/
+results/eval_icml2026_ablation/
 
 # OS / editor
 .DS_Store

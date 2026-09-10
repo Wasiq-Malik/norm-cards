@@ -107,7 +107,6 @@ class ClaimAnalysis:
     # results by real topic overlap; see topics.py.
     openalex_topic_ids: List[str] = field(default_factory=list)
     openalex_topic_names: List[str] = field(default_factory=list)
-    claim_type: str = "empirical"  # empirical | theoretical
     temporal_mode: str = "static"  # static | forecast
     entities: Dict[str, List[str]] = field(default_factory=dict)  # models/datasets/metrics/thresholds
     confidence: float = 0.0

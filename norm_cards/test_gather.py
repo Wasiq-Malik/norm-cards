@@ -33,7 +33,7 @@ CASES = {
             openalex_topic_names=["Image and Object Detection Techniques",
                                   "Adversarial Robustness in Machine Learning",
                                   "Generative Adversarial Networks and Image Synthesis"],
-            claim_type="empirical", temporal_mode="static",
+            temporal_mode="static",
             entities={"models": ["YOLO11n", "CVAE"],
                       "datasets": ["COCO", "COCO val2017"],
                       "metrics": ["AP50", "IoU"],
@@ -66,7 +66,7 @@ CASES = {
             openalex_topic_names=["Control Systems and Identification",
                                   "Adaptive Control of Nonlinear Systems",
                                   "Statistical Methods and Bayesian Inference"],
-            claim_type="theoretical", temporal_mode="static",
+            temporal_mode="static",
             entities={"models": [], "datasets": [],
                       "metrics": ["error bound", "coverage probability"],
                       "thresholds": ["confidence 1-delta", "delta=0.05", "probability >= 0.95"]},
@@ -93,7 +93,7 @@ CASES = {
             openalex_topic_names=["Digital Media Forensic Detection",
                                   "Generative Adversarial Networks and Image Synthesis",
                                   "Advanced Steganography and Watermarking Techniques"],
-            claim_type="empirical", temporal_mode="forecast",
+            temporal_mode="forecast",
             entities={"models": [], "datasets": ["FaceForensics++", "DFDC", "Synthbuster"],
                       "metrics": ["AUC", "detection accuracy"], "thresholds": ["near chance"]},
             confidence=0.8, method="hand"),
@@ -125,7 +125,7 @@ def main():
     taxonomy = Taxonomy.load()
     sources = get_sources([s.strip() for s in args.sources.split(",") if s.strip()])
     print(f"Case {args.case}: {case['analysis'].subfields} "
-          f"({case['analysis'].claim_type}/{case['analysis'].temporal_mode})")
+          f"({case['analysis'].temporal_mode})")
     print(f"Sources: {[s.name for s in sources]}\n")
 
     result = pipeline.gather_from_analysis(

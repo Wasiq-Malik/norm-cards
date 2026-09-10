@@ -33,7 +33,7 @@ CLAIM:
 {claim}
 
 SUBFIELDS: {subfields}
-CLAIM TYPE: {claim_type}   TEMPORAL MODE: {temporal_mode}
+TEMPORAL MODE: {temporal_mode}
 ENTITIES: {entities}
 
 Produce JSON mapping each bucket to a list of 2-5 short search queries (each 2-8
@@ -45,7 +45,8 @@ words). Include these buckets when relevant:
 - "entity_anchored": queries built from the claim's named models/datasets/metrics
 - "intersection": ONLY if multiple subfields - their intersection
 - "trend": ONLY if temporal_mode is forecast - progress/scaling/trajectory over time
-- "theory": ONLY if claim_type is theoretical - standard assumptions, provable bounds
+- "theory": ONLY if the claim turns on provable guarantees, bounds or formal
+  constraints - standard assumptions, provable bounds
 
 Return ONLY the JSON object {{bucket: [queries...]}}.
 """
@@ -57,7 +58,6 @@ def generate(claim: str, analysis: ClaimAnalysis, taxonomy: Taxonomy,
     data = llm.complete_json(_PROMPT.format(
         claim=claim,
         subfields=", ".join(analysis.subfields) or "(unknown)",
-        claim_type=analysis.claim_type,
         temporal_mode=analysis.temporal_mode,
         entities=analysis.entities,
     ), model=model)

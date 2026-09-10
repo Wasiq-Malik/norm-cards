@@ -1,7 +1,7 @@
 """Orchestrate the per-claim paper-gathering pipeline and emit a bundle.
 
 claim -> classify -> queries -> multi-source search -> consolidate -> rank
-      -> bundle {subfields, claim_type, queries, ranked papers, pwc scaffold}
+      -> bundle {subfields, queries, ranked papers, pwc scaffold}
 """
 
 import time
@@ -34,7 +34,12 @@ def gather_from_analysis(analysis: ClaimAnalysis, queries: Dict, taxonomy: Taxon
 
     papers = collect.run_queries(sources, pairs, per_query=per_query,
                                  topic_ids=analysis.openalex_topic_ids)
-    papers = collect.rank(papers, analysis.subfields, topic_ids=analysis.openalex_topic_ids)
+    # The taxonomy stores a keyword list per subfield; ranking needs it, because the
+    # subfield name alone almost never appears verbatim in a paper's title or abstract.
+    kws = sorted({k for sf in analysis.subfields
+                  for k in ((taxonomy.get(sf) or {}).get("keywords") or [])})
+    papers = collect.rank(papers, analysis.subfields,
+                          topic_ids=analysis.openalex_topic_ids, keywords=kws)
     top = collect.select_balanced(papers, top_k)  # guarantee recent + foundational mix
 
     return {
@@ -54,7 +59,7 @@ def gather_from_analysis(analysis: ClaimAnalysis, queries: Dict, taxonomy: Taxon
 def gather_for_claim(claim: str, taxonomy: Taxonomy, sources,
                      model: str = None, per_query: int = 8, top_k: int = 30) -> Dict:
     analysis = classifier.classify(claim, taxonomy, model=model)
-    print(f"  subfields={analysis.subfields} type={analysis.claim_type} "
+    print(f"  subfields={analysis.subfields} "
           f"mode={analysis.temporal_mode} openalex_topics={analysis.openalex_topic_names}")
     queries = query_gen.generate(claim, analysis, taxonomy, model=model)
     return gather_from_analysis(analysis, queries, taxonomy, sources,
