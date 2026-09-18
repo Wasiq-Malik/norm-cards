@@ -1,0 +1,43 @@
+# Reference experiments — problem arxiv2608_14049
+
+**Claim.** A general-purpose robotic manipulation system can grasp diverse rigid and deformable flat objects while generalizing beyond the objects and semantic categories used for training. Generalization must cover both unseen instances of familiar categories and objects from entirely unseen categories. The claim is supported only if the system’s average grasp-success rate strictly exceeds that of the strongest prior approach under matched evaluation conditions in each of three regimes—training objects, unseen objects from trained categories, and objects from unseen categories—with a trial counted as successful only when the object remains aloft without slipping for at least two seconds after the final action.
+
+**Provenance.** transcribed from the source paper · authored by Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF · 2026-09-18 · derived from arXiv:2608.14049
+
+*Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.*
+
+### Experiment 0
+
+Fix the object splits and success rule used by all manipulation evaluations. Use all 104 FlatLab objects from 21 categories and partition them into Train, Test α, and Test β, where Test α contains unseen objects from categories represented in Train and Test β contains objects from entirely unseen categories. Annotate every object with its corresponding manipulation strategy. Run grasping in randomized simulated desktop placements and orientations, and count a trial as successful only if the object remains aloft without slipping for two seconds after the final action.
+
+### Experiment 1
+
+Build the training data and train the two modules independently. For the Manipulation Strategy Generator, randomize object placements, apply simulated material and scale transformations, and collect 1,390 object point clouds; sample each cloud to 2,048 points, center it at zero, normalize it to a unit sphere, and train for 150 epochs with batch size 32 using Adam, initial learning rate 5×10^-4, weight decay 1×10^-4, and a step scheduler that halves the learning rate every 30 epochs, selecting the checkpoint with the highest validation strategy-discrimination accuracy. For the Robot Action Execution Module, record 50 demonstrations per object, each pairing a scene point cloud with a 6-DoF gripper pose; sample or zero-pad clouds to 8,192 points, normalize them to zero mean, augment training clouds with scaling in [0.9, 1.1], Gaussian jitter of standard deviation 0.002, and random z-axis rotation, and train for 100 epochs with batch size 8 using Adam with learning rate 1×10^-4 and weight decay 1×10^-4. Training uses PyTorch on an NVIDIA GeForce RTX 4090, with a fixed random seed for the execution-module experiments.
+
+### Experiment 2
+
+Test whether the strategy generator selects strategies across the three generalization regimes. Evaluate strategy discrimination on Train, Test α, and Test β after training on the object point clouds and transformed examples. The reported classification accuracies are 99.2% on Train, 91.3% on Test α, and 78.6% on Test β.
+
+### Experiment 3
+
+Measure complete simulated grasping performance before comparing methods. Place every one of the 104 objects at randomized desktop positions and run five grasping trials per object in different orientations, recording both whether the expected strategy is selected and whether the object is grasped without slipping or falling under the two-second success rule. The reported grasp-success rates are 81.1% on Train, 74.2% on Test α, and 69.0% on Test β. The per-trial appendix analysis separately reports average strategy-selection rates of 92.1%, 82.6%, and 75.8% on the three splits and average grasp-success rates of 81.1%, 74.2%, and 69.0%.
+
+### Experiment 4
+
+Compare the unified system against single-strategy and end-to-end baselines under the FlatLab grasping protocol. Run Slide, which pushes an object to the table edge before grasping; Lift, which uses dual-arm coordination and end-effector friction; Diffusion Policy; 3D Diffusion Policy; OpenVLA; π0; π0.5; and FlatLab, with five grasping trials for every flat object and average grasp success as the metric. On Train, the success rates are 32.3% for Slide, 41.2% for Lift, 48.8% for Diffusion Policy, 66.2% for 3D Diffusion Policy, 55.5% for OpenVLA, 63.0% for π0, 68.6% for π0.5, and 81.1% for FlatLab. On Test α, they are 27.3%, 35.0%, 36.8%, 54.2%, 22.6%, 23.6%, 28.6%, and 74.2%, respectively. On Test β, they are 24.7%, 27.2%, 38.8%, 51.2%, 17.8%, 17.3%, 25.0%, and 69.0%, respectively.
+
+### Experiment 5
+
+Ablate the generator inputs and representation-learning components. Evaluate configurations A-1 through A-3 that alter the use of RGB, object point clouds, and scene point clouds, and configurations A-7 and A-8 that remove simulated data transformation or contrast consistency, using strategy accuracy on Train, Test α, and Test β. A-1 obtains 97.1%, 88.0%, and 77.3%; A-2 obtains 99.2%, 91.3%, and 71.4%; A-3 obtains 99.2%, 90.7%, and 70.5%; A-7 obtains 94.8%, 82.3%, and 56.4%; A-8 obtains 85.7%, 79.3%, and 70.5%; and the full model obtains 99.2%, 91.3%, and 78.6%.
+
+### Experiment 6
+
+Ablate primitive decomposition and rotation supervision in the action-execution module. Evaluate action-side configurations A-4 through A-6 and the full model using grasp-position mean squared error on Train, Test α, and Test β. A-4 produces errors of 0.0052, 0.0062, and 0.0077; A-5 produces 0.0081, 0.0083, and 0.0076; A-6 produces 0.0102, 0.0107, and 0.0114; and the full model produces 0.0032, 0.0034, and 0.0040. The input- and generator-side configurations A-1, A-2, A-3, A-7, and A-8 also produce 0.0032, 0.0034, and 0.0040 because their execution-module configuration is unchanged.
+
+### Experiment 7
+
+Probe sensitivity to the strategy generator's contrastive-loss weight λ and NT-Xent temperature τ. Vary λ and τ and evaluate strategy-discrimination success on Train, Test α, and Test β. The supplied paper text states that these experiments were run but does not provide the tested parameter values, numerical results, or a textual direction of change.
+
+### Experiment 8
+
+Transfer the system to physical manipulation. Deploy the method on a Baxter dual-arm robot with an Intel RealSense D455 camera covering the tabletop, use the Segment Anything Model to separate individual objects from the tabletop, collect more than 30 real flat objects, divide them into Train, Test α, and Test β sets, and mirror the simulation pipeline and evaluation protocol. The average real-world grasp-success rates are 83.6% on Train, 80.0% on Test α, and 80.0% on Test β.

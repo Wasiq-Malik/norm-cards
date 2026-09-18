@@ -1,0 +1,63 @@
+# Reference experiments — problem arxiv2606_00570
+
+**Claim.** Parameter-modifying knowledge-editing methods are practically viable for instruction-following and reasoning large language models when updating isolated facts and complex events, including repeated sequential updates. They count as viable only if, at the same editing workload, their arithmetic mean across edit reliability, generalization, locality, and portability is at least as high as that of the strongest external-memory alternative, while accuracy on unrelated general and reasoning tasks remains at least 100% of the model’s pre-edit accuracy, corresponding to 0% relative degradation. The proposition applies across both single-edit and sequential-edit settings rather than only isolated updates.
+
+**Provenance.** transcribed from the source paper · authored by Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF · 2026-09-18 · derived from arXiv:2606.00570
+
+*Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.*
+
+### Experiment 0
+
+Build the representation dataset used to test dimensional collapse. Sample 100,000 prompts from C4-en and use PyTorch forward hooks to collect centered hidden states from the down-projection layer of each Transformer block in Llama-3.1-8B-Instruct, DeepSeek-R1-Distill-Llama-8B, and Llama-2-13B; for T5-3B, collect states at the feed-forward input and output projections in MEND’s target encoder and decoder layers 22–23. Apply full GPU-accelerated SVD with torch.linalg.svd to each layer’s hidden-state matrix. For Llama-3.1-8B-Instruct, layers 5, 10, 15, 20, 25, 30, and 31 have effective-rank fractions of 79.3%, 75.7%, 77.6%, 79.6%, 79.6%, 50.4%, and 25.0%; their smallest singular values range from 3.38×10^-6 to 3.05×10^-3, and their condition numbers range from 4.19×10^6 to 1.28×10^8.
+
+### Experiment 1
+
+Validate the local approximations used in the geometric analysis. Measure hidden-state perturbation norms in edited layers after a single edit across several parameter-based methods, then track the stability of the original principal directions during early sequential editing across multiple models and architectures. Single-edit hidden-state changes remain relatively small in many edited layers, while dominant principal directions are more stable early in the sequence and low-scale directions deteriorate rapidly as edits accumulate.
+
+### Experiment 2
+
+Test whether editing perturbations are amplified in low-scale representation directions. Perform 1,000 sequential MEMIT edits on Llama-3.1-8B-Instruct and, in layer 30, project the hidden-state change onto the original singular-vector basis and calculate each direction’s relative change rate R_k=√n|c_k|/σ_k. The largest R_k values concentrate in directions with small singular values, and a single edit can produce R_k greater than 1 in many directions, meaning the perturbation exceeds the direction’s pre-edit RMS scale.
+
+### Experiment 3
+
+Connect representation amplification to sequential-editing performance. At each editing step, summarize R_k by the median within each edited layer and the mean across edited layers, then compute Spearman correlations with reliability, generalization, locality, and portability. For MEMIT, the correlations are -0.9619 for reliability (p<0.001), -0.4238 for generalization (p=0.2557), -0.7289 for locality (p=0.0259), and -0.8087 for portability (p=0.0083). For ROME they are -0.8645 (p=0.0026), -0.8645 (p=0.0026), -0.9129 (p<0.001), and -0.8617 (p=0.0028). WISE gives -0.7679 for reliability (p=0.0157), -0.0840 for generalization (p=0.8298), -0.4851 for locality (p=0.1857), and -0.6639 for portability (p=0.0512); AlphaEdit gives -0.2034, 0.6360, 0.0339, and 0.3500, none significant at p<0.05.
+
+### Experiment 4
+
+Fix the inference and scoring protocol for the editing comparisons. Evaluate edited models with autoregressive decoding rather than teacher forcing, score semantic consistency in reliability, generalization, locality, and portability with Qwen2.5-72B-Instruct, and separately check locality with a token-level measure. The token-level locality check reproduces the semantic locality results.
+
+### Experiment 5
+
+Test factual editing as the number of updates grows. Apply ROME, RECT, AlphaEdit, MEMIT, PMET, FT-L, MEND, AdaLoRA, WISE, GRACE, and SCR to Llama-3.1-8B-Instruct on ZsRE and evaluate after 1, 10, 100, and all edits. After one edit, the reliability, generalization, locality, and portability scores are respectively 80.00, 71.00, 7.00, and 8.96 for ROME; 79.00, 69.00, 6.50, and 9.66 for RECT; 83.00, 51.00, 13.00, and 9.51 for AlphaEdit; 79.00, 48.00, 9.50, and 13.00 for MEMIT; 25.00, 14.00, 6.50, and 5.11 for PMET; 6.00, 12.00, 1.50, and 2.67 for FT-L; 18.00, 26.00, 9.00, and 11.77 for MEND; 49.00, 51.00, 6.00, and 11.85 for AdaLoRA; 3.00, 1.00, 12.50, and 3.14 for WISE; 64.00, 2.00, 12.50, and 4.48 for GRACE; and 81.00, 75.00, 17.50, and 40.15 for SCR. After the full sequence, ROME, MEMIT, FT-L, MEND, and AdaLoRA score 0 on all four dimensions; RECT scores 5.76, 4.77, 0.00, and 0.85; AlphaEdit scores 69.49, 55.50, 8.38, and 8.56; PMET scores 6.46, 6.30, 7.80, and 4.79; WISE scores 2.84, 2.46, 10.30, and 2.35; GRACE scores 60.34, 2.69, 10.91, and 3.33; and SCR scores 84.40, 75.56, 16.03, and 46.41.
+
+### Experiment 6
+
+Check whether the factual-editing result extends across datasets, model families, model sizes, and longer edit counts. Repeat the comparisons on ZsRE and WikiData_counterfact with Llama-2-7B-Chat, Llama-3.1-8B-Instruct, and Mistral-7B-Instruct, and verify on Llama-2-13B and Qwen3-14B; also evaluate a finer range of edit counts rather than only 1, 10, 100, and the full sequence. The timing of degradation differs by method, but every parameter-based method declines over longer edit sequences, and SCR outperforms all parameter-based methods across the evaluated conditions.
+
+### Experiment 7
+
+Rule out confidence in the edited facts as the explanation for sequential degradation. Divide the factual edits into high-confidence and low-confidence fact sets and repeat the sequential evaluation. Parameter-based methods exhibit the same declining trend in both subsets.
+
+### Experiment 8
+
+Test isolated and sequential factual editing on a reasoning-oriented model. Edit DeepSeek-R1-Distill-Llama-8B on ZsRE and compute the arithmetic mean of reliability, generalization, locality, and portability. In single editing, the averages are 24.75 for ROME, 23.51 for RECT, 22.35 for AlphaEdit, 2.48 for FT-L, 25.99 for MEND, 10.38 for AdaLoRA, 4.65 for WISE, 13.38 for GRACE, and 56.59 for SCR. In sequential editing, they are 0.25 for ROME, 0.00 for RECT, 24.16 for AlphaEdit, 0.00 for FT-L, 0.00 for MEND, 0.00 for AdaLoRA, 3.50 for WISE, 15.13 for GRACE, and 60.19 for SCR. SCR’s sequential component scores are 90.00 reliability, 90.00 generalization, 15.50 locality, and 45.26 portability; the strongest parameter-based result, AlphaEdit, scores 46.00, 35.00, 8.00, and 7.62.
+
+### Experiment 9
+
+Measure whether edited models preserve unrelated reasoning and downstream-task accuracy. After 10 and 100 edits, evaluate mathematical reasoning benchmarks together with GPQA-Diamond, ARC_c, and MMLU-Pro. ROME and RECT initially retain some performance, with average accuracy drops of 2.74 and 8.37, but their accuracy is nearly zero after 100 edits. MEND has 0.00 accuracy after both 10 and 100 edits. AlphaEdit remains close to the original model across the datasets after 100 edits and sometimes improves slightly, although its editing locality and portability remain lower than SCR’s.
+
+### Experiment 10
+
+Inspect how factual edits interact with a reasoning model’s generated chain of thought. Analyze edited DeepSeek-R1-Distill-Llama-8B responses in cases where the edit guides the model to the intended next token. The subsequent reasoning can revert to outdated knowledge, produce plausible but fabricated explanations to maintain coherence, or disregard the original question while completing the answer.
+
+### Experiment 11
+
+Test editing on event-level rather than triple-level knowledge. Process ELKEN with GPT-4o and edit Llama-2-7B-Chat, Llama-3.1-8B-Instruct, and DeepSeek-R1-Distill-Llama-8B, evaluating both single and sequential settings; directly compare AlphaEdit with SCR in sequential editing. Most parameter-based methods are unsatisfactory even for one event edit and almost completely break down during sequential event editing. AlphaEdit deteriorates relative to its fact-editing results, while SCR scores higher than AlphaEdit on portability, locality, and their reported average for both Llama-3.1-8B-Instruct and DeepSeek-R1-Distill-Llama-8B.
+
+### Experiment 12
+
+Measure the deployment-time trade-off between editing and inference. Record wall-clock time per individual edit and average wall-clock inference latency per query, normalized by the unedited model, using greedy decoding and a fixed output length of 50 tokens. Methods that encode edits as progressively more abstract representations—from text to embeddings, hidden states, and parameter updates—take progressively longer to edit. Parameter-based methods add no inference latency because they modify the base model directly, whereas external-memory methods such as SCR edit faster but incur retrieval or longer-context inference costs; no evaluated method is best on both editing time and inference latency.
+
+### Experiment 13
+
+Test the sensitivity of the most persistent parameter editor to implementation choices. Vary AlphaEdit’s hyperparameters and target model architecture and repeat its editing evaluation. Its performance changes with both the hyperparameters and architecture rather than remaining stable across configurations.

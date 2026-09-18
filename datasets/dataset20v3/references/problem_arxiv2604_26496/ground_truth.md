@@ -1,0 +1,47 @@
+# Reference experiments — problem arxiv2604_26496
+
+**Claim.** The accuracy–robustness trade-off in adversarially trained deep image classifiers is not unavoidable. An adversarial-training objective can harmonize clean generalization and resistance to bounded adversarial perturbations rather than improving one only by degrading the other. The claim is supported only if both clean accuracy and adversarial accuracy improve by more than 0 percentage points over the corresponding conventional adversarial-training objective, and if both their arithmetic mean and harmonic mean exceed those of the strongest prior adversarial-training approach under an equal training budget by more than 0 points.
+
+**Provenance.** transcribed from the source paper · authored by Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF · 2026-09-18 · derived from arXiv:2604.26496
+
+*Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.*
+
+### Experiment 0
+
+Test whether perturbing boundary samples at full strength is necessary for robustness. Train ResNet-18 on CIFAR-10 for 100 epochs with PGD-AT at ε = 8/255, except that currently misclassified samples are included only as clean samples. Define boundary samples as correctly classified natural samples that can still be attacked when the perturbation budget is reduced to ε/10 = 0.8/255, then train variants that reduce the perturbation applied to those boundary samples to either the threshold or zero. Reducing boundary-sample perturbations has little effect on final robust accuracy, while an intermediate perturbation improves clean accuracy relative to fully perturbing them; the paper does not provide numerical values for these comparisons in the text.
+
+### Experiment 1
+
+Test whether the same perturbation insensitivity holds for non-boundary samples. In the same CIFAR-10 and ResNet-18 proof-of-concept setup, identify correctly classified samples that cannot be attacked below the ε/10 = 0.8/255 boundary threshold and reduce the perturbation applied to those non-boundary samples to the threshold or zero. Unlike the boundary-sample intervention, reducing perturbations on non-boundary samples substantially lowers robust accuracy, while fully perturbing them within the ε = 8/255 ball is required to learn robustness; the paper gives the direction but no numerical values in the text.
+
+### Experiment 2
+
+Test whether the rule used to partition boundary and non-boundary samples affects both objectives. Under the same CIFAR-10, ResNet-18, 100-epoch PGD-AT setup, compare alternative boundary-partition strategies while measuring clean and robust accuracy. The authors report that the partition strategy changes both outcomes and that an appropriate partition improves both clean accuracy and robustness, but they do not state the numerical values or enumerate the plotted strategies in the accompanying text.
+
+### Experiment 3
+
+Test whether RAAT improves clean and adversarial accuracy over its corresponding conventional adversarial-training objective. Train PGD-AT, TRADES, MART, Cons-AT, RAAT, and RAAT++ on CIFAR-10, CIFAR-100, and Tiny-ImageNet with ResNet-18 and WideResNet-28-10 under an ℓ∞ budget ε = 8/255. Training uses SGD with momentum 0.9, batch size 128, weight decay 5×10^-4, initial learning rate 0.1, 110 epochs, and learning-rate reductions by 0.1 at epochs 100 and 105; inner maximization uses 10 steps of size 2/255, λ = 6 for TRADES and MART, λ = 1 for Cons-AT and RAAT, η = 0.1, and γ = 0.75. Evaluate clean accuracy and white-box PGD-10, PGD-100, C&W, and AutoAttack accuracy with random starts, average three runs, and select each run’s checkpoint by highest PGD-10 accuracy. For clean/AutoAttack accuracy, PGD-AT versus RAAT is 82.92/46.74 versus 83.69/47.94 on CIFAR-10 ResNet-18, 87.49/50.96 versus 87.54/51.76 on CIFAR-10 WideResNet-28-10, 56.56/25.02 versus 58.53/25.65 on CIFAR-100 ResNet-18, 59.95/27.27 versus 59.89/27.81 on CIFAR-100 WideResNet-28-10, 46.32/17.07 versus 46.77/17.88 on Tiny-ImageNet ResNet-18, and 47.79/20.00 versus 49.32/21.30 on Tiny-ImageNet WideResNet-28-10. MART versus RAAT++ is respectively 77.93/46.70 versus 79.70/47.50, 82.78/50.89 versus 82.80/52.10, 49.83/25.00 versus 53.12/25.32, 56.84/27.97 versus 58.30/28.52, 39.70/17.18 versus 41.69/17.21, and 45.57/21.07 versus 47.96/22.12. Thus RAAT improves both clean and AutoAttack accuracy over PGD-AT in five of six settings, with clean accuracy falling from 59.95 to 59.89 on CIFAR-100 WideResNet-28-10, while RAAT++ improves both over MART in all six settings. Comparing the better of RAAT and RAAT++ with the best of the four benchmarks for clean, PGD-10, PGD-100, C&W, and AutoAttack gives percentage-change vectors of +0.32%, +2.35%, +1.88%, +4.60%, +0.46% on CIFAR-10 ResNet-18; +0.06%, +0.51%, +0.37%, +3.38%, +0.42% on CIFAR-10 WideResNet-28-10; +0.00%, +2.71%, +2.62%, +6.23%, +1.02% on CIFAR-100 ResNet-18; −1.40%, +2.62%, +2.43%, +8.17%, +2.56% on CIFAR-100 WideResNet-28-10; +0.01%, −0.26%, +0.18%, +3.73%, +1.59% on Tiny-ImageNet ResNet-18; and −1.41%, +1.13%, +0.35%, +2.75%, +5.09% on Tiny-ImageNet WideResNet-28-10.
+
+### Experiment 4
+
+Check whether the result extends from ℓ∞ to ℓ2 perturbations. Train the same six methods on CIFAR-10, CIFAR-100, and Tiny-ImageNet with ResNet-18 under an ℓ2 threat model using maximal perturbation budget ε = 128/255 and attack step size α = 32/255, with the remaining training protocol matching the main benchmark. The authors report that clean and adversarial performance has a tendency similar to the ℓ∞ results and supports the same comparison, but the supplied text does not include the numerical entries of this additional evaluation.
+
+### Experiment 5
+
+Compare RAAT’s clean–robust average with nine published trade-off methods. On CIFAR-100 with ResNet-18 under the ℓ∞ threat model, use the published or previously compiled clean and AutoAttack scores for MMA, AWP, GAIRAT, MAIL, TE, HAT, SOVR, ADR, and PIAT, and compare their arithmetic mean with the three-run RAAT result. RAAT obtains clean accuracy 58.53 ± 0.14, AutoAttack accuracy 25.65 ± 0.26, and mean 42.09. The comparison values are MMA 60.60 ± 0.60/18.40 ± 0.20/39.50, AWP 55.16 ± 0.27/25.16 ± 0.39/40.16, GAIRAT 58.43 ± 0.28/17.54 ± 0.33/37.99, MAIL 60.74 ± 0.15/22.44 ± 0.53/41.59, TE 56.45/26.30/41.38, HAT 59.19 ± 0.07/23.75 ± 0.14/41.47, SOVR 52.10 ± 0.80/24.30 ± 0.20/38.20, ADR 56.54/26.42/41.48, and PIAT 56.04/26.09/41.07. RAAT’s mean of 42.09 exceeds the largest prior mean in this comparison, MAIL’s 41.59, by 0.50 points; the prior methods were not all retrained by the authors under RAAT’s simple PGD-AT implementation.
+
+### Experiment 6
+
+Test whether the RAAT mechanism improves a stronger adversarial-training framework under the 200-epoch SOTA protocol. Implement RAAT on the ReBAT codebase to form RAAT#, train PreActResNet-18 for 200 epochs with learning-rate decays at epochs 100 and 150, and compare clean accuracy, AutoAttack accuracy, their arithmetic mean, and Natural-Robustness Ratio NRR = 2×Clean×Robust/(Clean+Robust) against WA, MMA, AWP, GAIRAT, KD+SWA, EWAT, MAIL, TE, SOVR, ReBAT, and RPAT, using prior-paper, reproduction, or compiled best-checkpoint scores for those methods. On CIFAR-10, RAAT# obtains 82.76 clean, 51.65 AutoAttack, mean 67.205, and NRR 63.605; the largest prior mean is 66.940 from KD+SWA and the largest prior NRR is 62.776 from RPAT. On CIFAR-100, RAAT# obtains 56.92 clean, 28.08 AutoAttack, mean 42.500, and NRR 37.607; the largest prior mean and NRR are RPAT’s 42.030 and 37.096. RAAT# therefore exceeds those strongest prior arithmetic means by 0.265 and 0.470 points and the strongest prior harmonic-mean NRR values by 0.829 and 0.511 points on CIFAR-10 and CIFAR-100, respectively.
+
+### Experiment 7
+
+Separate the contributions of reduced boundary perturbations and DICAR. Ablate RAAT by adding the reduced-boundary-perturbation component, denoted BOUND, and the DICAR regularization component separately and together, and measure clean and robust accuracy. Each component individually raises both clean and robust accuracy relative to the version without it, and using both produces the final RAAT result. The appendix does not identify the dataset and architecture or provide numerical values for this ablation in its accompanying text.
+
+### Experiment 8
+
+Test how the boundary threshold η affects RAAT. Vary η, which defines a boundary sample through successful attack within the reduced radius ηε, and measure clean and robust accuracy. The authors report that the partition changes both metrics and that an intermediate partition improves both perturbed-data and clean-data performance; they use η = 0.1 in all main experiments. The appendix does not state the tested η values, dataset, architecture, or numerical accuracies in the accompanying text.
+
+### Experiment 9
+
+Set the regularization strength used in the benchmark. Vary λ for TRADES, MART, Cons-AT, and RAAT and measure robust accuracy. TRADES and MART perform best around λ = 6 to 8, while Cons-AT and RAAT perform best for λ in [1,3]; the main experiments consequently use λ = 6 for TRADES and MART and λ = 1 for Cons-AT and RAAT. The appendix does not identify the dataset and architecture or give the individual robust-accuracy values in the accompanying text.

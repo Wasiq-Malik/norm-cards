@@ -341,6 +341,7 @@ def _complete_json_strict(system: str, instance: str, model: str) -> dict:
     proposer's long prose otherwise breaks a naive json.loads on embedded quotes."""
     litellm = llm._litellm()
     resp = litellm.completion(
+        timeout=llm.TIMEOUT,
         model=model,
         messages=[
             {"role": "system", "content": system},
@@ -348,7 +349,7 @@ def _complete_json_strict(system: str, instance: str, model: str) -> dict:
              'form {"experiments": ["...", "..."]} where each item is one full '
              "experiment description as prose."},
         ],
-        temperature=1 if model.startswith("gpt-5") else 0.1,
+        temperature=1 if llm.wants_default_temperature(model) else 0.1,
         response_format={"type": "json_object"},
     )
     return json.loads(resp.choices[0].message.content)

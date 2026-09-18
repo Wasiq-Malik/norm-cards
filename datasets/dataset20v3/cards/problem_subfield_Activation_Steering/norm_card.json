@@ -1,0 +1,1721 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Activation_Steering",
+  "claim": "Experimental norms and standard practice in Activation Steering.",
+  "subfields": [
+    "Activation Steering"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 13,
+    "pdf_sources": {
+      "cache:text": 13,
+      "none": 17
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Activation Steering",
+      "menu": {
+        "datasets": [
+          {
+            "name": "RealToxicityPrompts",
+            "role": "eval",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "ADVBENCH",
+            "role": "train",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "ALPACA",
+            "role": "train",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "StrongREJECT",
+            "role": "eval",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "HEx-PHI",
+            "role": "eval",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "The Pile",
+            "role": "eval",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "CodeParrot (Python)",
+            "role": "train",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Perez et al. binary-behaviour datasets",
+            "role": "eval",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "ESD (English subset)",
+            "role": "train",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "COCO Captions",
+            "role": "train",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "SimpleQA",
+            "role": "eval",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "insecure code finetuning dataset",
+            "role": "train",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "activation-collection dataset (prompt-only insecure code prompts)",
+            "role": "train",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Fixed 20k Wikipedia sentences",
+            "role": "eval",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "TinyBench/TinyBenchmarks (tinyArc, tinyGSM8kstrict, tinyMMLU, tinyTruthQA, tinyHellaSwag, tinyWinoGrande)",
+            "role": "eval",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Llama-3",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Activation Steering with a Feedback Controller",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Llama-2",
+            "role": "backbone",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Qwen-2.5",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Activation Steering with a Feedback Controller",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Qwen-3.5",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Gemma-2",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Gemma-3",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "CosyVoice",
+            "role": "backbone",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "EmoShift",
+            "role": "method_under_test",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "GCAD (Gated Cropped Attention-Delta)",
+            "role": "method_under_test",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "PID Feedback Controller for Activation Steering",
+            "role": "method_under_test",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Fusion Steering",
+            "role": "method_under_test",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Activation steering injection (residual-stream)",
+            "role": "method_under_test",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Fine-tuning baselines (full, LoRA, LoRRA)",
+            "role": "baseline",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Insecure-finetuned model (LoRA)",
+            "role": "baseline",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "FLUX (image generation backbone)",
+            "role": "backbone",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Gemma-2-2B-IT",
+            "role": "backbone",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Mistral-7B",
+            "role": "evaluator",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Llama-3-8B-Instruct",
+            "role": "evaluator",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "QVQ-72B-Preview",
+            "role": "evaluator",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "GPT-4o-mini",
+            "role": "evaluator",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "AGPT-4.1-mini",
+            "role": "evaluator",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Whisper-Large-v3",
+            "role": "evaluator",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "WavLM-Base",
+            "role": "evaluator",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "emotion2vec",
+            "role": "evaluator",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Mistral Small 3.1",
+            "role": "evaluator",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "GPT-2",
+            "role": "evaluator",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Coherence score (LLM judge, 0\u2013100)",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Harmful response rate (benchmark criterion)",
+            "direction": "lower_better",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Coherent-harmful EM rate",
+            "direction": "lower_better",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "CLSTox (toxicity)",
+            "direction": "lower_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Zero-shot toxicity (LLM-judge)",
+            "direction": "lower_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Perplexity (PPL)",
+            "direction": "lower_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller",
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "MMLU (5-shot accuracy)",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Attack Success Rate (ASR)",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "TinyBench metrics (tinyArc, tinyGSM8kstrict, tinyMMLU, tinyTruthQA, tinyHellaSwag, tinyWinoGrande)",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "CLIP style classifier score",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "CLIPScore (content preservation)",
+            "direction": "higher_better",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Top-1 token accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Relative top-1 accuracy (steered/default)",
+            "direction": "higher_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Matching score (target behaviour share)",
+            "direction": "higher_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Faulty answer rate",
+            "direction": "lower_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Mode-collapse indicator (single token >95%)",
+            "direction": "lower_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Alignment tax (Pile top-1 while steered)",
+            "direction": "higher_better",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Trait expression score (0\u2013100, LLM judge)",
+            "direction": "higher_better",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Coherence drift \u0394 (T10\u2212T1 or T5\u2212T1)",
+            "direction": "lower_better",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Honesty (MASK benchmark)",
+            "direction": "higher_better",
+            "evidence": [
+              "Depth-Wise Activation Steering for Honest Language Models"
+            ]
+          },
+          {
+            "name": "Word Error Rate (WER)",
+            "direction": "lower_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Speaker Similarity (SpkSIM)",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "DNSMOS",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Emotion recognition accuracy (SER)",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "MOS (Mean Opinion Score)",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Emo-MOS",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Win rate (AB preference)",
+            "direction": "higher_better",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Composite QA score (0.5\u00b7TokenOverlap + 0.5\u00b7LLM grade)",
+            "direction": "higher_better",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Token overlap",
+            "direction": "higher_better",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "LLM grade (1\u20135)",
+            "direction": "higher_better",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Proportion CORRECT (SimpleQA rubric)",
+            "direction": "higher_better",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Construct steering vectors from paired-activation differences",
+            "detail": "Collect residual activations on identical prompts from two conditions (e.g., base vs finetuned), compute per-prompt \u0394=h_f\u2212h_0 at selected tokens, and average per layer to form steering vectors; exclude generated-answer tokens if relevant.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Low-rank PCA with energy calibration",
+            "detail": "PCA the centered per-sample differences per layer, keep top-k components, align signs, and rescale to preserve intervention energy after truncation; sweep k.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Sweep steering strength and injection depth",
+            "detail": "Systematically sweep steering coefficient \u03b1 and vary injection layers/windows or apply depth-wise schedules; report performance curves and identify sensitive regions.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Grid search over layers and coefficients with held-out validation",
+            "detail": "Perform grid search of layer indices and \u03b1 on a validation split, then evaluate the chosen configuration on a held-out test set.",
+            "evidence": [
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Equal-budget depth allocation ablations",
+            "detail": "Hold total steering norm fixed and compare Gaussian vs random, uniform, and box-filter allocations across layers.",
+            "evidence": [
+              "Depth-Wise Activation Steering for Honest Language Models"
+            ]
+          },
+          {
+            "name": "Held-out splits for direction-building vs evaluation",
+            "detail": "Build steering/refusal directions on a training subset and evaluate on a disjoint held-out subset from the same benchmark.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller",
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Multi-evaluator toxicity assessment",
+            "detail": "Report toxicity using both a classifier and LLM-as-judge to reduce evaluator dependence; average over multiple runs where applicable.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Utility preservation checks",
+            "detail": "Report PPL on a fixed text set, PPL of model outputs, and knowledge-task accuracy (e.g., MMLU) to monitor capability degradation.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Multi-turn dialogue evaluation with persistent KV",
+            "detail": "Run 5\u201310 turn dialogues with KV cache persisted; apply steering each token; judge trait expression and coherence per turn and measure drift.",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Human perceptual evaluation with CIs",
+            "detail": "Conduct MOS/Emo-MOS and AB tests with multiple listeners and report 95% confidence intervals from t-distribution.",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Deterministic decoding for comparability",
+            "detail": "Use fixed decoding settings (e.g., greedy or specified temperature, max tokens) across baseline and steered runs.",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control",
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Per-prompt hyperparameter tuning (few trials)",
+            "detail": "Optimize limited per-prompt steering/fusion parameters with a small trial budget and a composite objective (e.g., overlap\u2013perplexity trade-off).",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Open-set safeguards for validity",
+            "detail": "Enforce validity criteria (e.g., discard settings with >5% faulty outputs or mode-collapse >95% single-token) and penalize invalid regimes.",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "No-steering baseline",
+            "detail": "Run the same backbone with identical decoding and prompts but no activation intervention.",
+            "rules_out": "That observed changes arise without the intervention (establishes baseline behavior, coherence, and safety).",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Activation Steering with a Feedback Controller",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours",
+              "Fusion Steering: Prompt-Specific Activation Control",
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Parameter-updated baseline on same data (full/LoRA/LoRRA finetuning)",
+            "detail": "Train a parameter-updated model on the same targets/data used to derive the steering vectors and evaluate under the same setup.",
+            "rules_out": "That the effect is simply what fine-tuning would produce rather than an activation-steering-specific phenomenon.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Depth-Wise Activation Steering for Honest Language Models",
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Prompt-only/system-prompt control",
+            "detail": "Apply only the system/prompt intervention (no activation edit) under the same multi-turn protocol.",
+            "rules_out": "That long-context/KV-cache persistence or prompting alone explains drift or coherence changes attributed to steering.",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Directionality control with size-matched randomized/permuted vectors",
+            "detail": "Construct a control vector by permuting or randomizing the components per layer while preserving mean/std or total norm.",
+            "rules_out": "That equal-magnitude activation perturbations (rather than the learned direction) account for the effect.",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Injection-depth ablations and equal-budget schedules",
+            "detail": "Apply the same steering budget at different layers/windows or distribute it across depth using alternative schedules (random, uniform, box) under equal total norm.",
+            "rules_out": "That any perturbation location or total energy alone explains results; isolates sensitivity to where and how strength is allocated.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Depth-Wise Activation Steering for Honest Language Models"
+            ]
+          },
+          {
+            "name": "Single-layer vs depth-wise scheduled steering",
+            "detail": "Compare a point-mass single-layer edit to a depth-wise schedule matched for total norm.",
+            "rules_out": "That improvements are explained by simply injecting a vector (single layer) rather than by the depth-wise allocation.",
+            "evidence": [
+              "Depth-Wise Activation Steering for Honest Language Models"
+            ]
+          },
+          {
+            "name": "Equal-energy low-rank vs full-dimensional vector",
+            "detail": "Project the steering vector onto top-k PCA components with energy calibration and compare to the full vector at matched energy.",
+            "rules_out": "That apparent gains or losses are due to reduced vector energy rather than concentrating on informative low-rank directions.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Established steering-method baselines",
+            "detail": "Evaluate ActAdd (activation addition), Mean/Linear-AcT, DIM, ITI/ITI-C, RePE, CAA, AURA under the same data and metrics.",
+            "rules_out": "That gains are due to dataset/setup idiosyncrasies rather than the proposed steering mechanism outperforming prior methods.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Uniform full-layer steering vs segmented layer-group tuning",
+            "detail": "Apply a single fusion/strength parameter across all layers versus separately tuned parameters for early/mid/late layer groups.",
+            "rules_out": "That improvements are due merely to any across-the-board activation injection rather than layer-group-specific control.",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "Residual-stream activation-add baseline",
+            "detail": "Add a fixed persona/behavior vector to the residual stream at a single site with tuned \u03b1 and compare to attention-level steering.",
+            "rules_out": "That any activation-add steering suffices, isolating the contribution of the alternative pathway (e.g., attention-delta with gating/cropping).",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Fluency/overlap improvements mistaken for target-behavior change",
+            "detail": "Higher fluency or lexical overlap can inflate harmfulness/accuracy proxies without genuinely changing the targeted behavior.",
+            "ruled_out_by": "Measure harmfulness independently from coherence (require both for 'coherent-harmful'), report human MOS/SpkSIM, and use composite metrics combining token overlap with LLM-graded quality.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis",
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          },
+          {
+            "name": "General capability degradation (alignment tax) explains effects",
+            "detail": "Global degradation (e.g., higher PPL, lower task accuracy) could reduce targeted outputs and mimic successful steering.",
+            "ruled_out_by": "Report PPL on fixed text, MMLU, and Pile top-1 while steered; show targeted changes with minimal utility loss.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller",
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Evaluator dependence (classifier vs LLM judge)",
+            "detail": "Observed toxicity or safety changes might depend on the chosen evaluator rather than reflect real behavior changes.",
+            "ruled_out_by": "Evaluate with both a classifier and multiple LLM judges and report both.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Overfitting to prompts used to compute steering directions",
+            "detail": "Directions may overfit training prompts, inflating evaluation on similar items.",
+            "ruled_out_by": "Use disjoint train/validation/test splits (e.g., 80/20 for ADVBENCH, separate splits for behavior datasets) and report held-out performance.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Steering effects are identical to fine-tuning",
+            "detail": "If steering merely reproduces fine-tuned behavior, it offers no distinct mechanism/benefit.",
+            "ruled_out_by": "Directly compare steered vs fine-tuned models on the same metrics; include LoRA/LoRRA/full fine-tune baselines.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+              "Depth-Wise Activation Steering for Honest Language Models"
+            ]
+          },
+          {
+            "name": "Magnitude-only perturbation (not direction) drives results",
+            "detail": "Equal-norm or equal-statistic activation changes might produce similar outcomes without relying on learned directionality.",
+            "ruled_out_by": "Use per-layer permuted vectors preserving mean/std or randomized equal-norm controls; compare against true direction.",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Mode collapse or invalid outputs misread as success",
+            "detail": "Strong steering can induce invalid or collapsed outputs that confound behavior scores.",
+            "ruled_out_by": "Filter/penalize settings with >5% faulty outputs or >95% single-token frequency and report penalties.",
+            "evidence": [
+              "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+            ]
+          },
+          {
+            "name": "Coherence drift caused by long context/KV persistence, not steering",
+            "detail": "Accumulated context alone could degrade coherence over turns.",
+            "ruled_out_by": "Run prompt-only and no-steering baselines under identical multi-turn protocols; show stability relative to steered runs.",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Improved coherence due to weaker steering signal",
+            "detail": "A method might avoid drift just by reducing effective steering strength, sacrificing trait expression.",
+            "ruled_out_by": "Report trait-expression alongside coherence across turns; show maintained or improved trait strength.",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Response-token contamination in extracted vectors causes drift",
+            "detail": "Response-dependent components in vectors may drive KV cache accumulation unrelated to intended prompt signal.",
+            "ruled_out_by": "Ablate cropping (remove response-token contributions) and gating to show their effect on drift; restoring response tokens increases drift.",
+            "evidence": [
+              "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+            ]
+          },
+          {
+            "name": "Low-rank effects due to reduced intervention energy",
+            "detail": "Performance changes after low-rank projection may stem from lower vector energy, not informative subspace selection.",
+            "ruled_out_by": "Energy-calibrate the low-rank projection to match full-vector energy and then compare.",
+            "evidence": [
+              "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+            ]
+          },
+          {
+            "name": "Controller overshoot/instability masks practical failures",
+            "detail": "Integral action may remove bias but create large overshoot oscillations that hide instability.",
+            "ruled_out_by": "Measure error alignment across layers and compare P, PI, and PID to show reduced overshoot with PID.",
+            "evidence": [
+              "Activation Steering with a Feedback Controller"
+            ]
+          },
+          {
+            "name": "Classifier-driven artifacts in emotion metrics",
+            "detail": "SER gains may reflect optimization toward the classifier rather than perceptible emotion.",
+            "ruled_out_by": "Human AB intensity tests and MOS/Emo-MOS alongside SER.",
+            "evidence": [
+              "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+            ]
+          },
+          {
+            "name": "Selection bias from focusing only on incorrect cases",
+            "detail": "Restricting to initially incorrect prompts may skew topic distribution and inflate gains.",
+            "ruled_out_by": "Compare topic distributions of the full and selected subsets and show alignment.",
+            "evidence": [
+              "Fusion Steering: Prompt-Specific Activation Control"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 0,
+        "kept_per_key": {
+          "datasets": 15,
+          "models": 26,
+          "metrics": 31,
+          "protocols": 13,
+          "controls": 10,
+          "confounds": 14
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "ADVBENCH",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "ALPACA",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "COCO Captions",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "CodeParrot",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "CodeParrot (Python)"
+        ],
+        "role": "train"
+      },
+      {
+        "name": "ESD",
+        "evidence": [
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "ESD (English subset)"
+        ],
+        "role": "train"
+      },
+      {
+        "name": "Fixed 20k Wikipedia sentences",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "HEx-PHI",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "Perez et al. binary-behaviour datasets",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "Llama-3",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Activation Steering with a Feedback Controller",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Llama-3-8B-Instruct"
+        ],
+        "role": "evaluator"
+      },
+      {
+        "name": "Qwen-2.5",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Activation Steering with a Feedback Controller",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Fine-tuning baselines",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Fine-tuning baselines (full, LoRA, LoRRA)"
+        ],
+        "role": "baseline"
+      },
+      {
+        "name": "Gemma-2",
+        "evidence": [
+          "Activation Steering with a Feedback Controller",
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Gemma-2-2B-IT"
+        ],
+        "role": "backbone"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Coherence score",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Coherence score (LLM judge, 0\u2013100)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Perplexity",
+        "evidence": [
+          "Activation Steering with a Feedback Controller",
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Perplexity (PPL)"
+        ],
+        "direction": "lower_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Sweep steering strength and injection depth",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Systematically sweep steering coefficient \u03b1 and vary injection layers/windows or apply depth-wise schedules; report performance curves and identify sensitive regions."
+      },
+      {
+        "name": "Deterministic decoding for comparability",
+        "evidence": [
+          "Fusion Steering: Prompt-Specific Activation Control",
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Use fixed decoding settings (e.g., greedy or specified temperature, max tokens) across baseline and steered runs."
+      },
+      {
+        "name": "Grid search over layers and coefficients with held-out validation",
+        "evidence": [
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Perform grid search of layer indices and \u03b1 on a validation split, then evaluate the chosen configuration on a held-out test set."
+      },
+      {
+        "name": "Held-out splits for direction-building vs evaluation",
+        "evidence": [
+          "Activation Steering with a Feedback Controller",
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Build steering/refusal directions on a training subset and evaluate on a disjoint held-out subset from the same benchmark."
+      },
+      {
+        "name": "Construct steering vectors from paired-activation differences",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Collect residual activations on identical prompts from two conditions (e.g., base vs finetuned), compute per-prompt \u0394=h_f\u2212h_0 at selected tokens, and average per layer to form steering vectors; exclude generated-answer tokens if relevant."
+      },
+      {
+        "name": "Equal-budget depth allocation ablations",
+        "evidence": [
+          "Depth-Wise Activation Steering for Honest Language Models"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Hold total steering norm fixed and compare Gaussian vs random, uniform, and box-filter allocations across layers."
+      },
+      {
+        "name": "Human perceptual evaluation with CIs",
+        "evidence": [
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Conduct MOS/Emo-MOS and AB tests with multiple listeners and report 95% confidence intervals from t-distribution."
+      },
+      {
+        "name": "Low-rank PCA with energy calibration",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "PCA the centered per-sample differences per layer, keep top-k components, align signs, and rescale to preserve intervention energy after truncation; sweep k."
+      },
+      {
+        "name": "Multi-evaluator toxicity assessment",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Report toxicity using both a classifier and LLM-as-judge to reduce evaluator dependence; average over multiple runs where applicable."
+      },
+      {
+        "name": "Multi-turn dialogue evaluation with persistent KV",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Run 5\u201310 turn dialogues with KV cache persisted; apply steering each token; judge trait expression and coherence per turn and measure drift."
+      },
+      {
+        "name": "Open-set safeguards for validity",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Enforce validity criteria (e.g., discard settings with >5% faulty outputs or mode-collapse >95% single-token) and penalize invalid regimes."
+      },
+      {
+        "name": "Per-prompt hyperparameter tuning",
+        "evidence": [
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Per-prompt hyperparameter tuning (few trials)"
+        ],
+        "detail": "Optimize limited per-prompt steering/fusion parameters with a small trial budget and a composite objective (e.g., overlap\u2013perplexity trade-off)."
+      },
+      {
+        "name": "Utility preservation checks",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Report PPL on a fixed text set, PPL of model outputs, and knowledge-task accuracy (e.g., MMLU) to monitor capability degradation."
+      }
+    ],
+    "controls": [
+      {
+        "name": "No-steering baseline",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Activation Steering with a Feedback Controller",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours",
+          "Fusion Steering: Prompt-Specific Activation Control",
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Established steering-method baselines"
+        ],
+        "detail": "Evaluate ActAdd (activation addition), Mean/Linear-AcT, DIM, ITI/ITI-C, RePE, CAA, AURA under the same data and metrics.",
+        "rules_out": "That gains are due to dataset/setup idiosyncrasies rather than the proposed steering mechanism outperforming prior methods."
+      },
+      {
+        "name": "Parameter-updated baseline on same data",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Depth-Wise Activation Steering for Honest Language Models",
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Parameter-updated baseline on same data (full/LoRA/LoRRA finetuning)"
+        ],
+        "detail": "Train a parameter-updated model on the same targets/data used to derive the steering vectors and evaluate under the same setup.",
+        "rules_out": "That the effect is simply what fine-tuning would produce rather than an activation-steering-specific phenomenon."
+      },
+      {
+        "name": "Injection-depth ablations and equal-budget schedules",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Depth-Wise Activation Steering for Honest Language Models"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Apply the same steering budget at different layers/windows or distribute it across depth using alternative schedules (random, uniform, box) under equal total norm.",
+        "rules_out": "That any perturbation location or total energy alone explains results; isolates sensitivity to where and how strength is allocated."
+      },
+      {
+        "name": "Directionality control with size-matched randomized/permuted vectors",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Construct a control vector by permuting or randomizing the components per layer while preserving mean/std or total norm.",
+        "rules_out": "That equal-magnitude activation perturbations (rather than the learned direction) account for the effect."
+      },
+      {
+        "name": "Equal-energy low-rank vs full-dimensional vector",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Project the steering vector onto top-k PCA components with energy calibration and compare to the full vector at matched energy.",
+        "rules_out": "That apparent gains or losses are due to reduced vector energy rather than concentrating on informative low-rank directions."
+      },
+      {
+        "name": "Prompt-only/system-prompt control",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Apply only the system/prompt intervention (no activation edit) under the same multi-turn protocol.",
+        "rules_out": "That long-context/KV-cache persistence or prompting alone explains drift or coherence changes attributed to steering."
+      },
+      {
+        "name": "Residual-stream activation-add baseline",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Add a fixed persona/behavior vector to the residual stream at a single site with tuned \u03b1 and compare to attention-level steering.",
+        "rules_out": "That any activation-add steering suffices, isolating the contribution of the alternative pathway (e.g., attention-delta with gating/cropping)."
+      },
+      {
+        "name": "Single-layer vs depth-wise scheduled steering",
+        "evidence": [
+          "Depth-Wise Activation Steering for Honest Language Models"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Compare a point-mass single-layer edit to a depth-wise schedule matched for total norm.",
+        "rules_out": "That improvements are explained by simply injecting a vector (single layer) rather than by the depth-wise allocation."
+      },
+      {
+        "name": "Uniform full-layer steering vs segmented layer-group tuning",
+        "evidence": [
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Apply a single fusion/strength parameter across all layers versus separately tuned parameters for early/mid/late layer groups.",
+        "rules_out": "That improvements are due merely to any across-the-board activation injection rather than layer-group-specific control."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Fluency/overlap improvements mistaken for target-behavior change",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis",
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Higher fluency or lexical overlap can inflate harmfulness/accuracy proxies without genuinely changing the targeted behavior.",
+        "ruled_out_by": "Measure harmfulness independently from coherence (require both for 'coherent-harmful'), report human MOS/SpkSIM, and use composite metrics combining token overlap with LLM-graded quality."
+      },
+      {
+        "name": "General capability degradation (alignment tax) explains effects",
+        "evidence": [
+          "Activation Steering with a Feedback Controller",
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Global degradation (e.g., higher PPL, lower task accuracy) could reduce targeted outputs and mimic successful steering.",
+        "ruled_out_by": "Report PPL on fixed text, MMLU, and Pile top-1 while steered; show targeted changes with minimal utility loss."
+      },
+      {
+        "name": "Steering effects are identical to fine-tuning",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+          "Depth-Wise Activation Steering for Honest Language Models"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "If steering merely reproduces fine-tuned behavior, it offers no distinct mechanism/benefit.",
+        "ruled_out_by": "Directly compare steered vs fine-tuned models on the same metrics; include LoRA/LoRRA/full fine-tune baselines."
+      },
+      {
+        "name": "Classifier-driven artifacts in emotion metrics",
+        "evidence": [
+          "EmoShift: Lightweight Activation Steering for Enhanced Emotion-Aware Speech Synthesis"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "SER gains may reflect optimization toward the classifier rather than perceptible emotion.",
+        "ruled_out_by": "Human AB intensity tests and MOS/Emo-MOS alongside SER."
+      },
+      {
+        "name": "Coherence drift caused by long context/KV persistence, not steering",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Accumulated context alone could degrade coherence over turns.",
+        "ruled_out_by": "Run prompt-only and no-steering baselines under identical multi-turn protocols; show stability relative to steered runs."
+      },
+      {
+        "name": "Controller overshoot/instability masks practical failures",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Integral action may remove bias but create large overshoot oscillations that hide instability.",
+        "ruled_out_by": "Measure error alignment across layers and compare P, PI, and PID to show reduced overshoot with PID."
+      },
+      {
+        "name": "Evaluator dependence",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [
+          "Evaluator dependence (classifier vs LLM judge)"
+        ],
+        "detail": "Observed toxicity or safety changes might depend on the chosen evaluator rather than reflect real behavior changes.",
+        "ruled_out_by": "Evaluate with both a classifier and multiple LLM judges and report both."
+      },
+      {
+        "name": "Improved coherence due to weaker steering signal",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "A method might avoid drift just by reducing effective steering strength, sacrificing trait expression.",
+        "ruled_out_by": "Report trait-expression alongside coherence across turns; show maintained or improved trait strength."
+      },
+      {
+        "name": "Low-rank effects due to reduced intervention energy",
+        "evidence": [
+          "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Performance changes after low-rank projection may stem from lower vector energy, not informative subspace selection.",
+        "ruled_out_by": "Energy-calibrate the low-rank projection to match full-vector energy and then compare."
+      },
+      {
+        "name": "Magnitude-only perturbation (not direction) drives results",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Equal-norm or equal-statistic activation changes might produce similar outcomes without relying on learned directionality.",
+        "ruled_out_by": "Use per-layer permuted vectors preserving mean/std or randomized equal-norm controls; compare against true direction."
+      },
+      {
+        "name": "Mode collapse or invalid outputs misread as success",
+        "evidence": [
+          "Extending Activation Steering to Broad Skills and Multiple Behaviours"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Strong steering can induce invalid or collapsed outputs that confound behavior scores.",
+        "ruled_out_by": "Filter/penalize settings with >5% faulty outputs or >95% single-token frequency and report penalties."
+      },
+      {
+        "name": "Overfitting to prompts used to compute steering directions",
+        "evidence": [
+          "Activation Steering with a Feedback Controller"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Directions may overfit training prompts, inflating evaluation on similar items.",
+        "ruled_out_by": "Use disjoint train/validation/test splits (e.g., 80/20 for ADVBENCH, separate splits for behavior datasets) and report held-out performance."
+      },
+      {
+        "name": "Response-token contamination in extracted vectors causes drift",
+        "evidence": [
+          "Prompt-Activation Duality: Improving Activation Steering via Attention-Level Interventions"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Response-dependent components in vectors may drive KV cache accumulation unrelated to intended prompt signal.",
+        "ruled_out_by": "Ablate cropping (remove response-token contributions) and gating to show their effect on drift; restoring response tokens increases drift."
+      },
+      {
+        "name": "Selection bias from focusing only on incorrect cases",
+        "evidence": [
+          "Fusion Steering: Prompt-Specific Activation Control"
+        ],
+        "subfields": [
+          "Activation Steering"
+        ],
+        "variants": [],
+        "detail": "Restricting to initially incorrect prompts may skew topic distribution and inflate gains.",
+        "ruled_out_by": "Compare topic distributions of the full and selected subsets and show alignment."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 15,
+      "out": 8,
+      "dropped_uncorroborated": 0,
+      "relaxed": true,
+      "by_subfield": {
+        "Activation Steering": 8
+      }
+    },
+    "models": {
+      "in": 24,
+      "out": 4,
+      "dropped_uncorroborated": 20,
+      "relaxed": false,
+      "by_subfield": {
+        "Activation Steering": 4
+      }
+    },
+    "metrics": {
+      "in": 31,
+      "out": 2,
+      "dropped_uncorroborated": 29,
+      "relaxed": false,
+      "by_subfield": {
+        "Activation Steering": 2
+      }
+    },
+    "protocols": {
+      "in": 13,
+      "out": 13,
+      "by_subfield": {
+        "Activation Steering": 13
+      }
+    },
+    "controls": {
+      "in": 9,
+      "out": 9,
+      "by_subfield": {
+        "Activation Steering": 9
+      }
+    },
+    "confounds": {
+      "in": 14,
+      "out": 14,
+      "by_subfield": {
+        "Activation Steering": 14
+      }
+    },
+    "totals": {
+      "in": 106,
+      "out": 50
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Establish valid baseline headroom and deterministic setup",
+      "dataset": "RealToxicityPrompts (eval), StrongREJECT (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Deterministic decoding for comparability",
+      "metrics": [
+        "Harmful response rate (benchmark criterion) (lower_better)",
+        "Coherence score (LLM judge, 0\u2013100) (higher_better)",
+        "Coherent-harmful EM rate (lower_better)",
+        "Zero-shot toxicity (LLM-judge) (lower_better)",
+        "Faulty answer rate (lower_better)",
+        "Mode-collapse indicator (single token >95%) (lower_better)"
+      ],
+      "pass_condition": "Pass if all hold under no-steering baseline with fixed decoding: (i) Harmful response rate \u2265 5% on at least one of {RealToxicityPrompts, StrongREJECT}; (ii) Coherence score \u2265 60; (iii) Faulty answer rate \u2264 5%; (iv) Mode-collapse indicator \u2264 5%. Otherwise refute viability to test steering effects.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Ensures there is measurable headroom for harm reduction and that outputs are valid and comparable before testing steering.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Build and validate refusal steering vector (apparatus)",
+      "dataset": "ADVBENCH (train)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Construct steering vectors from paired-activation differences",
+      "metrics": [
+        "Matching score (target behaviour share) (higher_better)",
+        "Trait expression score (0\u2013100, LLM judge) (higher_better)",
+        "Perplexity (PPL) (lower_better)",
+        "Alignment tax (Pile top-1 while steered) (higher_better)",
+        "Faulty answer rate (lower_better)",
+        "Mode-collapse indicator (single token >95%) (lower_better)"
+      ],
+      "pass_condition": "On a held-out validation split disjoint from vector-building prompts, pass if: (i) Matching score increases by \u2265 0.20 absolute vs no-steer at a small \u03b1; (ii) Perplexity on Fixed 20k Wikipedia sentences increases by \u2264 10% relative vs no-steer; (iii) Alignment tax (Pile top-1 while steered) \u2265 baseline \u2212 2% absolute; (iv) Faulty answer rate \u2264 5% and Mode-collapse indicator \u2264 5%. Otherwise refute that the constructed vector is a valid steering apparatus.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Establish valid baseline headroom and deterministic setup"
+      ],
+      "rationale": "Validates that the constructed direction encodes the target behaviour while preserving general utility per standard practice with held-out splits.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Demonstrate harm reduction with utility preservation on held-out test",
+      "dataset": "RealToxicityPrompts (eval), StrongREJECT (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Sweep steering strength and injection depth",
+      "metrics": [
+        "Harmful response rate (benchmark criterion) (lower_better)",
+        "Coherent-harmful EM rate (lower_better)",
+        "CLSTox (toxicity) (lower_better)",
+        "Zero-shot toxicity (LLM-judge) (lower_better)",
+        "Coherence score (LLM judge, 0\u2013100) (higher_better)",
+        "MMLU (5-shot accuracy) (higher_better)",
+        "TinyBench metrics (tinyArc, tinyGSM8kstrict, tinyMMLU, tinyTruthQA, tinyHellaSwag, tinyWinoGrande) (higher_better)",
+        "Perplexity (PPL) (lower_better)",
+        "Alignment tax (Pile top-1 while steered) (higher_better)",
+        "Faulty answer rate (lower_better)",
+        "Mode-collapse indicator (single token >95%) (lower_better)"
+      ],
+      "pass_condition": "Select \u03b1/layer via validation grid search; on the held-out test: (i) Harmful response rate decreases by \u2265 30% relative vs no-steer on both RealToxicityPrompts and StrongREJECT; (ii) Coherent-harmful EM decreases by \u2265 30% relative vs no-steer; (iii) CLSTox decreases by \u2265 10% relative and Zero-shot toxicity decreases by \u2265 10% relative vs no-steer; (iv) Coherence score within \u00b13 points of no-steer; (v) MMLU drop \u2264 2% absolute; (vi) TinyBench average drop \u2264 3 points absolute; (vii) PPL increase \u2264 15% relative; (viii) Faulty answer rate \u2264 5% and Mode-collapse indicator \u2264 5%. Failure of any gate refutes headline claim under standard norms.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Build and validate refusal steering vector (apparatus)"
+      ],
+      "rationale": "Directly tests the core objective (reduce harmfulness) and the standard utility-preservation checks on disjoint test data with deterministic decoding.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Attribute effect to learned direction rather than perturbation magnitude",
+      "dataset": "RealToxicityPrompts (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Grid search over layers and coefficients with held-out validation",
+      "metrics": [
+        "Harmful response rate (benchmark criterion) (lower_better)",
+        "Matching score (target behaviour share) (higher_better)",
+        "Coherence score (LLM judge, 0\u2013100) (higher_better)"
+      ],
+      "pass_condition": "Construct per-layer permuted and randomized equal-norm control vectors; tune \u03b1/layer for each on validation. On test, pass if the true learned direction outperforms the best control by: (i) \u2265 10% absolute larger reduction in Harmful response rate; (ii) \u2265 0.10 absolute higher Matching score; and (iii) Coherence score not worse by > 2 points. Differences must have 95% bootstrap CI excluding 0. Otherwise refute that directionality (not just magnitude) drives the effect.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Build and validate refusal steering vector (apparatus)"
+      ],
+      "rationale": "Standard directionality control to rule out equal-magnitude/random perturbation explanations.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Isolate low-rank subspace effects from intervention energy",
+      "dataset": "RealToxicityPrompts (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Low-rank PCA with energy calibration",
+      "metrics": [
+        "Harmful response rate (benchmark criterion) (lower_better)",
+        "Perplexity (PPL) (lower_better)"
+      ],
+      "pass_condition": "After projecting the steering vector onto top-k PCA components with energy calibration (k in {8,16,32}), pass if there exists k \u2264 32 such that: (i) Harmful response rate reduction is \u2265 80% of the full-dimensional vector\u2019s reduction at matched energy; and (ii) PPL increase does not exceed the full-dimensional vector by > 5% relative. Otherwise refute that observed low-rank behaviour is not merely an energy artifact.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Build and validate refusal steering vector (apparatus)"
+      ],
+      "rationale": "Controls for confound where low-rank gains/losses stem from reduced/increased vector energy rather than informative subspaces.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Distinguish activation steering from parameter-updated baselines (fine-tuning)",
+      "dataset": "RealToxicityPrompts (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "Activation steering injection (residual-stream) (method_under_test)",
+      "attack_or_condition": "Utility preservation checks",
+      "metrics": [
+        "Harmful response rate (benchmark criterion) (lower_better)",
+        "MMLU (5-shot accuracy) (higher_better)",
+        "Perplexity (PPL) (lower_better)",
+        "TinyBench metrics (tinyArc, tinyGSM8kstrict, tinyMMLU, tinyTruthQA, tinyHellaSwag, tinyWinoGrande) (higher_better)"
+      ],
+      "pass_condition": "Train a LoRA fine-tune on the same target data used to derive the steering vector and evaluate under the same protocol. Pass if either: (A) At matched harmfulness reduction (within \u00b15% relative), steering yields strictly better utility: MMLU higher by \u2265 1% absolute OR PPL lower by \u2265 10% relative OR TinyBench average higher by \u2265 2 points; OR (B) Steering achieves \u2265 70% of LoRA\u2019s harmfulness reduction while incurring \u2264 50% of LoRA\u2019s MMLU drop and \u2264 50% of LoRA\u2019s PPL increase. Otherwise refute that activation steering offers a distinct mechanism/benefit over fine-tuning under standard norms.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Demonstrate harm reduction with utility preservation on held-out test"
+      ],
+      "rationale": "Ensures the observed effects are not simply those of parameter updates and that steering provides distinct trade-offs per standard practice.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

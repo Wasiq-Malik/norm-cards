@@ -522,7 +522,7 @@ def _main():
 
     ap = argparse.ArgumentParser(
         description="Generate a scientific norm card from a paper bundle "
-                    "(the output of `python -m norm_cards.run`).")
+                    "(the output of `python -m norm_cards.subfield_gather`).")
     ap.add_argument("--bundle", required=True, help="Path to a bundle.json")
     ap.add_argument("--out", default="", help="Output path (default: norm_card.json "
                                               "alongside the bundle)")

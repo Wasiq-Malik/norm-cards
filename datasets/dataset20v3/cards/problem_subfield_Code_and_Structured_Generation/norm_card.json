@@ -1,0 +1,1994 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Code_and_Structured_Generation",
+  "claim": "Experimental norms and standard practice in Code and Structured Generation.",
+  "subfields": [
+    "Code and Structured Generation"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 18,
+    "pdf_sources": {
+      "cache:text": 2,
+      "none": 12,
+      "pdf_url": 5,
+      "arxiv": 8,
+      "s2": 2,
+      "cache": 1
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Code and Structured Generation",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Spider",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "APPS",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "BIRD",
+            "role": "eval",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "HumanEval",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+            ]
+          },
+          {
+            "name": "HumanEval-X",
+            "role": "eval",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "MBPP",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+            ]
+          },
+          {
+            "name": "CodeXGLUE",
+            "role": "eval",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+            ]
+          },
+          {
+            "name": "BigCodeBench",
+            "role": "eval",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "CoNaLa",
+            "role": "eval",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "KaggleDBQA",
+            "role": "eval",
+            "evidence": [
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+            ]
+          },
+          {
+            "name": "CoSQL",
+            "role": "eval",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "SParC",
+            "role": "eval",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Spider-DK",
+            "role": "eval",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "DOMAINEVAL",
+            "role": "eval",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "AixBench",
+            "role": "eval",
+            "evidence": [
+              "AixBench: A Code Generation Benchmark Dataset"
+            ]
+          },
+          {
+            "name": "EVOR-BENCH",
+            "role": "eval",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "SWE-bench-Lite",
+            "role": "eval",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "ServiceNow Script Includes evaluation set",
+            "role": "eval",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "CodeR-Pile (JS/TS subset)",
+            "role": "train",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "CodeJudge: Evaluating Code Generation with Large Language Models",
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "EVOR: Evolving Retrieval for Code Generation",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "CodeLlama",
+            "role": "backbone",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models",
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "Qwen",
+            "role": "backbone",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "T5",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "RAT-SQL",
+            "role": "baseline",
+            "evidence": [
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+            ]
+          },
+          {
+            "name": "DIN-SQL",
+            "role": "method_under_test",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Claude",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "PICARD",
+            "role": "baseline",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "LGESQL",
+            "role": "method_under_test",
+            "evidence": [
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+            ]
+          },
+          {
+            "name": "DeepSeek-Coder",
+            "role": "backbone",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Llama-2",
+            "role": "backbone",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Llama-3",
+            "role": "backbone",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "PaLM-2",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Codex",
+            "role": "backbone",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "aiXcoder XL",
+            "role": "method_under_test",
+            "evidence": [
+              "AixBench: A Code Generation Benchmark Dataset"
+            ]
+          },
+          {
+            "name": "GitHub Copilot",
+            "role": "baseline",
+            "evidence": [
+              "AixBench: A Code Generation Benchmark Dataset"
+            ]
+          },
+          {
+            "name": "EVOR",
+            "role": "method_under_test",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "INSTRUCTOR-xl (retriever)",
+            "role": "baseline",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "BM25",
+            "role": "baseline",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "DAIL-SQL",
+            "role": "method_under_test",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "CD-Seq2Seq",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "SyntaxSQL-con",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Seq2Seq",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Pointer-generator",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Template-based (response generation)",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "TBCNN-pair",
+            "role": "baseline",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Pass@k",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "AixBench: A Code Generation Benchmark Dataset",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Execution accuracy (EX)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "EVOR: Evolving Retrieval for Code Generation",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Exact set match accuracy (EM)",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "BLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "CodeBLEU",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "ROUGE (e.g., ROUGE-L)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "METEOR",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Test pass rate (TPR) / AvgTPR",
+            "direction": "higher_better",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "AvgPassRatio",
+            "direction": "higher_better",
+            "evidence": [
+              "AixBench: A Code Generation Benchmark Dataset"
+            ]
+          },
+          {
+            "name": "Kendall's tau (\u03c4)",
+            "direction": "higher_better",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Spearman's rho (\u03c1)",
+            "direction": "higher_better",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Mean Reciprocal Rank (MRR)",
+            "direction": "higher_better",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Top-K retrieval accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Compilation/Interpretation success rate",
+            "direction": "higher_better",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+            ]
+          },
+          {
+            "name": "Valid Efficiency Score (VES)",
+            "direction": "higher_better",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Execution runtime",
+            "direction": "lower_better",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Human evaluation accuracy / Logic Correctness Rate",
+            "direction": "higher_better",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Grammar score (1\u20135)",
+            "direction": "higher_better",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Test-suite coverage (branch/statement)",
+            "direction": "higher_better",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Normalized correctness score [0,1]",
+            "direction": "higher_better",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Execution-based functional evaluation with unit tests",
+            "detail": "Compile (when applicable) and execute generated code on benchmark-provided tests; report pass@k and/or test pass rates; use unbiased pass@k estimator when sampling many outputs.",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "AixBench: A Code Generation Benchmark Dataset",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Deterministic pass@1 and sampled pass@k",
+            "detail": "Report Pass@1 with greedy decoding (temperature=0); report Pass@k with stochastic sampling (e.g., temperature\u22480.2, top-p\u22480.95) with sufficient samples.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Spider official evaluation",
+            "detail": "Use Spider test-suite-sql-eval for execution accuracy and exact set match; evaluate on dev/test splits with unseen databases; extract and execute only the first SQL from outputs.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Database-split for cross-domain Text-to-SQL",
+            "detail": "Split train/dev/test by database to ensure evaluation on unseen schemas and prevent DB memorization.",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Multiple seeds and error bars",
+            "detail": "Report mean over multiple random seeds (\u22653) with standard error or standard deviation; for stochastic decoding repeat runs (e.g., 3x) and average.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models",
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+            ]
+          },
+          {
+            "name": "Human evaluation with independent annotators",
+            "detail": "Use at least two independent expert annotators with reconciliation for SQL correctness; or \u22653 annotators with majority vote and Likert grammar scores for NL responses.",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Sandboxed code execution with safety filters",
+            "detail": "Run generated/reference code in an isolated sandbox; filter dangerous operations (banned-keyword list) and auto-include required context/imports to ensure tests run.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Macro-averaging across domains",
+            "detail": "For multi-domain code benchmarks, report macro-average and standard deviation across domains.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Efficiency measurement robustness",
+            "detail": "Measure SQL/query runtime by running each query many times (e.g., 100x) on the same hardware, drop outliers, and average.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Alternative DBMS validation and reference rewrites",
+            "detail": "Migrate datasets to a stricter DBMS (e.g., PostgreSQL) and apply deterministic rewrites (e.g., tie-preserving LIMIT, GROUP BY fixes) to reassess metric failures.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Dataset hygiene",
+            "detail": "Apply deduplication and decontamination against model training data; document procedures.",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Zero-shot and few-shot ICL settings",
+            "detail": "Evaluate in both zero-shot and few-shot modes; draw examples from training pools disjoint in schema from evaluation databases.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Latency and token-budget reporting",
+            "detail": "Report reranker/inference latency and evaluate performance under token-budget constraints for retrieval-augmented pipelines.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation",
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "Dialogue protocols for conversational SQL",
+            "detail": "For DST tasks, forbid access to gold previous-turn SQL and evaluate with Question/Interaction-level exact match; report BLEU and human logic/grammar on responses.",
+            "evidence": [
+              "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+            ]
+          },
+          {
+            "name": "Out-of-distribution evaluation",
+            "detail": "Assess generalization on a held-out OOD set not used in any training/fine-tuning.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Random example selection baseline (ICL)",
+            "detail": "Use size-matched random few-shot example sets from the allowed pool.",
+            "rules_out": "That improvements are due to adding examples at all rather than the proposed selection/organization strategy.",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Oracle/upper-bound selection",
+            "detail": "Use ground-truth target (e.g., gold SQL) to select examples/demonstrations.",
+            "rules_out": "Ceiling attributable to perfect selection, isolating selection algorithm limitations from inherent task limits.",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Vanilla no-retrieval baseline",
+            "detail": "Generate code without any external retrieval/augmentation.",
+            "rules_out": "That gains are from the base LLM rather than the retrieval/evolution intervention.",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "BM25 retrieval baseline",
+            "detail": "Apply keyword-based BM25 on the same corpus.",
+            "rules_out": "That improvements stem from generic keyword search rather than the proposed dense/learned or structured retrieval.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Documentation-only retrieval (DocPrompting)",
+            "detail": "Retrieve only static documentation as context for generation.",
+            "rules_out": "That using any retrieved text (docs alone) explains gains rather than the full evolved/retrieval design.",
+            "evidence": [
+              "EVOR: Evolving Retrieval for Code Generation"
+            ]
+          },
+          {
+            "name": "Knowledge evidence ablation (w/knowledge vs w/o knowledge)",
+            "detail": "Evaluate with and without externally provided ground-truth evidence.",
+            "rules_out": "That performance changes are due to unrelated prompt differences instead of external knowledge provision.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Backbone substitution / size-matched baselines",
+            "detail": "Run the same method across multiple backbone LMs (sizes/families) or compare against base vs instruction-tuned variants.",
+            "rules_out": "That gains come from a particular large/proprietary model or instruction tuning rather than the method.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models",
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+              "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+            ]
+          },
+          {
+            "name": "w/REF vs w/oREF for LLM evaluators",
+            "detail": "Run evaluator prompts both with the reference solution and with the reference removed.",
+            "rules_out": "That evaluator performance relies on seeing the reference rather than genuine semantic assessment.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Deterministic vs sampling regime",
+            "detail": "Compare greedy N=1 decoding to multi-sample stochastic decoding at fixed settings.",
+            "rules_out": "That observed gains are purely a byproduct of sampling more candidates rather than the method.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Schema normalization control",
+            "detail": "Evaluate with manually normalized/expanded schema names without adding extra knowledge.",
+            "rules_out": "That benefits attributed to documentation arise from simple name clarifications.",
+            "evidence": [
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+            ]
+          },
+          {
+            "name": "Train\u2013test description alignment",
+            "detail": "Augment training schemas with artificial descriptions matching evaluation-time inputs.",
+            "rules_out": "That effects are due to a description presence mismatch rather than true description utility.",
+            "evidence": [
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+            ]
+          },
+          {
+            "name": "Alternative DBMS and rule-based reference rewrites",
+            "detail": "Re-evaluate after migrating to a stricter DBMS and applying deterministic rewrites (e.g., tie-handling, GROUP BY).",
+            "rules_out": "That metric failures stem from permissive SQL dialects or reference-query artifacts.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Structure/metadata ablations",
+            "detail": "Remove/alter specific structural hints (e.g., foreign keys, schema info) or enforce length-matched prompts.",
+            "rules_out": "That gains are driven by additional tokens/length or a specific phrasing rather than the proposed representation.",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Human performance reference",
+            "detail": "Measure expert human performance on the same split.",
+            "rules_out": "That models have already matched practical human-level performance; sets an empirical upper bound.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Efficiency equivalence control",
+            "detail": "Compare original vs semantically equivalent optimized queries.",
+            "rules_out": "That efficiency gains arise from semantic changes or incorrect results.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "No-retrieval memorization check",
+            "detail": "Probe base LLMs without any retrieval/context for target-specific knowledge.",
+            "rules_out": "That high performance is due to pretraining memorization rather than retrieval.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Out-of-distribution test set",
+            "detail": "Evaluate on a held-out OOD split not seen in any training/synthetic data.",
+            "rules_out": "That improvements are due to overfitting or catastrophic forgetting.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Training data contamination / benchmark leakage",
+            "detail": "Benchmark items (or near-duplicates) may be in pretraining/fine-tuning data, inflating scores.",
+            "ruled_out_by": "Deduplicate and decontaminate benchmarks; document procedures or use continuously updated sources.",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Surface similarity does not imply functional correctness",
+            "detail": "High BLEU/ROUGE/Code similarity may not reflect executable correctness.",
+            "ruled_out_by": "Prioritize execution-based metrics (pass@k/TPR) and/or human judgments; report weak correlations of text metrics to functionality.",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Insufficient test-suite adequacy",
+            "detail": "Weak tests miss incorrect behaviors, overestimating correctness.",
+            "ruled_out_by": "Report and aim for high branch/statement coverage; use benchmarks with strong coverage; acknowledge residual gaps.",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Single-reference SQL and tie-handling artifacts",
+            "detail": "Correct SQL may fail metrics due to LIMIT/ORDER BY ties or GROUP BY formulation.",
+            "ruled_out_by": "Apply deterministic rewrites (tie-preserving LIMIT, GROUP BY fixes) and recompute metrics.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Schema-mapping ambiguity in Text-to-SQL",
+            "detail": "Multiple valid schema mappings exist but benchmarks provide a single reference.",
+            "ruled_out_by": "Expert human evaluation with schema inspection and adjudication.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Wrong database content assumptions",
+            "detail": "Ground-truth queries rely on assumptions not supported by DB contents.",
+            "ruled_out_by": "Manual DB validation during annotation/human eval and correction of mislabeled items.",
+            "evidence": [
+              "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+            ]
+          },
+          {
+            "name": "Randomness in decoding",
+            "detail": "Stochastic sampling yields variable outcomes mistaken as method gains.",
+            "ruled_out_by": "Use temperature=0 for deterministic comparisons or average across multiple repeated runs/seeds.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models",
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Pass@k undercounts partial correctness",
+            "detail": "Programs that pass many tests but not all are scored as failures.",
+            "ruled_out_by": "Also report fractional test pass metrics (AvgPassRatio/TPR).",
+            "evidence": [
+              "AixBench: A Code Generation Benchmark Dataset",
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Efficiency inflated by incorrect results",
+            "detail": "Faster but wrong outputs bias efficiency metrics.",
+            "ruled_out_by": "Gate efficiency by correctness (e.g., VES counts only valid outputs).",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Pretraining memorization explains retrieval gains",
+            "detail": "Base LLM may recall APIs without retrieval.",
+            "ruled_out_by": "No-retrieval probes showing low accuracy; then add retrieval for comparison.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Evaluator relies on seeing the reference",
+            "detail": "LLM-based evaluators may key off the gold solution rather than reason about correctness.",
+            "ruled_out_by": "Evaluate w/REF and w/oREF; maintain performance without reference access.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Gains due to evaluator model size/vendor",
+            "detail": "Results hinge on a specific large/proprietary evaluator.",
+            "ruled_out_by": "Replicate with multiple evaluator LMs of varying sizes (including open-source) and compare correlations/accuracy.",
+            "evidence": [
+              "CodeJudge: Evaluating Code Generation with Large Language Models"
+            ]
+          },
+          {
+            "name": "Dataset difficulty or prompt mismatch drives gaps",
+            "detail": "Performance differences stem from dataset hardness or prompt/knowledge disparities.",
+            "ruled_out_by": "Use identical prompts and knowledge across datasets; report dataset statistics (e.g., SQL hardness, mention rates).",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+              "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+            ]
+          },
+          {
+            "name": "Catastrophic forgetting after specialization",
+            "detail": "Domain fine-tuning harms general code abilities, masking trade-offs.",
+            "ruled_out_by": "Evaluate on OOD sets and compare to base model.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          },
+          {
+            "name": "Missing imports/dependencies cause execution failures",
+            "detail": "Test failures reflect missing context rather than generation quality.",
+            "ruled_out_by": "Auto-include required context/imports and trace dependencies before execution.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Unsafe code skews evaluation or must be discarded",
+            "detail": "Dangerous operations bias results or force filtering.",
+            "ruled_out_by": "Execute in sandbox and filter via banned-keyword lists; report safety filtering.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Multi-trial pass@k overstates interactive usability",
+            "detail": "Independent sampling differs from sequential user attempts.",
+            "ruled_out_by": "Also report interactive/user-centric metrics (e.g., #attempts, time-to-completion, usability Likerts).",
+            "evidence": [
+              "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+            ]
+          },
+          {
+            "name": "Human evaluation bias from model identity",
+            "detail": "Knowing model identities biases subjective ratings.",
+            "ruled_out_by": "Blind peer review and multi-round comparative judging.",
+            "evidence": [
+              "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+            ]
+          },
+          {
+            "name": "Runtime measurement noise",
+            "detail": "System variability inflates/obscures efficiency differences.",
+            "ruled_out_by": "Repeated runs on fixed hardware with outlier removal and averaging.",
+            "evidence": [
+              "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+            ]
+          },
+          {
+            "name": "Prompt-length/token-count explains gains",
+            "detail": "Improvements arise from longer prompts (e.g., added schema/keys) rather than the method.",
+            "ruled_out_by": "Length-matched ablations removing specific structural hints or phrasing and re-evaluating.",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "Example surface similarity drives ICL gains",
+            "detail": "Selected demos are trivially similar to targets, not due to selection quality.",
+            "ruled_out_by": "Quantify similarity (e.g., Jaccard) vs accuracy and compare to oracle/upper bounds.",
+            "evidence": [
+              "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+            ]
+          },
+          {
+            "name": "API invocation vs implementation ability",
+            "detail": "Tasks are solved by calling APIs rather than implementing logic.",
+            "ruled_out_by": "Use benchmarks built from implementation functions with tests focusing on concrete functionality.",
+            "evidence": [
+              "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+            ]
+          },
+          {
+            "name": "Overfitting to small synthetic training data",
+            "detail": "Synthetic RL datasets cause narrow gains that don't generalize.",
+            "ruled_out_by": "Start from broader SFT checkpoints, limit synthetic fine-tuning, monitor learning curves, and validate on OOD sets.",
+            "evidence": [
+              "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 1,
+        "evidence_links_dropped": 6,
+        "kept_per_key": {
+          "datasets": 19,
+          "models": 27,
+          "metrics": 20,
+          "protocols": 15,
+          "controls": 17,
+          "confounds": 23
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "Spider",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+          "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "APPS",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "BIRD",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "Code Llama",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models",
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "CodeLlama"
+        ],
+        "role": "backbone"
+      },
+      {
+        "name": "GPT-3.5",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "CodeJudge: Evaluating Code Generation with Large Language Models",
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "GPT-4",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "EVOR: Evolving Retrieval for Code Generation",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Claude",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "DIN-SQL",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "Qwen",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "RAT-SQL",
+        "evidence": [
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+          "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "T5-5",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "T5"
+        ],
+        "role": "backbone"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Exact set match accuracy",
+        "evidence": [
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+          "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Exact set match accuracy (EM)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Execution accuracy",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "EVOR: Evolving Retrieval for Code Generation",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Execution accuracy (EX)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Pass@k",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "AixBench: A Code Generation Benchmark Dataset",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "BLEU",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "CodeBLEU",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "METEOR",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "ROUGE",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "ROUGE (e.g., ROUGE-L)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Human evaluation accuracy / Logic Correctness Rate",
+        "evidence": [
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Execution-based functional evaluation with unit tests",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "AixBench: A Code Generation Benchmark Dataset",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Compile (when applicable) and execute generated code on benchmark-provided tests; report pass@k and/or test pass rates; use unbiased pass@k estimator when sampling many outputs."
+      },
+      {
+        "name": "Multiple seeds and error bars",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models",
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+          "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Report mean over multiple random seeds (\u22653) with standard error or standard deviation; for stochastic decoding repeat runs (e.g., 3x) and average."
+      },
+      {
+        "name": "Spider official evaluation",
+        "evidence": [
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks",
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Use Spider test-suite-sql-eval for execution accuracy and exact set match; evaluate on dev/test splits with unseen databases; extract and execute only the first SQL from outputs."
+      },
+      {
+        "name": "Human evaluation with independent annotators",
+        "evidence": [
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases",
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Use at least two independent expert annotators with reconciliation for SQL correctness; or \u22653 annotators with majority vote and Likert grammar scores for NL responses."
+      },
+      {
+        "name": "Latency and token-budget reporting",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation",
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Report reranker/inference latency and evaluate performance under token-budget constraints for retrieval-augmented pipelines."
+      },
+      {
+        "name": "Zero-shot and few-shot ICL settings",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Evaluate in both zero-shot and few-shot modes; draw examples from training pools disjoint in schema from evaluation databases."
+      },
+      {
+        "name": "Alternative DBMS validation and reference rewrites",
+        "evidence": [
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Migrate datasets to a stricter DBMS (e.g., PostgreSQL) and apply deterministic rewrites (e.g., tie-preserving LIMIT, GROUP BY fixes) to reassess metric failures."
+      },
+      {
+        "name": "Database-split for cross-domain Text-to-SQL",
+        "evidence": [
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Split train/dev/test by database to ensure evaluation on unseen schemas and prevent DB memorization."
+      },
+      {
+        "name": "Dataset hygiene",
+        "evidence": [
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Apply deduplication and decontamination against model training data; document procedures."
+      },
+      {
+        "name": "Deterministic pass@1 and sampled pass@k",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Report Pass@1 with greedy decoding (temperature=0); report Pass@k with stochastic sampling (e.g., temperature\u22480.2, top-p\u22480.95) with sufficient samples."
+      },
+      {
+        "name": "Dialogue protocols for conversational SQL",
+        "evidence": [
+          "CoSQL: A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "For DST tasks, forbid access to gold previous-turn SQL and evaluate with Question/Interaction-level exact match; report BLEU and human logic/grammar on responses."
+      },
+      {
+        "name": "Efficiency measurement robustness",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Measure SQL/query runtime by running each query many times (e.g., 100x) on the same hardware, drop outliers, and average."
+      },
+      {
+        "name": "Macro-averaging across domains",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "For multi-domain code benchmarks, report macro-average and standard deviation across domains."
+      },
+      {
+        "name": "Out-of-distribution evaluation",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Assess generalization on a held-out OOD set not used in any training/fine-tuning."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Backbone substitution / size-matched baselines",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models",
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation",
+          "LGESQL: Line Graph Enhanced Text-to-SQL Model with Mixed Local and Non-Local Relations"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Run the same method across multiple backbone LMs (sizes/families) or compare against base vs instruction-tuned variants.",
+        "rules_out": "That gains come from a particular large/proprietary model or instruction tuning rather than the method."
+      },
+      {
+        "name": "BM25 retrieval baseline",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation",
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Vanilla no-retrieval baseline"
+        ],
+        "detail": "Generate code without any external retrieval/augmentation.",
+        "rules_out": "That improvements stem from generic keyword search rather than the proposed dense/learned or structured retrieval."
+      },
+      {
+        "name": "Alternative DBMS and rule-based reference rewrites",
+        "evidence": [
+          "Evaluating Cross-Domain Text-to-SQL Models and Benchmarks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Re-evaluate after migrating to a stricter DBMS and applying deterministic rewrites (e.g., tie-handling, GROUP BY).",
+        "rules_out": "That metric failures stem from permissive SQL dialects or reference-query artifacts."
+      },
+      {
+        "name": "Deterministic vs sampling regime",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Compare greedy N=1 decoding to multi-sample stochastic decoding at fixed settings.",
+        "rules_out": "That observed gains are purely a byproduct of sampling more candidates rather than the method."
+      },
+      {
+        "name": "Documentation-only retrieval",
+        "evidence": [
+          "EVOR: Evolving Retrieval for Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Documentation-only retrieval (DocPrompting)"
+        ],
+        "detail": "Retrieve only static documentation as context for generation.",
+        "rules_out": "That using any retrieved text (docs alone) explains gains rather than the full evolved/retrieval design."
+      },
+      {
+        "name": "Efficiency equivalence control",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Compare original vs semantically equivalent optimized queries.",
+        "rules_out": "That efficiency gains arise from semantic changes or incorrect results."
+      },
+      {
+        "name": "Human performance reference",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Measure expert human performance on the same split.",
+        "rules_out": "That models have already matched practical human-level performance; sets an empirical upper bound."
+      },
+      {
+        "name": "Knowledge evidence ablation",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Knowledge evidence ablation (w/knowledge vs w/o knowledge)"
+        ],
+        "detail": "Evaluate with and without externally provided ground-truth evidence.",
+        "rules_out": "That performance changes are due to unrelated prompt differences instead of external knowledge provision."
+      },
+      {
+        "name": "No-retrieval memorization check",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Probe base LLMs without any retrieval/context for target-specific knowledge.",
+        "rules_out": "That high performance is due to pretraining memorization rather than retrieval."
+      },
+      {
+        "name": "Oracle/upper-bound selection",
+        "evidence": [
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Use ground-truth target (e.g., gold SQL) to select examples/demonstrations.",
+        "rules_out": "Ceiling attributable to perfect selection, isolating selection algorithm limitations from inherent task limits."
+      },
+      {
+        "name": "Out-of-distribution test set",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Evaluate on a held-out OOD split not seen in any training/synthetic data.",
+        "rules_out": "That improvements are due to overfitting or catastrophic forgetting."
+      },
+      {
+        "name": "Random example selection baseline",
+        "evidence": [
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [
+          "Random example selection baseline (ICL)"
+        ],
+        "detail": "Use size-matched random few-shot example sets from the allowed pool.",
+        "rules_out": "That improvements are due to adding examples at all rather than the proposed selection/organization strategy."
+      },
+      {
+        "name": "Schema normalization control",
+        "evidence": [
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Evaluate with manually normalized/expanded schema names without adding extra knowledge.",
+        "rules_out": "That benefits attributed to documentation arise from simple name clarifications."
+      },
+      {
+        "name": "Structure/metadata ablations",
+        "evidence": [
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Remove/alter specific structural hints (e.g., foreign keys, schema info) or enforce length-matched prompts.",
+        "rules_out": "That gains are driven by additional tokens/length or a specific phrasing rather than the proposed representation."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Dataset difficulty or prompt mismatch drives gaps",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs",
+          "KaggleDBQA: Realistic Evaluation of Text-to-SQL Parsers"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Performance differences stem from dataset hardness or prompt/knowledge disparities.",
+        "ruled_out_by": "Use identical prompts and knowledge across datasets; report dataset statistics (e.g., SQL hardness, mention rates)."
+      },
+      {
+        "name": "Pass@k undercounts partial correctness",
+        "evidence": [
+          "AixBench: A Code Generation Benchmark Dataset",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Programs that pass many tests but not all are scored as failures.",
+        "ruled_out_by": "Also report fractional test pass metrics (AvgPassRatio/TPR)."
+      },
+      {
+        "name": "Randomness in decoding",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models",
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Stochastic sampling yields variable outcomes mistaken as method gains.",
+        "ruled_out_by": "Use temperature=0 for deterministic comparisons or average across multiple repeated runs/seeds."
+      },
+      {
+        "name": "Surface similarity does not imply functional correctness",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "High BLEU/ROUGE/Code similarity may not reflect executable correctness.",
+        "ruled_out_by": "Prioritize execution-based metrics (pass@k/TPR) and/or human judgments; report weak correlations of text metrics to functionality."
+      },
+      {
+        "name": "Training data contamination / benchmark leakage",
+        "evidence": [
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review",
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Benchmark items (or near-duplicates) may be in pretraining/fine-tuning data, inflating scores.",
+        "ruled_out_by": "Deduplicate and decontaminate benchmarks; document procedures or use continuously updated sources."
+      },
+      {
+        "name": "API invocation vs implementation ability",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Tasks are solved by calling APIs rather than implementing logic.",
+        "ruled_out_by": "Use benchmarks built from implementation functions with tests focusing on concrete functionality."
+      },
+      {
+        "name": "Catastrophic forgetting after specialization",
+        "evidence": [
+          "DeepCodeSeek: Real-Time API Retrieval for Context-Aware Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Domain fine-tuning harms general code abilities, masking trade-offs.",
+        "ruled_out_by": "Evaluate on OOD sets and compare to base model."
+      },
+      {
+        "name": "Efficiency inflated by incorrect results",
+        "evidence": [
+          "Can LLM Already Serve as A Database Interface? A BIg Bench for Large-Scale Database Grounded Text-to-SQLs"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Faster but wrong outputs bias efficiency metrics.",
+        "ruled_out_by": "Gate efficiency by correctness (e.g., VES counts only valid outputs)."
+      },
+      {
+        "name": "Evaluator relies on seeing the reference",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "LLM-based evaluators may key off the gold solution rather than reason about correctness.",
+        "ruled_out_by": "Evaluate w/REF and w/oREF; maintain performance without reference access."
+      },
+      {
+        "name": "Example surface similarity drives ICL gains",
+        "evidence": [
+          "Text-to-SQL Empowered by Large Language Models: A Benchmark Evaluation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Selected demos are trivially similar to targets, not due to selection quality.",
+        "ruled_out_by": "Quantify similarity (e.g., Jaccard) vs accuracy and compare to oracle/upper bounds."
+      },
+      {
+        "name": "Gains due to evaluator model size/vendor",
+        "evidence": [
+          "CodeJudge: Evaluating Code Generation with Large Language Models"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Results hinge on a specific large/proprietary evaluator.",
+        "ruled_out_by": "Replicate with multiple evaluator LMs of varying sizes (including open-source) and compare correlations/accuracy."
+      },
+      {
+        "name": "Human evaluation bias from model identity",
+        "evidence": [
+          "A Survey on Evaluating Large Language Models in Code Generation Tasks"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Knowing model identities biases subjective ratings.",
+        "ruled_out_by": "Blind peer review and multi-round comparative judging."
+      },
+      {
+        "name": "Insufficient test-suite adequacy",
+        "evidence": [
+          "Benchmarks and Metrics for Evaluations of Code Generation: A Critical Review"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Weak tests miss incorrect behaviors, overestimating correctness.",
+        "ruled_out_by": "Report and aim for high branch/statement coverage; use benchmarks with strong coverage; acknowledge residual gaps."
+      },
+      {
+        "name": "Missing imports/dependencies cause execution failures",
+        "evidence": [
+          "DOMAINEVAL: An Auto-Constructed Benchmark for Multi-Domain Code Generation"
+        ],
+        "subfields": [
+          "Code and Structured Generation"
+        ],
+        "variants": [],
+        "detail": "Test failures reflect missing context rather than generation quality.",
+        "ruled_out_by": "Auto-include required context/imports and trace dependencies before execution."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 19,
+      "out": 3,
+      "dropped_uncorroborated": 16,
+      "relaxed": false,
+      "by_subfield": {
+        "Code and Structured Generation": 3
+      }
+    },
+    "models": {
+      "in": 27,
+      "out": 8,
+      "dropped_uncorroborated": 19,
+      "relaxed": false,
+      "by_subfield": {
+        "Code and Structured Generation": 8
+      }
+    },
+    "metrics": {
+      "in": 20,
+      "out": 8,
+      "dropped_uncorroborated": 12,
+      "relaxed": false,
+      "by_subfield": {
+        "Code and Structured Generation": 8
+      }
+    },
+    "protocols": {
+      "in": 15,
+      "out": 14,
+      "by_subfield": {
+        "Code and Structured Generation": 14
+      }
+    },
+    "controls": {
+      "in": 16,
+      "out": 14,
+      "by_subfield": {
+        "Code and Structured Generation": 14
+      }
+    },
+    "confounds": {
+      "in": 23,
+      "out": 14,
+      "by_subfield": {
+        "Code and Structured Generation": 14
+      }
+    },
+    "totals": {
+      "in": 120,
+      "out": 61
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Deterministic Pass@1 reproducibility (code-gen) established",
+      "dataset": "HumanEval (eval)",
+      "model": "DeepSeek-Coder (backbone)",
+      "method_under_test": "EVOR (method_under_test)",
+      "attack_or_condition": "Deterministic pass@1 and sampled pass@k",
+      "metrics": [
+        "Pass@1",
+        "Compilation/Interpretation success rate"
+      ],
+      "pass_condition": "Run the full HumanEval Pass@1 evaluation three times with temperature=0 (greedy). Success if (a) the generated code is byte-identical across all three runs for \u226599% of problems and (b) Pass@1 is exactly identical across runs (variance=0). Otherwise refute determinism compliance.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Verifies the environment truly produces deterministic outputs for Pass@1 as required by standard practice before any stochastic sampling comparisons.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Sandboxed execution and safety filters validated",
+      "dataset": "HumanEval (eval)",
+      "model": "DeepSeek-Coder (backbone)",
+      "method_under_test": "EVOR (method_under_test)",
+      "attack_or_condition": "Sandboxed code execution with safety filters",
+      "metrics": [
+        "Compilation/Interpretation success rate",
+        "Test pass rate (TPR) / AvgTPR"
+      ],
+      "pass_condition": "Using a banned-keyword filter (e.g., os.system, subprocess, socket, shutil.rmtree, requests, open with write/append), run \u226520 curated unsafe snippets: Compilation/Interpretation success rate must be 0%. On HumanEval unit tests with auto-imports/context enabled, Compilation/Interpretation success rate must be \u226595%. Both conditions must hold to pass.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Deterministic Pass@1 reproducibility (code-gen) established"
+      ],
+      "rationale": "Confirms the execution harness blocks dangerous operations while still reliably executing benign code, a prerequisite for valid execution-based evaluation.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Spider official evaluation harness correctness established",
+      "dataset": "Spider (eval)",
+      "model": "T5 (backbone)",
+      "method_under_test": "DIN-SQL (method_under_test)",
+      "attack_or_condition": "Spider official evaluation",
+      "metrics": [
+        "Execution accuracy (EX)",
+        "Exact set match accuracy (EM)"
+      ],
+      "pass_condition": "Feed the gold SQL as the model outputs over the Spider dev set. Success if EX=100% and EM=100%. Additionally, when appending a dummy trailing statement to the gold output (e.g., '; SELECT 1'), EX and EM must remain unchanged (0.0 pp difference), confirming first-SQL extraction is enforced.",
+      "constraints_not_enforced": [
+        "Database-split for cross-domain Text-to-SQL (no training performed)"
+      ],
+      "depends_on": [],
+      "rationale": "Validates the use of the official Spider evaluator and the first-SQL extraction rule before testing any model.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Code-generation norms compliance on HumanEval",
+      "dataset": "HumanEval (eval)",
+      "model": "DeepSeek-Coder (backbone)",
+      "method_under_test": "EVOR (method_under_test)",
+      "attack_or_condition": "Execution-based functional evaluation with unit tests \u2014 Compile (when applicable) and execute generated code on benchmark-provided tests; report pass@k and/or test pass rates; use unbiased pass@k estimator when sampling many outputs.",
+      "metrics": [
+        "Pass@1",
+        "Pass@k",
+        "Test pass rate (TPR) / AvgTPR",
+        "Compilation/Interpretation success rate"
+      ],
+      "pass_condition": "- Deterministic Pass@1: evaluate with temperature=0 (greedy).\n- Sampled Pass@10: temperature=0.2, top-p=0.95, and \u2265200 samples per problem; compute the unbiased Pass@10 estimator.\n- Multiple seeds: repeat the entire stochastic evaluation for \u22653 random seeds and report mean and standard error.\n- Sanity: unbiased Pass@10 \u2265 Pass@1 + 1.0 percentage points.\n- Harness health: overall Compilation/Interpretation success rate across all generated samples \u226585%.\nAll five conditions must be met to pass.",
+      "constraints_not_enforced": [
+        "Latency and token-budget reporting",
+        "Human evaluation with independent annotators"
+      ],
+      "depends_on": [
+        "Sandboxed execution and safety filters validated",
+        "Deterministic Pass@1 reproducibility (code-gen) established"
+      ],
+      "rationale": "Enforces core norms: deterministic Pass@1, sufficiently sampled unbiased Pass@k with multiple seeds and error bars, and execution-based functional metrics.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Text-to-SQL norms compliance on Spider",
+      "dataset": "Spider (eval)",
+      "model": "T5 (backbone)",
+      "method_under_test": "DIN-SQL (method_under_test)",
+      "attack_or_condition": "Spider official evaluation",
+      "metrics": [
+        "Execution accuracy (EX)",
+        "Exact set match accuracy (EM)"
+      ],
+      "pass_condition": "- Use the official Spider test-suite-sql-eval; evaluate on the dev split only with unseen databases.\n- Enforce first-SQL extraction (validated in the apparatus recipe); predictions containing multiple SQLs must be evaluated only on the first SQL.\n- Report both EX and EM.\n- If stochastic decoding is used: run \u22653 seeds and report mean and standard error; otherwise use temperature=0.\nAll listed conditions must be satisfied to pass.",
+      "constraints_not_enforced": [
+        "Database-split for cross-domain Text-to-SQL (no training performed)",
+        "Alternative DBMS validation and reference rewrites"
+      ],
+      "depends_on": [
+        "Spider official evaluation harness correctness established"
+      ],
+      "rationale": "Checks that Spider evaluation follows the official, execution-centered norms and reporting requirements with seed control.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Budget-matched baselines and decoding controls for code-gen",
+      "dataset": "BigCodeBench (eval)",
+      "model": "Llama-3 (backbone)",
+      "method_under_test": "EVOR (method_under_test)",
+      "attack_or_condition": "Deterministic vs sampling regime",
+      "metrics": [
+        "Pass@1",
+        "Pass@k",
+        "AvgPassRatio",
+        "Compilation/Interpretation success rate"
+      ],
+      "pass_condition": "Run three matched conditions on BigCodeBench: (1) Vanilla no-retrieval baseline with greedy Pass@1; (2) Same baseline with sampled Pass@10 using \u2265200 samples/problem; (3) EVOR with sampled Pass@10 using \u2265200 samples/problem. Success if: (a) average prompt+generation tokens per attempt across all three conditions differ by \u22645% (matched budgets), (b) sample counts per problem are identical across (2) and (3), and (c) the baseline sampled Pass@10 \u2265 baseline Pass@1 + 1.0 percentage points (verifies correct sampling benefit). All must hold to pass.",
+      "constraints_not_enforced": [
+        "BM25 retrieval baseline",
+        "Documentation-only retrieval (DocPrompting)"
+      ],
+      "depends_on": [
+        "Sandboxed execution and safety filters validated",
+        "Deterministic Pass@1 reproducibility (code-gen) established"
+      ],
+      "rationale": "Attributes gains to the intended mechanism rather than sampling or budget artifacts by enforcing matched budgets and decoding controls, and reporting execution-based metrics including AvgPassRatio.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

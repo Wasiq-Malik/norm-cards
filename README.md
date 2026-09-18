@@ -1,350 +1,209 @@
 # norm-cards
 
-Generate **scientific norm cards** for the AI subfield(s) a claim belongs to — a
-structured, evidence-grounded summary of how researchers in that subfield *run
-experiments* (standard datasets, models, metrics, protocols) — and use that card
-to help an agent design **better experiments** to verify or refute a claim.
+Does telling an LLM **how a research field runs experiments** help it design better
+experiments?
 
-This repo has three stages:
+A **norm card** is a structured summary of one subfield's experimental practice —
+its standard datasets, models and metrics, and more importantly its *protocols,
+controls and confounds*. We build one card per subfield, hand it to an experiment
+proposer along with a scientific claim, and measure whether the proposals it
+designs would have recovered what the claim's source paper actually did.
 
-1. **Search** (`run.py`) — a claim is classified into subfield(s) and OpenAlex
-   topics, turned into norm-defining queries, searched across sources, deduped,
-   and ranked into a **paper bundle**.
-2. **Norm-card generation** (`normcard.py`) — the bundle's papers are read in full
-   text and map-reduced into one **menu per subfield** (datasets / models /
-   metrics / protocols, each item carrying its supporting papers as evidence).
-3. **Evaluation harness** (`scify_proposer.py`) — the ablation that answers *does
-   the card actually help?* It runs SciFy's real experiment-proposer flow twice on
-   the same claim — **baseline** (no card) vs **method** (card injected) — with the
-   norm card as the only variable, and lets us compare the proposed experiments.
+**Current result** (20 claims × 3 proposer models, September 2026):
 
-Norm cards are generated for every claim. An earlier version classified each claim
-`empirical` or `theoretical` and generated a card only for the former; that was
-removed in August 2026 after it silently produced no card at all for a hybrid claim —
-one asserting a formal guarantee *and* naming three standard benchmarks. Claims of
-that shape are common (a guarantee plus an empirical comparison), and an
-all-or-nothing gate on a binary label handled them worst of all. Whether the menu
-generated from empirical literature is the right artifact for a guarantee-shaped claim
-is a real question, but it is now visible in the card rather than hidden behind a
-skip.
+| condition | recall |
+|---|---|
+| no card | 0.596 |
+| retrieval over the same papers | 0.618 |
+| **shared norm card** | **0.638** |
+
+Card − no card is **+0.042**, 95% interval **[+0.008, +0.075]**, winning on 14 of
+20 claims. Card − retrieval is +0.020 and does *not* exclude zero.
+
+The cards are **shared, not per-claim**: 14 cards cover all 20 claims, each built
+from its field's name alone with no claim text anywhere in the loop. That matters
+because a card retrieved using the claim it will be tested on proves very little.
 
 ---
 
-## Install
+## Quickstart
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env      # then fill in OPENAI_API_KEY (others optional)
+python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+cp .env.example .env          # add OPENAI_API_KEY
 ```
 
-`OPENAI_API_KEY` is the only required key. OpenAlex/arXiv/Semantic Scholar work
-keyless (keys just raise limits). Nothing is read at import time; a missing
-optional key only disables that one source.
+Reproduce the September 2026 run from the tracked dataset — no card construction,
+no paper retrieval, just proposing and judging:
+
+```bash
+# 1. lay the dataset out into a disposable run directory
+./.venv/bin/python -m norm_cards.dataset bootstrap --dataset dataset20v3 --run results/myrun
+./.venv/bin/python -m norm_cards.dataset assemble  --dataset dataset20v3 --run results/myrun
+
+export NORM_CARDS_EVAL_ROOT=results/myrun/eval
+export NORM_CARDS_CLAIMS=norm_cards/data/dataset20-claims-v3.jsonl
+
+# 2. propose — 20 claims × 3 arms × 3 models, ~45 min
+./.venv/bin/python -m norm_cards.eval.propose \
+    --models gpt-5.5,gpt-5.6-terra,gpt-5.4 --arms nocard,rag,card \
+    --cards results/myrun/cards --budget 9 --workers 3 \
+    --out results/myrun/proposals
+
+# 3. judge — ~45 min if you shard, ~2.5h if you don't (see below)
+./.venv/bin/python -m norm_cards.eval.evaluate --problems all \
+    --source results/myrun/proposals --judge-runs 1
+
+# 4. read the numbers
+./.venv/bin/python -m norm_cards.eval.analyze --run results/myrun --dataset dataset20v3
+```
+
+`evaluate` parallelises across judge runs (`k`), not across problems, so with
+`--judge-runs 1` it is sequential. To shard, run it several times over disjoint
+`--problems` lists in parallel; output is per problem, so they do not collide.
+
+**No API key?** `python -m norm_cards.test_gather` exercises search and ranking
+against real keyless sources.
 
 ---
 
-## Usage
+## How the experiment works
 
-### 1. Gather a paper bundle for a claim
+Both sides come from the same paper by two routes that never meet. One route keeps
+the authors' experiments; the other keeps only the question they were answering.
 
-```bash
-python -m norm_cards.run --claim "An Ultralytics YOLO11n detector on COCO ... AP50 >= 0.90 ..." \
-    --model gpt-5-mini
+```
+paper ─┬─ transcribe experiments ──────────────► reference experiments
+       │                                              │
+       └─ draft the claim                             │
+          (drop the method AND the apparatus)         │
+                    │                                 │
+                    ▼                                 ▼
+              proposer ── one of three ──►  proposed experiments ──► judge ──► recall
+                          conditions                                    ▲
+                                                                        │
+                nocard   nothing but the claim                    blind to the
+                rag      full text of the field's papers          condition; never
+                card     the curated norm card                    sees the card
 ```
 
-Batch over a JSONL of `{ "problem_id", "claim", ... }` records (resumable):
+The three conditions draw on **identical source material**: the `rag` arm gets raw
+BM25 passages from the same subfield papers the card was distilled from, trimmed to
+the card's own character budget. So the contrast is curation, not access or context
+length.
 
-```bash
-python -m norm_cards.run \
-    --claim_file claims.jsonl \
-    --output_folder results/run1 \
-    --model gpt-5-mini --per_query 8 --top_k 30
-# -> results/run1/problem_<id>/bundle.json (+ papers.md) per claim
-```
+### Recall, and why the denominator is the hard part
 
-### 2. Generate a norm card from a bundle
+Recall is the mean over *reference* experiments of covered (1.0) / partial (0.5) /
+missing (0.0). The mapping is many-to-many: one broad proposal can carry several
+reference items.
 
-```bash
-python -m norm_cards.normcard --bundle results/norm_cards_hybrid/problem_12/bundle.json
-# -> writes norm_card.json next to the bundle
-# models: --map_model gpt-5-mini  --reduce_model gpt-5  --recipe_model gpt-5
-```
+But a paper usually supports several claims, and `transcribe` copies **all** of its
+experiments — so about 46% of any reference is mechanism and external follow-ups
+that this claim does not oblige. Scoring against all of it asks "would you have
+reproduced the paper?", which is not the question. `analyze` therefore reports the
+split, and it is the honest headline:
 
-A worked pair to inspect: `results/norm_cards_hybrid/problem_12/bundle.json` and the
-`norm_card.json` it produces.
+| denominator | card − no card |
+|---|---|
+| claim-obliged (headline + apparatus + control + confound) | +0.012 [−0.019, +0.042] |
+| beyond-claim (mechanism + external) | **+0.074 [+0.025, +0.123]** |
 
-### 3. Run the evaluation harness
-
-```bash
-export NORM_CARDS_EVAL_ROOT=results/eval_icml2026_v2
-export NORM_CARDS_CLAIMS=norm_cards/data/icml2026-claims-v1.jsonl
-
-# one arm per (model, condition); conditions differ ONLY in current_evidence
-python -m norm_cards.eval.propose \
-    --cards results/eval_icml2026_v2/pipeline \
-    --arms nocard,retrieval,card \
-    --models gpt-5.4,gpt-5.5,gpt-5.6 \
-    --out results/eval_icml2026_v2/proposals
-
-python -m norm_cards.eval.evaluate --problems all \
-    --source results/eval_icml2026_v2/proposals --judge-runs 3
-python -m norm_cards.eval.report
-```
-
-| condition | `current_evidence` | what it isolates |
-|---|---|---|
-| `nocard` | `{}` | what the model already knows |
-| `retrieval` | top-ranked papers, titles + abstracts | the presence of relevant literature |
-| `card` | the curated norm card | the synthesis over that literature |
-
-`retrieval` is the bar that matters. A norm card *is* a synthesis over retrieved
-papers, so beating `nocard` only shows relevant literature helps; beating `retrieval`
-at comparable context cost is what shows the extraction pipeline earns its keep.
-
-To ask **which parts of the card are worth keeping**, run an arm per subset — the
-question becomes a measurement instead of a matter of taste:
-
-```bash
-python -m norm_cards.eval.propose --cards <dir> --arms card --sections design
-python -m norm_cards.eval.propose --cards <dir> --arms card --sections resources
-```
-
-Re-tuning curation costs nothing: the raw per-subfield menus stay in the card file,
-so thresholds can be changed without refetching a paper or calling a model.
-
-```bash
-python -m norm_cards.curate --cards results/eval_icml2026_v2/pipeline --min_evidence 3
-```
+**The card's measurable gain is concentrated in experiments the claim does not
+require.** Fixing that means scoping the reference to the claim at transcription
+time; it is the largest open item in the harness.
 
 ---
 
-## Design decisions (read before extending the harness)
-
-- **Faithful to SciFy, self-contained.** `scify_proposer.py` copies SciFy's
-  `SYSTEM_PROPOSER` and `DECOMPOSITION_PROMPT` **verbatim** and imports nothing
-  from the SciFy (`dryrun`) codebase — so the harness stays runnable standalone and
-  the only thing that ever differs between arms is the injected card.
-- **Resource constraints removed.** SciFy's proposer caps experiments at an
-  8GB/30-min compute budget; we strip that block on purpose — we're testing whether
-  the card helps design the *ideal* experiment set, not a resource-limited one.
-- **Model: `gpt-5.5`** for the proposer/decomposer (temp forced to 1.0, the
-  provider default reasoning effort — *medium* — for the gpt-5 series). Card
-  generation uses `gpt-5-mini` (map) + `gpt-5` (reduce/recipes).
-- **Same subclaims fed to both arms**, so the decomposer can't bias the comparison.
-
----
-
-## Output schema (norm card, `format_version` 0.3)
-
-```jsonc
-{
-  "type": "scientific_norm_card_set", "format_version": "0.3",
-  "claim": "...", "subfields": ["...", "..."],
-  "provenance": { "n_papers_deduped": 24, "n_fulltext": 16, ... },
-
-  "norm_cards": [ /* one raw menu per subfield — provenance, not the deliverable */ ],
-
-  "card": {                            // merged + curated: what consumers read
-    // HOW the field argues — read first by the proposer, because this is the part
-    // it cannot already guess.
-    "protocols": [ { "name": "batch editing swept k in {1,10,100,1000,3000}",
-                     "detail": "the specifics, one line", "evidence": ["<title>"] } ],
-    "controls":  [ { "name": "random size-matched head set",
-                     "detail": "how the condition is constructed",
-                     "rules_out": "that any equally-sized intervention would do it",
-                     "evidence": [...] } ],
-    "confounds": [ { "name": "effect is capability damage, not belief change",
-                     "detail": "why the headline result would look identical under it",
-                     "ruled_out_by": "the measurement that discriminates",
-                     "evidence": [...] } ],
-    // WHAT it runs on.
-    "datasets":  [ { "name": "COUNTERFACT", "role": "train|eval|robustness_eval", ... } ],
-    "models":    [ { "name": "Llama-2", "role": "backbone|method_under_test|baseline",
-                     "variants": ["Llama-2-7B-Chat", "LLaMA2-7B-Chat-HF"], ... } ],
-    "metrics":   [ { "name": "Locality", "direction": "higher_better", ... } ]
-  },
-  "curation": { "totals": {"in": 178, "out": 42}, "datasets": {...}, ... }
-}
-```
-
-Three invariants: **every item carries `evidence`** (the papers it came from — the
-grounding guard drops anything unfaithful or unsupported); the card only ever contains
-what the gathered literature supports; and a **resource** additionally needs
-`min_evidence` independent papers before it counts, because a dataset one group used
-once is that group's choice, not the subfield's norm.
-
-### What changed in 0.3, and why
-
-Measured on the v0.2 cards for the three ICML-2026 claims:
-
-| | v0.2 | v0.3 |
-|---|---|---|
-| items per claim | 228 · 276 · 351 | ~31 · ~42 · ~35 |
-| share that is resources | 75-86% | capped at 8 per key, design read first |
-| items cited by exactly one paper | 59-75% | 0 among resources |
-| cross-subfield duplicate items | 32 · 76 · 71 | 0 (one merged card per claim) |
-| protocols naming a control condition | 1/47 · 1/38 · 6/88 | `controls` is its own section |
-| rival explanations | none | `confounds` is its own section |
-| what the proposer actually received | 163-216 bare nouns, a Python dict repr | prose, details intact, 40% fewer chars |
-
-The `controls` and `confounds` sections exist because of a measurement, not a hunch.
-Labelling every reference experiment by what it is *for* and pooling coverage across
-claims and models showed proposals covering apparatus and headline experiments at
-0.83-0.88 and confound-elimination experiments at **0.43** — and the v0.2 card made
-that *worse*, not better, because with SciFy's 3-experiment cap its resource lists
-displaced the controls the model would otherwise have proposed. See **Where the misses
-are** in a generated report.
-
----
-
-## Results & findings so far
-
-`results/norm_cards_hybrid/` holds the shared experiment artifacts — one folder per
-claim (`bundle.json`, `papers.md`, `norm_card.json`, `scify_proposer.json`) plus:
-
-- **`GRAND_REPORT_10claims.md`** — the headline baseline-vs-method comparison across
-  10 claims (6, 7, 9, 10, 11, 12, 21, 33, 36, 37) at gpt-5.5.
-- **`showcase_card_wins.md`** — the two clearest card-attributable wins (#9
-  system-ID error bounds, #21 HMM + DFA-constrained decoding), with menu provenance.
-- **`ground_truth_recipes.md`** — an independent expert decomposition of each claim
-  into the experiment set required to verify/refute it, to be used as the scoring
-  reference for the evaluation harness.
-
-**Headline result (n=1, temp=1):** at gpt-5.5 with SciFy's real flow, the card does
-**not** improve experiment *coverage or correctness* — the baseline is strong and
-never fabricates. The card's consistent effect is **methodological
-concreteness/grounding** (naming the subfield's specific, current tooling), and it
-is largest in **obscure fields** where parametric knowledge is thinnest (#9, #21).
-See the report for caveats; a higher-n re-run of #9/#21 is the recommended next step
-before any of this goes in a deck.
-
----
-
-## Repo layout
+## Repository layout
 
 ```
+datasets/dataset20v3/     tracked INPUTS — cannot be regenerated cheaply
+  dataset.json              manifest: which claims, which models, review status
+  references/               20 reference experiment sets, transcribed from papers
+  cards/                    the 14 shared subfield cards (~2h of API time)
+  subfield_bundles.jsonl    the papers each card was built from; feeds the rag arm
+  subfields.json            claim → subfields, including 10 hand corrections
+  subfield_overrides.json   each correction with its written rationale
+
 norm_cards/
-  run.py            # stage 1: claim -> paper bundle  (CLI: python -m norm_cards.run)
-  classifier.py     #   claim -> subfields
-  query_gen.py      #   subfields -> norm-defining search queries
-  collect.py        #   search + dedup + citation-velocity ranking
-  fulltext.py       #   PDF/full-text resolver chain (arXiv -> pdf_url -> Unpaywall -> S2)
-  sources/          #   OpenAlex (default), arXiv, Semantic Scholar, SerpAPI adapters
-  normcard.py       # stage 2: bundle -> norm_card.json  (map/reduce/curate/recipe)
-  curate.py         #   deterministic half: canonicalize families, merge subfield
-                    #     menus, drop uncorroborated resources (no model involved)
-  scify_proposer.py # stage 3: the SciFy Proposer, resynced against dryrun @400e677
-  llm.py            #   litellm wrapper (temp/model handling)
-  config.py         #   defaults + key loading
-  data/             #   PwC task seeds, OpenAlex topic seeds, sprint claims JSONL
-  test_gather.py    #   keyless smoke test for the search/rank stages
-  eval/             # stage 4: automated evaluation harness
-    tools.py        #   web/OpenAlex/full-text/resource-check tool belt
-    agent_loop.py   #   tool-calling loop, evidence ledger, tracing
-    schemas.py      #   submit_evaluation schema, evidence-discipline validator,
-                    #     and the reference-recipe input gate
-    prompts.py      #   the judge's system prompt
-    scoring.py      #   verdicts -> numbers; majority vote across judge runs
-    reference.py    #   reference recipes as INPUT (--template / --check)
-    transcribe.py   #   draft a reference FROM a paper, for a human to accept
-    build_cards.py  #   batch gathering run -> per-problem norm cards
-    propose.py      #   proposer arms: nocard / retrieval / card, x models
-    invariance.py   #   judge stress test: resource substitution + order permutation
-    evaluate.py     #   judge CLI (gpt-5.6-luna, k runs, blind to arm)
-    calibrate.py    #   judge-vs-hand-label agreement check
-    report.py       #   aggregate -> REPORT.md
-results/norm_cards_hybrid/  # shared bundles, cards, proposer outputs, reports
-results/eval_v2/            # reference recipes, judgments, REPORT.md (traces gitignored)
+  dataset.py              bootstrap + assemble a dataset into a run directory
+  subfield_gather.py      retrieve papers for a SUBFIELD (never using claim text)
+  normcard.py             map/reduce a paper bundle into per-subfield menus
+  curate.py               deterministic merge + prune; no model calls
+  classifier.py           claim → subfields
+  scify_proposer.py       the proposer, resynced against the real SciFy agent
+  eval/
+    make_claims.py        paper → claim
+    transcribe.py         paper → reference experiments (gated behind --accept)
+    build_cards.py        paper bundles → norm cards
+    propose.py            run the arms
+    evaluate.py           the blind judge
+    analyze.py            arm means, paired intervals, the role split
+    judge_tests.py        nine stress tests for the judge itself
+
+results/                  git-ignored. Disposable: rebuildable from datasets/.
 ```
 
 ---
 
-## Keyless smoke test
+## Building a dataset from scratch
 
-`test_gather.py` exercises the search/rank stages with hand-authored
-classifications (no LLM key) on sample claims:
+Only needed for *new* claims; `dataset20v3` is already built.
 
 ```bash
-python -m norm_cards.test_gather --case 11   # empirical: detection robustness
+# claims and references, drafted separately so neither leaks into the other
+python -m norm_cards.eval.make_claims --papers papers.json --out claims.jsonl
+python -m norm_cards.eval.transcribe  --problem <id> --arxiv <arxiv id>
+python -m norm_cards.eval.transcribe  --problem <id> --accept --author "Your Name"
+
+# subfields, then one retrieval and one card per subfield serving >=2 claims
+python -m norm_cards.classifier       --claims claims.jsonl --out subfields.json
+python -m norm_cards.subfield_gather  --subfields subfields.json --out shared/
+python -m norm_cards.eval.build_cards --run shared/ --limit 1   # repeat until done
 ```
+
+`--limit 1` builds one card per process. Card construction holds the full text of
+every paper it has read, and the loop was OOM-killed four times before this existed;
+re-running resumes, so a kill costs one card rather than the batch.
+
+### What a claim must and must not say
+
+This took three drafts to get right, and both failure modes cost a full rebuild.
+
+- **Say** the phenomenon, the subject under test, and the bar **with its number**.
+- **Never say** the authors' method — that hands over the design.
+- **Never say** the apparatus — which datasets, baselines, prompts, splits or
+  protocol. v2 named all of these and recall looked fine, but the proposer had
+  nothing left to design, so the card had nothing to inform. The test: *if a
+  competent researcher could have picked a different dataset or baseline set and
+  still tested the same proposition, it is apparatus — leave it out.*
+
+Measured across the three drafts: named artifacts per claim went 1.4 → 6.7 → **0.8**
+while claims carrying a decidable bar went 0 → 17 → **19**.
+
+### Reviewing references
+
+`transcribe` writes `ground_truth.draft.json` and refuses to promote it; `--accept
+--author` does that, and the schema validator rejects anything whose provenance
+still says draft. The dataset's references are currently promoted with the author
+line **"PENDING HUMAN SIGN-OFF"**, which the judge is shown. Re-accept under your own
+name once you have read them against the papers.
 
 ---
 
-## Automated evaluation harness (`norm_cards/eval/`)
+## Things worth knowing before you trust a number
 
-Scores experiment sets for coverage, soundness, precision, norm alignment and
-grounding, so pipeline changes can be measured as deltas on a fixed benchmark. Full
-design: [`docs/eval_harness_design.md`](docs/eval_harness_design.md).
-
-One agentic stage — the judge. Its baseline is its own reading of the claim and the
-two experiment lists; the research belt (web search, OpenAlex, paper full text,
-dataset/model existence checks) is an opt-in extra behind `--tools`, not the default.
-That is a measured decision: on the judge stress suite the belt more than doubled the
-drift of the order control — reversing a list, which cannot change what a set
-establishes — from a mean 0.069 to 0.165, because rate-limited searches hand the judge
-different evidence on different passes. It scores against
-a **reference recipe**, which the harness takes as an input and never produces:
-someone writes it, or transcribes it from the experiment section of the paper the
-claim came from. Format: [`docs/reference_format.md`](docs/reference_format.md).
-
-The harness deliberately has no way to generate a reference. One written by asking
-a strong model to design experiments for the claim is not an independent standard —
-it is another system's output, and if that model were good enough to define
-correctness you would ship it as the proposer instead of scoring against it.
-
-**The judge scores the set, not the experiments one at a time.** The reference is
-flattened into *decision requirements* — what has to be established before the claim
-can be called true or false — and the judge maps the whole proposed set onto them,
-many-to-many. One experiment may carry three requirements; three may jointly carry
-one. Reordering, merging or splitting the same work does not move the numbers, and a
-different valid route to the same conclusion counts as satisfied. Per-experiment
-judgments still happen, but they answer separate questions: is this design sound, does
-it follow the field's norms, do its resources exist and fit, does it duplicate
-something else in the set.
-
-```bash
-# Reference recipes — authored by hand or transcribed, validated and rendered here.
-python -m norm_cards.eval.reference --template 11   # blank skeleton to fill in
-python -m norm_cards.eval.reference --check         # validate + render markdown
-# -> results/eval_v2/ground_truth/problem_<id>/{ground_truth.json, ground_truth.md}
-
-# Generate proposer output, one arm per model (no norm card — model comparison).
-python -m norm_cards.eval.propose --models gpt-5.4,gpt-5.5,gpt-5.6
-
-# Score a pipeline's output against those fixtures, per arm, k runs.
-python -m norm_cards.eval.evaluate --problems 11 --judge-runs 3   # gpt-5.6-luna
-# -> results/eval_v2/judgments/problem_<id>/<arm>.json
-
-python -m norm_cards.eval.report        # -> results/eval_v2/REPORT.md
-python -m norm_cards.eval.calibrate --template   # judge vs. hand labels
-```
-
-A second claim set lives beside the DARPA sprint one via two env vars:
-
-```bash
-NORM_CARDS_EVAL_ROOT=results/eval_icml2026 \
-NORM_CARDS_CLAIMS=norm_cards/data/icml2026-claims-v1.jsonl \
-  python -m norm_cards.eval.reference --check
-```
-
-What keeps the judge honest:
-
-- **The reference is authoritative about *what* must be decided, never about *how*.**
-  Divergence from it is explicitly not a fault. It says its own provenance at the top,
-  which the judge is shown. Material errors in a requirement go to
-  `reference_defects`; work that closes a gap the reference misses goes to
-  `unmet_by_reference` and earns credit rather than reading as a complaint.
-- **Nothing can rest on "the reference disagrees."** Faulting an experiment requires a
-  quoted source *and* a step-by-step reasoning chain from that quote to the fault.
-  Marking a requirement unmet requires the chain but no quote — it is a statement about
-  the set, which no search can confirm, and demanding citations for absence would just
-  push the judge toward calling things satisfied. Both are enforced in
-  `schemas.validate_evaluation`, which hands rejections back to the agent to fix.
-- **Field norms come from the reference, not from the pipeline.** The generated norm
-  card is the treatment in the ablation; showing the judge the treatment would hand the
-  method arm an automatic match.
-- **The judge is blind to the arm**, and never told a second arm exists.
-- **Scores are computed in code** (`scoring.py`) from small per-requirement and
-  per-experiment judgments; no agent ever emits a score. k runs are majority-voted,
-  and calls without a majority are marked `CONTESTED` for hand review.
+- **The judge runs without tools by default.** Web search made an order-invariance
+  control drift by 0.165 instead of 0.069, because rate-limited searches hand it
+  different evidence on different passes. `--tools` re-enables them.
+- **`judge_tests.py` is the judge's own test suite** — nine tests including swapping
+  reference and proposal, padding with irrelevant experiments, and duplicating one.
+  A duplicate-penalty defect it caught is why `prompts.py` has a redundancy
+  paragraph.
+- **`propose` skips per claim, not per arm.** Adding a model in a second invocation
+  against the same output directory silently skips every claim the first finished.
+  Pass all models in one `--models` call.
+- **Contamination is filtered on arXiv v1 date**, never venue date.
+- **One model shows no effect.** gpt-5.4 is −0.005 where gpt-5.5 and gpt-5.6-terra
+  are both ≈+0.065. Pooling does real work in the headline.

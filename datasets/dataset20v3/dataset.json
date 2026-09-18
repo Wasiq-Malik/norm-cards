@@ -1,0 +1,16 @@
+{
+  "name": "dataset20v3",
+  "claims": "norm_cards/data/dataset20-claims-v3.jsonl",
+  "built": "2026-09-18",
+  "description": "20 claims from 2026 venue papers, with references transcribed from each paper and 14 shared per-subfield norm cards.",
+  "claims_model": "gpt-5.6-sol",
+  "references_model": "gpt-5.6-sol",
+  "references_reviewed": false,
+  "notes": [
+    "Claims name the subject and the bar but NOT the apparatus: no datasets, baselines or protocol. v2 named those and left the proposer nothing to design.",
+    "References are transcribed from the whole paper, so ~46% of their experiments are mechanism/external follow-ups the claim does not oblige. Score with the role split in norm_cards.eval.analyze, not full recall alone.",
+    "References are model-drafted and NOT human-reviewed; provenance says so and the judge is shown that line.",
+    "Cards are per-SUBFIELD: retrieved with queries built from the field name and taxonomy keywords only, never claim text, then served unchanged to every claim in that field.",
+    "subfields.json carries 10 hand corrections to the classifier; subfield_overrides.json records each with its rationale, and subfields_original is kept beside each."
+  ]
+}

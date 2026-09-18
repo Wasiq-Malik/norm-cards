@@ -1,0 +1,30 @@
+{
+  "_readme": "Hand corrections to the subfield classifier's output, applied at card-assembly time. The classifier is left untouched; this file records what was changed and why, so any result built on it can be audited or reverted. Two kinds of change: (a) MISLABEL - the classifier named something that is not the claim's field, or missed the obvious one; (b) MERGE - a subfield unique to one claim folded into a field it shares experimental norms with, so a card can be built once and reused. Merge criterion is shared NORMS (benchmarks, protocols, controls), not topical adjacency.",
+  "_new_subfields": {
+    "Code and Structured Generation": "Correctness is decided by executing or validating generated output against a spec: BigCodeBench pass rates, Spider SQL / JSON-mode-eval validity under constrained decoding. Absorbs: Coding, Text-to-SQL, Language Modeling.",
+    "Embedding-based Retrieval and Ranking": "Ranking candidates by distance in a frozen embedding space, scored with top-k retrieval metrics against nearest-neighbour baselines. Absorbs: Embedding models, Retrieval.",
+    "Verifiable-Reward Tasks": "An automatic verifier supplies ground truth - Lean kernel-checked compilation, programmatically checkable instruction constraints. Absorbs: Instruction Following, Math. WEAKEST of the three merges; flagged as arguable."
+  },
+  "overrides": {
+    "arxiv2510_20487": {"subfields": ["Jailbreaks and Adversarial Prompting", "Code and Structured Generation"],
+      "why": "MERGE: 'Coding' (BigCodeBench type-annotation behaviour) -> Code and Structured Generation."},
+    "arxiv2602_23523": {"subfields": ["Deepfake and Forensics", "Anomaly Detection"],
+      "why": "MERGE: 'Face Verification' folded into Deepfake and Forensics - same generators, same distortion suites, already carded for this claim."},
+    "arxiv2604_24474": {"subfields": ["Embedding-based Retrieval and Ranking", "Reinforcement Learning"],
+      "why": "MERGE: 'Embedding models' -> Embedding-based Retrieval and Ranking, which is the claim's primary experiment (rank ligands by embedding distance). 'Biology' DROPPED: cheminformatics shares norms with nothing else in this set, so no card exists and none can be shared."},
+    "arxiv2605_08612": {"subfields": ["Jailbreaks and Adversarial Prompting", "Robotics", "Image Understanding"],
+      "why": "MISLABEL: 'Omni models' is wrong - this is an OpenVLA-7B manipulation policy evaluated on LIBERO. The classifier never assigned Robotics to a robot-policy paper. Attack norms stay primary (ASR, poisoning rate, clean utility)."},
+    "arxiv2606_00570": {"subfields": ["Mechanistic Interpretability", "Reasoning", "Embedding-based Retrieval and Ranking"],
+      "why": "MERGE: 'Knowledge Editing' -> Mechanistic Interpretability; locality and portability controls in editing are the selectivity controls in model-internal intervention. 'Retrieval' -> Embedding-based Retrieval and Ranking."},
+    "arxiv2606_24026": {"subfields": ["Mechanistic Interpretability", "Agents"],
+      "why": "MISLABEL: 'Coding Agents' dropped - the coder backbone is incidental; the experiment is agents explaining transformer circuits, already covered."},
+    "arxiv2607_19374": {"subfields": ["Verifiable-Reward Tasks", "Reasoning"],
+      "why": "MERGE: 'Math' -> Verifiable-Reward Tasks; ground truth is Lean kernel-checked compilation, not a math benchmark score."},
+    "arxiv2608_09928": {"subfields": ["Activation Steering", "Mechanistic Interpretability", "Image Understanding"],
+      "why": "MISLABEL: 'OCR' and 'Question Answering' are the benchmarks, not the field. The experiment is causal feature directions in a multimodal LM's language backbone."},
+    "arxiv2608_23830": {"subfields": ["Reinforcement Learning", "Verifiable-Reward Tasks"],
+      "why": "MERGE: 'Instruction Following' -> Verifiable-Reward Tasks. MISLABEL: 'Test Task' dropped - not a field."},
+    "arxiv2608_28229": {"subfields": ["Code and Structured Generation", "Reasoning"],
+      "why": "MERGE: 'Text-to-SQL' and 'Language Modeling' -> Code and Structured Generation; outputs are validated against JSON/SQL/LTL grammars."}
+  }
+}

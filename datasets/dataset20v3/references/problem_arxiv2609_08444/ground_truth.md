@@ -1,0 +1,39 @@
+# Reference experiments — problem arxiv2609_08444
+
+**Claim.** The question is whether VLM-driven embodied task planners operating under partial egocentric observability can remain aware of previously encountered hazards after those hazards become occluded or leave the current view. The claim is supported only if a planner using prior safety-relevant environment information achieves a higher safe-success rate than both the strongest prior safety-aware VLM planner and an otherwise matched current-observation-only planner using the same underlying model, while attaining an ordinary task-success rate at least as high as an unmodified VLM planner, in both simulated and physical execution. Safe success means completing the assigned task while also satisfying its safety goal.
+
+**Provenance.** transcribed from the source paper · authored by Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF · 2026-09-18 · derived from arXiv:2609.08444
+
+*Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.*
+
+### Experiment 0
+
+Test safe task planning under partial egocentric observability. Modify IS-Bench by replacing its surround-view observations with a single egocentric RGB view and adding depth, and evaluate electric-shock, fire, falling, and food-contamination tasks using BDDL task and safety goals. Implement SafeMem’s task planner and risk predictor with GPT-4o, construct its graph with Gemini 2.5 Flash and SAM 2.0, and implement SaP, CoT, the Base VLM planner, and SafeMem without graph memory with GPT-4o. Measure Success Rate (SR) and Safe Success Rate (SSR), where SSR requires satisfying both the task goal and safety goal. SafeMem obtained category SR/SSR values of 0.67/0.67 for electric shock, 0.50/0.50 for fire, 1.00/0.67 for falling, and 1.00/0.50 for food contamination, averaging 0.79 SR and 0.59 SSR. SafeMem without graph memory averaged 0.75 SR and 0.21 SSR; CoT averaged 0.83 and 0.17; SaP averaged 0.79 and 0.13; and Base averaged 0.59 and 0.00.
+
+### Experiment 1
+
+Repeat the comparison in physical execution. Deploy the methods on a 7-DoF Franka Panda arm with an egocentric view and construct one real-world task for each IS-Bench hazard category: electric shock, fire, falling, and food contamination. Average each result across 10 runs and measure SR and SSR. SafeMem achieved SR 1.0 and SSR 1.0 in all four categories. SafeMem without graph memory obtained electric 1.0/0.3, fire 0.8/0.0, falling 0.9/0.0, and food 0.8/0.0. Base obtained 1.0/0.0, 1.0/0.1, 1.0/0.1, and 1.0/0.0; CoT obtained 0.6/0.0, 1.0/0.0, 1.0/0.0, and 1.0/0.0; and SaP obtained 1.0/0.0 in every category.
+
+### Experiment 2
+
+Test the framework under full observability. Run SafeMem, SafeMem without graph memory, SaP, CoT, and Base on the original fully observable IS-Bench setting with depth images added, using the same four hazard categories and SR and SSR metrics. SafeMem obtained electric 1.00/1.00, fire 0.50/0.50, falling 1.00/0.83, and food 1.00/0.33, averaging 0.88 SR and 0.67 SSR. SafeMem without graph memory averaged 0.92/0.42; CoT averaged 0.88/0.21; Base averaged 0.79/0.21; and SaP averaged 0.88/0.13.
+
+### Experiment 3
+
+Trace whether the graph retains an occluded hazard during planning. Run SafeMem on the partially observable IS-Bench Cooking Tofu task, where placing the sauce pot on the stove occludes a flammable paper towel. The stored graph continues to represent the paper towel and its hazardous relationship with the stove after it leaves the current observation. Before turning on the stove, the planner moves right and places the paper towel on the floor, then moves left, turns on the stove, waits for the tofu to cook, and turns the stove off; the task is completed while avoiding the fire hazard.
+
+### Experiment 4
+
+Compare graph memory with alternative ways of retaining observation history. Under partial observability on IS-Bench, replace the graph with full-history context that supplies all historical images to the risk predictor, RAG that converts images into a textual knowledge base and retrieves from it when predicting REPLAN, or an object-list memory containing previously seen objects but no relationship edges. The graph obtained average SR 0.79 and SSR 0.59. Full-history context obtained 0.58 and 0.13, RAG obtained 0.79 and 0.38, and object-list memory obtained 0.88 and 0.17.
+
+### Experiment 5
+
+Ablate the graph operations that preserve and update safety information. On partially observable IS-Bench tasks, compare full SafeMem with removal of graph memory, removal of invisible-object retention, and removal of action-aware edge updating. Full SafeMem obtained average SR 0.79 and SSR 0.59. Removing graph memory produced 0.75 and 0.21; removing invisible-object retention produced 0.71 and 0.21; and removing action-aware edge updating produced 0.71 and 0.38.
+
+### Experiment 6
+
+Measure the effect of always obeying the risk predictor. On partially observable IS-Bench tasks, compare conservative factor η=0.8, under which a REPLAN signal is followed with probability 0.8, against η=1, under which every REPLAN signal is followed. Both settings obtained average SR 0.79. At η=0.8, the safety-violation rate was 0.35, corresponding to 6 of 17 tasks, and SSR was 0.59. At η=1, the safety-violation rate was 0.18, corresponding to 3 of 17 tasks, and SSR was 0.67.
+
+### Experiment 7
+
+Check performance when no hazard needs to be avoided. Remove the hazards from IS-Bench tasks and compare average task success for SafeMem, the Base VLM planner, and CoT. SafeMem obtained average SR 0.82, Base obtained 0.76, and CoT obtained 0.88.

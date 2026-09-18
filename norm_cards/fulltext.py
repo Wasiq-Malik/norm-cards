@@ -90,9 +90,16 @@ def resolve_pdf(paper: Dict) -> Tuple[Optional[bytes], str]:
     """Return (pdf_bytes, source_tag) for a paper dict, or (None, 'none')."""
     doi = (paper.get("doi") or "").replace("https://doi.org/", "").strip()
     pu, url = paper.get("pdf_url") or "", paper.get("url") or ""
-    m = re.search(r"arxiv\.org/(?:abs|pdf)/([0-9]+\.[0-9]+)", f"{pu} {url}")
-    if m:
-        b = _try_pdf(f"https://arxiv.org/pdf/{m.group(1)}.pdf")
+    # An explicit arxiv_id is checked FIRST and on its own. Callers that know the
+    # id and nothing else — transcribe.py, make_claims.py — used to fall straight
+    # through to Unpaywall with an empty DOI and give up, so every claim in a
+    # 16-paper batch was silently drafted from its abstract instead of full text.
+    ax = re.sub(r"v\d+$", "", str(paper.get("arxiv_id") or "").strip())
+    if not ax:
+        m = re.search(r"arxiv\.org/(?:abs|pdf)/([0-9]+\.[0-9]+)", f"{pu} {url}")
+        ax = m.group(1) if m else ""
+    if ax:
+        b = _try_pdf(f"https://arxiv.org/pdf/{ax}.pdf") or _try_pdf(f"https://arxiv.org/pdf/{ax}")
         if b:
             return b, "arxiv"
     b = _try_pdf(pu)
@@ -126,11 +133,28 @@ def extract_text(pdf_bytes: bytes, max_pages: int = 18) -> str:
 
 def fetch_fulltext(paper: Dict, cache_dir: str, max_pages: int = 18,
                    min_chars: int = 500) -> Tuple[str, str]:
-    """Resolve + extract, caching the PDF by title hash. Returns (text, source);
-    text is "" if unfetchable or too short to be a real body."""
+    """Resolve + extract, caching BOTH the PDF and its extracted text. Returns
+    (text, source); text is "" if unfetchable or too short to be a real body.
+
+    The text cache matters more than the PDF one. Downloading is a few hundred
+    milliseconds; pdfplumber on a 20-page paper is one to three seconds, and the
+    same papers are re-extracted by every stage that touches them — the card
+    build, each retrieval arm, transcription. Across one evening that was roughly
+    2,500 extractions of ~500 distinct PDFs, nearly all of them redundant.
+    """
     os.makedirs(cache_dir, exist_ok=True)
     h = hashlib.md5((paper.get("title") or "").encode()).hexdigest()[:12]
     path = os.path.join(cache_dir, f"{h}.pdf")
+    # Keyed on max_pages: a 30-page extract is not a valid answer for an 18-page
+    # request, and silently returning one would change what a stage reads.
+    tpath = os.path.join(cache_dir, f"{h}.p{max_pages}.txt")
+    if os.path.exists(tpath):
+        try:
+            cached = open(tpath, encoding="utf-8").read()
+            if len(cached) >= min_chars:
+                return cached, "cache:text"
+        except Exception:
+            pass
     source = "cache"
     if os.path.exists(path):
         pdf_bytes = open(path, "rb").read()
@@ -140,4 +164,11 @@ def fetch_fulltext(paper: Dict, cache_dir: str, max_pages: int = 18,
             return "", source
         open(path, "wb").write(pdf_bytes)
     text = extract_text(pdf_bytes, max_pages=max_pages)
-    return (text, source) if len(text) >= min_chars else ("", source)
+    if len(text) >= min_chars:
+        try:
+            with open(tpath, "w", encoding="utf-8") as f:
+                f.write(text)
+        except Exception:
+            pass                      # a cache that cannot be written is not an error
+        return text, source
+    return "", source

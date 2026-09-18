@@ -1,0 +1,210 @@
+{
+  "arxiv2608_25585": {
+    "subfields": [
+      "Robotics",
+      "Agents",
+      "Image Understanding"
+    ],
+    "theme": "robotics/embodied/RL"
+  },
+  "arxiv2608_26645": {
+    "subfields": [
+      "Robotics",
+      "Reinforcement Learning",
+      "Agents"
+    ],
+    "theme": "robotics/embodied/RL"
+  },
+  "arxiv2609_06718": {
+    "subfields": [
+      "Robotics",
+      "Reinforcement Learning",
+      "Agents"
+    ],
+    "theme": "robotics/embodied/RL"
+  },
+  "arxiv2606_16939": {
+    "subfields": [
+      "Mechanistic Interpretability",
+      "Activation Steering"
+    ],
+    "theme": "mech-interp/editing"
+  },
+  "arxiv2608_09928": {
+    "subfields": [
+      "Activation Steering",
+      "Mechanistic Interpretability",
+      "Image Understanding"
+    ],
+    "theme": "mech-interp/editing",
+    "subfields_original": [
+      "Activation Steering",
+      "OCR",
+      "Question Answering"
+    ],
+    "override_why": "MISLABEL: 'OCR' and 'Question Answering' are the benchmarks, not the field. The experiment is causal feature directions in a multimodal LM's language backbone."
+  },
+  "arxiv2606_24026": {
+    "subfields": [
+      "Mechanistic Interpretability",
+      "Agents"
+    ],
+    "theme": "mech-interp/editing",
+    "subfields_original": [
+      "Mechanistic Interpretability",
+      "Agents",
+      "Coding Agents"
+    ],
+    "override_why": "MISLABEL: 'Coding Agents' dropped - the coder backbone is incidental; the experiment is agents explaining transformer circuits, already covered."
+  },
+  "arxiv2608_28229": {
+    "subfields": [
+      "Code and Structured Generation",
+      "Reasoning"
+    ],
+    "theme": "constrained decoding",
+    "subfields_original": [
+      "Text-to-SQL",
+      "Language Modeling",
+      "Reasoning"
+    ],
+    "override_why": "MERGE: 'Text-to-SQL' and 'Language Modeling' -> Code and Structured Generation; outputs are validated against JSON/SQL/LTL grammars."
+  },
+  "arxiv2608_23830": {
+    "subfields": [
+      "Reinforcement Learning",
+      "Verifiable-Reward Tasks"
+    ],
+    "theme": "constrained decoding",
+    "subfields_original": [
+      "Instruction Following",
+      "Reinforcement Learning",
+      "Test Task"
+    ],
+    "override_why": "MERGE: 'Instruction Following' -> Verifiable-Reward Tasks. MISLABEL: 'Test Task' dropped - not a field."
+  },
+  "arxiv2604_09101": {
+    "subfields": [
+      "Anomaly Detection",
+      "Image Classification",
+      "Deepfake and Forensics"
+    ],
+    "theme": "vision robustness"
+  },
+  "arxiv2605_08612": {
+    "subfields": [
+      "Jailbreaks and Adversarial Prompting",
+      "Robotics",
+      "Image Understanding"
+    ],
+    "theme": "vision robustness",
+    "subfields_original": [
+      "Jailbreaks and Adversarial Prompting",
+      "Image Understanding",
+      "Omni models"
+    ],
+    "override_why": "MISLABEL: 'Omni models' is wrong - this is an OpenVLA-7B manipulation policy evaluated on LIBERO. The classifier never assigned Robotics to a robot-policy paper. Attack norms stay primary (ASR, poisoning rate, clean utility)."
+  },
+  "arxiv2607_19374": {
+    "subfields": [
+      "Verifiable-Reward Tasks",
+      "Reasoning"
+    ],
+    "theme": "math/theorem proving",
+    "subfields_original": [
+      "Math",
+      "Reasoning"
+    ],
+    "override_why": "MERGE: 'Math' -> Verifiable-Reward Tasks; ground truth is Lean kernel-checked compilation, not a math benchmark score."
+  },
+  "arxiv2604_24474": {
+    "subfields": [
+      "Embedding-based Retrieval and Ranking",
+      "Reinforcement Learning"
+    ],
+    "theme": "molecular/sci-ML",
+    "subfields_original": [
+      "Embedding models",
+      "Reinforcement Learning",
+      "Biology"
+    ],
+    "override_why": "MERGE: 'Embedding models' -> Embedding-based Retrieval and Ranking, which is the claim's primary experiment (rank ligands by embedding distance). 'Biology' DROPPED: cheminformatics shares norms with nothing else in this set, so no card exists and none can be shared."
+  },
+  "arxiv2604_26496": {
+    "subfields": [
+      "Image Classification"
+    ],
+    "theme": "vision robustness"
+  },
+  "arxiv2608_14049": {
+    "subfields": [
+      "Robotics",
+      "Reinforcement Learning",
+      "Agents"
+    ],
+    "theme": "robotics/embodied/RL"
+  },
+  "arxiv2606_00570": {
+    "subfields": [
+      "Mechanistic Interpretability",
+      "Reasoning",
+      "Embedding-based Retrieval and Ranking"
+    ],
+    "theme": "mech-interp/editing",
+    "subfields_original": [
+      "Knowledge Editing",
+      "Retrieval",
+      "Reasoning"
+    ],
+    "override_why": "MERGE: 'Knowledge Editing' -> Mechanistic Interpretability; locality and portability controls in editing are the selectivity controls in model-internal intervention. 'Retrieval' -> Embedding-based Retrieval and Ranking."
+  },
+  "arxiv2606_28153": {
+    "subfields": [
+      "Jailbreaks and Adversarial Prompting",
+      "Mechanistic Interpretability",
+      "Activation Steering"
+    ],
+    "theme": "mech-interp/safety"
+  },
+  "arxiv2510_20487": {
+    "subfields": [
+      "Jailbreaks and Adversarial Prompting",
+      "Code and Structured Generation"
+    ],
+    "theme": "mech-interp/safety",
+    "subfields_original": [
+      "Jailbreaks and Adversarial Prompting",
+      "Coding"
+    ],
+    "override_why": "MERGE: 'Coding' (BigCodeBench type-annotation behaviour) -> Code and Structured Generation."
+  },
+  "arxiv2609_02350": {
+    "subfields": [
+      "Robotics",
+      "Agents",
+      "Image Understanding"
+    ],
+    "theme": "robotics/embodied/RL"
+  },
+  "arxiv2602_23523": {
+    "subfields": [
+      "Deepfake and Forensics",
+      "Anomaly Detection"
+    ],
+    "theme": "media forensics",
+    "subfields_original": [
+      "Deepfake and Forensics",
+      "Face Verification",
+      "Anomaly Detection"
+    ],
+    "override_why": "MERGE: 'Face Verification' folded into Deepfake and Forensics - same generators, same distortion suites, already carded for this claim."
+  },
+  "arxiv2609_08444": {
+    "subfields": [
+      "Robotics",
+      "Agents",
+      "Reasoning"
+    ],
+    "theme": "robotics/embodied/RL"
+  }
+}

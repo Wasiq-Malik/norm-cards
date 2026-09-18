@@ -13,7 +13,7 @@ norm alignment and grounding** against the claim's true verify/refute decision
 structure — so that pipeline changes can be measured as deltas on a fixed benchmark.
 
 An *arm* is whatever is being contrasted: baseline vs method for the norm-card
-ablation, or one arm per model for a proposer comparison. `report.py` discovers arms
+ablation, or one arm per model for a proposer comparison. `analyze.py` discovers arms
 from the judgment files rather than hardcoding them.
 
 One agentic stage, over an input the harness does not produce:
@@ -291,10 +291,12 @@ into a value no run supports, though the mean is carried so the item does not va
   `CONTESTED` for hand review rather than silently averaged.
 - **Blind arms** — the judge is never told whether a set came from the baseline or the
   norm-card arm, nor that a second arm exists. Removes the obvious thumb on the scale.
-- **Calibration set before trusting** — `calibrate.py --template` emits every judged
-  experiment with a blank `expected_verdict`; hand-label ~10 (clearly valid / clearly
-  invalid / subtle) *without reading what the judge said*, then `calibrate.py` reports
-  agreement. Gate: don't trust a full run below 8/10 with every miss explainable.
+- **The judge's own test suite** — `judge_tests.py` runs nine stress tests against a
+  known reference: swapping reference and proposal, padding with irrelevant
+  experiments, duplicating one, dropping one, and an order-invariance control whose
+  score must not move. It caught a duplicate-penalty defect that the aggregate
+  numbers would never have shown.
+
 - **GT-defect channel** — systematic under-scoring shows up as valid experiments
   marked `CONTRADICTS`; forcing the judge to either produce independent evidence or
   file a GT defect removes the "GT-said-so" shortcut that sank the gpt-5.5 judge.
@@ -352,7 +354,7 @@ what a card can add: with three slots, resource content displaces control condit
 the model would otherwise have proposed, which is the mechanism behind the v0.2 card's
 negative Δ on controls and confounds.
 
-## Reporting (`norm_cards/eval/report.py`)
+## Reporting (`norm_cards/eval/analyze.py`)
 
 Aggregates all judgment files into `results/eval_v2/REPORT.md`:
 
@@ -376,8 +378,7 @@ norm_cards/eval/
   scoring.py        # verdicts/statuses -> numbers; majority vote across judge runs
   reference.py      # reference recipes as INPUT: --template <id> | --check
   evaluate.py       # judge CLI:  -m norm_cards.eval.evaluate --problems ... [--arms] [--judge-runs k]
-  calibrate.py      # judge-vs-hand-labels agreement check (--template to start)
-  report.py         # aggregate -> REPORT.md
+  analyze.py        # arm means, paired intervals, the claim-obliged/beyond-claim split
 results/eval_v2/
   ground_truth/problem_<id>/{ground_truth.json, ground_truth.md}
   judgments/problem_<id>/{baseline.json, method.json, <arm>.run<k>.trace.jsonl}

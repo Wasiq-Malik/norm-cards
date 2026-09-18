@@ -8,6 +8,9 @@ from .. import config
 
 _session = None
 
+# No single retry sleep is worth more than this in a batch run.
+MAX_RETRY_WAIT = 60
+
 
 def http():
     """Shared requests session with a polite User-Agent."""
@@ -40,7 +43,13 @@ def request(url, retries: int = 4, **kwargs):
     for attempt in range(retries):
         r = http().get(url, **kwargs)
         if r.status_code in (429, 503) and attempt < retries - 1:
-            wait = int(r.headers.get("Retry-After", 0)) or min(2 ** attempt, 30)
+            # Retry-After is honoured but CAPPED. OpenAlex has answered a 429 with
+            # Retry-After: 9727 — nearly three hours — and sleeping that inside a
+            # batch job silently parks the whole run past any deadline it had.
+            # Better to burn the remaining attempts quickly and let the caller
+            # record the claim as failed and move on.
+            wait = min(int(r.headers.get("Retry-After", 0)) or min(2 ** attempt, 30),
+                       MAX_RETRY_WAIT)
             print(f"[http] {r.status_code} on {config.redact(url).split('?')[0]}; "
                   f"retry in {wait}s "
                   f"({attempt + 1}/{retries})")

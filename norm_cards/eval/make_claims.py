@@ -41,34 +41,66 @@ from .. import llm, fulltext
 
 DRAFT_PROMPT = """Below is a paper. Write the CLAIM its experiments were designed to decide.
 
-A claim is a proposition that could turn out false. Someone handed only this claim
-should understand what question is at stake and what would settle it, without being
-told the answer or the method.
+A claim is a proposition that could turn out false. Someone handed only this claim should
+understand what question is at stake AND what would settle it, without being told the answer.
 
-HARD CONSTRAINTS — each of these has broken this dataset before:
+THE BAR IS PART OF THE CLAIM. THE FINDING IS NOT.
+This distinction is the whole task, and getting it wrong in either direction ruins the claim.
 
-1. NO RESULTS. Do not state what the authors found, no headline numbers, no "X
-   degrades by 27%". State what was in question before they ran anything. If the
-   paper's contribution is a negative finding, the claim is the proposition they
-   set out to test, phrased so that either outcome is possible.
+  A BAR is the threshold that decides the question. It belongs in the claim, WITH ITS NUMBER:
+      "...is considered robust if the post-training attack success rate remains within 5% of
+       a model trained on clean data only"
+      "...mediated by fewer than 50 attention heads in the final 10 layers"
+      "...retains AP50 >= 0.90 with <= 5% relative degradation from clean performance"
 
-2. NO METHOD. Do not name the specific instrument, statistic, architecture or
-   procedure the authors invented to answer it. If the claim names the technique,
-   a system reading it has been handed the experimental design. Name the artifact
-   under test and the property at issue; leave HOW to establish it open.
+  A FINDING is what the authors got when they ran it. It must NOT appear:
+      "editing degrades reasoning by 27% on AIME"        <- the answer, omit
+      "SWYB achieves 100.0% syntactic validity"          <- the answer, omit
 
-3. KEEP WHAT CONSTRAINS. Do keep the things that make the claim decidable and
-   scoped: the class of system, the setting, the regime, and any threshold the
-   authors themselves treat as the bar. A claim with no commitments cannot be
-   refuted and is useless here.
+  Write the bar even when the paper states it only implicitly, by reporting a comparison: if the
+  authors treat "beats the strongest prior baseline under an equal training budget" as the test,
+  say exactly that. NEVER substitute a vague word for a bar. "reliable", "comparable",
+  "competitive", "substantially intact", "high accuracy", "robust" are not bars: each one hides
+  the number that decides the claim, and a claim that cannot be decided is useless here.
 
-4. SELF-CONTAINED. No "this paper", no citations, no reference to the authors. It
-   should read like a proposition someone wrote down before the work existed.
+NAME THE SUBJECT. DO NOT NAME THE APPARATUS.
+The claim names what it is ABOUT. It does not name the equipment the authors happened to use to
+look at it. This is the third failure mode, and it is the one that quietly destroys the
+measurement:
 
-Three to six sentences. Plain prose, no bullets, no headings.
+  SUBJECT - belongs in the claim. The system, model family or phenomenon whose behaviour is at
+  stake: "a vision-language-action manipulation policy", "OpenVLA-7B", "parameter-modifying
+  knowledge-editing methods". Where the claim really is about one specific artifact, name it.
 
-Also return `subfields`: 2-3 research areas this sits in, as a working scientist
-would name them (e.g. "Vision-Language-Action Models", "Knowledge Editing").
+  APPARATUS - must NOT appear. Which datasets it was measured on, which baselines it was compared
+  against, which prompts, seeds, splits, sampling settings or protocol were used. Those are
+  DESIGN DECISIONS, and designing them is exactly what is being measured here. Handing them over
+  leaves the proposer nothing to design:
+      "...on 256 BigCodeBench problems, using identical datasets, sampling settings and
+       prompt templates"                                  <- apparatus, omit
+      "...against PGD-AT, TRADES, MART and Cons-AT"       <- apparatus, omit
+      "...trained and evaluated on CelebA-HQ at 128x128 and 256x256"   <- apparatus, omit
+
+  KEEP THE BAR, DROP THE APPARATUS. They are different things and the claim needs the first
+  without the second:
+      "...the behavioural marker that differs between evaluation and deployment contexts comes
+       within 5 percentage points of the model's own deployment rate, while task accuracy
+       degrades by no more than 5% relative"
+  That states a decidable bar with numbers and names no dataset. That is the target shape.
+
+  TEST: if a competent researcher in the field could have picked a different dataset, baseline
+  set or protocol and still tested the same proposition, it is apparatus - leave it out. Name at
+  most two or three specific artifacts in the whole claim, and only where they are the subject.
+
+WHAT STILL MUST NOT APPEAR: the authors' own METHOD — the technique they invented to answer the
+question, and its name. If the paper's contribution is called SWYB or HYVE or EUCLEAN, the claim
+says what property is at stake, never that name or its mechanism. Naming it hands over the
+experimental design, which is the thing being measured.
+
+FORM: three to six sentences, plain prose, no bullets, self-contained, no "this paper", no
+citations. Aim for the length of the examples above rather than an exhaustive specification.
+
+Also return `subfields`: 2-3 research areas this sits in, as a working scientist would name them.
 
 PAPER TITLE: {title}
 
@@ -76,9 +108,20 @@ PAPER TEXT:
 {text}
 
 Return JSON: {{"claim": "...", "subfields": ["...", "..."],
-               "what_is_at_stake": "one line: what a reader learns from the answer",
-               "leaked_method_check": "quote any phrase in your claim that names the
-                                       authors' specific technique, or 'none'"}}"""
+               "decision_rule": "the sentence in your claim that states the bar, quoted verbatim",
+               "leaked_method_check": "quote any phrase in your claim naming the authors' own
+                                       technique or its mechanism, or 'none'",
+               "named_apparatus": ["every dataset, benchmark or baseline named in your claim;
+                                    empty list if none, which is the usual correct answer"]}}"""
+
+
+# A claim must stand on its own. "the authors' system", "this paper", "our method"
+# all smuggle the paper back in — and worse, they point at the very technique the
+# claim is supposed to withhold, so a proposer reads "whatever they built" and the
+# measurement is gone.
+SELF_REF = re.compile(r"\bthe authors'?\b|\bthis (?:paper|work|study)\b|"
+                      r"\bwe (?:propose|introduce|present)\b|\bour (?:method|approach|system|model)\b",
+                      re.I)
 
 
 def _pid(arxiv_id: str) -> str:
@@ -114,6 +157,8 @@ def draft_one(paper: dict, cache_dir: str, model: str) -> dict:
         "_subfields_hint": out.get("subfields") or [],
         "_what_is_at_stake": out.get("what_is_at_stake", ""),
         "_leaked_method_check": out.get("leaked_method_check", ""),
+        "_decision_rule": out.get("decision_rule", ""),
+        "_named_apparatus": out.get("named_apparatus") or [],
     }
 
 
@@ -122,7 +167,7 @@ def _main():
     ap.add_argument("--papers", required=True,
                     help="JSON list of {id, title, v1, venue, theme, abstract}")
     ap.add_argument("--out", required=True, help="claims JSONL to write")
-    ap.add_argument("--model", default="gpt-5")
+    ap.add_argument("--model", default="gpt-5.6-sol")
     ap.add_argument("--cache_dir", default=".pdfcache")
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
@@ -150,12 +195,22 @@ def _main():
         existing[pid] = rec
         leak = (rec.get("_leaked_method_check") or "none").strip().lower()
         flag = "" if leak in ("none", "", "n/a") else f"   ⚠ possible method leak: {leak[:70]}"
+        sr = SELF_REF.search(rec["claim"])
+        if sr:
+            flag += f"   ⚠ NOT self-contained: {sr.group(0)!r}"
         print(f"[{i}/{len(papers)}] {pid}  {rec['provenance']['venue']:7s} "
               f"v1={rec['provenance']['arxiv_v1_date']}  {rec['provenance']['theme']}{flag}")
         print(f"        {rec['claim'][:150]}")
         with open(args.out, "w", encoding="utf-8") as f:
             for r in existing.values():
                 f.write(json.dumps(r) + "\n")
+    weak = [r for r in existing.values()
+            if not re.search(r"\d", r.get("_decision_rule") or "")]
+    if weak:
+        print(f"\n{len(weak)} claim(s) whose stated decision rule carries NO number — check these "
+              f"first, a claim without a bar cannot be decided:")
+        for r in weak:
+            print(f"   {r['problem_id']}: {(r.get('_decision_rule') or '(none given)')[:90]}")
     print(f"\n-> {args.out}   {len(existing)} claim(s). Every one is needs_review: "
           f"read it against the paper before it becomes a fixture.")
 

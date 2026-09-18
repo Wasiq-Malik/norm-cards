@@ -1,0 +1,1840 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Robotics",
+  "claim": "Experimental norms and standard practice in Robotics.",
+  "subfields": [
+    "Robotics"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 12,
+    "pdf_sources": {
+      "none": 16,
+      "cache:text": 4,
+      "cache": 2,
+      "pdf_url": 2,
+      "arxiv": 6
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Robotics",
+      "menu": {
+        "datasets": [
+          {
+            "name": "LIBERO",
+            "role": "eval",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Paro questionnaire dataset (Science Museum London, 440 subjects)",
+            "role": "eval",
+            "evidence": [
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+            ]
+          },
+          {
+            "name": "UMI trajectories",
+            "role": "train",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Cross-embodiment post-training dataset",
+            "role": "train",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "RoboCasa",
+            "role": "eval",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "RoboCasa365",
+            "role": "eval",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "VLABench",
+            "role": "eval",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "RoboDojo",
+            "role": "eval",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "LIBERO-CF",
+            "role": "robustness_eval",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Duckietown (physical and simulator)",
+            "role": "eval",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "AI Driving Olympics (AI-DO)",
+            "role": "eval",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "RoCKIn@Home",
+            "role": "eval",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "RoCKIn@Work",
+            "role": "eval",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "YCB object set",
+            "role": "eval",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "CSIRO manipulation benchmark dataset (Qualisys mocap)",
+            "role": "eval",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "DARPA Robotics Challenge Finals",
+            "role": "eval",
+            "evidence": [
+              "Optimization based controller design and implementation for the Atlas robot in the DARPA Robotics Challenge Finals"
+            ]
+          },
+          {
+            "name": "DriveAction",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "BDD-X",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "Next-qa",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "TextVQA",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "RealWorldQA",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "Reason2Drive",
+            "role": "eval",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "OpenVLA-OFT",
+            "role": "method_under_test",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "OpenVLA",
+            "role": "backbone",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "\u03c00",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success"
+            ]
+          },
+          {
+            "name": "\u03c0",
+            "role": "baseline",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Xiaomi-Robotics-1 (2B/5B/10B)",
+            "role": "method_under_test",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Qwen3-VL",
+            "role": "backbone",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "RDT-1B",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success"
+            ]
+          },
+          {
+            "name": "Diffusion Policy",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success"
+            ]
+          },
+          {
+            "name": "ACT",
+            "role": "baseline",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success"
+            ]
+          },
+          {
+            "name": "\u03c0-DROID",
+            "role": "baseline",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Vision-Action (VA) model",
+            "role": "baseline",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "DPro / DPro+",
+            "role": "method_under_test",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "DOpt / DOpt+",
+            "role": "method_under_test",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "NFW",
+            "role": "method_under_test",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "DAlpha / DRad",
+            "role": "method_under_test",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "SAlpha / SRad",
+            "role": "method_under_test",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "success rate",
+            "direction": "higher_better",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "precision",
+            "direction": "higher_better",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "recall",
+            "direction": "higher_better",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "mean picks per hour (MPPH) = \u03bd \u00d7 q",
+            "direction": "higher_better",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "mean grasp rate (\u03bd)",
+            "direction": "higher_better",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "grasp reliability / success probability (q)",
+            "direction": "higher_better",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "sensing/computation/motion time per attempt (t_s, t_c, t_r)",
+            "direction": "lower_better",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "pose error (SE(3) distance)",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "translation error (Euclidean)",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "rotation error (quaternion)",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "velocity error",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "acceleration error",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "motor torque error",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "contact force error",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "contact moment error",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "moving time",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Mean Position Deviation (MPD)",
+            "direction": "lower_better",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Mean Orientation Deviation (MOD)",
+            "direction": "lower_better",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "mean episode reward",
+            "direction": "higher_better",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "training runtime (CPU/GPU wall-clock)",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "action generation throughput",
+            "direction": "higher_better",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success"
+            ]
+          },
+          {
+            "name": "action prediction MSE",
+            "direction": "lower_better",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "grounding rate",
+            "direction": "higher_better",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "average score (0\u2013100)",
+            "direction": "higher_better",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "WER (word error rate)",
+            "direction": "lower_better",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "object classification accuracy (class/instance)",
+            "direction": "higher_better",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Repeatability with statistics",
+            "detail": "Run multiple trials/seeds per condition and report mean and dispersion (std/SE) over repeats/episodes.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints",
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+              "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Inter-robot reproducibility",
+            "detail": "Evaluate the same agent across multiple robots of the same platform and report performance variability.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Cross-lab/site reproduction and replication (MIRRER)",
+            "detail": "Reproduce and replicate experiments across labs; compute per-lab local baselines and Local Relative Rankings (LRR).",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+              "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+            ]
+          },
+          {
+            "name": "Sim-to-real evaluation",
+            "detail": "Evaluate in simulation benchmarks and on real robots on matched tasks; report both.",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Record and release raw logs and ground truth",
+            "detail": "Record rosbag/sensor logs, videos, and motion-capture ground truth; publish for replay and analysis.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Explicit train/test separation and trial reporting",
+            "detail": "Separate training and test sets; report number of trials, conditions/tolerances, and standard errors; share raw data when possible.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Object configuration sampling specification",
+            "detail": "State and standardize the procedure for sampling initial object configurations (random vs structured).",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Sensor viewpoint and calibration reporting",
+            "detail": "Report sensor models, viewpoints (fixed/multi/moving), and calibration/registration to robot frames.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "External motion-capture ground truth",
+            "detail": "Use external mocap (e.g., OptiTrack/Qualisys) to measure robot/object poses for benchmarking.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Control-loop and logging rate matching",
+            "detail": "Match simulation/control loop and logging rates to the dataset/protocol (e.g., 10 Hz) and log specified data streams.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Competition-style multi-run scoring with automation",
+            "detail": "Allocate multiple runs per task and use automated RefBoxes for scoring, timing, and data collection.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Black-box and grey-box ROS 2 testing",
+            "detail": "Assess computing system performance via end-to-end black-box and minimally invasive grey-box tests on ROS 2 graphs.",
+            "evidence": [
+              "RobotPerf: An Open-Source, Vendor-Agnostic, Benchmarking Suite for Evaluating Robotics Computing System Performance"
+            ]
+          },
+          {
+            "name": "Runtime measurement and reporting",
+            "detail": "Measure and report CPU/GPU wall-clock time for training/evaluation segments and across batch sizes.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "Cross-benchmark evaluation",
+            "detail": "Evaluate methods across multiple established benchmarks to assess generality.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Pre-run hardware compliance and run termination rules",
+            "detail": "Perform hardware compliance checks; define termination events (crash, time limit, exit) and include only validated runs.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "HRI questionnaire design with controls",
+            "detail": "Collect subjective evaluations with no-interaction control groups and record participants\u2019 prior knowledge.",
+            "evidence": [
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Within-condition repeats",
+            "detail": "Multiple repeated trials/seeds with the same system and context.",
+            "rules_out": "Run-to-run randomness or transient effects as the cause of performance differences.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+              "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Cross-robot same-agent evaluation",
+            "detail": "Run the same agent on multiple nominally identical robots.",
+            "rules_out": "Idiosyncratic hardware effects from a single robot.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Cross-lab/site local baseline (LRR)",
+            "detail": "Each lab first reproduces the original setup to establish a local baseline before testing a new method.",
+            "rules_out": "Site-specific factors or incomparable absolute metrics across labs.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+              "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+            ]
+          },
+          {
+            "name": "Functionality-isolating tasks (FBMs)",
+            "detail": "Design tasks to engage only the subsystem under test and fix other factors (e.g., pre-positioning).",
+            "rules_out": "Attribution of success/failure to unrelated subsystems.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "External ground-truth sensing",
+            "detail": "Use motion capture or other external measurements during evaluation.",
+            "rules_out": "Apparent accuracy due to onboard sensing/odometry drift or bias.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Standardized human stimuli",
+            "detail": "Hold human factors constant (e.g., same live speaker, fixed prompts).",
+            "rules_out": "Performance differences driven by human variability rather than system capability.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Default-parameter simulator baselines across engines",
+            "detail": "Run default settings across multiple physics engines as reference conditions.",
+            "rules_out": "Effects stemming from protocol/dataset handling rather than simulator physics/modeling choices.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Modality ablations",
+            "detail": "Evaluate with vision-only, language-only, and uninformed inputs alongside full V+L+A.",
+            "rules_out": "That performance derives solely from one modality or from priors without provided context.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models",
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Navigation-information ablation",
+            "detail": "Compare behavior with vs without navigation instructions in decision tasks.",
+            "rules_out": "Correct actions explained by image cues or priors rather than goal-aligned guidance.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "Pretrained base vs fine-tuned model",
+            "detail": "Compare to the unfine-tuned backbone and to other models fine-tuned with their default recipes.",
+            "rules_out": "Improvements arising from the base model or generic fine-tuning rather than the proposed recipe.",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Strong published baselines / prior SOTA on same benchmark",
+            "detail": "Compare against prior best numbers or strong baselines under identical protocols.",
+            "rules_out": "Gains due to evaluation protocol differences rather than actual performance.",
+            "evidence": [
+              "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Component/penalty ablations for constrained RL",
+            "detail": "Compare mapping/projection layers with/without violation penalties and alternative mappings.",
+            "rules_out": "Effects explained purely by added penalties or specific solvers rather than the proposed mechanism.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "HRI no-interaction control group",
+            "detail": "Include a group that does not physically interact with the robot.",
+            "rules_out": "Higher ratings due to mere presence or exhibition context rather than interaction effects.",
+            "evidence": [
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+            ]
+          },
+          {
+            "name": "HRI prior-knowledge control",
+            "detail": "Analyze groups with and without prior knowledge/familiarity.",
+            "rules_out": "Differences driven by pre-existing beliefs rather than the robot/interaction.",
+            "evidence": [
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Run-to-run randomness",
+            "detail": "Stochasticity and transient variability can mimic improvements/failures.",
+            "ruled_out_by": "Within-condition repeated trials/seeds with mean and dispersion reporting.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Hardware variation between robots",
+            "detail": "Manufacturing/calibration differences alter outcomes independent of the method.",
+            "ruled_out_by": "Cross-robot evaluations and detailed hardware reporting for replication.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Sensor/viewpoint differences",
+            "detail": "Different modalities/viewpoints/FOV/noise change perception results.",
+            "ruled_out_by": "Report sensor models and viewpoint configuration; standardize/calibrate across runs.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Lighting/environment effects",
+            "detail": "Lighting level/type and environment conditions affect sensing and success.",
+            "ruled_out_by": "Report lighting (e.g., lux, structured vs ambient) and test under specified conditions.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Lab/operator/infrastructure differences",
+            "detail": "Site-specific nuances can shift results, making absolute numbers incomparable.",
+            "ruled_out_by": "Cross-site reproduction with local baselines (LRR) and replicated experiments.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+              "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+            ]
+          },
+          {
+            "name": "Object set selection and initial configuration sampling",
+            "detail": "Choice of objects/poses can change task difficulty and measured performance.",
+            "ruled_out_by": "Use published sets (e.g., YCB) and specify exact configuration sampling procedures.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Training\u2013test leakage or overfitting",
+            "detail": "Overlap or overfitting drives apparent gains without generalization.",
+            "ruled_out_by": "Strict train/test separation; monitor held-out validation losses/metrics.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Data integrity and failed runs bias aggregates",
+            "detail": "Including aborted/invalid runs or corrupted logs skews metrics.",
+            "ruled_out_by": "Hardware compliance checks; data validation; include only successful validated runs.",
+            "evidence": [
+              "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+            ]
+          },
+          {
+            "name": "Averaging masks multimodal outcomes",
+            "detail": "Averaging trajectories hides distinct terminal pose modes.",
+            "ruled_out_by": "Compare distributions over repeated trials (e.g., Mahalanobis distance of final poses).",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Controller/actuator mismatch vs physics differences",
+            "detail": "Discrepancies attributed to physics may stem from controller dynamics or loop rates.",
+            "ruled_out_by": "Match control modes, limits, and loop rates to the dataset; prescribe controller parameters.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Missing contacts / faulty contact dynamics",
+            "detail": "Large errors arise from missed or unstable contacts rather than nominal parameters.",
+            "ruled_out_by": "Measure contact forces/moments, wrist F/T, torques, and moving time to detect contact failures.",
+            "evidence": [
+              "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+            ]
+          },
+          {
+            "name": "Timing ambiguity due to parallelism",
+            "detail": "Parallel sensing/computation/motion alters effective cycle time and MPPH.",
+            "ruled_out_by": "Report t_s, t_c, t_r separately and note parallel vs sequential execution.",
+            "evidence": [
+              "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+            ]
+          },
+          {
+            "name": "Capabilities come from pretrained VLM features, not action learning",
+            "detail": "Vision-language pretraining alone could explain performance.",
+            "ruled_out_by": "Initialize from VLM-only weights and compare out-of-the-box task success to action-pretrained models.",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Post-training dominates pre-training scale effects",
+            "detail": "Alignment/post-training may overwrite pre-training benefits.",
+            "ruled_out_by": "Post-train from checkpoints with varied pre-training scales and compare held-out/task success.",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Visual shortcuts (attractors) cause failures, not language weakness",
+            "detail": "Salient training-task objects bias policies regardless of instructions.",
+            "ruled_out_by": "Remove visual attractors (CF-Focused) and measure grounding/success changes.",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Generic language incapacity explains counterfactual failures",
+            "detail": "Models may just not follow language at all.",
+            "ruled_out_by": "Show strong in-domain instruction following and restored grounding when attractors are removed.",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Improvements from degraded/random behavior",
+            "detail": "Method perturbs behavior, trading off competence for apparent grounding gains.",
+            "ruled_out_by": "Report both grounding and task success; demonstrate preserved/improved in-domain success.",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Simple training tricks replicate effects",
+            "detail": "Vanilla language dropout could explain gains.",
+            "ruled_out_by": "Ablations with dropout showing degradation vs proposed method.",
+            "evidence": [
+              "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+            ]
+          },
+          {
+            "name": "Idle/noisy trajectory segments bias learning",
+            "detail": "Long idle periods teach trivial/no-op actions.",
+            "ruled_out_by": "Filter idle segments from training data and re-evaluate.",
+            "evidence": [
+              "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+            ]
+          },
+          {
+            "name": "Human-judging subjectivity",
+            "detail": "Subjective scoring inflates/deflates performance.",
+            "ruled_out_by": "Automated RefBoxes and objective sensing/ground truth for scoring.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Hardware heterogeneity biases logged data",
+            "detail": "Different sensors/actuators embed biases in shared datasets/logs.",
+            "ruled_out_by": "Precisely specify arenas/objects/ground truth and release common logs for offline comparison.",
+            "evidence": [
+              "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+            ]
+          },
+          {
+            "name": "Zero-gradient from closest-point projection",
+            "detail": "Actor gradients vanish, making projection-based RL seem ineffective.",
+            "ruled_out_by": "Evaluate alternative mappings (\u03b1-projection, radial, NFW) and compare learning outcomes.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "Computational overhead explains poor practicality",
+            "detail": "Optimization layers cause slow training rather than poor learning quality.",
+            "ruled_out_by": "Report CPU/GPU wall-clock runtimes alongside rewards for fair comparison.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "Batch size/solver availability differences",
+            "detail": "Unavailable/altered batch sizes confound algorithm comparisons.",
+            "ruled_out_by": "Run additional experiments at common feasible batch sizes and report separately.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "Projection solver failures for distant outputs",
+            "detail": "QP solver fails on extreme actions, biasing results.",
+            "ruled_out_by": "Apply output squashing before projection and verify successful projections during rollouts.",
+            "evidence": [
+              "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+            ]
+          },
+          {
+            "name": "Missing navigation/context yields hallucinated actions",
+            "detail": "Absent goal context leads to plausible but wrong decisions.",
+            "ruled_out_by": "Ablate navigation inputs and compare action accuracy in targeted scenarios.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "Dataset coverage imbalance",
+            "detail": "Overrepresentation of easy maneuvers inflates overall accuracy.",
+            "ruled_out_by": "Curate broad scenario coverage and analyze per-task performance to expose weaknesses.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "Cross-benchmark label ambiguity",
+            "detail": "Score drops due to ambiguous/mislabeled items in other datasets.",
+            "ruled_out_by": "Manual audits identifying and excluding erroneous/ambiguous cases in comparisons.",
+            "evidence": [
+              "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+            ]
+          },
+          {
+            "name": "A priori knowledge biases HRI questionnaires",
+            "detail": "Participants\u2019 prior familiarity drives ratings independent of interaction quality.",
+            "ruled_out_by": "Record prior knowledge and analyze group-wise effects in the statistical evaluation.",
+            "evidence": [
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+              "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 2,
+        "evidence_links_dropped": 8,
+        "kept_per_key": {
+          "datasets": 22,
+          "models": 16,
+          "metrics": 26,
+          "protocols": 16,
+          "controls": 14,
+          "confounds": 29
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "LIBERO",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "Paro questionnaire dataset",
+        "evidence": [
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [
+          "Paro questionnaire dataset (Science Museum London, 440 subjects)"
+        ],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "OpenVLA",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "OpenVLA-OFT",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "\u03c0",
+        "evidence": [
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "role": "baseline"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "success rate",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "precision",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "recall",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Repeatability with statistics",
+        "evidence": [
+          "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints",
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+          "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Run multiple trials/seeds per condition and report mean and dispersion (std/SE) over repeats/episodes."
+      },
+      {
+        "name": "Sim-to-real evaluation",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Evaluate in simulation benchmarks and on real robots on matched tasks; report both."
+      },
+      {
+        "name": "Cross-benchmark evaluation",
+        "evidence": [
+          "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Evaluate methods across multiple established benchmarks to assess generality."
+      },
+      {
+        "name": "Cross-lab/site reproduction and replication",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+          "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [
+          "Cross-lab/site reproduction and replication (MIRRER)"
+        ],
+        "detail": "Reproduce and replicate experiments across labs; compute per-lab local baselines and Local Relative Rankings (LRR)."
+      },
+      {
+        "name": "Explicit train/test separation and trial reporting",
+        "evidence": [
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Separate training and test sets; report number of trials, conditions/tolerances, and standard errors; share raw data when possible."
+      },
+      {
+        "name": "External motion-capture ground truth",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Use external mocap (e.g., OptiTrack/Qualisys) to measure robot/object poses for benchmarking."
+      },
+      {
+        "name": "HRI questionnaire design with controls",
+        "evidence": [
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Collect subjective evaluations with no-interaction control groups and record participants\u2019 prior knowledge."
+      },
+      {
+        "name": "Record and release raw logs and ground truth",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Record rosbag/sensor logs, videos, and motion-capture ground truth; publish for replay and analysis."
+      },
+      {
+        "name": "Black-box and grey-box ROS 2 testing",
+        "evidence": [
+          "RobotPerf: An Open-Source, Vendor-Agnostic, Benchmarking Suite for Evaluating Robotics Computing System Performance"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Assess computing system performance via end-to-end black-box and minimally invasive grey-box tests on ROS 2 graphs."
+      },
+      {
+        "name": "Competition-style multi-run scoring with automation",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Allocate multiple runs per task and use automated RefBoxes for scoring, timing, and data collection."
+      },
+      {
+        "name": "Control-loop and logging rate matching",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Match simulation/control loop and logging rates to the dataset/protocol (e.g., 10 Hz) and log specified data streams."
+      },
+      {
+        "name": "Inter-robot reproducibility",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Evaluate the same agent across multiple robots of the same platform and report performance variability."
+      },
+      {
+        "name": "Object configuration sampling specification",
+        "evidence": [
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "State and standardize the procedure for sampling initial object configurations (random vs structured)."
+      },
+      {
+        "name": "Pre-run hardware compliance and run termination rules",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Perform hardware compliance checks; define termination events (crash, time limit, exit) and include only validated runs."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Within-condition repeats",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset",
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+          "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Multiple repeated trials/seeds with the same system and context.",
+        "rules_out": "Run-to-run randomness or transient effects as the cause of performance differences."
+      },
+      {
+        "name": "Cross-lab/site local baseline",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+          "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [
+          "Cross-lab/site local baseline (LRR)"
+        ],
+        "detail": "Each lab first reproduces the original setup to establish a local baseline before testing a new method.",
+        "rules_out": "Site-specific factors or incomparable absolute metrics across labs."
+      },
+      {
+        "name": "HRI no-interaction control group",
+        "evidence": [
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Include a group that does not physically interact with the robot.",
+        "rules_out": "Higher ratings due to mere presence or exhibition context rather than interaction effects."
+      },
+      {
+        "name": "HRI prior-knowledge control",
+        "evidence": [
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Analyze groups with and without prior knowledge/familiarity.",
+        "rules_out": "Differences driven by pre-existing beliefs rather than the robot/interaction."
+      },
+      {
+        "name": "Modality ablations",
+        "evidence": [
+          "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models",
+          "When Vision Overrides Language: Evaluating and Mitigating Counterfactual Failures in VLAs"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Evaluate with vision-only, language-only, and uninformed inputs alongside full V+L+A.",
+        "rules_out": "That performance derives solely from one modality or from priors without provided context."
+      },
+      {
+        "name": "Pretrained base vs fine-tuned model",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Compare to the unfine-tuned backbone and to other models fine-tuned with their default recipes.",
+        "rules_out": "Improvements arising from the base model or generic fine-tuning rather than the proposed recipe."
+      },
+      {
+        "name": "Strong published baselines / prior SOTA on same benchmark",
+        "evidence": [
+          "Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Compare against prior best numbers or strong baselines under identical protocols.",
+        "rules_out": "Gains due to evaluation protocol differences rather than actual performance."
+      },
+      {
+        "name": "Component/penalty ablations for constrained RL",
+        "evidence": [
+          "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Compare mapping/projection layers with/without violation penalties and alternative mappings.",
+        "rules_out": "Effects explained purely by added penalties or specific solvers rather than the proposed mechanism."
+      },
+      {
+        "name": "Cross-robot same-agent evaluation",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Run the same agent on multiple nominally identical robots.",
+        "rules_out": "Idiosyncratic hardware effects from a single robot."
+      },
+      {
+        "name": "Default-parameter simulator baselines across engines",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Run default settings across multiple physics engines as reference conditions.",
+        "rules_out": "Effects stemming from protocol/dataset handling rather than simulator physics/modeling choices."
+      },
+      {
+        "name": "External ground-truth sensing",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Use motion capture or other external measurements during evaluation.",
+        "rules_out": "Apparent accuracy due to onboard sensing/odometry drift or bias."
+      },
+      {
+        "name": "Functionality-isolating tasks",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [
+          "Functionality-isolating tasks (FBMs)"
+        ],
+        "detail": "Design tasks to engage only the subsystem under test and fix other factors (e.g., pre-positioning).",
+        "rules_out": "Attribution of success/failure to unrelated subsystems."
+      },
+      {
+        "name": "Navigation-information ablation",
+        "evidence": [
+          "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Compare behavior with vs without navigation instructions in decision tasks.",
+        "rules_out": "Correct actions explained by image cues or priors rather than goal-aligned guidance."
+      },
+      {
+        "name": "Standardized human stimuli",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Hold human factors constant (e.g., same live speaker, fixed prompts).",
+        "rules_out": "Performance differences driven by human variability rather than system capability."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "A priori knowledge biases HRI questionnaires",
+        "evidence": [
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot at Science Museum in London",
+          "Tabulation and analysis of questionnaire results of subjective evaluation of seal robot in UK"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Participants\u2019 prior familiarity drives ratings independent of interaction quality.",
+        "ruled_out_by": "Record prior knowledge and analyze group-wise effects in the statistical evaluation."
+      },
+      {
+        "name": "Hardware variation between robots",
+        "evidence": [
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Manufacturing/calibration differences alter outcomes independent of the method.",
+        "ruled_out_by": "Cross-robot evaluations and detailed hardware reporting for replication."
+      },
+      {
+        "name": "Lab/operator/infrastructure differences",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents",
+          "Towards Using Multiple Iterated, Reproduced, and Replicated Experiments with Robots (MIRRER) for Evaluation and Benchmarking"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Site-specific nuances can shift results, making absolute numbers incomparable.",
+        "ruled_out_by": "Cross-site reproduction with local baselines (LRR) and replicated experiments."
+      },
+      {
+        "name": "Object set selection and initial configuration sampling",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Choice of objects/poses can change task difficulty and measured performance.",
+        "ruled_out_by": "Use published sets (e.g., YCB) and specify exact configuration sampling procedures."
+      },
+      {
+        "name": "Run-to-run randomness",
+        "evidence": [
+          "Competitions for Benchmarking: Task and Functionality Scoring Complete Performance Assessment",
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Stochasticity and transient variability can mimic improvements/failures.",
+        "ruled_out_by": "Within-condition repeated trials/seeds with mean and dispersion reporting."
+      },
+      {
+        "name": "Training\u2013test leakage or overfitting",
+        "evidence": [
+          "Guest Editorial Open Discussion of Robot Grasping Benchmarks, Protocols, and Metrics",
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Overlap or overfitting drives apparent gains without generalization.",
+        "ruled_out_by": "Strict train/test separation; monitor held-out validation losses/metrics."
+      },
+      {
+        "name": "Averaging masks multimodal outcomes",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Averaging trajectories hides distinct terminal pose modes.",
+        "ruled_out_by": "Compare distributions over repeated trials (e.g., Mahalanobis distance of final poses)."
+      },
+      {
+        "name": "Batch size/solver availability differences",
+        "evidence": [
+          "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Unavailable/altered batch sizes confound algorithm comparisons.",
+        "ruled_out_by": "Run additional experiments at common feasible batch sizes and report separately."
+      },
+      {
+        "name": "Capabilities come from pretrained VLM features, not action learning",
+        "evidence": [
+          "Xiaomi-Robotics-1: Scaling Vision-Language-Action Models with over 100K Hours of Real-World Trajectories"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Vision-language pretraining alone could explain performance.",
+        "ruled_out_by": "Initialize from VLM-only weights and compare out-of-the-box task success to action-pretrained models."
+      },
+      {
+        "name": "Computational overhead explains poor practicality",
+        "evidence": [
+          "Benchmarking Actor-Critic Deep Reinforcement Learning Algorithms for Robotics Control with Action Constraints"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Optimization layers cause slow training rather than poor learning quality.",
+        "ruled_out_by": "Report CPU/GPU wall-clock runtimes alongside rewards for fair comparison."
+      },
+      {
+        "name": "Controller/actuator mismatch vs physics differences",
+        "evidence": [
+          "Benchmarking Simulated Robotic Manipulation Through a Real World Dataset"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Discrepancies attributed to physics may stem from controller dynamics or loop rates.",
+        "ruled_out_by": "Match control modes, limits, and loop rates to the dataset; prescribe controller parameters."
+      },
+      {
+        "name": "Cross-benchmark label ambiguity",
+        "evidence": [
+          "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Score drops due to ambiguous/mislabeled items in other datasets.",
+        "ruled_out_by": "Manual audits identifying and excluding erroneous/ambiguous cases in comparisons."
+      },
+      {
+        "name": "Data integrity and failed runs bias aggregates",
+        "evidence": [
+          "Integrated Benchmarking and Design for Reproducible and Accessible Evaluation of Robotic Agents"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Including aborted/invalid runs or corrupted logs skews metrics.",
+        "ruled_out_by": "Hardware compliance checks; data validation; include only successful validated runs."
+      },
+      {
+        "name": "Dataset coverage imbalance",
+        "evidence": [
+          "DriveAction: A Benchmark for Exploring Human-like Driving Decisions in VLA Models"
+        ],
+        "subfields": [
+          "Robotics"
+        ],
+        "variants": [],
+        "detail": "Overrepresentation of easy maneuvers inflates overall accuracy.",
+        "ruled_out_by": "Curate broad scenario coverage and analyze per-task performance to expose weaknesses."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 22,
+      "out": 2,
+      "dropped_uncorroborated": 20,
+      "relaxed": false,
+      "by_subfield": {
+        "Robotics": 2
+      }
+    },
+    "models": {
+      "in": 16,
+      "out": 3,
+      "dropped_uncorroborated": 13,
+      "relaxed": false,
+      "by_subfield": {
+        "Robotics": 3
+      }
+    },
+    "metrics": {
+      "in": 26,
+      "out": 3,
+      "dropped_uncorroborated": 23,
+      "relaxed": false,
+      "by_subfield": {
+        "Robotics": 3
+      }
+    },
+    "protocols": {
+      "in": 16,
+      "out": 14,
+      "by_subfield": {
+        "Robotics": 14
+      }
+    },
+    "controls": {
+      "in": 14,
+      "out": 14,
+      "by_subfield": {
+        "Robotics": 14
+      }
+    },
+    "confounds": {
+      "in": 29,
+      "out": 14,
+      "by_subfield": {
+        "Robotics": 14
+      }
+    },
+    "totals": {
+      "in": 123,
+      "out": 50
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Repeatability in RoboDojo (statistics)",
+      "dataset": "RoboDojo (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "Repeatability with statistics",
+      "metrics": [
+        "success rate (higher_better)"
+      ],
+      "pass_condition": "Select 3 standard RoboDojo tasks. For each task, run >=5 random seeds with >=10 episodes per seed (>=50 episodes/task). Compute per-task mean success rate and standard error across episodes. Pass if these statistics are computed and stored for all 3 tasks; otherwise fail.",
+      "constraints_not_enforced": [
+        "Inter-robot reproducibility",
+        "Cross-lab/site reproduction and replication (MIRRER)"
+      ],
+      "depends_on": [],
+      "rationale": "Repeatability with statistics is a foundational norm; it is cheap to verify in simulation and immediately refutes claims of standard practice if absent.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "gate",
+      "goal": "Train/test split and sampler compliance on LIBERO",
+      "dataset": "LIBERO (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "Explicit train/test separation and trial reporting",
+      "metrics": [
+        "success rate (higher_better)"
+      ],
+      "pass_condition": "Evaluate only on LIBERO (eval) tasks with the policy frozen (no gradient updates) and with object initial states sampled using the published LIBERO evaluation sampler. For each of 3 tasks, run >=50 episodes and write metadata containing sampler parameters, number of trials, and seed list. Pass if: (a) evaluation logs show zero training steps on LIBERO (eval), and (b) metadata contains the sampler spec and N_episodes >=50 for all tasks; otherwise fail.",
+      "constraints_not_enforced": [
+        "Cross-lab/site reproduction and replication (MIRRER)",
+        "Inter-robot reproducibility"
+      ],
+      "depends_on": [],
+      "rationale": "Strict train/test separation and explicit reporting of trials and sampling are core experimental norms that can be verified by attempting compliant evaluation and inspecting logs/metadata.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validated external mocap for ground truth",
+      "dataset": "YCB object set (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "External motion-capture ground truth",
+      "metrics": [
+        "translation error (Euclidean) (lower_better)",
+        "rotation error (quaternion) (lower_better)"
+      ],
+      "pass_condition": "Set up external mocap (e.g., Qualisys/OptiTrack) and register it to robot frames. Using a calibration tool or end-effector probe, collect >=100 diverse stationary poses spanning the workspace and compare mocap poses to robot forward-kinematics ground truth. Pass if median translation error <= 5 mm and median rotation error <= 0.5 deg; otherwise fail.",
+      "constraints_not_enforced": [
+        "Repeatability with statistics in manipulation tasks"
+      ],
+      "depends_on": [],
+      "rationale": "Ground-truth apparatus must be validated before headline tests; numeric accuracy gates ensure the apparatus provides reliable pose references as required by norms.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Sim-to-real on matched RoboCasa tasks",
+      "dataset": "RoboCasa (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "Sim-to-real evaluation",
+      "metrics": [
+        "success rate (higher_better)",
+        "moving time (lower_better)",
+        "sensing/computation/motion time per attempt (t_s, t_c, t_r) (lower_better)"
+      ],
+      "pass_condition": "Choose 3 RoboCasa tasks available in both simulation and a corresponding real-robot setup. Use the same object set and initial-state sampler in both domains. Run >=50 episodes per task in sim and >=30 episodes per task on the real robot. Log rosbag/sensor streams, videos, and (from the validated apparatus) mocap ground truth; match control-loop and logging rates to >=10 Hz and record t_s, t_c, t_r per attempt. Pass if, for all tasks, sim and real trials are completed with identical sampling specs, and mean\u00b1SE of success rate, moving time, and t_s/t_c/t_r are reported from the collected logs; otherwise fail.",
+      "constraints_not_enforced": [
+        "Cross-lab/site reproduction and replication (MIRRER)"
+      ],
+      "depends_on": [
+        "Validated external mocap for ground truth"
+      ],
+      "rationale": "Norms require sim-to-real testing on matched tasks with comprehensive logging and timing; this directly verifies those requirements using standardized benchmarks and validated ground truth.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Inter-robot reproducibility on YCB tasks",
+      "dataset": "YCB object set (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "Inter-robot reproducibility",
+      "metrics": [
+        "success rate (higher_better)"
+      ],
+      "pass_condition": "Deploy the same frozen policy binary on two nominally identical robots of the same platform. On a fixed 5-task YCB manipulation suite, run >=20 episodes per task per robot using automated scoring (Competition-style multi-run scoring with automation). Record identical sensor configurations and calibrations, and capture rosbag/videos/mocap logs. Pass if per-robot mean\u00b1SE success rates for each task are computed and all raw logs are saved for both robots; otherwise fail.",
+      "constraints_not_enforced": [
+        "Cross-lab/site reproduction and replication (MIRRER)"
+      ],
+      "depends_on": [
+        "Validated external mocap for ground truth"
+      ],
+      "rationale": "Running the same agent on multiple identical robots and reporting variability is a key norm to rule out idiosyncratic hardware effects.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Cross-benchmark compliance (RoboDojo+LIBERO+RoboCasa)",
+      "dataset": "RoboCasa (eval)",
+      "model": "OpenVLA (backbone)",
+      "method_under_test": "OpenVLA-OFT (method_under_test)",
+      "attack_or_condition": "Cross-benchmark evaluation",
+      "metrics": [
+        "success rate (higher_better)"
+      ],
+      "pass_condition": "Pass if the following all succeeded: (1) Repeatability in RoboDojo (statistics), (2) Train/test split and sampler compliance on LIBERO, and (3) Sim-to-real on matched RoboCasa tasks\u2014yielding standardized success-rate summaries across at least these three distinct benchmarks; otherwise fail.",
+      "constraints_not_enforced": [
+        "Cross-lab/site reproduction and replication (MIRRER)"
+      ],
+      "depends_on": [
+        "Repeatability in RoboDojo (statistics)",
+        "Train/test split and sampler compliance on LIBERO",
+        "Sim-to-real on matched RoboCasa tasks"
+      ],
+      "rationale": "Evaluating across multiple established benchmarks is a generality norm; this control aggregates prior tasks to ensure cross-benchmark coverage under consistent reporting.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

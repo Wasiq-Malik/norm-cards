@@ -187,6 +187,7 @@ def _main():
 
     models = [m.strip() for m in args.models.split(",") if m.strip()]
     names = [a.strip() for a in args.arms.split(",") if a.strip()]
+    n_skipped = 0
     sections = resolve_sections(args.sections)
     label = "" if args.sections.strip().lower() == "all" else args.sections.strip().lower()
     claims = load_claims()
@@ -200,7 +201,13 @@ def _main():
         out_dir = os.path.join(args.out, f"problem_{pid}")
         out_path = os.path.join(out_dir, "scify_proposer.json")
         if os.path.exists(out_path) and not args.force:
-            print(f"[{pid}] proposals exist; --force to redo")
+            # The skip is per CLAIM, not per arm, so adding a model to an existing
+            # run skips everything and exits looking like success. Say which arms
+            # are already there, and fail loudly if the whole run was a no-op.
+            have = sorted(json.load(open(out_path, encoding="utf-8")).get("arms") or {})
+            print(f"[{pid}] proposals exist ({len(have)} arms: "
+                  f"{', '.join(have[:4])}{'…' if len(have) > 4 else ''}); --force to redo")
+            n_skipped += 1
             continue
 
         problem = claims[pid]
@@ -240,6 +247,13 @@ def _main():
         for m, a in sorted(arms.items()):
             print(f"      {m:26s} " + (a.get("error") or f"{len(a['experiments'])} experiments"))
         print(f"    -> {out_path}")
+
+
+    if n_skipped == len(ids):
+        raise SystemExit(
+            f"nothing to do: all {n_skipped} claim(s) already have a proposals file. "
+            f"--force overwrites them, which DISCARDS arms from other models in the "
+            f"same file; to add a model to an existing run, merge into `arms` instead.")
 
 
 if __name__ == "__main__":

@@ -35,6 +35,7 @@ It is not a licence to skip the reading.
 import argparse
 import json
 import os
+import re
 
 from . import gt_dir, gt_path, load_claims
 from . import reference, schemas
@@ -59,6 +60,15 @@ You are a scribe, not a designer. This distinction is the whole point of the tas
 - Keep the authors' own numbers, thresholds, model names, dataset names and
   hyperparameters. These are what make the decision rule unambiguous.
 
+- NEVER point at a figure, table, panel or plotted line. "shown by the orange and
+  green lines in the robustness panel", "see Figure 3", "reported in Table 2" are
+  useless here: the reader of this reference is a system that cannot see the
+  paper. Every decision must be stated in words and numbers on the page. If the
+  result lives only in a plot, read the plot and write down what it shows —
+  "clean accuracy rises from 84.1% to 86.7% while robust accuracy is unchanged
+  within 0.3 points" — or, if you cannot read a value off it, describe the
+  comparison and say the direction, never the figure.
+
 FORM. One paragraph per experiment, at the granularity a proposer writes: what is
 run, on what data and model, what is measured, and what result decides the
 question. Open with a short imperative saying what the experiment is for ("Build
@@ -77,6 +87,12 @@ ROLE. Label each with what it is FOR:
 CITE. For each, name the section, figure or table it is transcribed from, so a
 reviewer can check it in one lookup.
 
+EXAMPLES. Below are experiments from references that were transcribed by hand and
+reviewed against their papers. Match their granularity, their plainness, and the
+way each opens by saying what the experiment is FOR. Do not copy their subject
+matter — they are from other fields.
+{examples}
+
 CLAIM this reference will be scored against (context only — transcribe the
 paper's experiments, NOT experiments for this claim):
 {claim}
@@ -91,11 +107,55 @@ Return JSON:
   "not_run":["experiments a reader might expect that this paper does NOT run"]}}"""
 
 
-def draft(claim: str, text: str, model: str = "gpt-5") -> dict:
+# The three references authored and reviewed by hand before this tool existed.
+# Style is easier to show than to specify, and these are the only examples that
+# were checked against their source papers line by line.
+EXAMPLE_REFS = os.path.join("results", "eval_icml2026_v3_notools", "ground_truth")
+
+
+def load_examples(root: str = "", per_ref: int = 2, max_chars: int = 5000) -> str:
+    """A few reviewed experiments, with the role each plays, as exemplars."""
+    root = root or EXAMPLE_REFS
+    if not os.path.isdir(root):
+        return "(no reviewed references available as examples)"
+    out, used = [], 0
+    for d in sorted(os.listdir(root)):
+        path = os.path.join(root, d, "ground_truth.json")
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            ref = json.load(f)
+        roles = ref.get("roles") or []
+        for i, e in list(enumerate(ref.get("experiments") or []))[:per_ref]:
+            role = roles[i] if i < len(roles) else "?"
+            block = f"--- example ({role}) ---\n{e.strip()}"
+            if used + len(block) > max_chars:
+                break
+            out.append(block)
+            used += len(block)
+    return "\n\n".join(out) or "(no reviewed references available as examples)"
+
+
+def draft(claim: str, text: str, model: str = "gpt-5.6-sol", examples: str = "") -> dict:
     if not (text or "").strip():
         raise ValueError("no paper text — transcription has no source to work from")
-    return llm.complete_json(_PROMPT.format(claim=claim[:1200], text=text[:200000]),
-                             model=model)
+    return llm.complete_json(
+        _PROMPT.format(claim=claim[:1200], text=text[:200000],
+                       examples=examples or load_examples()), model=model)
+
+
+FIGREF = re.compile(r"\b(orange|green|blue|red|purple|dashed|solid)\s+(line|curve|bar)s?\b"
+                    r"|\bFig(?:ure)?\.?\s*\d|\bTable\s*\d|\bpanel\b|\bsubplot\b"
+                    r"|\bleft (?:panel|plot)\b|\bas shown in the (?:figure|plot|chart)\b", re.I)
+
+
+def figure_references(exps: list) -> list:
+    """Experiments that point at something the reader cannot see.
+
+    A reference is read by a system with no access to the paper, so "shown by the
+    orange and green lines" states no decision at all. Caught here rather than
+    left for a reviewer, because it reads as fluent prose and is easy to skim past."""
+    return [(i, FIGREF.search(e).group(0)) for i, e in enumerate(exps) if FIGREF.search(e)]
 
 
 def to_reference(problem: dict, drafted: dict, source: str) -> dict:
@@ -144,7 +204,7 @@ def _main():
     ap.add_argument("--problem", required=True, help="problem id from the claims file")
     ap.add_argument("--arxiv", default="", help="arXiv id of the source paper")
     ap.add_argument("--pdf", default="", help="local PDF path, instead of --arxiv")
-    ap.add_argument("--model", default="gpt-5")
+    ap.add_argument("--model", default="gpt-5.6-sol")
     ap.add_argument("--cache_dir", default=".pdfcache")
     ap.add_argument("--accept", action="store_true",
                     help="promote an existing draft to ground_truth.json. Only after "
@@ -204,6 +264,12 @@ def _main():
     md = os.path.join(gt_dir(pid), "ground_truth.draft.md")
     with open(md, "w", encoding="utf-8") as f:
         f.write(review_markdown(ref))
+    figs = figure_references(ref["experiments"])
+    if figs:
+        print(f"  WARNING: {len(figs)} experiment(s) point at a figure or table the reader "
+              f"cannot see — rewrite these before accepting:")
+        for i, m in figs:
+            print(f"    experiment {i}: ...{m}...")
     print(f"drafted {len(ref['experiments'])} experiments "
           f"{dict((r, ref['roles'].count(r)) for r in sorted(set(ref['roles'])))}")
     print(f"  -> {_draft_path(pid)}\n  -> {md}   <- read this against the paper")

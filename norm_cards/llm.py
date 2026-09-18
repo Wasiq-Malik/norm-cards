@@ -7,6 +7,7 @@ raises. No silent fallbacks.
 import os
 import re
 import json
+import time
 
 from . import config
 
@@ -21,14 +22,46 @@ def _litellm():
     return litellm
 
 
-def complete(prompt: str, model: str = None, temperature: float = 0.1) -> str:
-    """Single-turn completion."""
+# Reasoning models reject any temperature but the default. The check is by family
+# rather than an exact list because the list keeps growing: gpt-6-astra shipped
+# after this code was written and failed with "temperature does not support 0.1",
+# because the only guard was `startswith("gpt-5")`.
+_FIXED_TEMP = ("gpt-5", "gpt-6", "gpt-7", "o1", "o3", "o4")
+
+
+def wants_default_temperature(model: str) -> bool:
+    """Does this model reject an explicit temperature?"""
+    m = (model or "").split("/")[-1].lower()
+    return m.startswith(_FIXED_TEMP)
+
+
+# No call gets to hang forever. A card build once sat for FOUR HOURS on an
+# established connection with nothing to show for it, because litellm's default
+# is to wait indefinitely and nothing here overrode it. A batch job that stalls
+# silently is worse than one that fails: the failure is at least visible.
+TIMEOUT = 300
+RETRIES = 3
+
+
+def complete(prompt: str, model: str = None, temperature: float = 0.1,
+             timeout: int = TIMEOUT, retries: int = RETRIES) -> str:
+    """Single-turn completion, with a hard timeout and bounded retries."""
     model = model or config.DEFAULT_MODEL
-    kwargs = {"model": model, "messages": [{"role": "user", "content": prompt}]}
-    # gpt-5 family wants temperature=1, mirroring codeagent.py.
-    kwargs["temperature"] = 1 if model.startswith("gpt-5") else temperature
-    resp = _litellm().completion(**kwargs)
-    return resp.choices[0].message.content.strip()
+    kwargs = {"model": model, "messages": [{"role": "user", "content": prompt}],
+              "timeout": timeout}
+    kwargs["temperature"] = 1 if wants_default_temperature(model) else temperature
+    last = None
+    for attempt in range(retries):
+        try:
+            resp = _litellm().completion(**kwargs)
+            return resp.choices[0].message.content.strip()
+        except Exception as e:
+            last = e
+            print(f"  [llm] {type(e).__name__} on {model} "
+                  f"(attempt {attempt + 1}/{retries}): {str(e)[:110]}", flush=True)
+            if attempt + 1 < retries:
+                time.sleep(5 * (attempt + 1))
+    raise last
 
 
 def complete_json(prompt: str, model: str = None) -> dict:
