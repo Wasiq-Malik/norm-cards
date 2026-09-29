@@ -18,7 +18,20 @@ order they should be believed:
    follow-ups usually serve its OTHER claims. Scoring both ways separates "designed
    a good test of the claim" from "guessed more of what the authors did".
 
-4. **Per-card attribution.** Mean effect for each shared subfield card. Most claims
+4. **recall@k.** The proposer is instructed to list experiments in priority order
+   (`scify_proposer.py`), so the ranking is real and a prefix is meaningful: recall@k
+   is what a team would recover if it could only run the first k. This is the metric
+   that matters operationally, because SciFy's production budget is 3 and this
+   harness runs at 9 — an effect that only appears at 9 is not yet an effect you can
+   ship.
+
+5. **Precision and strict recall**, as robustness. Precision is the share of
+   proposals bearing on any reference item; it is NOT correctness, because under
+   claim-is-the-contract an unmatched proposal may be an adequate route the authors
+   did not take. Strict recall drops partial credit: if an effect needs halves to
+   survive, say so.
+
+6. **Per-card attribution.** Mean effect for each shared subfield card. Most claims
    are served by two or three cards, so a claim's change is credited to each of
    them — presence, not isolation. Read it as which cards to keep building.
 """
@@ -32,6 +45,8 @@ import random
 import statistics as st
 
 ARMS = ("nocard", "rag", "card")
+VALUE = {"covered": 1.0, "partial": 0.5, "missing": 0.0}
+BUDGETS = (3, 6, 9)
 OBLIGED = {"headline", "apparatus", "control", "confound"}
 BEYOND = {"mechanism", "external"}
 RIGOUR = {"control", "confound"}
@@ -66,6 +81,7 @@ def load(run: str):
         with open(p, encoding="utf-8") as f:
             roles[pid] = json.load(f).get("roles") or []
     full, sliced = {}, collections.defaultdict(dict)
+    cov, nprop = {}, {}
     for p in glob.glob(os.path.join(run, "eval", "judgments", "problem_*", "*.json")):
         if os.path.basename(p).startswith("_"):      # _selftest and friends
             continue
@@ -73,6 +89,11 @@ def load(run: str):
             j = json.load(f)
         key = (j["problem_id"], j.get("proposer_model", "?"), arm_base(j.get("arm", "")))
         full[key] = j["scores"]["recall"]
+        # `covered_by` holds the proposal indices carrying each reference item, which
+        # is what makes a prefix — and therefore recall@k — computable.
+        cov[key] = [(VALUE.get(c.get("status"), 0.0), sorted(c.get("covered_by") or []))
+                    for c in (j.get("reference_coverage") or [])]
+        nprop[key] = j["scores"].get("n_proposed") or 0
         rl = roles.get(j["problem_id"], [])
         statuses = j["scores"].get("coverage_statuses") or []
         for sel, tag in ((OBLIGED, "obliged"), (BEYOND, "beyond"), (RIGOUR, "rigour")):
@@ -80,7 +101,25 @@ def load(run: str):
                     for i, s in enumerate(statuses) if i < len(rl) and rl[i] in sel]
             if vals:
                 sliced[tag][key] = st.fmean(vals)
-    return full, sliced
+    return full, sliced, cov, nprop
+
+
+def recall_at(items, k):
+    """Value recovered if only the first k proposals, in priority order, were run."""
+    if not items:
+        return 0.0
+    return sum(v for v, by in items if by and min(by) < k) / len(items)
+
+
+def strict(items):
+    """Recall with no partial credit — does the effect survive without halves?"""
+    return st.fmean(1.0 if v == 1.0 else 0.0 for v, _ in items) if items else 0.0
+
+
+def precision(items, n_prop):
+    """Share of proposals bearing on any reference item. Overlap, NOT correctness."""
+    used = {i for _, by in items for i in by}
+    return len(used) / n_prop if n_prop else 0.0
 
 
 def block(title, tbl, models, pids):
@@ -108,7 +147,7 @@ def _main():
     ap.add_argument("--dataset", default="", help="dataset name, for per-card attribution")
     args = ap.parse_args()
 
-    full, sliced = load(args.run)
+    full, sliced, cov, nprop = load(args.run)
     if not full:
         raise SystemExit(f"no judgments under {os.path.join(args.run, 'eval', 'judgments')}")
     models = sorted({m for _, m, _ in full})
@@ -124,6 +163,33 @@ def _main():
                        ("rigour", "CONTROLS + CONFOUNDS ONLY")):
         if sliced.get(tag):
             block(title, sliced[tag], models, pids)
+
+    if cov:
+        print("\n  === recall@k — value recovered within a k-experiment budget ===")
+        print(f"  {'budget':>8s} " + " ".join(f"{a:>8s}" for a in ARMS) + "   Δcard−nocard")
+        for k in BUDGETS:
+            ms = []
+            for a in ARMS:
+                v = [recall_at(cov[(p, m, a)], k) for p in pids for m in models
+                     if (p, m, a) in cov]
+                ms.append(st.fmean(v) if v else 0.0)
+            print(f"  {k:>8d} " + " ".join(f"{x:8.3f}" for x in ms)
+                  + f"   {ms[2] - ms[0]:+.3f}")
+        ms = [st.fmean([full[(p, m, a)] for p in pids for m in models if (p, m, a) in full])
+              for a in ARMS]
+        print(f"  {'full':>8s} " + " ".join(f"{x:8.3f}" for x in ms)
+              + f"   {ms[2] - ms[0]:+.3f}")
+        print("\n  === robustness ===")
+        for name, fn in (("strict recall", lambda k: strict(cov[k])),
+                         ("precision", lambda k: precision(cov[k], nprop[k]))):
+            ms = [st.fmean([fn((p, m, a)) for p in pids for m in models if (p, m, a) in cov])
+                  for a in ARMS]
+            pr = [(fn((p, m, "nocard")), fn((p, m, "card"))) for p in pids for m in models
+                  if (p, m, "nocard") in cov and (p, m, "card") in cov]
+            d, lo, hi = boot(pr)
+            print(f"  {name:16s} " + " ".join(f"{x:8.3f}" for x in ms)
+                  + f"   {d:+.3f} [{lo:+.3f}, {hi:+.3f}]"
+                  + ("  *" if (lo > 0 or hi < 0) else ""))
 
     eff = {}
     for p in pids:

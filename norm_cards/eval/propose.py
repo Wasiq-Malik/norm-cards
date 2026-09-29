@@ -183,6 +183,13 @@ def _main():
     ap.add_argument("--out", default=os.path.join("results", "proposals"))
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--merge", action="store_true",
+                    help="add arms to an existing proposals file instead of skipping "
+                         "the claim. The skip is per CLAIM, so adding a model to a "
+                         "finished run otherwise no-ops on every claim and exits "
+                         "looking like success; --force would 'fix' that by "
+                         "discarding the other models' arms. This runs only the arms "
+                         "that are missing and merges them in.")
     args = ap.parse_args()
 
     models = [m.strip() for m in args.models.split(",") if m.strip()]
@@ -200,7 +207,24 @@ def _main():
             continue
         out_dir = os.path.join(args.out, f"problem_{pid}")
         out_path = os.path.join(out_dir, "scify_proposer.json")
-        if os.path.exists(out_path) and not args.force:
+        existing = {}
+        if os.path.exists(out_path) and args.merge and not args.force:
+            with open(out_path, encoding="utf-8") as f:
+                existing = json.load(f)
+            have = set(existing.get("arms") or {})
+            # arm keys are "<model>+<condition>"; only the model half is known here,
+            # so decide by model — a model with any arm present is already done.
+            done = {m for m in models if any(a.startswith(m + "+") for a in have)}
+            if set(models) <= done:
+                print(f"[{pid}] all {len(models)} model(s) already present "
+                      f"({len(have)} arms); nothing to merge")
+                n_skipped += 1
+                continue
+            models_here = [m for m in models if m not in done]
+            print(f"[{pid}] merging {models_here} into {len(have)} existing arm(s)")
+        else:
+            models_here = models
+        if os.path.exists(out_path) and not args.force and not args.merge:
             # The skip is per CLAIM, not per arm, so adding a model to an existing
             # run skips everything and exits looking like success. Say which arms
             # are already there, and fail loudly if the whole run was a no-op.
@@ -225,11 +249,15 @@ def _main():
         for c, ev in conditions.items():
             print(f"    condition {c:16s} evidence {sum(len(v) for v in ev.values()):6d} chars")
 
-        print(f"    proposing: {len(models)} model(s) x {len(conditions)} condition(s), "
+        print(f"    proposing: {len(models_here)} model(s) x {len(conditions)} condition(s), "
               f"budget {args.budget}")
-        arms = propose_all(problem, models, subclaims, conditions,
+        arms = propose_all(problem, models_here, subclaims, conditions,
                            workers=args.workers, budget=args.budget,
                            repeats=args.repeats)
+        if existing:
+            merged = dict(existing.get("arms") or {})
+            merged.update(arms)
+            arms = merged
 
         os.makedirs(out_dir, exist_ok=True)
         with open(out_path, "w", encoding="utf-8") as f:

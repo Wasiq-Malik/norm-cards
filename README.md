@@ -206,7 +206,8 @@ name once you have read them against the papers.
   credits controls run outside the setting the claim names.
 - **`propose` skips per claim, not per arm.** Adding a model in a second invocation
   against the same output directory silently skips every claim the first finished.
-  Pass all models in one `--models` call.
+  Pass all models in one `--models` call, or add `--merge` to run only the missing
+  models' arms and merge them into the existing files.
 - **Contamination is filtered on arXiv v1 date**, never venue date.
 - **One model shows no effect.** gpt-5.4 is −0.005 where gpt-5.5 and gpt-5.6-terra
   are both ≈+0.065. Pooling does real work in the headline.
