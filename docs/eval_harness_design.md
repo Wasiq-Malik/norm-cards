@@ -21,7 +21,7 @@ One agentic stage, over an input the harness does not produce:
 | Piece | Model | Role |
 |---|---|---|
 | **Reference recipes** | none — **authored outside the harness** | The experiment chain a competent team would run to decide the claim. Hand-written, or transcribed from the source paper's experiment section. A checked-in fixture; `reference.py` validates and renders it. See `reference_format.md`. |
-| **Evaluation** | `gpt-5.6-luna` (cheap/fast → judge-runs default 3) | Judges the SET against the claim's decision requirements, plus a per-experiment audit for soundness, norm alignment, grounding and economy. Evidence-quoted throughout. |
+| **Evaluation** | `gpt-5.6-terra`, judge prompt v2 | Judges the SET against the claim's decision requirements, plus a per-experiment audit for soundness, norm alignment, grounding and economy. Evidence-quoted throughout. |
 
 **Scope for now:** the 10 claims that have `scify_proposer.json`
 (6, 7, 9, 10, 11, 12, 21, 33, 36, 37); the evaluator runs on those existing outputs.
@@ -69,77 +69,47 @@ being framed as a complaint about the source.
    step matching, and divergence is explicitly not a fault. Any judgment that faults an
    experiment must still be backed by *independent* evidence (paper quotes, docs,
    leaderboards) — "the reference does it differently" is never sufficient.
-2. **The judge's baseline is unaided; the tool belt is an extra.** `--tools` is OFF by
-   default. What is being evaluated is the judge's own reading of the claim and the two
-   lists, so that is what it is given. The belt (web search, page fetch, OpenAlex,
-   full-text retrieval) is available where resource existence is genuinely at issue.
-   This reversed an earlier "fully equipped, cost accepted" default, on evidence: in the
-   judge stress suite the belt made the ORDER CONTROL — reversing a proposal list, which
-   provably cannot change what the set establishes — drift by a mean |Δ| of 0.165
-   against 0.069 unaided, and by 0.286 on one claim. Rate-limited searches return
-   different evidence on different passes, and that variance lands straight in the
-   score. A judge whose noise exceeds the effect being measured is not thorough, it is
-   unusable.
-3. **Every judgment quotes evidence.** A verdict without a quoted, attributable source is
-   downgraded to `UNSUPPORTED` and excluded from headline scores.
+2. **The judge is unaided.** It is given the claim and the two lists and nothing else,
+   because its own reading of them is what is being evaluated. It once had a research
+   belt (web search, page fetch, OpenAlex, full-text retrieval) and an evidence ledger;
+   both were removed after the judge stress suite showed the belt made the ORDER
+   CONTROL — reversing a proposal list, which provably cannot change what the set
+   establishes — drift by a mean |Δ| of 0.165 against 0.069 unaided, and by 0.286 on
+   one claim. Rate-limited searches return different evidence on different passes, and
+   that variance lands straight in the score. A judge whose noise exceeds the effect
+   being measured is not thorough, it is unusable.
+3. **Every negative judgment is reasoned.** A `partial` or `missing` status must carry a
+   reasoning chain ending in what the team would fail to learn; `schemas.py` rejects it
+   otherwise and the judge resubmits.
 4. **Judge the decision structure, not string similarity.** A proposed experiment that
    differs from the GT but genuinely advances the verify/refute decision is a
    `VALID_NOVEL`, not a miss. Coverage is scored over *roles* in the dependency chain
    (gate → apparatus → headline → control), not over GT line items.
-5. **Everything is auditable.** Full tool-call trajectories (every query, every fetched
-   page, every quote) are logged as JSONL traces so any verdict can be hand-checked.
+5. **Everything is auditable.** Every judge call, its prompt and every submission
+   (rejected ones included) are logged as JSONL traces so any verdict can be hand-checked.
 
 ---
 
 ## Shared infrastructure
 
-### `norm_cards/eval/agent_loop.py` — generic tool-calling loop
-
-The judge's runner (litellm function-calling, consistent with
-`llm.py`):
+### `norm_cards/eval/agent_loop.py` — the submit loop
 
 ```
 run_agent(system, user, submit_spec, model, *, reasoning_effort,
           max_steps=200, trace_path, validate) -> AgentResult
 ```
 
-- Standard OpenAI-style tool-calling loop: model ↔ tool executor until the model emits
-  the final structured answer (a designated `submit_*` tool with a strict JSON schema —
-  this is how we force valid output without truncating the research phase).
-- `max_steps` is a safety valve, not a budget — set high (200), never advertised to the
-  model. No token/time pressure in any prompt.
-- `validate` rejections are handed *back to the agent* as a tool result, so a schema or
-  evidence-discipline failure produces a corrected resubmission instead of a dead run.
-- Every step appended to `trace.jsonl` with the full tool result. Results are also cached
-  to disk (keyed by tool+args hash) so re-runs are cheap and evidence is reproducible.
+- The judge has one tool, its `submit_*` tool, with a strict JSON schema — this is how
+  valid output is forced. The loop runs until it is called with a payload that passes.
+- `validate` rejections are handed *back to the model* as a tool result, so a schema
+  slip produces a corrected resubmission instead of a dead run.
+- `max_steps` is a runaway guard, never advertised to the model.
 - **`reasoning_effort` is always passed explicitly.** Verified live: the API rejects
   function tools on `/v1/chat/completions` when the parameter is *omitted*, but accepts
   every explicit level including `xhigh`. Omitting it is the one way to break the loop.
-- **Evidence ledger + context compaction.** A `record_evidence(source, quote, bearing)`
-  tool captures quotes the moment they're found; the ledger is pinned in context and
-  never compacted, while raw tool results older than the last 6 shrink to a head slice
-  once the transcript passes ~400k chars. This is what makes long research runs possible
-  without the agent losing the quote it read eighty steps ago — and it enforces the
-  "quote evidence" rule mechanically rather than by asking nicely in a prompt.
-
-### `norm_cards/eval/tools.py` — the tool belt
-
-All tools are **local functions** exposed via function-calling, not provider-native
-search. Rationale: (a) works identically for any model family, (b) every query and
-result is logged and cacheable → auditable evidence trail, (c) no dependence on what a
-given provider's built-in browsing returns on a given day.
-
-| Tool | Backing | Purpose |
-|---|---|---|
-| `web_search(query, n)` | SERP API (key already used by `sources/serp_scholar.py`) | General web: docs, leaderboards, blog posts, HF/Kaggle dataset pages. |
-| `fetch_page(url)` | requests + readability extraction | Read a page found via search; returns cleaned text. |
-| `openalex_search(query, n, lexical=False)` | wraps `sources/openalex.py` (`search` / `search_lexical`) | Scholarly search: titles, abstracts, venues, citation counts, DOIs, OA pdf urls. |
-| `fetch_paper(id_or_url)` | wraps `fulltext.py` + `.pdfcache` | Full text of a paper (pdf → text) for quote extraction. |
-| `check_resource(name, kind)` | HF Hub / Kaggle / PapersWithCode APIs | Existence + metadata check for a named dataset/model/metric ("does `coco-person-640` exist? what is YOLO11n's reported AP?"). Used heavily for groundedness. |
-
-"Deep search" is emergent: the loop iterates search → fetch → search as long as it
-wants. No separate deep-research API dependency (can be added later behind the same
-tool interface if wanted).
+- **Two transports.** The GPT-6 family refuses function tools with reasoning effort on
+  `/v1/chat/completions`, so those models go through `/v1/responses`.
+- Every call has a timeout: a hung call is otherwise indistinguishable from a slow one.
 
 ---
 
@@ -291,11 +261,11 @@ into a value no run supports, though the mean is carried so the item does not va
   `CONTESTED` for hand review rather than silently averaged.
 - **Blind arms** — the judge is never told whether a set came from the baseline or the
   norm-card arm, nor that a second arm exists. Removes the obvious thumb on the scale.
-- **The judge's own test suite** — `judge_tests.py` runs nine stress tests against a
-  known reference: swapping reference and proposal, padding with irrelevant
-  experiments, duplicating one, dropping one, and an order-invariance control whose
-  score must not move. It caught a duplicate-penalty defect that the aggregate
-  numbers would never have shown.
+- **The judge's own test suite** — `judge_suite.py` runs 14 behaviours in three
+  unrelated domains, each a short constructed case with a known correct status for every
+  reference experiment, three runs each. It replaced `judge_tests.py`, which scored
+  perturbations of real proposals against single noisy judge passes and could not tell
+  two judges apart (the same test returned 0.204 and then 0.018).
 
 - **GT-defect channel** — systematic under-scoring shows up as valid experiments
   marked `CONTRADICTS`; forcing the judge to either produce independent evidence or
@@ -370,9 +340,9 @@ Aggregates all judgment files into `results/eval_v2/REPORT.md`:
 ```
 norm_cards/eval/
   __init__.py       # paths, judge config, claim + reference fixture loading
-  agent_loop.py     # tool-calling loop, evidence ledger, compaction, trace/cache
-  tools.py          # web_search, fetch_page, openalex_search, fetch_paper, check_resource
-  schemas.py        # submit_evaluation schema, its validator (evidence discipline),
+  agent_loop.py     # submit loop, two API transports, traces
+  judge_suite.py    # known-answer tests for the judge
+  schemas.py        # submit_evaluation schema, its validator,
                     #   and the reference-recipe input gate
   prompts.py        # the judge's system prompt (the real spec of its behaviour)
   scoring.py        # verdicts/statuses -> numbers; majority vote across judge runs
@@ -386,9 +356,9 @@ results/eval_v2/
   REPORT.md
 ```
 
-Judge traces and the tool cache are gitignored (megabytes each, regenerable);
-references and judgments are tracked, and every judgment carries its own evidence
-ledger, so verdicts stay auditable from git alone. `ground_truth/` keeps its directory
+Judge traces are gitignored (regenerable); references and judgments are tracked, and
+every judgment carries its per-reference rationale and reasoning chain, so verdicts stay
+auditable from git alone. `ground_truth/` keeps its directory
 name so existing paths and fixtures do not churn, but its contents are inputs now.
 
 `results/norm_cards_hybrid/` is left untouched as the v1 record.
@@ -400,8 +370,7 @@ flowchart LR
   B[claims JSONL\nsprint2-...-v1.jsonl] --> H[human / source paper\nauthors the reference]
   H --> GTJ[ground_truth.json fixtures\nchecked in, validated by reference.py]
   P[existing scify_proposer.json\nbaseline + method arms] --> EV
-  GTJ --> EV[judge: gpt-5.6-luna\nper-experiment protocol, k=3]
-  T[(web / OpenAlex / fulltext\n/ resource checks)] --- EV
+  GTJ --> EV[judge: gpt-5.6-terra\nprompt v2]
   EV --> J[requirement statuses + experiment audits]
   J --> R[REPORT.md\nbaseline vs method]
   J -->|defects, human-reviewed| H
@@ -412,12 +381,10 @@ flowchart LR
 1. **`reasoning_effort` must be sent explicitly on every tool-calling request.** Omitting
    it makes the API reject function tools on `/v1/chat/completions`; every explicit level
    through `xhigh` works fine. This is the single easiest way to break the loop.
-2. **The evidence ledger became load-bearing, not decorative.** `record_evidence` exists
-   because long runs must compact old page text out of context; pinning the ledger is
-   what makes that safe, and it simultaneously turns "quote your evidence" from a prompt
-   request into a mechanism.
+2. **The evidence ledger and research tools were removed** (September 2026), with the
+   context compaction they required. See design principle 2.
 3. **Validation is the enforcement point.** `schemas.validate_evaluation` rejects any
-   judgment that faults an experiment while lacking a quote *and* a ≥2-step chain, and hands
+   judgment that faults an experiment without a reasoning chain, and hands
    the error back to the agent to fix. This is what stops the judge falling back on "the
    reference recipe disagrees" — the failure mode that made the gpt-5.5 judge unusable.
 4. **Scoring moved entirely into code** (`scoring.py`). No agent ever emits a score; it
@@ -431,15 +398,10 @@ flowchart LR
    reference defects across two claims, including one where it sided with a proposed
    experiment over the reference on gate logic. That the fallible-reference machinery
    works is exactly why swapping in a better-sourced reference is a drop-in change.
-7. **A local PDF space-recovery step** was added in `eval/tools.py` (retry extraction at
-   `x_tolerance=1.0` when the space ratio is anomalously low — some arXiv PDFs otherwise
-   extract as `77.5%oftheproblems`). Deliberately *not* patched into `fulltext.py`, which
-   feeds the pipeline under evaluation and must not change while we measure it.
 
 ## Decisions (settled)
 
-1. **Local tools over provider-native browsing** — for auditability and
-   model-agnosticism (see tool-belt rationale).
+1. **No research tools for the judge** — see design principle 2.
 2. **Current test set = the 10 claims with existing proposer outputs**, scored as-is
    (capped prompt, n=1 proposals). Uncapped proposer re-runs and the other 7 claims are
    future expansions that plug into the same harness.
@@ -447,6 +409,6 @@ flowchart LR
    step (one-time, xhigh effort); the eval loop treats GT as immutable fixtures and
    errors out if one is missing. Reference defects from eval runs are the input a human
    reviews before deciding to regenerate a claim's GT.
-4. **Judge runs default to 3** (luna is cheap); anything deck-bound additionally needs
+4. **Judge runs default to 3**; anything deck-bound additionally needs
    the proposer side replicated (v1 lesson: n=1, temp=1 results like #9/#21 are
    anecdotes until replicated).

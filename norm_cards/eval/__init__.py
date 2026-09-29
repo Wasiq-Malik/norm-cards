@@ -9,8 +9,9 @@
   build_cards.py splits a batch gathering run into per-problem norm cards.
   propose.py     runs the proposer over a claim set, one arm per (model, condition):
                  nocard / retrieval / card.
-  evaluate.py    gpt-5.6-luna scores an arm's experiment set against the claim's
-                 decision requirements, derived from the reference.
+  evaluate.py    the judge (JUDGE_MODEL, prompt JUDGE_PROMPT) scores an arm's
+                 experiment set against the claim's reference experiments.
+  judge_suite.py known-answer tests for the judge; run it before swapping judges.
   scoring.py     turns those judgments into numbers; no model ever emits a score.
   report.py      aggregates arms into a comparison table.
   calibrate.py   checks the judge against hand labels before you trust a run.
@@ -38,7 +39,16 @@ CLAIMS_FILE = os.environ.get(
     os.path.join(os.path.dirname(__file__), "..", "data",
                  "sprint2-continuous-release-problems-v1.jsonl"))
 
-JUDGE_MODEL = "gpt-5.6-luna"
+# gpt-5.6-terra since 2026-09-28. On the known-answer judge suite (judge_suite.py) luna
+# credited controls run outside the setting a claim names in 12 of 27 runs; terra never
+# did. Controls are what norm cards supply, so that error would inflate exactly the
+# effect under study. The judge must never grade its own model's proposals, which is why
+# gpt-5.6-terra is not in the proposer lineup.
+JUDGE_MODEL = "gpt-5.6-terra"
+# v2: 241 words instead of 930, no research-tools section, and no contradiction between
+# "judge each reference experiment" and "only the claim is binding". It scored the same as
+# v1 on the judge suite. v1 stays in prompts.PROMPTS to reproduce older runs.
+JUDGE_PROMPT = "v2"
 JUDGE_EFFORT = "high"
 
 
@@ -52,10 +62,6 @@ def gt_path(problem_id: str) -> str:
 
 def judgment_dir(problem_id: str) -> str:
     return os.path.join(EVAL_ROOT, "judgments", f"problem_{problem_id}")
-
-
-def tool_cache_dir() -> str:
-    return os.path.join(EVAL_ROOT, ".toolcache")
 
 
 def load_claims(path: str = None) -> dict:

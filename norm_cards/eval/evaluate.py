@@ -6,8 +6,8 @@ Both sides are lists of experiments, rendered identically, and the judge compare
 and the judge answers one question per reference experiment: would a team running the
 proposed set have learned what it would have told them? The mean of those is `recall`.
 
-Scores one arm at a time, k times each (default 3 — luna is cheap, and majority voting
-is what turns a single opinionated run into something reportable). Judgments without a
+Scores one arm at a time, k times each (default 3; majority voting is what turns a
+single opinionated run into something reportable). Judgments without a
 majority are marked CONTESTED for hand review instead of being averaged into a value
 no run supports.
 
@@ -28,9 +28,9 @@ import os
 import traceback
 from concurrent.futures import ThreadPoolExecutor
 
-from . import (EVAL_ROOT, JUDGE_EFFORT, JUDGE_MODEL, judgment_dir, load_claims,
-               load_ground_truth, tool_cache_dir)
-from . import agent_loop, prompts, reference, schemas, scoring, tools
+from . import (EVAL_ROOT, JUDGE_EFFORT, JUDGE_MODEL, JUDGE_PROMPT, judgment_dir,
+               load_claims, load_ground_truth)
+from . import agent_loop, prompts, reference, schemas, scoring
 
 DEFAULT_SOURCE = os.path.join("results", "norm_cards_hybrid")
 ARM_KEYS = {"baseline": "baseline_experiments", "method": "method_experiments"}
@@ -100,9 +100,13 @@ def load_norm_card(source: str, problem_id: str) -> dict:
 
 def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir: str,
                  arm: str, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
-                 max_steps: int = 200, progress: bool = True,
-                 use_tools: bool = False) -> dict:
-    """One independent evaluator pass over one arm's experiment set."""
+                 max_steps: int = 200, progress: bool = True, system: str = None,
+                 min_chain: int = 2) -> dict:
+    """One independent evaluator pass over one arm's experiment set.
+
+    `system` overrides the judge prompt (the suite runs v1 and v2 on the same cases);
+    `min_chain` is how many reasoning steps a partial/missing verdict must carry — v2
+    asks for one or two sentences, so it validates at 1."""
     proposed = arm_data["experiments"]
     ref_exps = reference.experiments(gt)
     user = prompts.EVALUATION_USER.format(
@@ -116,11 +120,12 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir:
         experiments=reference.experiments_text(proposed, "PROPOSED EXPERIMENT"))
 
     ev = agent_loop.run_agent(
-        system=prompts.EVALUATION_SYSTEM, user=user,
+        system=system or prompts.EVALUATION_SYSTEM, user=user,
         submit_spec=schemas.SUBMIT_EVALUATION, model=model, reasoning_effort=effort,
-        max_steps=max_steps, use_tools=use_tools,
+        max_steps=max_steps,
         trace_path=os.path.join(out_dir, f"{arm_slug(arm)}.run{run_idx}.trace.jsonl"),
-        validate=lambda d: schemas.validate_evaluation(d, len(proposed), len(ref_exps)),
+        validate=lambda d: schemas.validate_evaluation(d, len(proposed), len(ref_exps),
+                                                       min_chain=min_chain),
         progress=progress, tag=f"[{arm} r{run_idx}] ")
     ev["_run"] = run_idx
     return ev
@@ -129,7 +134,8 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir:
 def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int = 3,
                          model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
                          max_steps: int = 200, workers: int = 3,
-                         use_tools: bool = False) -> dict:
+                         prompt: str = None) -> dict:
+    prompt = prompt or JUDGE_PROMPT
     pid = str(problem["problem_id"])
     gt = load_ground_truth(pid)          # fixture; fails loudly if absent
 
@@ -154,7 +160,9 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
         try:
             return evaluate_arm(problem, gt, arm_data, i, out_dir, arm, model=model,
                                 effort=effort, max_steps=max_steps,
-                                progress=(workers == 1), use_tools=use_tools)
+                                progress=(workers == 1),
+                                system=prompts.PROMPTS[prompt],
+                                min_chain=1 if prompt == "v2" else 2)
         except Exception as e:
             print(f"    [{arm} r{i}] run FAILED, continuing without it: "
                   f"{type(e).__name__}: {e}")
@@ -178,8 +186,8 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
     return {
         "type": "evaluation", "format_version": "5.0",
         "problem_id": pid, "arm": arm, "claim": problem["claim"],
-        "judge": {"model": model, "reasoning_effort": effort, "runs": len(runs),
-                  "runs_requested": judge_runs, "tools": bool(use_tools)},
+        "judge": {"model": model, "prompt": prompt, "reasoning_effort": effort,
+                  "runs": len(runs), "runs_requested": judge_runs},
         "proposer_model": arm_data.get("proposer_model", ""),
         "n_proposed": len(arm_data["experiments"]),
         "n_reference": len(reference.experiments(gt)),
@@ -188,7 +196,6 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
         "scores": agg.pop("scores"),
         **agg,
         "runs": [{"run": r.get("_run"), "meta": r.get("_meta"),
-                  "evidence_ledger": r.get("_evidence"),
                   "reference_coverage": r.get("reference_coverage"),
                   "proposed": r.get("proposed"),
                   "decision_sufficiency": r.get("decision_sufficiency"),
@@ -212,18 +219,9 @@ def _main():
     ap.add_argument("--judge-runs", type=int, default=3,
                     help="independent judge passes, majority-voted. 1 = a single pass, "
                          "much cheaper, no agreement signal and no CONTESTED flagging")
-    ap.add_argument("--tools", action="store_true",
-                    help="give the judge the research belt (web/OpenAlex/full-text/"
-                         "resource checks). OFF by default: the judge's baseline is "
-                         "its own reading of the claim and the two lists, and that is "
-                         "what we are evaluating. Measured on the judge stress suite, "
-                         "the belt made the order control — reversing a list, which "
-                         "cannot change what a set establishes — drift by a mean 0.165 "
-                         "instead of 0.069, because rate-limited searches hand the "
-                         "judge different evidence on different passes. Treat it as an "
-                         "extra, and only where resource existence is genuinely at "
-                         "issue.")
     ap.add_argument("--model", default=JUDGE_MODEL)
+    ap.add_argument("--prompt", default=JUDGE_PROMPT, choices=sorted(prompts.PROMPTS),
+                    help="judge prompt version; v1 only to reproduce runs made before v2")
     ap.add_argument("--effort", default=JUDGE_EFFORT,
                     choices=["low", "medium", "high", "xhigh"])
     ap.add_argument("--max_steps", type=int, default=200)
@@ -235,7 +233,6 @@ def _main():
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 
-    tools.set_cache_dir(tool_cache_dir())
     claims = load_claims()
     if args.problems == "all":
         gt_root = os.path.join(EVAL_ROOT, "ground_truth")
@@ -262,7 +259,7 @@ def _main():
                 res = evaluate_problem_arm(
                     claims[pid], args.source, arm, judge_runs=args.judge_runs,
                     model=args.model, effort=args.effort, max_steps=args.max_steps,
-                    workers=args.workers, use_tools=args.tools)
+                    workers=args.workers, prompt=args.prompt)
             except Exception as e:
                 print(f"[{pid}/{arm}] FAILED: {type(e).__name__}: {e}")
                 continue

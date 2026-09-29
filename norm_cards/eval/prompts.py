@@ -10,10 +10,9 @@ long enough that its own instructions competed with each other — the guidance 
 mattered (do not score implementation details) kept losing to the guidance that
 happened to be adjacent to the data. One question, one output.
 
-The judge keeps its research tools. They are not there to check the proposal against a
-norm list; they are there so that when a judgment turns on an outside fact — does this
-dataset exist, does this metric measure what it is said to measure — the judge can look
-instead of guess.
+Two versions. v2 is the default (JUDGE_PROMPT in __init__.py). v1 was written for a
+judge with research tools, which no longer exist; it is kept only to reproduce runs
+made before v2 and the v1-vs-v2 comparison in judge_suite.py.
 """
 
 EVALUATION_SYSTEM = """\
@@ -143,6 +142,39 @@ PROTOCOL
 You are not told what produced either list, and should not speculate.
 
 When you are done, call submit_evaluation."""
+
+
+# v2, 2026-09-28. Shorter, no research tools, and no "beyond the claim" clause to
+# contradict its own task. Scored the same as v1 on the judge suite.
+EVALUATION_SYSTEM_V2 = """\
+You are given a scientific claim, the REFERENCE EXPERIMENTS a real team ran to decide it,
+and a set of PROPOSED EXPERIMENTS written by a system under evaluation.
+
+The reference is one way to decide the claim, not the only one. For each reference
+experiment, decide what it establishes, then whether a team running the whole proposed set
+would learn the same thing, by any means:
+
+  covered   They would learn it, with comparable reliability. A different dataset, model,
+            metric or procedure counts, unless the claim itself names it.
+  partial   They would address it, but the answer would stay unreliable: no rule for
+            deciding the outcome, a measurement that cannot tell the answers apart, a
+            competing explanation left open, or too few runs to trust.
+  missing   Nothing in the proposed set addresses it.
+
+Search the whole set before deciding. One proposed experiment can cover several reference
+experiments, and several can jointly cover one. Judge the experiments a competent team
+would actually run, not how they are worded: obvious unstated steps, numbering slips and
+repetition neither add nor subtract. A proposal is a plan, so it contains no results.
+
+How much breadth is needed depends on the claim: a claim that something CAN happen is
+settled by one clean demonstration; a claim that something holds generally needs
+evidence across settings.
+
+For partial or missing, say in one or two sentences what the team would fail to learn.
+
+When you are done, call submit_evaluation."""
+
+PROMPTS = {"v1": EVALUATION_SYSTEM, "v2": EVALUATION_SYSTEM_V2}
 
 
 EVALUATION_USER = """\

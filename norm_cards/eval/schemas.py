@@ -26,13 +26,6 @@ COVER_STATUS = ("covered", "partial", "missing")
 # WHETHER an experiment relates to the decision but HOW MUCH it advances it.
 SUFFICIENCY = ("sufficient", "sufficient_with_gaps", "insufficient")
 
-_EVIDENCE = {"type": "object", "properties": {
-    "source": {"type": "string"},
-    "quote": {"type": "string", "description": "verbatim text — never paraphrase"},
-    "bearing": {"type": "string", "description": "what this establishes here"}},
-    "required": ["source", "quote", "bearing"]}
-
-
 # --------------------------------------------------------------------------- #
 # The reference — an INPUT, validated on the way in
 # --------------------------------------------------------------------------- #
@@ -151,9 +144,7 @@ _REF_COVERAGE = {"type": "object", "properties": {
     "reasoning_chain": {"type": "array", "items": {"type": "string"},
                         "description": "one inference per entry, ending in what the "
                                        "team would fail to learn. Required for partial "
-                                       "and missing."},
-    "evidence": {"type": "array", "items": _EVIDENCE,
-                 "description": "quotes from any tool check that informed this"}},
+                                       "and missing."}},
     "required": ["ref_index", "adequacy", "status", "covered_by", "rationale"]}
 
 SUBMIT_EVALUATION = {"type": "function", "function": {
@@ -176,13 +167,13 @@ SUBMIT_EVALUATION = {"type": "function", "function": {
 
 
 def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
-                        tools_available: bool = True) -> Optional[str]:
+                        min_chain: int = 2) -> Optional[str]:
     """Structural gate, plus the one discipline that matters.
 
     Saying a reference experiment is not covered asserts something about the set in
-    front of the judge, which no search can confirm — so it needs a reasoning chain,
-    not a citation. Demanding quotes for absence would push the judge toward calling
-    things covered to avoid the burden.
+    front of the judge, so it needs a reasoning chain. Demanding more for absence than
+    for presence would push the judge toward calling things covered to avoid the
+    burden.
     """
     errs: List[str] = []
 
@@ -206,7 +197,7 @@ def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
         if c.get("status") not in COVER_STATUS:
             errs.append(f"ref {i}: status must be one of {COVER_STATUS}")
         chain = [x for x in (c.get("reasoning_chain") or []) if str(x).strip()]
-        if c.get("status") in ("partial", "missing") and len(chain) < 2:
+        if c.get("status") in ("partial", "missing") and len(chain) < min_chain:
             errs.append(f"ref {i}: a '{c.get('status')}' judgment needs a "
                         f"reasoning_chain showing why the set does not settle it")
         if c.get("status") == "covered" and not (c.get("covered_by") or []):

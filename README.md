@@ -140,7 +140,7 @@ norm_cards/
     propose.py            run the arms
     evaluate.py           the blind judge
     analyze.py            arm means, paired intervals, the role split
-    judge_tests.py        nine stress tests for the judge itself
+    judge_suite.py        known-answer test suite for the judge itself
 
 results/                  git-ignored. Disposable: rebuildable from datasets/.
 ```
@@ -194,13 +194,16 @@ name once you have read them against the papers.
 
 ## Things worth knowing before you trust a number
 
-- **The judge runs without tools by default.** Web search made an order-invariance
-  control drift by 0.165 instead of 0.069, because rate-limited searches hand it
-  different evidence on different passes. `--tools` re-enables them.
-- **`judge_tests.py` is the judge's own test suite** — nine tests including swapping
-  reference and proposal, padding with irrelevant experiments, and duplicating one.
-  A duplicate-penalty defect it caught is why `prompts.py` has a redundancy
-  paragraph.
+- **The judge is `gpt-5.6-terra` with prompt v2, and runs without tools.** v2 drops the
+  tool instructions and says when breadth matters: a claim that something *can* happen
+  needs one clean demonstration, a claim that it holds *generally* needs breadth. v1 stays
+  in `prompts.PROMPTS`; `evaluate --prompt v1` reproduces older runs. The judge must never
+  grade proposals written by its own model.
+- **`judge_suite.py` is the judge's own test suite** — 14 behaviours x 3 unrelated domains,
+  each case constructed with a known correct status per reference experiment and run
+  several times. It reports target pass rate, collateral damage and self-agreement per
+  `model:prompt`, so two judges can be compared directly. Terra beat luna on it: luna
+  credits controls run outside the setting the claim names.
 - **`propose` skips per claim, not per arm.** Adding a model in a second invocation
   against the same output directory silently skips every claim the first finished.
   Pass all models in one `--models` call.
