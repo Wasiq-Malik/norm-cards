@@ -145,14 +145,16 @@ When you are done, call submit_evaluation."""
 
 
 # v2, 2026-09-28. Shorter, no research tools, and no "beyond the claim" clause to
-# contradict its own task. Scored the same as v1 on the judge suite.
+# contradict its own task. It travels with its own user message and submit schema
+# (EVALUATION_USER_V2, schemas.SUBMIT_EVALUATION_V2), which ask for nothing it does not
+# explain.
 EVALUATION_SYSTEM_V2 = """\
 You are given a scientific claim, the REFERENCE EXPERIMENTS a real team ran to decide it,
 and a set of PROPOSED EXPERIMENTS written by a system under evaluation.
 
 The reference is one way to decide the claim, not the only one. For each reference
-experiment, decide what it establishes, then whether a team running the whole proposed set
-would learn the same thing, by any means:
+experiment, decide what it establishes that the claim needs, then whether a team running the
+whole proposed set would learn that, by any means:
 
   covered   They would learn it, with comparable reliability. A different dataset, model,
             metric or procedure counts, unless the claim itself names it.
@@ -166,15 +168,16 @@ experiments, and several can jointly cover one. Judge the experiments a competen
 would actually run, not how they are worded: obvious unstated steps, numbering slips and
 repetition neither add nor subtract. A proposal is a plan, so it contains no results.
 
-How much breadth is needed depends on the claim: a claim that something CAN happen is
-settled by one clean demonstration; a claim that something holds generally needs
-evidence across settings.
+How much breadth is needed depends on the claim, not on the reference: a claim that
+something CAN happen is settled by one clean demonstration, even if the reference ran
+several datasets or models; a claim that something holds generally needs evidence across
+settings.
 
-For partial or missing, say in one or two sentences what the team would fail to learn.
+Give each status a reason in one or two sentences. For partial or missing, the reason is
+what the team would fail to learn.
 
 When you are done, call submit_evaluation."""
 
-PROMPTS = {"v1": EVALUATION_SYSTEM, "v2": EVALUATION_SYSTEM_V2}
 
 
 EVALUATION_USER = """\
@@ -195,3 +198,22 @@ Provenance: {provenance}
 For each reference experiment: state its adequacy property, scan the whole proposed
 set, and decide whether a team running that set would learn what it would have told
 them. Then submit."""
+
+
+# The v1 user message closes with "state its adequacy property", which only v1's
+# system prompt and schema explain. v2's user message is data only: everything the
+# judge is asked to do is in the system prompt.
+EVALUATION_USER_V2 = """\
+CLAIM:
+{claim}
+
+REFERENCE EXPERIMENTS ({n_ref}):
+{reference}
+
+PROPOSED EXPERIMENTS ({n}):
+{experiments}"""
+
+# version -> what the judge is shown and what it must return. Everything the judge reads
+# as an instruction is here: the system prompt, the user message and the submit schema.
+PROMPTS = {"v1": {"system": EVALUATION_SYSTEM, "user": EVALUATION_USER},
+           "v2": {"system": EVALUATION_SYSTEM_V2, "user": EVALUATION_USER_V2}}

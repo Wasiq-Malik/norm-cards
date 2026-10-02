@@ -166,9 +166,76 @@ SUBMIT_EVALUATION = {"type": "function", "function": {
                      "sufficiency_reasoning"]}}}
 
 
-def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
-                        min_chain: int = 2) -> Optional[str]:
-    """Structural gate, plus the one discipline that matters.
+# v2 asks for exactly what the v2 prompt describes: what each reference experiment
+# establishes, its status, the proposals that carry it, and a short reason. v1's schema also asked for an
+# "adequacy property", a set-level sufficiency verdict and a gap list, none of which the
+# v2 prompt mentions and none of which feeds recall; a schema that asks for things the
+# prompt never explained is a second, vaguer prompt.
+SUBMIT_EVALUATION_V2 = {"type": "function", "function": {
+    "name": "submit_evaluation",
+    "description": "Submit your evaluation: one entry per reference experiment.",
+    "parameters": {"type": "object", "properties": {
+        "reference_coverage": {"type": "array", "items": {
+            "type": "object", "properties": {
+                "ref_index": {"type": "integer",
+                              "description": "0-based index in the reference list"},
+                # Written before the status. Dropping v1's version of this field
+                # ("adequacy property") let the judge credit controls run outside the
+                # setting the claim names (judge suite subst_bound 27/27 -> 21/27):
+                # without a place to write what the experiment establishes, it skips
+                # the step the prompt asks for.
+                "establishes": {"type": "string",
+                                "description": "one sentence: what this reference "
+                                               "experiment establishes that the claim "
+                                               "needs, including the setting if the "
+                                               "claim names one. Write this first."},
+                "status": {"type": "string", "enum": list(COVER_STATUS)},
+                "covered_by": {"type": "array", "items": {"type": "integer"},
+                               "description": "indices of the proposed experiments that "
+                                              "contribute; empty if missing"},
+                "reason": {"type": "string",
+                           "description": "one or two sentences; for partial or "
+                                          "missing, what the team would fail to learn"}},
+            "required": ["ref_index", "establishes", "status", "covered_by",
+                         "reason"]}}},
+        "required": ["reference_coverage"]}}}
+
+
+def validate_evaluation_v2(ev: Dict, n_proposed: int, n_reference: int) -> Optional[str]:
+    """Structure only: one entry per reference index, statuses consistent with
+    covered_by, and `establishes` and `reason` filled on every entry."""
+    items = ev.get("reference_coverage")
+    if not isinstance(items, list):
+        return f"reference_coverage must be a list, got {type(items).__name__}"
+    errs: List[str] = []
+    cov = [c for c in items if isinstance(c, dict)]
+    if len(cov) != len(items):
+        errs.append("reference_coverage must contain objects, not bare strings")
+    seen = {c.get("ref_index") for c in cov}
+    if len(cov) != n_reference or seen != set(range(n_reference)):
+        errs.append(f"needs exactly one entry per reference experiment, indices "
+                    f"0..{n_reference - 1}; got "
+                    f"{sorted(x for x in seen if isinstance(x, int))}")
+    for c in cov:
+        i, st, by = c.get("ref_index"), c.get("status"), c.get("covered_by") or []
+        if st not in COVER_STATUS:
+            errs.append(f"ref {i}: status must be one of {COVER_STATUS}")
+        if st == "covered" and not by:
+            errs.append(f"ref {i}: covered, so covered_by must list the proposals")
+        if st == "missing" and by:
+            errs.append(f"ref {i}: missing, so covered_by must be empty "
+                        f"(use partial if something addresses it)")
+        for j in by:
+            if not isinstance(j, int) or not 0 <= j < n_proposed:
+                errs.append(f"ref {i}: covered_by {j!r} is not a proposed index")
+        for field in ("establishes", "reason"):
+            if not (c.get(field) or "").strip():
+                errs.append(f"ref {i}: {field} is empty")
+    return "; ".join(errs) if errs else None
+
+
+def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int) -> Optional[str]:
+    """v1's structural gate, plus the one discipline that matters.
 
     Saying a reference experiment is not covered asserts something about the set in
     front of the judge, so it needs a reasoning chain. Demanding more for absence than
@@ -197,7 +264,7 @@ def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
         if c.get("status") not in COVER_STATUS:
             errs.append(f"ref {i}: status must be one of {COVER_STATUS}")
         chain = [x for x in (c.get("reasoning_chain") or []) if str(x).strip()]
-        if c.get("status") in ("partial", "missing") and len(chain) < min_chain:
+        if c.get("status") in ("partial", "missing") and len(chain) < 2:
             errs.append(f"ref {i}: a '{c.get('status')}' judgment needs a "
                         f"reasoning_chain showing why the set does not settle it")
         if c.get("status") == "covered" and not (c.get("covered_by") or []):

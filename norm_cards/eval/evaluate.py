@@ -100,16 +100,17 @@ def load_norm_card(source: str, problem_id: str) -> dict:
 
 def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir: str,
                  arm: str, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
-                 max_steps: int = 200, progress: bool = True, system: str = None,
-                 min_chain: int = 2) -> dict:
+                 max_steps: int = 200, progress: bool = True,
+                 prompt: str = None) -> dict:
     """One independent evaluator pass over one arm's experiment set.
 
-    `system` overrides the judge prompt (the suite runs v1 and v2 on the same cases);
-    `min_chain` is how many reasoning steps a partial/missing verdict must carry — v2
-    asks for one or two sentences, so it validates at 1."""
+    `prompt` picks the version: its system prompt, its user message and its submit
+    schema travel together, so the judge is never asked for something the prompt it
+    was given does not explain."""
+    prompt = prompt or JUDGE_PROMPT
     proposed = arm_data["experiments"]
     ref_exps = reference.experiments(gt)
-    user = prompts.EVALUATION_USER.format(
+    user = prompts.PROMPTS[prompt]["user"].format(
         domain=problem.get("domain", "ai"), problem_id=problem["problem_id"],
         claim=problem["claim"],
         subclaims="\n".join(f"- {s}" for s in arm_data["subclaims"]) or "(none provided)",
@@ -118,15 +119,19 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir:
         reference=reference.experiments_text(ref_exps, "REFERENCE EXPERIMENT"),
         n=len(proposed),
         experiments=reference.experiments_text(proposed, "PROPOSED EXPERIMENT"))
+    if prompt == "v1":
+        submit = schemas.SUBMIT_EVALUATION
+        validate = lambda d: schemas.validate_evaluation(d, len(proposed), len(ref_exps))
+    else:
+        submit = schemas.SUBMIT_EVALUATION_V2
+        validate = lambda d: schemas.validate_evaluation_v2(d, len(proposed), len(ref_exps))
 
     ev = agent_loop.run_agent(
-        system=system or prompts.EVALUATION_SYSTEM, user=user,
-        submit_spec=schemas.SUBMIT_EVALUATION, model=model, reasoning_effort=effort,
+        system=prompts.PROMPTS[prompt]["system"], user=user,
+        submit_spec=submit, model=model, reasoning_effort=effort,
         max_steps=max_steps,
         trace_path=os.path.join(out_dir, f"{arm_slug(arm)}.run{run_idx}.trace.jsonl"),
-        validate=lambda d: schemas.validate_evaluation(d, len(proposed), len(ref_exps),
-                                                       min_chain=min_chain),
-        progress=progress, tag=f"[{arm} r{run_idx}] ")
+        validate=validate, progress=progress, tag=f"[{arm} r{run_idx}] ")
     ev["_run"] = run_idx
     return ev
 
@@ -160,9 +165,7 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
         try:
             return evaluate_arm(problem, gt, arm_data, i, out_dir, arm, model=model,
                                 effort=effort, max_steps=max_steps,
-                                progress=(workers == 1),
-                                system=prompts.PROMPTS[prompt],
-                                min_chain=1 if prompt == "v2" else 2)
+                                progress=(workers == 1), prompt=prompt)
         except Exception as e:
             print(f"    [{arm} r{i}] run FAILED, continuing without it: "
                   f"{type(e).__name__}: {e}")
@@ -270,7 +273,8 @@ def _main():
             print(f"    -> {out_path}")
             print(f"       recall={s['recall']}  (covered {s['n_covered']} / partial "
                   f"{s['n_partial']} / missing {s['n_missing']} of {s['n_reference']})"
-                  f"  sufficiency={s['decision_sufficiency']}"
+                  + (f"  sufficiency={s['decision_sufficiency']}"
+                     if s['decision_sufficiency'] else "")
                   + (f"  unused={s['unused_proposed']}" if s['unused_proposed'] else "")
                   + (f"  contested={s['n_contested']}" if s['n_contested'] else ""))
             if arm == SELFTEST_ARM:
