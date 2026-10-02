@@ -9,20 +9,34 @@ controls and confounds*. We build one card per subfield, hand it to an experimen
 proposer along with a scientific claim, and measure whether the proposals it
 designs would have recovered what the claim's source paper actually did.
 
-**Current result** (20 claims × 3 proposer models, September 2026):
+**Current result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 
-| condition | recall |
+| condition | strict recall |
 |---|---|
-| no card | 0.596 |
-| retrieval over the same papers | 0.618 |
-| **shared norm card** | **0.638** |
+| no card | 0.790 |
+| retrieval over the same papers | 0.793 |
+| **shared norm card** | **0.817** |
 
-Card − no card is **+0.042**, 95% interval **[+0.008, +0.075]**, winning on 14 of
-20 claims. Card − retrieval is +0.020 and does *not* exclude zero.
+Card − no card is **+0.027**, 95% interval **[+0.003, +0.052]**. Strict recall counts a
+reference experiment only when the judge marks it *fully* covered; a half-addressed
+experiment is not something a downstream system can run. On the looser measure that gives
+a partial half credit the gap is +0.020 — the card mostly finishes work rather than adding
+it. Card − retrieval is +0.024 and does *not* exclude zero.
 
-The cards are **shared, not per-claim**: 14 cards cover all 20 claims, each built
-from its field's name alone with no claim text anywhere in the loop. That matters
-because a card retrieved using the claim it will be tested on proves very little.
+![F1 at each budget](docs/charts/f1-at-k.svg)
+
+Recall rises with the experiment budget and precision falls, so F1 peaks where they
+balance — at **5 experiments**, against a reference averaging 5.18. The best budget to
+give a proposer is about the number of experiments the question actually needs.
+
+The cards are **shared, not per-claim**: 14 cards cover all 34 claims, each built from its
+field's name alone with no claim text anywhere in the loop. That matters because a card
+retrieved using the claim it will be tested on proves very little.
+
+Each claim is scored only against the reference experiments that decide it. Papers support
+several claims, and scoring a proposal against experiments belonging to a *different* claim
+of the same paper was holding recall near 0.55 for reasons that had nothing to do with the
+proposer — see [`datasets/dataset34v5/`](datasets/dataset34v5).
 
 ---
 
