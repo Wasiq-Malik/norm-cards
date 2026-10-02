@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_26496",
+  "claim": "The usual bargain in adversarially trained image classifiers, where resistance to bounded perturbations is bought by giving up accuracy on untouched images, is not forced. A training objective can lift both at once instead of trading one against the other. Supported only if both clean accuracy and accuracy under attack rise by more than 0 percentage points against the conventional objective the method is built on, and only if both the plain average and the harmonic mean of the two exceed those of the strongest earlier approach trained under an equal budget by more than 0 points.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.26496"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2604_26496",
+      "claim": "C0",
+      "v3_indices": [
+        3,
+        4,
+        5,
+        6,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Does the proposed objective beat the conventional one on both axes? Setup: six training objectives (two conventional baselines, two consistency-style baselines and the two proposed variants) on CIFAR-10, CIFAR-100 and Tiny-ImageNet, with ResNet-18 and WideResNet-28-10, at a perturbation budget of 8/255; SGD, 110 epochs, decays at 100 and 105, 10-step inner attacks; three runs averaged, checkpoint picked by highest PGD-10 accuracy. Measured: clean accuracy plus PGD-10, PGD-100, C&W and AutoAttack accuracy. Result: against the PGD baseline the proposed method raises both clean and AutoAttack accuracy in five of six settings (the exception is CIFAR-100 / WideResNet, where clean falls 59.95 to 59.89); the second variant improves on the MART baseline in all six. Against the best of four baselines per metric, the gains are positive on 13 of 15 metric-setting pairs, with clean accuracy down 1.40% on CIFAR-100 / WideResNet and 1.41% on Tiny-ImageNet / WideResNet.",
+    "Does the result hold under a different threat model? Setup: the same six objectives on CIFAR-10, CIFAR-100 and Tiny-ImageNet with ResNet-18, now under an l2 budget of 128/255 with step size 32/255, rest of the protocol unchanged; three runs averaged. Result: the pattern repeats. On CIFAR-10 the proposed method reaches 89.17 clean / 67.95 AutoAttack against the strongest baseline's 88.76 / 67.46; on CIFAR-100, 66.12 / 40.25 against 65.14 / 39.92; on Tiny-ImageNet, 61.20 / 42.63 against 61.49 / 42.59, where clean accuracy is 0.47% below the best baseline.",
+    "How does the method compare with published trade-off methods? Setup: CIFAR-100, ResNet-18, 8/255; take published clean and AutoAttack numbers for nine prior trade-off methods and compare the average of the two against this method's three-run result. Result: 58.53 clean / 25.65 AutoAttack, average 42.09, against the best prior average of 41.59. Caveat: the prior numbers are taken from their own papers rather than retrained here, so training budgets and implementations are not matched.",
+    "Does the idea carry over to a stronger training recipe? Setup: implement the mechanism on top of a stronger published adversarial-training codebase, PreActResNet-18, 200 epochs with decays at 100 and 150 to match the comparison protocol, against eleven prior methods. Measured: clean accuracy, AutoAttack accuracy, their plain average, and their harmonic mean. Result: on CIFAR-10, 82.76 / 51.65, average 67.21, harmonic mean 63.61, against the best prior average 66.94 and best prior harmonic mean 62.78; on CIFAR-100, 56.92 / 28.08, average 42.50, harmonic mean 37.61, against 42.03 and 37.10.",
+    "Fix the regularisation weight used by every method that has one. Setup: sweep the weight for the four objectives with a regularisation term and read off robust accuracy. Result: the two conventional baselines peak around 6 to 8, the two consistency-style objectives in the range 1 to 3; the main experiments use 6 and 1 respectively. The text gives no dataset, architecture or per-value accuracies for the sweep."
+  ],
+  "roles": [
+    "headline",
+    "external",
+    "external",
+    "external",
+    "apparatus"
+  ]
+}

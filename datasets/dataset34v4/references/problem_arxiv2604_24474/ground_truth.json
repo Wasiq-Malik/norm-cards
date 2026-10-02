@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_24474",
+  "claim": "Frozen molecular representations learned without similarity-specific supervision encode ligand similarity sufficiently to support both ligand-based virtual screening and reinforcement-learning molecular generation. The question is whether their distances reflect established structural and pharmacophoric similarity while providing useful ranking and reward signals without task-specific training. The proposition is accepted only if at least one such representation attains an absolute Pearson correlation of at least 0.50 with corresponding established 3D similarity scores, achieves best-pooled EF1% greater than 2 on more than 50% of screening targets with average EF1% no lower than the strongest traditional similarity measure, and, in both string-based and synthesis-aware generation, yields candidates with higher mean predicted pIC50 and higher sampling throughput than a 3D-alignment reward.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.24474"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2604_24474",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test whether frozen pretrained embedding distances recover established structural and pharmacophoric similarity. Sample 200,000 molecules from the AmpC dataset uniformly across ROCS combination-similarity bins from 0 to 2 at intervals of 0.2, and compare each molecule with a reference ligand using ROCS Color Tanimoto, Shape Tanimoto, and their 50:50 combination. Without task-specific fine-tuning, mean-pool the final atom representations from GeoDiff\u2019s 128-dimensional 2D GIN and 128-dimensional 3D SchNet encoders, concatenate their \u21132-normalized outputs for a 256-dimensional representation, and mean-pool MoLFormer-XL\u2019s final token states for a 768-dimensional representation. For cosine PED, GeoDiff 2D correlates with ROCS color at Pearson r = \u22120.60 and shape at r = \u22120.45; GeoDiff 3D correlates with shape at r = \u22120.60 and color at r = \u22120.59; GeoDiff Concat correlates with the ROCS combination at r = \u22120.67; and MoLFormer correlates with combination, color, and shape at r = \u22120.63, \u22120.64, and \u22120.48. Euclidean PED gives r = \u22120.60 and \u22120.45 for GeoDiff 2D against color and shape, r = \u22120.58 and \u22120.60 for GeoDiff 3D against shape and color, r = \u22120.67 for GeoDiff Concat against the combination, and r = \u22120.64 and \u22120.47 for MoLFormer against color and shape. Negative correlations mean that embedding distance falls as ROCS similarity rises.",
+    "Test whether PED ranks active ligands in virtual screening without similarity-specific training. Use all 15 LIT-PCBA targets, replacing the malformed original reference structures with the corrected canonical SMILES from Huang et al. (2025), and rank each target\u2019s active and inactive candidates by ascending PED. For targets with multiple reference ligands, assign each candidate its minimum PED over references and calculate best-pooled EF1%; also calculate the mean and standard deviation of EF1% over individual references. Compare the PED results with published 2D ECFP4, ROCS 3D, molecular-docking, and ROSHAMBO2 results. With cosine distance, PED variants exceed best-pooled EF1% = 2 on 7 of the 8 targets previously favorable to ROCS and 6 of the remaining 7 targets; MoLFormer cosine PED itself exceeds 2 on 9 of 15 targets and has the highest average mean EF1%, 4.53 \u00b1 2.79, and highest average best-pooled EF1%, 6.15. The strongest traditional result is 2D ECFP4 at 3.94 \u00b1 2.43 average mean EF1% and 4.83 average best-pooled EF1%; ROCS 3D gives 2.59 \u00b1 2.34 and 4.81, molecular docking 2.07 \u00b1 1.36 and 2.51, and ROSHAMBO2 combination 2.25 \u00b1 1.84 and 3.80. With Euclidean distance, PED again exceeds best-pooled EF1% = 2 on 7 of the 8 favorable and 6 of the 7 remaining targets; MoLFormer has the highest PED average mean EF1%, 4.31 \u00b1 3.11, while GeoDiff 3D has the highest average best-pooled EF1%, 5.47, followed by MoLFormer at 5.08.",
+    "Test PED as a reinforcement-learning reward in both string-based and synthesis-aware molecular generation. Generate analogs of the BTK inhibitor BMS-986195 using REINVENT 3.2 and SynFormer, and compare ROSHAMBO2 scoring based on the reference crystallographic coordinates from PDB 6O8I with Euclidean PED rewards from GeoDiff 2D, GeoDiff 3D, GeoDiff Concat, and MoLFormer. Transform PED with a reverse sigmoid using k = 0.25 and distance bounds l,h of 0.1,1.2 for GeoDiff 2D, 1,10 for GeoDiff 3D, 0.1,0.58 for GeoDiff Concat, and 5,17 for MoLFormer; combine the transformed score at equal weight with custom undesirable-substructure alerts. Run REINVENT for 10,000 RL steps with batch size 128, learning rate 1\u00d710\u207b\u2074, inception memory size 100 and sample size 10, reward scaling 128, and margin threshold 50, producing 1,280,000 molecules including duplicates per run. Run SynFormer over 115 reaction templates and 223,244 Enamine US in-stock building blocks for at most 100 steps with batch size 128, learning rate 1\u00d710\u207b\u2074, augmented-likelihood scale \u03c3 = 500, a frozen prior, and a replay buffer sampling 128 saved molecules per step, producing 12,800 molecules including duplicates per run. All methods converge with high valid-SMILES rates; ROSHAMBO2 converges more slowly in REINVENT, while SynFormer converges rapidly. Relative to ROSHAMBO2, GeoDiff and MoLFormer increase REINVENT sampling throughput by 1.5\u00d7 and 3.3\u00d7, respectively, and both approximately double SynFormer sampling throughput.",
+    "Check whether high-scoring generated molecules retain drug-like physicochemical properties. Calculate drug-likeness statistics for the top 5,000 molecules from every ROSHAMBO2 and PED reward under REINVENT and SynFormer. REINVENT molecules remain within the reported favorable drug-like ranges across all rewards, which the authors attribute to the undesirable-substructure filters in its reward. SynFormer shows larger variation because its building-block generation permits larger structural changes; the higher-diversity GeoDiff 2D and GeoDiff Concat outputs more frequently fall outside desirable ranges for molecular weight, TPSA, LogP, and QED.",
+    "Test whether the generated molecules favored by PED have higher predicted BTK potency than molecules favored by 3D alignment. For each reward and each generator, take the top 1,000 molecules by total score, group them by ring-linker scaffold, uniformly sample a scaffold-balanced set of up to 500 molecules, and predict BTK pIC50 with Boltz-2; report mean \u00b1 standard deviation and Cliff\u2019s delta relative to ROSHAMBO2. For REINVENT, ROSHAMBO2 gives 7.40 \u00b1 0.69; GeoDiff 2D gives 7.44 \u00b1 0.60 with \u0394 = 0.04; GeoDiff 3D gives 8.83 \u00b1 1.29 with \u0394 = 0.71; GeoDiff Concat gives 7.70 \u00b1 0.79 with \u0394 = 0.20; and MoLFormer gives 10.27 \u00b1 1.34 with \u0394 = 0.92. For SynFormer, ROSHAMBO2 gives 7.69 \u00b1 1.04; GeoDiff 2D gives 8.81 \u00b1 0.87 with \u0394 = 0.61; GeoDiff 3D gives 8.28 \u00b1 0.90 with \u0394 = 0.34; GeoDiff Concat gives 7.48 \u00b1 1.06 with \u0394 = \u22120.11; and MoLFormer gives 8.31 \u00b1 0.74 with \u0394 = 0.39."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "headline",
+    "confound",
+    "headline"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+ "claims": {
+  "arxiv2604_26496": "The usual bargain in adversarially trained image classifiers, where resistance to bounded perturbations is bought by giving up accuracy on untouched images, is not forced. A training objective can lift both at once instead of trading one against the other. Supported only if both clean accuracy and accuracy under attack rise by more than 0 percentage points against the conventional objective the method is built on, and only if both the plain average and the harmonic mean of the two exceed those of the strongest earlier approach trained under an equal budget by more than 0 points.",
+  "arxiv2604_26496_c1": "In adversarial training, resistance to attack is learned mainly from correctly classified training images that sit well away from the decision boundary, not from those hugging it. Call an image near-boundary if it can still be flipped at a tenth of the full perturbation budget, and far otherwise. Weakening the perturbation applied to near-boundary images should cost much less robustness than weakening it for far images. Supported only if, for weakening to a tenth of the budget and to zero, the robustness lost is smaller for near-boundary images than for far ones in both cases, full-strength perturbation of the far images beats both weakened variants on robust accuracy, and at least one way of drawing that near/far line raises clean and robust accuracy together relative to treating all correctly classified images the same."
+ },
+ "experiments": {
+  "0": {
+   "role": "mechanism",
+   "text": "Does the training signal for robustness come from images near the decision boundary? Setup: ResNet-18 on CIFAR-10, 100 epochs of standard PGD adversarial training at a perturbation budget of 8/255, with currently misclassified images fed in clean. Mark as near-boundary any correctly classified natural image that can still be flipped at one tenth of the budget (0.8/255). Train variants that cut the perturbation on those near-boundary images to the tenth, or to zero. Measured: clean and robust accuracy. Result: cutting perturbation on near-boundary images barely moves robustness, and the intermediate setting improves clean accuracy over perturbing them fully. Caveat: the comparison is only shown as a figure; the text gives no numbers."
+  },
+  "1": {
+   "role": "mechanism",
+   "text": "The matching test on images far from the boundary. Setup: same CIFAR-10 / ResNet-18 run, but now cut the perturbation to the tenth or to zero for correctly classified images that survive attack at that reduced radius. Measured: clean and robust accuracy. Result: unlike the near-boundary case, robustness drops substantially; learning it needs these images perturbed at the full budget. Direction only, again figure-based with no numbers in the text."
+  },
+  "2": {
+   "role": "mechanism",
+   "text": "Does the rule used to split near from far matter to both objectives? Setup: same training setup, alternative splitting rules. Measured: clean and robust accuracy. Result: the split changes both, and a suitable one improves both together. The text neither lists the rules compared nor gives their numbers."
+  },
+  "3": {
+   "role": "headline",
+   "text": "Does the proposed objective beat the conventional one on both axes? Setup: six training objectives (two conventional baselines, two consistency-style baselines and the two proposed variants) on CIFAR-10, CIFAR-100 and Tiny-ImageNet, with ResNet-18 and WideResNet-28-10, at a perturbation budget of 8/255; SGD, 110 epochs, decays at 100 and 105, 10-step inner attacks; three runs averaged, checkpoint picked by highest PGD-10 accuracy. Measured: clean accuracy plus PGD-10, PGD-100, C&W and AutoAttack accuracy. Result: against the PGD baseline the proposed method raises both clean and AutoAttack accuracy in five of six settings (the exception is CIFAR-100 / WideResNet, where clean falls 59.95 to 59.89); the second variant improves on the MART baseline in all six. Against the best of four baselines per metric, the gains are positive on 13 of 15 metric-setting pairs, with clean accuracy down 1.40% on CIFAR-100 / WideResNet and 1.41% on Tiny-ImageNet / WideResNet."
+  },
+  "5": {
+   "role": "external",
+   "text": "How does the method compare with published trade-off methods? Setup: CIFAR-100, ResNet-18, 8/255; take published clean and AutoAttack numbers for nine prior trade-off methods and compare the average of the two against this method's three-run result. Result: 58.53 clean / 25.65 AutoAttack, average 42.09, against the best prior average of 41.59. Caveat: the prior numbers are taken from their own papers rather than retrained here, so training budgets and implementations are not matched."
+  },
+  "6": {
+   "role": "external",
+   "text": "Does the idea carry over to a stronger training recipe? Setup: implement the mechanism on top of a stronger published adversarial-training codebase, PreActResNet-18, 200 epochs with decays at 100 and 150 to match the comparison protocol, against eleven prior methods. Measured: clean accuracy, AutoAttack accuracy, their plain average, and their harmonic mean. Result: on CIFAR-10, 82.76 / 51.65, average 67.21, harmonic mean 63.61, against the best prior average 66.94 and best prior harmonic mean 62.78; on CIFAR-100, 56.92 / 28.08, average 42.50, harmonic mean 37.61, against 42.03 and 37.10."
+  },
+  "9": {
+   "role": "apparatus",
+   "text": "Fix the regularisation weight used by every method that has one. Setup: sweep the weight for the four objectives with a regularisation term and read off robust accuracy. Result: the two conventional baselines peak around 6 to 8, the two consistency-style objectives in the range 1 to 3; the main experiments use 6 and 1 respectively. The text gives no dataset, architecture or per-value accuracies for the sweep."
+  },
+  "4": {
+   "role": "external",
+   "text": "Does the result hold under a different threat model? Setup: the same six objectives on CIFAR-10, CIFAR-100 and Tiny-ImageNet with ResNet-18, now under an l2 budget of 128/255 with step size 32/255, rest of the protocol unchanged; three runs averaged. Result: the pattern repeats. On CIFAR-10 the proposed method reaches 89.17 clean / 67.95 AutoAttack against the strongest baseline's 88.76 / 67.46; on CIFAR-100, 66.12 / 40.25 against 65.14 / 39.92; on Tiny-ImageNet, 61.20 / 42.63 against 61.49 / 42.59, where clean accuracy is 0.47% below the best baseline."
+  }
+ },
+ "split_changes": {
+  "4": "ADDED to C0 as a robustness check. The hand split dropped it because the v3 text said the l2 results had no numbers; appendix Table 5 does give them, so the drop was my error, caused by the 18-page text cutoff."
+ },
+ "notes": "Read the full paper including appendix D. The v3 text said the l2 results had no numbers in the supplied text; they are in appendix Table 5 and are now recorded. Experiments 0-2 really are figure-only, which is now stated as a caveat rather than left implicit. Flagged [5] as not retrained by the authors, which bears on C0's 'equal training budget' bar."
+}

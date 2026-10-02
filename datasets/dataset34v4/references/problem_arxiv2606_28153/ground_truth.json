@@ -1,0 +1,57 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_28153",
+  "claim": "Successful jailbreaks in Llama-2-7B-Chat and Llama-3-8B-Instruct selectively bypass rather than erase internal safety representations, with attack-sensitive refusal components coexisting alongside safety-relevant attention heads that remain active after attack success. A safety-relevant head is considered attack-robust if its activation distributions for refused harmful inputs and successful jailbreaks have an overlap coefficient of at least 0.5; it is considered compromised if that overlap is below 0.5 and its standardized activation decreases under jailbreaks. Selective suppression constitutes a localized sufficient pathway for refusal bypass if suppressing at most eight safety-relevant heads raises attack success from approximately 0% to at least 80% and exceeds equal-sized random-head interventions with nonoverlapping 95% confidence intervals. The persistent representations have practical predictive value if, without additional training, their harmful-input classification exceeds the model\u2019s own refusal behavior and matches or exceeds the strongest dedicated safety classifier in aggregate Macro-F1.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.28153"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_28153",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the paired evaluation sets used to compare refused harmful requests with successful jailbreaks. Sample benign instructions from Alpaca, collect harmful instructions from multiple published harmful-behavior datasets, and generate attack variants with GCG, AutoDAN, many-shot jailbreaking, and PAIR for Llama-2-7B-Chat and Llama-3-8B-Instruct. Retain only one-to-one pairs for which the original harmful request is refused and the attacked variant succeeds. From approximately 10,000 attack samples, 378 pairs for Llama-2-7B-Chat and 176 pairs for Llama-3-8B-Instruct pass this filter, a reported yield of approximately 2\u20133%.",
+    "Extract the refusal feature and fix the head-classification rule. Compute a difference-in-means refusal direction from simple harmful and benign instruction sets, select the best layer on a validation set, and normalize the resulting direction. The selected layer is 12 for Llama-3-8B-Instruct and 14 for Llama-2-7B-Chat. Back-project that direction through attention-head OV circuits, collect each head's end-of-instruction activation score on benign, refused harmful, and successful-attack inputs, estimate activation distributions with KDE using Scott's rule, and set both the harmful-versus-benign and harmful-versus-attack overlap thresholds to 0.5. Standardize each head's activation against its benign mean and standard deviation; among harmful-versus-benign discriminative heads, classify a low-overlap harmful-versus-attack head as an ACH when its standardized activation decreases under attack and as an SAH when it increases.",
+    "Test whether successful jailbreaks erase the model-wide refusal feature. Measure activation of the selected refusal direction at the end-of-instruction token across attention heads and MLP components for refused harmful inputs and their successful attack variants in Llama-2-7B-Chat and Llama-3-8B-Instruct. Successful attacks reduce some component activations but leave substantial refusal-direction activation in the middle layers, including layers previously identified as safety-relevant, rather than flattening the feature across the model.",
+    "Identify the attention-head populations whose behavior differs under attack. Apply the two-stage overlap rule with \u03c4_harmful=0.5 and \u03c4_attack=0.5 to 416 heads in layers 0\u201312 of Llama-3-8B-Instruct and 480 heads in layers 0\u201314 of Llama-2-7B-Chat. Llama-3 yields 80 harmful-salient heads, 21 ACHs, and 17 SAHs; Llama-2 yields 43 harmful-salient heads, 20 ACHs, and 19 SAHs. More than 60% of ACHs occur in layers 0\u20133, while SAHs are distributed mainly through layers 5\u201312. Attack inputs produce both strongly decreased early-layer activations and strongly increased middle-layer activations rather than a uniform reduction.",
+    "Check that the head categories are not fixed by the particular overlap threshold. Set the same threshold for both filtering stages and scan \u03c4 from 0.1 to 0.9. For Llama-3-8B-Instruct, the harmful-salient/SAH/ACH counts are 12/0/0 at 0.1, 20/1/0 at 0.2, 30/2/1 at 0.3, 57/8/7 at 0.4, 80/17/21 at 0.5, 92/51/45 at 0.6, 72/98/98 at 0.7, 24/172/179 at 0.8, and 0/207/207 at 0.9. For Llama-2-7B-Chat, the corresponding counts are 5/0/0, 14/1/0, 17/3/2, 25/9/8, 43/19/20, 53/44/40, 51/86/79, 28/156/146, and 2/237/218. The authors report that the main categorization trends hold for \u03c4 between 0.4 and 0.6 and use 0.5 for the main experiments.",
+    "Check that KDE bandwidth does not determine the ACH and SAH assignments. Scale Scott's-rule bandwidth by \u03b1\u2208{0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0}, recompute every overlap coefficient, rerun the two-stage filter at fixed thresholds of 0.5, and compare each resulting ACH and SAH set with the \u03b1=1.0 set using Jaccard consistency and Spearman rank correlation. Across the full scan, Spearman correlation is at least 0.928 for Llama-3 and 0.979 for Llama-2; for \u03b1\u2208[0.8,1.4], it is at least 0.994 for Llama-3 and 0.997 for Llama-2. At \u03b1=0.8, ACH/SAH Jaccard scores are 0.913/0.810 for Llama-3 and 0.909/0.905 for Llama-2; at \u03b1=1.2 they are 0.810/1.000 and 0.800/1.000. At the extreme \u03b1=2.0 setting they fall to 0.429/0.471 and 0.550/0.684, respectively.",
+    "Test whether suppressing the identified ACHs is sufficient to bypass refusal. On normally refused harmful inputs with baseline ASR approximately 0%, modify each selected head's end-of-instruction output as o\u2190o\u22120.8r_v and progressively increase the number of intervened ACHs. The authors state that \u03b1=0.8 was selected because smaller values produced negligible effects and larger values destabilized generation. At eight intervened heads, ASR reaches 95.0% for Llama-3-8B-Instruct and 81.6% for Llama-2-7B-Chat. At the final intervention size, ASR reaches 99.5\u00b10.3% for Llama-3 and 83.7\u00b11.1% for Llama-2, with 95% confidence intervals computed over 10 runs.",
+    "Rule out that suppressing an equal number of arbitrary attention heads produces the same attack success. Apply the same negative-feature intervention to random heads using 10 seeds and report 95% confidence intervals, using 21 random heads for Llama-3-8B-Instruct and 20 for Llama-2-7B-Chat to match the total identified ACH counts. Random-head intervention yields 4.0\u00b13.7% ASR for Llama-3 and 10.2\u00b111.6% for Llama-2, compared with 99.5\u00b10.3% and 83.7\u00b11.1% when the identified ACHs are intervened on.",
+    "Check whether the ACH intervention merely destroys generation quality. Inspect generations after intervening on 8\u201321 ACHs. The reported generations remain coherent and on-topic after the intervention; the paper does not report a standard capability-benchmark evaluation for these intervened models.",
+    "Test whether the persistent internal activations can classify harmful inputs without additional training. Select observation positions whose benign-versus-harmful activation overlap is below a threshold, aggregate their standardized activations with a top-m score, and classify an input as harmful when that score exceeds a decision threshold. Evaluate with a single forward pass and no gradient computation, model intervention, or detector training on 10 balanced 1:1 harmful-to-benign datasets: Aegis, Aegis2.0, HarmBench-Adversarial, HarmBench-Vanilla, OpenAI Moderation, SALAD-Bench, SimpleSafetyTests, ToxicChat, WildGuardTest, and WildJailbreak. Report per-dataset Macro-F1 and a sample-count-weighted average. Compared with each model's own refusal behavior, weighted-average Macro-F1 rises from 0.470 to 0.853 for Gemma-2B, 0.514 to 0.816 for Gemma-9B, 0.519 to 0.798 for Gemma-27B, 0.664 to 0.752 for Llama-2-7B, 0.797 to 0.888 for Llama-3-8B, 0.506 to 0.860 for Qwen-7B, and 0.470 to 0.847 for Qwen-14B. The dedicated classifiers score 0.599 for LlamaGuard3, 0.666 for LlamaGuard4, 0.877 for Qwen3Guard, and 0.880 for WildGuard, while the Llama-3-8B activation detector scores 0.888. On adversarial datasets, Gemma-2B rises from 0.270 to 0.976 on SALAD-Bench and Qwen-7B rises from 0.483 to 0.907 on WildJailbreak; detector scores across the reported adversarial examples are 0.85\u20130.98 while the corresponding refusal-based scores are below 0.5."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "headline",
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "control",
+    "confound",
+    "external"
+  ]
+}

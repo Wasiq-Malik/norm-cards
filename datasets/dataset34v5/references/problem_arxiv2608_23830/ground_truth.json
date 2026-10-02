@@ -1,0 +1,47 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_23830",
+  "claim": "When a language model is trained by reinforcement learning to obey several instructions inside a single response, its exploration drifts toward the instructions it already finds easy, and that drift is what holds the training back. Supported only if a policy trained to counteract the drift ends with lower spread in per-instruction success and lower variance in how often pairs of instructions are satisfied together, each by more than 0 absolute units, than an otherwise identical equal-reward policy, while its mean share of prompts where every instruction passes is higher by more than 0 percentage points. Separately, each of those two imbalance measures counts as a valid diagnostic only if, holding mean per-instruction accuracy fixed, it correlates negatively with the share of prompts where every instruction passes.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.23830"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_23830",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Does equal-reward training favour the instructions already being satisfied? Setup: train a 1.7B model with a standard policy-gradient method and a reward equal to the count of satisfied instructions, on prompts carrying up to five instructions, then compare per-instruction-type accuracy before and after. Group instruction types as easy, medium or hard by their accuracy before training. Result: easy types improve consistently; medium and hard types improve with much higher variance; and types starting from very low accuracy barely improve at all, which the authors read as a second cause of the drift beyond the reward shape itself.",
+    "Validate the two imbalance measures independently of mean accuracy. Setup: take multi-instruction test prompts and pool responses from fifteen models spanning several families and sizes. Repeatedly sample groups of 128 responses and keep only groups whose mean per-instruction accuracy equals the across-model mean to within 0.01, which holds that confound fixed by construction. For each group build a binary response-by-instruction matrix, compute the variance of per-instruction success rates and the variance of pairwise joint-satisfaction rates normalised by the smaller of the two marginals, and compare both with the share of prompts where every instruction passes. Result: at fixed per-instruction accuracy both measures move inversely with that share. The paper reports the direction but no correlation coefficients, so the claim's r < 0 bar is met only qualitatively.",
+    "Build the warm-started policies used in the comparison. Setup: evaluate the starting policy on a 45,374-prompt training subset carrying three to five rule-based instructions, find instruction types below 0.5 accuracy, and collect up to 100 successful responses for each, giving 900 seed examples. Sample candidates, keep those satisfying the target instruction, and prefer the one covering the most other instructions; when nothing valid appears, append a short nudge naming the instruction to focus on and resample. Fine-tune the starting policy on this seed data for one epoch before reinforcement learning.",
+    "Train the matched comparison arms. Setup: from a 1.7B and a 7B starting model, train on the same 45,374-prompt subset with the same policy-gradient method, group size 16, batch 512, learning rate 1e-6, at most 400 steps on four A100s. Three arms: plain count reward; warm start then count reward; warm start then a scarcity-weighted reward that weights a satisfied instruction by one minus its frequency in the response group, with a paired term weighting jointly satisfied pairs by one minus their joint count over the smaller individual count.",
+    "Does counteracting the drift improve prompt-level instruction following? Setup: generate at temperature 0.7 and evaluate the 1.7B arms on three instruction-following benchmarks, including multi-turn. Result: the count-reward arm averages 62.0 across seven scores; warm start alone 64.2; warm start plus scarcity weighting 67.5. Against the count-reward baseline that is +5.5 on average and +9.2 on the strictest single benchmark, with warm start alone contributing +2.2.",
+    "Do the gains coincide with the imbalance actually falling during training? Setup: for each training prompt and response group, track both imbalance measures, the share of instructions satisfied at least once in the group, and the prompt-level pass rate, for all three arms. Result: the count-reward arm reduces both measures slowly and stays more imbalanced; the warm-started arms start with better coverage and prompt accuracy; and the scarcity-weighted arm drops both measures fastest and furthest, ending with the lowest variance and the highest coverage and prompt accuracy. The paper gives curves but no endpoint numbers, so the claim's 'more than 0 absolute units' bar is again met only by direction."
+  ],
+  "roles": [
+    "mechanism",
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "mechanism"
+  ]
+}

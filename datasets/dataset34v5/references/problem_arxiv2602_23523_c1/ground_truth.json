@@ -1,0 +1,38 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2602_23523_c1",
+  "claim": "A proactive face watermark trained on one collection of faces and a fixed set of deepfake generators keeps working, without retraining, on a deepfake generator it never trained against and on a different face collection. Each kind of generalisation is judged separately. Supported only if the source identifier is recovered with a lower bit error rate than the strongest earlier proactive-forensics method at matched resolution, both on the held-out generator and averaged over generators on the unseen faces, while PSNR and SSIM on the unseen faces are no lower than the best earlier watermark.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2602.23523"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2602_23523",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        6,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Train the watermarking system. Setup: CelebA-HQ (30k faces, official splits) at 128x128 and 256x256. Each image gets a 152-number mark: 68 face-alignment landmarks (136 coordinates) plus a 16-bit identifier derived from a hash of the file name. Training is two-stage: first against ordinary processing (resize, blur, median filter, two JPEG variants), then against four face-swap/reenactment generators (SimSwap, UniFace, CSCS, StarGAN-v2), keeping InfoSwap unseen for testing; one manipulation per batch, with another batch image as the swap source.",
+    "Generalise to a deepfake generator excluded from training. Setup: InfoSwap is applied only at test time. Result: identifier BER 0.22% (128px) and 0.84% (256px), landmark error 1.5 and 3.9 px; the best earlier InfoSwap BERs are 3.35% (LampMark, 128px) and 2.31% (DiffMark, 256px).",
+    "Generalise to a face dataset never seen in training. Setup: apply the CelebA-HQ model unchanged to 2,000 random LFW images (different identities and capture conditions). Result: PSNR/SSIM 39.56 dB / 0.97 (128px) and 40.68 / 0.98 (256px); identifier BER averaged over the five generators 4.06% and 2.76% versus 4.66% and 4.50% for the best earlier method (DiffMark); landmark error 1.8 and 4.2 px."
+  ],
+  "roles": [
+    "apparatus",
+    "external",
+    "external"
+  ]
+}

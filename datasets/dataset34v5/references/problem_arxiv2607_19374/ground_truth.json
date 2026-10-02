@@ -1,0 +1,50 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2607_19374",
+  "claim": "Plane-geometry problems written only in prose can be turned automatically into theorem statements in a standard proof assistant and its mainline mathematics library, in a way that keeps the meaning and that general-purpose neural provers can work with. Keeping the meaning requires the formal statement, including whatever non-degeneracy and configuration assumptions have to be spelled out, to say what the prose said. Supported if expert review finds the first compiling candidate correct for at least half of the problems, or a correct candidate among five attempts for at least half; if a general-purpose prover given no geometry-specific training proves more than 0% of them on a single attempt; and if training on the resulting statements raises that figure by more than 0 percentage points over the same starting checkpoint.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2607.19374"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2607_19374",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build the competition-level set used for the meaning check. Setup: filter a competition mathematics corpus by domain down to 780 plane-geometry problems spanning difficulty 1.0 to 9.5, from international and national olympiads and regional contests. For each, have a large model produce 32 candidate formalisations through the full four-stage pipeline (make implicit constraints explicit, anchor the configuration, map concepts to library terms, repair against compiler feedback), and keep problems with at least one statement that compiles. Result: 768 of 780 kept, a 98.5% retention rate. Note this measures compilation, not correctness.",
+    "Build the large corpus used for prover training and inference. Setup: filter a large mathematics problem set to 183,796 geometry candidates, run the same pipeline, and keep each problem that ends with at least one compiling statement. Result: 177,597 problems, 96.6% retention.",
+    "Do the compiling statements mean what the prose meant? Setup: sample 180 problems at difficulty 4.0 or above, prepare five compiling formalisations each, and have graduate students experienced in formal mathematics label whether each preserves the original statement. Count first-candidate-correct and any-of-five-correct. Result: 88 of 180 first candidates correct (48.89%) and 132 of 180 correct within five (73.33%). So the first-candidate figure falls just under the 50% bar while the five-attempt figure clears it. Accuracy falls with difficulty, from 50.9%/77.4% at 4.0-5.0 down to 20.0%/60.0% above 8.0.",
+    "Can an untrained general-purpose prover do anything with these statements? Setup: run an 8B prover checkpoint, fine-tuned for general proving in this assistant but given no geometry-specific training, over all 177,597 problems and measure the share solved in one attempt. Result: 13.6%.",
+    "Does training on proofs collected from this corpus improve that prover? Setup: from the same starting checkpoint, train one run by supervised fine-tuning on all successful proof traces collected at one attempt per problem, and another by preference optimisation on successful-versus-failed pairs collected at two attempts, using 7,148 pairs. Eight A100s, one epoch, cosine schedule. Result: single-attempt success rises from 13.6% to 15.1% after supervised fine-tuning and 15.0% after preference optimisation.",
+    "Is that 1.5-point gain bigger than run-to-run noise? Setup: two independent inference runs of the untrained checkpoint, and a paired per-problem comparison of gains against losses. Result: the two baseline runs give 13.62% and 13.58%, a spread of 0.04 points against a gain of about 1.5. Per problem, supervised fine-tuning wins 5,635 and loses 2,988; preference optimisation wins 5,338 and loses 2,853. The authors note the gain is not sampling variance but remains modest in absolute terms.",
+    "What does a frontier prover make of the corpus? Setup: run a state-of-the-art prover on 100 randomly sampled formalised problems. Result: it proves 25 and leaves 19 unresolved but unrefuted. Important caveat: that count is taken after excluding statements the prover explicitly refutes as false, statements made trivially true by obvious misformalisation, and statements with concrete counterexamples. So this is a filtered subset, and the exclusions are themselves evidence that some compiling statements do not mean what the prose meant."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "headline",
+    "headline",
+    "headline",
+    "confound",
+    "external"
+  ]
+}

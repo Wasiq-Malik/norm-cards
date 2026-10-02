@@ -1,0 +1,35 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612_c1",
+  "claim": "Ordinary training-time visual backdoors fail to take hold in vision-language-action policies because the gradients for the ordinary task and for the hidden behaviour pull against each other during joint fine-tuning, and removing that opposition is what lets the hidden behaviour be learned without ruining ordinary performance. Accepted only if the conventional approach shows a training-averaged cosine similarity between the two gradient signals below 0 together with a failure to fit the action policy at all, while an approach built to remove the opposition keeps that similarity near zero, exceeds 80% on the triggered behaviour, and holds ordinary task success within 5% relative of a cleanly trained policy.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C1",
+      "v3_indices": [
+        2,
+        3
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Are the low baseline numbers just a failure to train the continuous action policy at all, rather than a failure of the backdoor? Setup: train a clean policy and each attack on the spatial suite and record final training loss, validation action error, task success and the dominant failure mode. Result: the clean policy reaches loss 0.12, action error 0.028, 91.5% success. The conventional attack sits at loss 1.68, error 0.412, 4.5% success with the policy stalling outright; the strongest earlier attack at 1.42, 0.385, 17.5% with jittering. The proposed one stays near clean (0.15, 0.034, 88.8%), so the baselines' weakness is an optimisation failure.",
+    "Is gradient opposition the reason? Setup: during fine-tuning, compute the cosine similarity between the gradients of the ordinary-task objective and the hidden-behaviour objective over the trainable adapter parameters, comparing the strongest earlier attack with the proposed one over about 1,000 steps. Result: the earlier attack goes negative quickly, oscillates around -0.2 to -0.5 and settles near -0.4; the proposed one stays near zero throughout, at most weakly positive."
+  ],
+  "roles": [
+    "confound",
+    "mechanism"
+  ]
+}

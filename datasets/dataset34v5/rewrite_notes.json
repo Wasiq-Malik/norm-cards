@@ -1,0 +1,88 @@
+{
+ "arxiv2608_09928": {
+  "split_changes": {},
+  "notes": "Read appendix E (steering decomposition, feature correspondence). [1] now has the actual correspondence numbers, which v3 could not see. [12] now records that the feature direction alone contributes little and most of the steering gain comes from layer choice, which is the sharpest caveat on the claim's steering bar and was invisible at 18 pages. [5] now flags that the spatial evaluation subset is selected using the feature under test. [7] now distinguishes top-feature effects from the pool mean."
+ },
+ "arxiv2606_00570": {
+  "split_changes": {},
+  "notes": "Read the parts of the paper v3 never saw (only ~50% was extracted at 18 pages), including section 4 and the correlation table. [3] now gives the actual correlations per method and makes clear the relationship holds for two of four methods, which is exactly the C1 bar; v3 listed the numbers without that reading. [9] now states that the null-space method does meet C0's no-degradation clause while failing the average clause, which the v3 text left implicit."
+ },
+ "arxiv2606_28153": {
+  "split_changes": {
+   "13": "ADDED to C0 as a control. The paper's appendix D.5 reports an over-refusal evaluation and a training-free baseline comparison that the 18-page cutoff hid from v3. It is a genuine control on the claim's detection bar, since a detector that flagged every hard benign prompt could otherwise score well."
+  },
+  "notes": "Read the appendix (A.1-A.4 threshold and bandwidth sweeps, D.5 over-refusal). [4] and [5] now report where the rule degenerates rather than only the default setting. [8] now flags that no capability benchmark backs the coherence check. [11] now says the detector edges rather than matches the strongest purpose-built classifier. New [13] added."
+ },
+ "arxiv2606_16939": {
+  "split_changes": {},
+  "notes": "Nearly the whole paper was already visible at 18 pages. [5] now records that the edge-ablation half of the comparison has no baseline at all, which matters for the claim's faithfulness/completeness bar; v3 mentioned the absence but not that it leaves the comparison one-sided. [6] now says plainly that the method matches rather than beats on accuracy, and wins on time, which is what the claim's bar actually asks."
+ },
+ "arxiv2608_14049": {
+  "split_changes": {},
+  "notes": "Read the real-world appendix as well, though its experiment belongs to a thin claim that was not kept. [3] now points out that the drop across regimes is carried by strategy selection rather than grasping, which the v3 numbers contained but did not say. [4] now names which baseline is strongest in all three regimes and gives the margins, which is what the claim's bar asks for."
+ },
+ "arxiv2609_08444": {
+  "split_changes": {},
+  "notes": "Read the experimental-setup appendix for the real-robot protocol. [0] and [7] now state where the method does not lead on ordinary task success, which is exactly the clause C0's bar contains and which v3 reported numerically without reading. [1] notes the perfect real-robot score comes from four constructed tasks. [4] points out that ordinary success and safe success come apart across memory variants. The hand split already flagged [7] as wrongly marked not-required in scope.json; this rewrite keeps it in C0 as a control."
+ },
+ "arxiv2604_24474": {
+  "split_changes": {},
+  "notes": "Deferred earlier in the session: writing this file tripped a safety classifier mid-response. Rewritten at the level of abstraction the claim needs, describing what each experiment measured and what came out, without the generation protocol's operational detail (template and building-block counts, reward transform parameters, specific reference compound) which is apparatus the claim deliberately withholds anyway. [4] now states that the property control comes from the filters rather than the reward. [5] now reads the results against the claim's bar and notes no representation wins in both generators."
+ },
+ "arxiv2510_20487": {
+  "split_changes": {},
+  "notes": "Checked against the full paper (appendices I, K included). The v3 text was accurate; [12] now states the trajectory of the prompting condition from appendix K, [11] the actual code-golf setup, [13] that the vector was extracted inside a Wood Labs context."
+ },
+ "arxiv2609_06718": {
+  "split_changes": {},
+  "notes": "Nearly the whole paper was visible at 18 pages. [0] now reports the adversarial baseline's atomic numbers alongside the rest, which makes clear the gap is in composition rather than in individual skills. [4] now states that all methods fall sharply under the stricter trapping rule, so the headline numbers depend on the success definition; v3 gave the numbers without that reading."
+ },
+ "arxiv2604_09101": {
+  "split_changes": {},
+  "notes": "Full paper seen in v3. Corrected [8]: v3 omitted that SIBA's clean accuracy rises by ~2 points, outside the claim's +-1 pp repair bar. [7] now states that the attack itself weakens."
+ },
+ "arxiv2609_02350": {
+  "split_changes": {},
+  "notes": "Nearly the whole paper was visible at 18 pages. [1] now separates comparators that meet the resource constraints from those that do not, which is the whole point of C0's bar and was flattened in v3. [7] now quantifies how much of the result depends on the second training dataset and notes that the single-dataset agent would not clear the comparator."
+ },
+ "arxiv2604_26496": {
+  "split_changes": {
+   "4": "ADDED to C0 as a robustness check. The hand split dropped it because the v3 text said the l2 results had no numbers; appendix Table 5 does give them, so the drop was my error, caused by the 18-page text cutoff."
+  },
+  "notes": "Read the full paper including appendix D. The v3 text said the l2 results had no numbers in the supplied text; they are in appendix Table 5 and are now recorded. Experiments 0-2 really are figure-only, which is now stated as a caveat rather than left implicit. Flagged [5] as not retrained by the authors, which bears on C0's 'equal training budget' bar."
+ },
+ "arxiv2607_19374": {
+  "split_changes": {
+   "10": "MOVED from C1 to C0 as an external check. The hand split put the frontier-prover run under the transfer claim, where it was the worst-covered item in the whole dataset (0.10 mean coverage). It tests neither held-out transfer nor a second prover; what it bears on is formalisation quality, since its exclusion list reveals false and trivially misformalised statements. That makes it evidence about C0's meaning-preservation bar."
+  },
+  "notes": "Read appendices D and G. [4] now states that the first-candidate figure falls under C0's 50% bar while the five-attempt figure clears it, which v3 reported numerically but did not read against the bar. [10] now records that the 25/100 is after exclusions and why those exclusions matter. [0] now notes that 98.5% retention measures compilation, not correctness."
+ },
+ "arxiv2608_28229": {
+  "split_changes": {},
+  "notes": "Whole paper visible at 18 pages. [3] and [4] now state the actual margins against the strongest alternative, which are 1.3-1.9 points on SQL and 0.6 points on one temporal-logic model, close to a tie; v3 listed both sets of numbers without reading them against the claim's quality bar."
+ },
+ "arxiv2605_08612": {
+  "split_changes": {},
+  "notes": "Full text already seen in v3; numbers verified. Added to [1] that ordinary success is ~12 points below the clean policy, which bears directly on C0's 'within 5% relative' bar and was not stated in v3. [11] and [12] now state the defence results against C2's bar explicitly."
+ },
+ "arxiv2608_25585": {
+  "split_changes": {},
+  "notes": "Whole paper visible at 18 pages. [2] now records that the action-aware retriever lifts the baselines substantially too, which v3 listed in the numbers but did not state; it bears on how much of the headline margin is the retriever rather than the policy. [3] now notes the first-subgoal rates are close. [7] now says the latency bar is supported only by a trend."
+ },
+ "arxiv2608_26645": {
+  "split_changes": {},
+  "notes": "Whole paper visible at 18 pages. [2] now states plainly that the human-corrected comparison system remains the closest competitor, which the claim's 'strongest prior comparison system' bar turns on; v3 buried this in a confusing sentence about Threading D0 that misread the table. [4] now frames the oracle variant as measuring the monitor's instruction quality. [6] notes the every-task clause is tested on only two tasks."
+ },
+ "arxiv2608_23830": {
+  "split_changes": {},
+  "notes": "Whole paper visible at 18 pages. [1] and [6] now say explicitly that the paper supports those parts of the bar only by direction, with no coefficients or endpoint values; v3 noted the absence but did not connect it to the claim's thresholds. [1] now makes clear the fixed-accuracy sampling is what removes the confound."
+ },
+ "arxiv2606_24026": {
+  "split_changes": {},
+  "notes": "The last quarter of the paper, an appendix case study on a circuit in a real 8B model, belongs to a thin claim that was not kept, so nothing needed from it. [3] now states which bars each backbone clears, [8] which comparisons the two exceptions come from, and [9] that task accuracy ties, which is exactly the clause C1's bar turns on."
+ },
+ "arxiv2602_23523": {
+  "split_changes": {},
+  "notes": "Full paper seen in v3 already; numbers check out. Fixed a leak in C0: the v3 claim stated the authors' own fitted cutoff (3.2375 px) as the bar; now 'one fixed cutoff set in advance'. [3] now records that the cutoff and AUC come from the same validation data. [5] now notes StarGAN-v2, where the method is not best."
+ }
+}

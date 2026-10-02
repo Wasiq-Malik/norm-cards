@@ -1,0 +1,1340 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Image_Classification",
+  "claim": "Experimental norms and standard practice in Image Classification.",
+  "subfields": [
+    "Image Classification"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 12,
+    "pdf_sources": {
+      "none": 18,
+      "cache:text": 12
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Image Classification",
+      "menu": {
+        "datasets": [
+          {
+            "name": "ImageNet",
+            "role": "eval",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "CIFAR-10",
+            "role": "eval",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Caltech-UCSD Birds (CUB)",
+            "role": "eval",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Stanford Dogs",
+            "role": "eval",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Animals with Attributes (AWA)",
+            "role": "eval",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "PASCAL VOC 2012 (multi-label)",
+            "role": "eval",
+            "evidence": [
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+            ]
+          },
+          {
+            "name": "Oliva-Torralba (OT) scene dataset",
+            "role": "eval",
+            "evidence": [
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+            ]
+          },
+          {
+            "name": "VIPriors Image Classification Challenge (ImageNet-derived)",
+            "role": "eval",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "Cervical histopathology (4-class)",
+            "role": "eval",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "PCam (subset)",
+            "role": "eval",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Cadik (color-to-gray quality)",
+            "role": "eval",
+            "evidence": [
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+            ]
+          },
+          {
+            "name": "COLOR250 (color-to-gray quality)",
+            "role": "eval",
+            "evidence": [
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "ResNet (family)",
+            "role": "backbone",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification",
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Convolutional Neural Network (CNN)",
+            "role": "backbone",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Multilayer Perceptron (MLP)",
+            "role": "baseline",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "ResNeSt101",
+            "role": "backbone",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "TResNet-XL",
+            "role": "backbone",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "SE-ResNeXt101",
+            "role": "backbone",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "AlexNet (fc7 features)",
+            "role": "backbone",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "GoogLeNet (pool features)",
+            "role": "backbone",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Fisher Vectors (SIFT-based)",
+            "role": "baseline",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Structured Joint Embedding (SJE)",
+            "role": "method_under_test",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "one-vs-rest SVM objective",
+            "role": "method_under_test",
+            "evidence": [
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "multiclass / ranking SVM objectives",
+            "role": "baseline",
+            "evidence": [
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "HistoGAN (conditional GAN for augmentation)",
+            "role": "method_under_test",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "CLIP (ResNet-50 visual encoder for pseudo-labels)",
+            "role": "baseline",
+            "evidence": [
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Accuracy (Top-1)",
+            "direction": "higher_better",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification",
+              "Introducing Image Classification Efficacies",
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification",
+              "Strengthening Machine Learning Reproducibility for Image Classification",
+              "Texture image analysis and texture classification methods - A review",
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "Average per-class Top-1 accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Validation loss (cross-entropy)",
+            "direction": "lower_better",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "mean Average Precision (mAP, multi-label)",
+            "direction": "higher_better",
+            "evidence": [
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+            ]
+          },
+          {
+            "name": "Balanced accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Area under Precision-Recall Curve (AUPRC)",
+            "direction": "higher_better",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Image Classification Efficacy (ICE: map-level/class-level)",
+            "direction": "higher_better",
+            "evidence": [
+              "Introducing Image Classification Efficacies",
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Precision / Recall / F1-score",
+            "direction": "higher_better",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Sensitivity / Specificity",
+            "direction": "higher_better",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Fr\u00e9chet Inception Distance (FID)",
+            "direction": "lower_better",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Classwise accuracy / Overall accuracy",
+            "direction": "higher_better",
+            "evidence": [
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Use held-out validation and/or cross-validation for hyperparameters and early stopping",
+            "detail": "Reserve a validation split or perform CV to select learning rates/regularization and stop training based on validation metrics",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "Report official splits exactly and prevent leakage",
+            "detail": "Use the benchmark\u2019s official train/val/test (or class-exclusive zero-shot) splits and document them; ensure no overlap (e.g., mutually exclusive classes for zero-shot, patient-level splits in medical)",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Normalize inputs",
+            "detail": "Apply input normalization (e.g., divide by 255 or mean/std normalization) and report the scheme used",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Specify optimizer and learning-rate schedule",
+            "detail": "State optimizer (e.g., SGD with momentum or Adam), base LR, warm-up, decay/schedule (e.g., cosine), weight decay, batch size, and epochs",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Document data augmentation",
+            "detail": "Report training augmentations (e.g., random resized crop/aspect/area ranges, flips, AutoAugment, CutMix) and any traditional augmentations used for baselines",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Track and report training/validation curves",
+            "detail": "Log training loss, validation loss, and validation accuracy across epochs to diagnose overfitting",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Test-time augmentation and ensembling protocol",
+            "detail": "Describe test-time crops/scales/flips and how predictions are averaged across augmentations and models",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "Declare pretraining/external data use",
+            "detail": "State whether external data or pretrained weights are used; if disallowed, merge only allowed splits for final training",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "State input resolution(s) for train and eval",
+            "detail": "Report training and test-time input sizes/scales used",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "Zero-shot evaluation setup",
+            "detail": "Ensure train/val/test classes are disjoint; select combination/ensemble weights on held-out unseen classes",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Synthetic augmentation selection (if using GANs)",
+            "detail": "Filter generated samples by predictive entropy and feature distance-to-class-centroid (with MC-dropout features) and select generator checkpoints using smoothed FID computed on domain features",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Precision-Recall evaluation protocol",
+            "detail": "Compute PR curves by varying decision thresholds (not from a single confusion matrix) and report AUPRC where appropriate",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Component-removed ablation",
+            "detail": "Remove the specific new component (e.g., selection stage, global-local aggregation, multi-embedding combination) while holding all else constant",
+            "rules_out": "That gains are due merely to adding any extra machinery rather than the proposed component",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification",
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Alternative objective/loss under same backbone and training",
+            "detail": "Train the same architecture with competing objectives/losses (e.g., multiclass/ranking SVM vs one-vs-rest; CE vs CE+metric losses)",
+            "rules_out": "That improvements are caused by the backbone or training recipe rather than the proposed objective/loss",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Towards good practice in large-scale learning for image classification"
+            ]
+          },
+          {
+            "name": "Backbone/feature-extractor swap",
+            "detail": "Evaluate the method across different input feature extractors/backbones while keeping the rest of the pipeline fixed",
+            "rules_out": "That observed gains are driven solely by a particular feature extractor/backbone",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge",
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Capacity-matched simple baseline lacking the inductive bias",
+            "detail": "Compare against a size-matched non-convolutional/different-inductive-bias model trained with the same data and optimizer",
+            "rules_out": "That gains are due to generic capacity or training procedure rather than the model\u2019s inductive bias",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "No-augmentation baseline",
+            "detail": "Train the classifier on the original data without synthetic or advanced augmentation",
+            "rules_out": "That gains are due to standard training or dataset idiosyncrasies rather than the augmentation method",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Single-model vs ensemble",
+            "detail": "Evaluate each model individually with the same test-time augmentation before averaging predictions across models",
+            "rules_out": "That ensemble gains are attributable to a single strong component rather than complementary models",
+            "evidence": [
+              "A Technical Report for VIPriors Image Classification Challenge"
+            ]
+          },
+          {
+            "name": "Training schedule ablations",
+            "detail": "Vary training length and pseudo-label update frequency (if applicable) while holding other factors constant",
+            "rules_out": "That performance differences arise from training duration/schedule rather than the proposed optimization mechanism",
+            "evidence": [
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+            ]
+          },
+          {
+            "name": "Data/corpus variant control (for label/text embeddings)",
+            "detail": "Train embeddings on corpora of different sizes/specificities and compare downstream performance under the same framework",
+            "rules_out": "That gains stem from corpus size/specificity instead of the embedding method",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Class imbalance inflating accuracy",
+            "detail": "Overall accuracy can appear high due to skewed class prevalence without reflecting true discriminative performance",
+            "ruled_out_by": "Report class-imbalance-robust metrics (balanced accuracy, AUPRC, ICE) alongside accuracy",
+            "evidence": [
+              "Introducing Image Classification Efficacies",
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Overfitting/memorization masquerading as improvement",
+            "detail": "Training loss decreases while validation loss increases, giving a false sense of progress",
+            "ruled_out_by": "Track and report both training and validation losses over epochs; select epochs by validation loss",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Calibration changes masked by accuracy",
+            "detail": "Accuracy may remain unchanged while predicted probabilities become miscalibrated",
+            "ruled_out_by": "Report validation cross-entropy (or other proper scoring rules) in addition to accuracy",
+            "evidence": [
+              "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+            ]
+          },
+          {
+            "name": "Train/test class overlap in zero-shot",
+            "detail": "Any overlap between seen and test classes inflates zero-shot accuracy",
+            "ruled_out_by": "Use mutually exclusive train/val/test class splits and validate ensemble weights on held-out unseen classes",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Apparent gains driven by stronger input features/backbones",
+            "detail": "Improvements could be due to better image features rather than the proposed method",
+            "ruled_out_by": "Evaluate across multiple feature extractors/backbones and show consistent method benefits",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Corpus-size/specificity explains embedding gains",
+            "detail": "Performance may improve due to a larger or more domain-specific text corpus, not the embedding method",
+            "ruled_out_by": "Train/evaluate embeddings from multiple corpora (domain-specific vs Wikipedia) and compare under the same framework",
+            "evidence": [
+              "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+            ]
+          },
+          {
+            "name": "Per-image parameter tuning (e.g., decolorization weight) explains gains",
+            "detail": "Improvements might come from per-image hyperparameter selection rather than the proposed algorithmic change",
+            "ruled_out_by": "Compare against prior methods with fixed parameters and report downstream classification gains",
+            "evidence": [
+              "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+            ]
+          },
+          {
+            "name": "Label ambiguity in generated data",
+            "detail": "Synthetic images may not match their conditioning labels, harming augmentation efficacy",
+            "ruled_out_by": "Filter generated samples using predictive entropy and feature-distance-to-class-centroid (with MC-dropout features)",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Mismatch of evaluation feature space (FID) to domain",
+            "detail": "Using generic Inception features for FID on non-natural images can mislead model selection",
+            "ruled_out_by": "Compute FID (or equivalent) in a domain-appropriate feature space (e.g., task-pretrained ResNet on the target domain)",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Unstable per-epoch selection metric (noisy FID minima)",
+            "detail": "GAN training noise can cause spurious low FID epochs to be selected",
+            "ruled_out_by": "Smooth the metric across epochs (e.g., EMA) and select by the smoothed minimum",
+            "evidence": [
+              "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+            ]
+          },
+          {
+            "name": "Single-threshold evaluation hides rare-class performance",
+            "detail": "A fixed decision threshold underestimates rare-class performance and conflates threshold choice with model quality",
+            "ruled_out_by": "Evaluate precision-recall across thresholds and report AUPRC (and ICE)",
+            "evidence": [
+              "Strengthening Machine Learning Reproducibility for Image Classification"
+            ]
+          },
+          {
+            "name": "Differences across data sources bias comparisons",
+            "detail": "Scores from standard accuracy metrics may not be comparable across datasets/sources",
+            "ruled_out_by": "Use interpretable, prevalence-adjusted metrics (ICE/MICE, class-level ICE) to enable cross-source comparability",
+            "evidence": [
+              "Introducing Image Classification Efficacies"
+            ]
+          },
+          {
+            "name": "Implementation/hyperparameter discrepancies cause reproduction gaps",
+            "detail": "Unspecified choices or missing code can explain differences from reported results",
+            "ruled_out_by": "Ablate key hyperparameters (e.g., thresholds, schedules), document settings, and acknowledge unresolved gaps when original code is unavailable",
+            "evidence": [
+              "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+            ]
+          },
+          {
+            "name": "Acquisition/preprocessing heterogeneity across studies",
+            "detail": "Variations in image acquisition, reconstruction, and preprocessing can explain instability across results",
+            "ruled_out_by": "Report acquisition and preprocessing details comprehensively and stratify results or stability analyses by feature class/processing pipeline",
+            "evidence": [
+              "Repeatability and Reproducibility of Radiomic Features: A Systematic Review"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 0,
+        "kept_per_key": {
+          "datasets": 12,
+          "models": 14,
+          "metrics": 11,
+          "protocols": 12,
+          "controls": 8,
+          "confounds": 14
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "ImageNet",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Towards good practice in large-scale learning for image classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "CLIP",
+        "evidence": [
+          "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "CLIP (ResNet-50 visual encoder for pseudo-labels)"
+        ],
+        "role": "baseline"
+      },
+      {
+        "name": "Convolutional Neural Network",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Convolutional Neural Network (CNN)"
+        ],
+        "role": "backbone"
+      },
+      {
+        "name": "Fisher Vectors",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Fisher Vectors (SIFT-based)"
+        ],
+        "role": "baseline"
+      },
+      {
+        "name": "GoogLeNet",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "GoogLeNet (pool features)"
+        ],
+        "role": "backbone"
+      },
+      {
+        "name": "HistoGAN",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "HistoGAN (conditional GAN for augmentation)"
+        ],
+        "role": "method_under_test"
+      },
+      {
+        "name": "Multilayer Perceptron",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Multilayer Perceptron (MLP)"
+        ],
+        "role": "baseline"
+      },
+      {
+        "name": "ResNeSt101",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "SE-ResNeXt101",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "role": "backbone"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Accuracy",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+          "Exploring the significance of using perceptually relevant image decolorization method for scene classification",
+          "Introducing Image Classification Efficacies",
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification",
+          "Strengthening Machine Learning Reproducibility for Image Classification",
+          "Texture image analysis and texture classification methods - A review",
+          "Towards good practice in large-scale learning for image classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Accuracy (Top-1)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Image Classification Efficacy",
+        "evidence": [
+          "Introducing Image Classification Efficacies",
+          "Strengthening Machine Learning Reproducibility for Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Image Classification Efficacy (ICE: map-level/class-level)"
+        ],
+        "direction": "higher_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Report official splits exactly and prevent leakage",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Use the benchmark\u2019s official train/val/test (or class-exclusive zero-shot) splits and document them; ensure no overlap (e.g., mutually exclusive classes for zero-shot, patient-level splits in medical)"
+      },
+      {
+        "name": "Use held-out validation and/or cross-validation for hyperparameters and early stopping",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset",
+          "Towards good practice in large-scale learning for image classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Reserve a validation split or perform CV to select learning rates/regularization and stop training based on validation metrics"
+      },
+      {
+        "name": "Document data augmentation",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Report training augmentations (e.g., random resized crop/aspect/area ranges, flips, AutoAugment, CutMix) and any traditional augmentations used for baselines"
+      },
+      {
+        "name": "Normalize inputs",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Apply input normalization (e.g., divide by 255 or mean/std normalization) and report the scheme used"
+      },
+      {
+        "name": "Specify optimizer and learning-rate schedule",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "State optimizer (e.g., SGD with momentum or Adam), base LR, warm-up, decay/schedule (e.g., cosine), weight decay, batch size, and epochs"
+      },
+      {
+        "name": "Declare pretraining/external data use",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "State whether external data or pretrained weights are used; if disallowed, merge only allowed splits for final training"
+      },
+      {
+        "name": "Precision-Recall evaluation protocol",
+        "evidence": [
+          "Strengthening Machine Learning Reproducibility for Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Compute PR curves by varying decision thresholds (not from a single confusion matrix) and report AUPRC where appropriate"
+      },
+      {
+        "name": "State input resolution(s) for train and eval",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Report training and test-time input sizes/scales used"
+      },
+      {
+        "name": "Synthetic augmentation selection",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Synthetic augmentation selection (if using GANs)"
+        ],
+        "detail": "Filter generated samples by predictive entropy and feature distance-to-class-centroid (with MC-dropout features) and select generator checkpoints using smoothed FID computed on domain features"
+      },
+      {
+        "name": "Test-time augmentation and ensembling protocol",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Describe test-time crops/scales/flips and how predictions are averaged across augmentations and models"
+      },
+      {
+        "name": "Track and report training/validation curves",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Log training loss, validation loss, and validation accuracy across epochs to diagnose overfitting"
+      },
+      {
+        "name": "Zero-shot evaluation setup",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Ensure train/val/test classes are disjoint; select combination/ensemble weights on held-out unseen classes"
+      }
+    ],
+    "controls": [
+      {
+        "name": "Component-removed ablation",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification",
+          "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification",
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Remove the specific new component (e.g., selection stage, global-local aggregation, multi-embedding combination) while holding all else constant",
+        "rules_out": "That gains are due merely to adding any extra machinery rather than the proposed component"
+      },
+      {
+        "name": "Alternative objective/loss under same backbone and training",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Towards good practice in large-scale learning for image classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Train the same architecture with competing objectives/losses (e.g., multiclass/ranking SVM vs one-vs-rest; CE vs CE+metric losses)",
+        "rules_out": "That improvements are caused by the backbone or training recipe rather than the proposed objective/loss"
+      },
+      {
+        "name": "Backbone/feature-extractor swap",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge",
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Evaluate the method across different input feature extractors/backbones while keeping the rest of the pipeline fixed",
+        "rules_out": "That observed gains are driven solely by a particular feature extractor/backbone"
+      },
+      {
+        "name": "Capacity-matched simple baseline lacking the inductive bias",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Compare against a size-matched non-convolutional/different-inductive-bias model trained with the same data and optimizer",
+        "rules_out": "That gains are due to generic capacity or training procedure rather than the model\u2019s inductive bias"
+      },
+      {
+        "name": "Data/corpus variant control",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Data/corpus variant control (for label/text embeddings)"
+        ],
+        "detail": "Train embeddings on corpora of different sizes/specificities and compare downstream performance under the same framework",
+        "rules_out": "That gains stem from corpus size/specificity instead of the embedding method"
+      },
+      {
+        "name": "No-augmentation baseline",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Train the classifier on the original data without synthetic or advanced augmentation",
+        "rules_out": "That gains are due to standard training or dataset idiosyncrasies rather than the augmentation method"
+      },
+      {
+        "name": "Single-model vs ensemble",
+        "evidence": [
+          "A Technical Report for VIPriors Image Classification Challenge"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Evaluate each model individually with the same test-time augmentation before averaging predictions across models",
+        "rules_out": "That ensemble gains are attributable to a single strong component rather than complementary models"
+      },
+      {
+        "name": "Training schedule ablations",
+        "evidence": [
+          "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Vary training length and pseudo-label update frequency (if applicable) while holding other factors constant",
+        "rules_out": "That performance differences arise from training duration/schedule rather than the proposed optimization mechanism"
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Class imbalance inflating accuracy",
+        "evidence": [
+          "Introducing Image Classification Efficacies",
+          "Strengthening Machine Learning Reproducibility for Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Overall accuracy can appear high due to skewed class prevalence without reflecting true discriminative performance",
+        "ruled_out_by": "Report class-imbalance-robust metrics (balanced accuracy, AUPRC, ICE) alongside accuracy"
+      },
+      {
+        "name": "Acquisition/preprocessing heterogeneity across studies",
+        "evidence": [
+          "Repeatability and Reproducibility of Radiomic Features: A Systematic Review"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Variations in image acquisition, reconstruction, and preprocessing can explain instability across results",
+        "ruled_out_by": "Report acquisition and preprocessing details comprehensively and stratify results or stability analyses by feature class/processing pipeline"
+      },
+      {
+        "name": "Apparent gains driven by stronger input features/backbones",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Improvements could be due to better image features rather than the proposed method",
+        "ruled_out_by": "Evaluate across multiple feature extractors/backbones and show consistent method benefits"
+      },
+      {
+        "name": "Calibration changes masked by accuracy",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Accuracy may remain unchanged while predicted probabilities become miscalibrated",
+        "ruled_out_by": "Report validation cross-entropy (or other proper scoring rules) in addition to accuracy"
+      },
+      {
+        "name": "Corpus-size/specificity explains embedding gains",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Performance may improve due to a larger or more domain-specific text corpus, not the embedding method",
+        "ruled_out_by": "Train/evaluate embeddings from multiple corpora (domain-specific vs Wikipedia) and compare under the same framework"
+      },
+      {
+        "name": "Differences across data sources bias comparisons",
+        "evidence": [
+          "Introducing Image Classification Efficacies"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Scores from standard accuracy metrics may not be comparable across datasets/sources",
+        "ruled_out_by": "Use interpretable, prevalence-adjusted metrics (ICE/MICE, class-level ICE) to enable cross-source comparability"
+      },
+      {
+        "name": "Implementation/hyperparameter discrepancies cause reproduction gaps",
+        "evidence": [
+          "Reproducibility Study of CDUL: CLIP-Driven Unsupervised Learning for Multi-Label Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Unspecified choices or missing code can explain differences from reported results",
+        "ruled_out_by": "Ablate key hyperparameters (e.g., thresholds, schedules), document settings, and acknowledge unresolved gaps when original code is unavailable"
+      },
+      {
+        "name": "Label ambiguity in generated data",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Synthetic images may not match their conditioning labels, harming augmentation efficacy",
+        "ruled_out_by": "Filter generated samples using predictive entropy and feature-distance-to-class-centroid (with MC-dropout features)"
+      },
+      {
+        "name": "Mismatch of evaluation feature space (FID) to domain",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Using generic Inception features for FID on non-natural images can mislead model selection",
+        "ruled_out_by": "Compute FID (or equivalent) in a domain-appropriate feature space (e.g., task-pretrained ResNet on the target domain)"
+      },
+      {
+        "name": "Overfitting/memorization masquerading as improvement",
+        "evidence": [
+          "Experimental Analysis of Neural Network-Based Image Classification on the CIFAR-10 Dataset"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Training loss decreases while validation loss increases, giving a false sense of progress",
+        "ruled_out_by": "Track and report both training and validation losses over epochs; select epochs by validation loss"
+      },
+      {
+        "name": "Per-image parameter tuning (e.g., decolorization weight) explains gains",
+        "evidence": [
+          "Exploring the significance of using perceptually relevant image decolorization method for scene classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Improvements might come from per-image hyperparameter selection rather than the proposed algorithmic change",
+        "ruled_out_by": "Compare against prior methods with fixed parameters and report downstream classification gains"
+      },
+      {
+        "name": "Single-threshold evaluation hides rare-class performance",
+        "evidence": [
+          "Strengthening Machine Learning Reproducibility for Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "A fixed decision threshold underestimates rare-class performance and conflates threshold choice with model quality",
+        "ruled_out_by": "Evaluate precision-recall across thresholds and report AUPRC (and ICE)"
+      },
+      {
+        "name": "Train/test class overlap in zero-shot",
+        "evidence": [
+          "Evaluation of Output Embeddings for Fine-Grained Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [],
+        "detail": "Any overlap between seen and test classes inflates zero-shot accuracy",
+        "ruled_out_by": "Use mutually exclusive train/val/test class splits and validate ensemble weights on held-out unseen classes"
+      },
+      {
+        "name": "Unstable per-epoch selection metric",
+        "evidence": [
+          "Selective Synthetic Augmentation with HistoGAN for Improved Histopathology Image Classification"
+        ],
+        "subfields": [
+          "Image Classification"
+        ],
+        "variants": [
+          "Unstable per-epoch selection metric (noisy FID minima)"
+        ],
+        "detail": "GAN training noise can cause spurious low FID epochs to be selected",
+        "ruled_out_by": "Smooth the metric across epochs (e.g., EMA) and select by the smoothed minimum"
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 11,
+      "out": 1,
+      "dropped_uncorroborated": 10,
+      "relaxed": false,
+      "by_subfield": {
+        "Image Classification": 1
+      }
+    },
+    "models": {
+      "in": 12,
+      "out": 8,
+      "dropped_uncorroborated": 0,
+      "relaxed": true,
+      "by_subfield": {
+        "Image Classification": 8
+      }
+    },
+    "metrics": {
+      "in": 11,
+      "out": 2,
+      "dropped_uncorroborated": 9,
+      "relaxed": false,
+      "by_subfield": {
+        "Image Classification": 2
+      }
+    },
+    "protocols": {
+      "in": 12,
+      "out": 12,
+      "by_subfield": {
+        "Image Classification": 12
+      }
+    },
+    "controls": {
+      "in": 8,
+      "out": 8,
+      "by_subfield": {
+        "Image Classification": 8
+      }
+    },
+    "confounds": {
+      "in": 14,
+      "out": 14,
+      "by_subfield": {
+        "Image Classification": 14
+      }
+    },
+    "totals": {
+      "in": 68,
+      "out": 45
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Verify official CIFAR-10 splits are used with zero train/test leakage",
+      "dataset": "CIFAR-10 (eval)",
+      "model": "ResNet (family) (backbone)",
+      "method_under_test": "Convolutional Neural Network (CNN) (backbone)",
+      "attack_or_condition": "Report official splits exactly and prevent leakage \u2014 Use the benchmark\u2019s official train/val/test (or class-exclusive zero-shot) splits and document them; ensure no overlap (e.g., mutually exclusive classes for zero-shot, patient-level splits in medical)",
+      "metrics": [
+        "Accuracy (Top-1)"
+      ],
+      "pass_condition": "Pass if and only if: (1) |train| == 50000 and |test| == 10000; and (2) the intersection size between the sets of SHA-256 hashes of all train images and all test images is exactly 0. Otherwise, refute.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Confirms adherence to the field\u2019s requirement of using official, non-overlapping splits; any leakage refutes standard practice immediately.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Build and validate a standard supervised CIFAR-10 classifier with held-out validation, proper normalization/augmentation, and logged curves",
+      "dataset": "CIFAR-10 (eval)",
+      "model": "ResNet (family) (backbone)",
+      "method_under_test": "Convolutional Neural Network (CNN) (backbone)",
+      "attack_or_condition": "Use held-out validation and/or cross-validation for hyperparameters and early stopping \u2014 Reserve a validation split or perform CV to select learning rates/regularization and stop training based on validation metrics",
+      "metrics": [
+        "Accuracy (Top-1)",
+        "Validation loss (cross-entropy)"
+      ],
+      "pass_condition": "Train ResNet on CIFAR-10 with a 10% held-out validation split (exactly 5000 images). Pass if and only if: (1) validation split size == 5000; (2) per-epoch training and validation loss are logged for all configured epochs (count of logged epochs equals configured epochs); (3) the selected best epoch by minimum validation loss occurs strictly before the final epoch; and (4) test Top-1 accuracy >= 93.5%. Otherwise, refute.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Verify official CIFAR-10 splits are used with zero train/test leakage"
+      ],
+      "rationale": "Establishes a credible, reproducible apparatus that follows standard practice (held-out validation, normalization/augmentation, optimizer schedule) and reaches a recognized CIFAR-10 baseline.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Quantify and report the effect of training augmentations versus a no-augmentation baseline",
+      "dataset": "CIFAR-10 (eval)",
+      "model": "ResNet (family) (backbone)",
+      "method_under_test": "Convolutional Neural Network (CNN) (backbone)",
+      "attack_or_condition": "Document data augmentation \u2014 Report training augmentations (e.g., random resized crop/aspect/area ranges, flips, AutoAugment, CutMix) and any traditional augmentations used for baselines",
+      "metrics": [
+        "Accuracy (Top-1)",
+        "Validation loss (cross-entropy)"
+      ],
+      "pass_condition": "Train two runs under identical settings except augmentations: (A) standard CIFAR-10 aug (random crop with padding=4, horizontal flip) and (B) no augmentation. Pass if and only if (Top-1_Augmented \u2212 Top-1_NoAugmented) \u2265 3.0 percentage points on the CIFAR-10 test set. Otherwise, refute.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Build and validate a standard supervised CIFAR-10 classifier with held-out validation, proper normalization/augmentation, and logged curves"
+      ],
+      "rationale": "Demonstrates the widely accepted impact of augmentations and the need to document them; a substantial delta is expected under standard practice.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Evaluate and report test-time augmentation and ensembling effects under a specified protocol",
+      "dataset": "CIFAR-10 (eval)",
+      "model": "ResNet (family) (backbone)",
+      "method_under_test": "Convolutional Neural Network (CNN) (backbone)",
+      "attack_or_condition": "Test-time augmentation and ensembling protocol \u2014 Describe test-time crops/scales/flips and how predictions are averaged across augmentations and models",
+      "metrics": [
+        "Accuracy (Top-1)"
+      ],
+      "pass_condition": "Using the same architecture and training as the apparatus, evaluate: (1) single-model, single-view; (2) single-model with test-time horizontal flip averaging; (3) 3-model ensemble (different random seeds) with the same TTA averaging. Pass if and only if: (i) TTA improves single-model Top-1 by \u2265 0.1 percentage points; and (ii) the 3-model ensemble improves over the best single-model (with the same TTA) by \u2265 0.3 percentage points. Otherwise, refute.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Build and validate a standard supervised CIFAR-10 classifier with held-out validation, proper normalization/augmentation, and logged curves"
+      ],
+      "rationale": "Verifies that TTA/ensembling are explicitly defined and have measurable impact, aligning with standard reporting practice.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Confirm PR is computed via threshold sweeps (not a single confusion matrix) on a multi-label benchmark",
+      "dataset": "PASCAL VOC 2012 (multi-label) (eval)",
+      "model": "ResNet (family) (backbone)",
+      "method_under_test": "Convolutional Neural Network (CNN) (backbone)",
+      "attack_or_condition": "Precision-Recall evaluation protocol \u2014 Compute PR curves by varying decision thresholds (not from a single confusion matrix) and report AUPRC where appropriate",
+      "metrics": [
+        "Area under Precision-Recall Curve (AUPRC)",
+        "mean Average Precision (mAP, multi-label)"
+      ],
+      "pass_condition": "Compute per-class PR curves by sweeping thresholds in [0,1] and AUPRC per class. Also compute scikit-learn average_precision_score per class and a naive PR area from a single 0.5 threshold confusion matrix. Pass if and only if: (1) for every class, |AUPRC_sweep \u2212 AP_sklearn| \u2264 1e-3; and (2) the naive single-threshold PR area underestimates AUPRC_sweep by \u2265 5% relative on at least 5 classes. Otherwise, refute.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Establishes compliance with the field\u2019s PR evaluation norm and exposes the inadequacy of single-threshold PR estimates, guarding against a common evaluation pitfall.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

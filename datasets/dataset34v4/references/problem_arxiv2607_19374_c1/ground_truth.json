@@ -1,0 +1,45 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2607_19374_c1",
+  "claim": "Geometry-specific training of general-purpose Lean theorem provers can produce gains that transfer beyond both the training distribution and the particular prover used to generate the training signal. The question is whether the gain persists on held-out competition geometry problems never used during training and can also be reproduced with a second, independently pretrained general-purpose prover. The proposition is supported only if proof success exceeds the corresponding unadapted checkpoint by more than 0 percentage points both on the held-out competition problems and for the second prover after geometry-specific training.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2607.19374"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2607_19374",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        6,
+        8,
+        9,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the competition-level formalization set used for semantic evaluation. Filter OMNI-Math by domain to obtain 780 plane-geometry problems with difficulty scores from 1.0 to 9.5, including problems from IMO, USAMO, national olympiads, and regional competitions. Use DeepSeek-V3 to generate 32 candidate Lean formalizations per problem with the complete four-stage EUCLEAN pipeline\u2014constraint explication, prove-first configuration anchoring, formalization mapping, and compiler-feedback iterative repair\u2014and retain problems having at least one compiling statement. This produces OMNI-Geometry with 768 of 780 problems retained, a 98.5% retention rate.",
+    "Build the large formalization corpus used for prover inference and training. Filter NuminaMath with problem_type == Geometry to obtain 183,796 candidate problems, apply the complete EUCLEAN pipeline with DeepSeek-V3, and retain each problem having at least one compiling formal statement after compiler-guided repair. This produces Numina-Geometry with 177,597 problems, retaining 96.6% of the candidates.",
+    "Test whether proofs collected from Numina-Geometry improve the same prover checkpoint. Starting separately from the Goedel v2 base checkpoint, train SFT on all successful proof traces collected with one generation attempt per problem and train DPO on successful-versus-failed pairs collected with two attempts per problem; DPO uses 7,148 preference pairs. Both runs use one node with eight NVIDIA A100-40GB GPUs, per-device batch size 1, gradient accumulation 32, effective batch size 256, one epoch, cosine scheduling, 0.05 warmup, BF16, ZeRO-3, and FlashAttention v2. SFT uses learning rate 1\u00d710^-4 and maximum sequence length 4096; DPO uses learning rate 1\u00d710^-5, beta 0.1, and maximum sequence length 2048. On all 177,597 Numina-Geometry problems, Goedel v2 improves from 13.6% Pass@1 to 15.1% after SFT and to 15.0% after DPO.",
+    "Test whether training on Numina-Geometry transfers to a held-out competition set. Use OMNI-Geometry only for evaluation and not in any training stage, and compare the Goedel v2 base, SFT, and DPO checkpoints. Pass@1 is 6.90% for the base model, 7.68% after SFT, and 7.81% after DPO; Pass@2 is 8.33%, 9.11%, and 8.59%, respectively.",
+    "Test whether the downstream training signal transfers to another general-purpose prover. Randomly sample half of Numina-Geometry, use DeepSeek-Prover-V2-7B itself to collect successful proof traces on that half, and fine-tune for two epochs with the same SFT recipe used for Goedel v2 except for the epoch count. Evaluate Pass@1 on the same half-corpus split. DeepSeek-Prover-V2-7B improves from 13.4% to 15.0%.",
+    "Test a frontier prover on a random subset of the generated corpus. Run Aristotle on 100 randomly sampled formalized problems. After excluding statements Aristotle explicitly judges false and refutes, statements made trivial by obvious misformalization, and statements with concrete counterexamples, Aristotle proves 25 problems and leaves another 19 unresolved but unrefuted."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

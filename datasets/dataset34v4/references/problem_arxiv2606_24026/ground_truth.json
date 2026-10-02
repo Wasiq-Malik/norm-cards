@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026",
+  "claim": "Language-model agents can be helpful explainers of already-localized transformer circuits by recovering individual components\u2019 functional roles and the computation implemented by the circuit as a whole. Helpfulness is established if at least one agent correctly classifies more than 50% of circuit components, achieves mean role-description quality above 0.50 on a 0\u20131 scale where 0, 0.5, and 1 represent incorrect, partially correct, and correct descriptions, and correctly identifies the overall task for more than 50% of circuits. Because the circuit is supplied in advance, the claim concerns explanation after localization rather than circuit discovery.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the controlled circuit-explanation benchmark. Start from the 84 RASP-derived semi-synthetic transformer models in InterpBench, excluding the two IOI tasks to reduce reliance on memorized circuit explanations, and trace each localized trained component through InterpBench\u2019s high-level/low-level correspondence map to the RASP variable it implements. Manually annotate every component with a task-specific note and one of five tags\u2014INDICATOR, AGGREGATOR, ROUTER, MAPPER, or COMBINER\u2014and give each task its RASP program, ground-truth task description, and five input-output examples sampled from the task distribution and produced by executing the program. The resulting AGENTICINTERPBENCH contains 84 circuits and 163 components: 120 MLPs and 43 attention components, with 72 MAPPER, 32 AGGREGATOR, 33 COMBINER, 11 ROUTER, and 15 INDICATOR annotations; circuits contain 1.94 components on average, with a range of 1\u201310.",
+    "Fix the agent workflow and execution budget used for every benchmark run. For each supplied localized component, run HYVE\u2019s observation, hypothesis-generation, and causal-validation loop, withholding the five-class taxonomy until the later classification stage; after processing all components, assign tags and role notes and infer the circuit\u2019s task from the validated component hypotheses and input-output examples. Observation and validation code may use provided TransformerLens helper libraries or custom Python; failed code receives its error message and may be revised for up to five execution attempts per stage. Permit at most three hypothesis-validation iterations per component, retain the latest hypothesis as tentative if none is supported, and measure exact tag accuracy, role-description quality rescaled from judge scores of 0, 1, and 2 to 0, 0.5, and 1, binary task-description accuracy, and the fraction of execute_python calls that run without error.",
+    "Validate the LLM-scored explanation metrics against blinded human ratings. Have two human judges independently score anonymized and randomized HYVE outputs using the same role-description and task-description rubrics, and use the lower of their two scores as the human label, matching the lower-score aggregation used for GPT-5.4 and Gemini-3.1-Pro as LLM judges. On the cross-backbone subset of 10 tasks and 17 components, comprising 68 component-level and 40 task-level model-output instances, human-human agreement is \u03ba=0.83 for role-description quality and \u03ba=0.96 for task accuracy; agreement between the lower human score and lower LLM-judge score is \u03ba=0.76 and \u03ba=0.80, respectively. On the larger GPT-5.4/Claude-Sonnet-4.6 annotation set, comprising 110 component-level and 62 task-level instances, human-human agreement is \u03ba=0.802 for role descriptions and \u03ba=0.963 for task accuracy, while lower-human versus lower-LLM agreement is \u03ba=0.753 and \u03ba=0.864. Validation-plan soundness is less reliable: human-human \u03ba is 0.37 on the cross-backbone subset and 0.460 on the larger subset, so the authors retain it as a process diagnostic rather than an official benchmark metric.",
+    "Test whether LM agents can explain supplied localized circuits. Run the full HYVE workflow over all 84 AGENTICINTERPBENCH circuits and 163 components with GPT-5.4, Claude-Sonnet-4.6, Gemini-3.1-Pro, and Qwen-3-Coder-30B-A3B-Instruct. GPT-5.4 obtains tag accuracy 0.74, role-description quality 0.46, task accuracy 0.63, and code-execution success 0.52; Claude-Sonnet-4.6 obtains 0.79, 0.58, 0.75, and 0.93; Gemini-3.1-Pro obtains 0.76, 0.59, 0.83, and 0.80; and Qwen-3-Coder-30B-A3B-Instruct obtains 0.67, 0.25, 0.25, and 0.62. Claude-Sonnet-4.6 has the highest component-tag accuracy, Gemini-3.1-Pro has the highest judged role-description and task accuracy, and no backbone is best on every metric.",
+    "Check that the reported backbone ordering is not produced by judge self-preference or a single stochastic run. Score role descriptions and task descriptions separately with GPT-5.4 and Gemini-3.1-Pro rather than only using their lower-score aggregate, and repeat runs on a fixed benchmark subset. Both judges give the same backbone ranking for task accuracy; for role-description quality, both place GPT-5.4 third and Qwen fourth, while Claude-Sonnet-4.6 and Gemini-3.1-Pro exchange the top two positions with only a small score difference. The authors report no consistent advantage for a judge\u2019s own model family, and the repeated runs preserve the backbone-level trends."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "confound"
+  ]
+}

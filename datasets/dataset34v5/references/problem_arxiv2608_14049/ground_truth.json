@@ -1,0 +1,41 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_14049",
+  "claim": "A general-purpose robotic manipulation system can pick up flat objects of varied shape and material, both rigid and deformable, and keep working on objects and whole categories it never trained on. The generalisation has to cover two things at once: unfamiliar instances of familiar categories, and objects from categories never seen at all. Supported only if mean grasp success strictly exceeds that of the strongest earlier approach under matched evaluation conditions in each of the three regimes, training objects, unseen objects from trained categories, and objects from unseen categories, counting a trial successful only when the object stays aloft without slipping for at least two seconds after the final action.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.14049"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_14049",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Fix the object splits and the success rule everything else is measured against. Setup: 104 flat objects across 21 categories, partitioned into a training set, a set of unseen objects from trained categories, and a set from entirely unseen categories; every object annotated with the manipulation strategy it calls for. Grasping runs from randomised desktop placements and orientations, and a trial counts as successful only if the object stays aloft without slipping for two seconds after the final action.",
+    "Build the training data and train the two modules separately. Setup: for the strategy module, randomise placements, apply simulated material and scale changes, and collect 1,390 object point clouds; sample each to 2,048 points, centre and normalise, and train 150 epochs with batch 32 and Adam, halving the learning rate every 30, selecting on validation strategy accuracy. For the action module, record 50 demonstrations per object, each pairing a scene point cloud with a 6-DoF gripper pose; sample or pad to 8,192 points, normalise, and augment with scaling, jitter and rotation about the vertical axis, training 100 epochs with batch 8. One consumer GPU, fixed seed for the action-module experiments.",
+    "How well does the full system grasp before any comparison? Setup: place each of the 104 objects at randomised positions and run five trials per object in different orientations, recording both whether the expected strategy was chosen and whether the grasp held under the two-second rule. Result: grasp success 81.1% on training objects, 74.2% on unseen objects from trained categories, and 69.0% on unseen categories, with strategy selection at 92.1%, 82.6% and 75.8%. The drop across regimes is carried mostly by strategy selection.",
+    "Does it beat single-strategy and end-to-end alternatives? Setup: run two fixed-strategy approaches (pushing to a table edge, and dual-arm lifting), two diffusion policies, and three recent generalist policies, under the same protocol with five trials per object; mean grasp success as the metric. Result: on training objects, 32.3% and 41.2% for the fixed strategies, 48.8% and 66.2% for the diffusion policies, 55.5%, 63.0% and 68.6% for the generalist policies, against 81.1%. On unseen objects the baselines fall to 22.6-54.2% against 74.2%, and on unseen categories to 17.3-51.2% against 69.0%. The strongest baseline is the 3D diffusion policy in all three regimes, so the margins are 14.9, 20.0 and 17.8 points; the generalist policies degrade most sharply out of distribution."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "headline",
+    "headline"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_00570",
+  "claim": "Parameter-modifying knowledge-editing methods are practically viable for instruction-following and reasoning large language models when updating isolated facts and complex events, including repeated sequential updates. They count as viable only if, at the same editing workload, their arithmetic mean across edit reliability, generalization, locality, and portability is at least as high as that of the strongest external-memory alternative, while accuracy on unrelated general and reasoning tasks remains at least 100% of the model\u2019s pre-edit accuracy, corresponding to 0% relative degradation. The proposition applies across both single-edit and sequential-edit settings rather than only isolated updates.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.00570"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_00570",
+      "claim": "C0",
+      "v3_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        13
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Fix the inference and scoring protocol for the editing comparisons. Evaluate edited models with autoregressive decoding rather than teacher forcing, score semantic consistency in reliability, generalization, locality, and portability with Qwen2.5-72B-Instruct, and separately check locality with a token-level measure. The token-level locality check reproduces the semantic locality results.",
+    "Test factual editing as the number of updates grows. Apply ROME, RECT, AlphaEdit, MEMIT, PMET, FT-L, MEND, AdaLoRA, WISE, GRACE, and SCR to Llama-3.1-8B-Instruct on ZsRE and evaluate after 1, 10, 100, and all edits. After one edit, the reliability, generalization, locality, and portability scores are respectively 80.00, 71.00, 7.00, and 8.96 for ROME; 79.00, 69.00, 6.50, and 9.66 for RECT; 83.00, 51.00, 13.00, and 9.51 for AlphaEdit; 79.00, 48.00, 9.50, and 13.00 for MEMIT; 25.00, 14.00, 6.50, and 5.11 for PMET; 6.00, 12.00, 1.50, and 2.67 for FT-L; 18.00, 26.00, 9.00, and 11.77 for MEND; 49.00, 51.00, 6.00, and 11.85 for AdaLoRA; 3.00, 1.00, 12.50, and 3.14 for WISE; 64.00, 2.00, 12.50, and 4.48 for GRACE; and 81.00, 75.00, 17.50, and 40.15 for SCR. After the full sequence, ROME, MEMIT, FT-L, MEND, and AdaLoRA score 0 on all four dimensions; RECT scores 5.76, 4.77, 0.00, and 0.85; AlphaEdit scores 69.49, 55.50, 8.38, and 8.56; PMET scores 6.46, 6.30, 7.80, and 4.79; WISE scores 2.84, 2.46, 10.30, and 2.35; GRACE scores 60.34, 2.69, 10.91, and 3.33; and SCR scores 84.40, 75.56, 16.03, and 46.41.",
+    "Check whether the factual-editing result extends across datasets, model families, model sizes, and longer edit counts. Repeat the comparisons on ZsRE and WikiData_counterfact with Llama-2-7B-Chat, Llama-3.1-8B-Instruct, and Mistral-7B-Instruct, and verify on Llama-2-13B and Qwen3-14B; also evaluate a finer range of edit counts rather than only 1, 10, 100, and the full sequence. The timing of degradation differs by method, but every parameter-based method declines over longer edit sequences, and SCR outperforms all parameter-based methods across the evaluated conditions.",
+    "Rule out confidence in the edited facts as the explanation for sequential degradation. Divide the factual edits into high-confidence and low-confidence fact sets and repeat the sequential evaluation. Parameter-based methods exhibit the same declining trend in both subsets.",
+    "Test isolated and sequential factual editing on a reasoning-oriented model. Edit DeepSeek-R1-Distill-Llama-8B on ZsRE and compute the arithmetic mean of reliability, generalization, locality, and portability. In single editing, the averages are 24.75 for ROME, 23.51 for RECT, 22.35 for AlphaEdit, 2.48 for FT-L, 25.99 for MEND, 10.38 for AdaLoRA, 4.65 for WISE, 13.38 for GRACE, and 56.59 for SCR. In sequential editing, they are 0.25 for ROME, 0.00 for RECT, 24.16 for AlphaEdit, 0.00 for FT-L, 0.00 for MEND, 0.00 for AdaLoRA, 3.50 for WISE, 15.13 for GRACE, and 60.19 for SCR. SCR\u2019s sequential component scores are 90.00 reliability, 90.00 generalization, 15.50 locality, and 45.26 portability; the strongest parameter-based result, AlphaEdit, scores 46.00, 35.00, 8.00, and 7.62.",
+    "Measure whether edited models preserve unrelated reasoning and downstream-task accuracy. After 10 and 100 edits, evaluate mathematical reasoning benchmarks together with GPQA-Diamond, ARC_c, and MMLU-Pro. ROME and RECT initially retain some performance, with average accuracy drops of 2.74 and 8.37, but their accuracy is nearly zero after 100 edits. MEND has 0.00 accuracy after both 10 and 100 edits. AlphaEdit remains close to the original model across the datasets after 100 edits and sometimes improves slightly, although its editing locality and portability remain lower than SCR\u2019s.",
+    "Test editing on event-level rather than triple-level knowledge. Process ELKEN with GPT-4o and edit Llama-2-7B-Chat, Llama-3.1-8B-Instruct, and DeepSeek-R1-Distill-Llama-8B, evaluating both single and sequential settings; directly compare AlphaEdit with SCR in sequential editing. Most parameter-based methods are unsatisfactory even for one event edit and almost completely break down during sequential event editing. AlphaEdit deteriorates relative to its fact-editing results, while SCR scores higher than AlphaEdit on portability, locality, and their reported average for both Llama-3.1-8B-Instruct and DeepSeek-R1-Distill-Llama-8B.",
+    "Test the sensitivity of the most persistent parameter editor to implementation choices. Vary AlphaEdit\u2019s hyperparameters and target model architecture and repeat its editing evaluation. Its performance changes with both the hyperparameters and architecture rather than remaining stable across configurations."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "external",
+    "confound",
+    "headline",
+    "headline",
+    "external",
+    "confound"
+  ]
+}

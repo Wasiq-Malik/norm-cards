@@ -1,0 +1,45 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026_c2",
+  "claim": "When language-model agents explain already-localized transformer circuits, their principal failure point is validation rather than hypothesis formation. Hypotheses count as mostly observation-grounded if their mean human grounding score exceeds 1 on a 0\u20132 scale, where 0 is unsupported, 1 is partially supported, and 2 is fully supported. Validation is the bottleneck if validation plans average below both the grounding score and the fully sound score of 2, code-execution success is below 100%, and components remain unresolved after three hypothesis-validation iterations. This attribution additionally requires the agent with the fewest unresolved components to achieve the highest final component-tag accuracy and the agent with the most unresolved components to achieve the lowest final explanation scores.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C2",
+      "v3_indices": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the controlled circuit-explanation benchmark. Start from the 84 RASP-derived semi-synthetic transformer models in InterpBench, excluding the two IOI tasks to reduce reliance on memorized circuit explanations, and trace each localized trained component through InterpBench\u2019s high-level/low-level correspondence map to the RASP variable it implements. Manually annotate every component with a task-specific note and one of five tags\u2014INDICATOR, AGGREGATOR, ROUTER, MAPPER, or COMBINER\u2014and give each task its RASP program, ground-truth task description, and five input-output examples sampled from the task distribution and produced by executing the program. The resulting AGENTICINTERPBENCH contains 84 circuits and 163 components: 120 MLPs and 43 attention components, with 72 MAPPER, 32 AGGREGATOR, 33 COMBINER, 11 ROUTER, and 15 INDICATOR annotations; circuits contain 1.94 components on average, with a range of 1\u201310.",
+    "Fix the agent workflow and execution budget used for every benchmark run. For each supplied localized component, run HYVE\u2019s observation, hypothesis-generation, and causal-validation loop, withholding the five-class taxonomy until the later classification stage; after processing all components, assign tags and role notes and infer the circuit\u2019s task from the validated component hypotheses and input-output examples. Observation and validation code may use provided TransformerLens helper libraries or custom Python; failed code receives its error message and may be revised for up to five execution attempts per stage. Permit at most three hypothesis-validation iterations per component, retain the latest hypothesis as tentative if none is supported, and measure exact tag accuracy, role-description quality rescaled from judge scores of 0, 1, and 2 to 0, 0.5, and 1, binary task-description accuracy, and the fraction of execute_python calls that run without error.",
+    "Check whether the generated hypotheses are supported by the agents\u2019 own observations. On the 10-task, 17-component human-validation subset, manually score every observation-hypothesis pair from all four backbones on a 0\u20132 scale, where 0 means the hypothesis contradicts or ignores the observation, 1 means partial support, and 2 means full support. The three proprietary backbones average 1.94, with one partially supported hypothesis and no ungrounded hypotheses. Qwen-3-Coder averages 1.41 and has fully grounded hypotheses for 41.2% of cases; its failures often begin from generic valid observations and add unsupported task-specific mechanisms.",
+    "Measure whether each proposed validation experiment would actually test its hypothesis. On the same 10-task, 17-component subset, have human annotators score validation plans from 0 for no meaningful validation, through 1 for indirect or incomplete validation, to 2 for a plan that fully tests the hypothesis, and aggregate with the lower annotator score. GPT-5.4 scores 1.71, Gemini-3.1-Pro 1.41, Claude-Sonnet-4.6 1.24, and Qwen-3-Coder 0.71. This rating evaluates the proposed experiment rather than whether the hypothesis itself is correct or whether the code executes successfully.",
+    "Identify what prevents validation plans from producing usable evidence. Cluster failed execute_python calls by error type for GPT-5.4, Claude-Sonnet-4.6, Gemini-3.1-Pro, and Qwen-3-Coder, using respectively 314, 101, 191, and 301 failed calls. The observed categories are Python or tensor-manipulation bugs, library or API misuse, runtime-environment errors, lookup errors, BOS or position-offset mistakes, and tool-protocol failures such as omitting the required result variable. These failures accompany code-execution success rates of 0.52 for GPT-5.4, 0.93 for Claude-Sonnet-4.6, 0.80 for Gemini-3.1-Pro, and 0.62 for Qwen-3-Coder.",
+    "Relate completed hypothesis validation to final explanation performance. Count components whose hypotheses are supported on the first, second, or third iteration and those still unresolved after the three-iteration budget. Claude-Sonnet-4.6 supports 106 components on the first hypothesis, 32 on the second, and 8 on the third, leaving 17 unresolved; GPT-5.4 supports 81, 26, and 18, leaving 38 unresolved; Qwen-3-Coder supports 65, 20, and 21, leaving 57 unresolved. Gemini-3.1-Pro lies between Claude-Sonnet-4.6 and GPT-5.4 in unresolved components. Claude-Sonnet-4.6 has the fewest unresolved components and the highest tag accuracy, while Qwen-3-Coder has the most unresolved components and the lowest final explanation scores among the tested systems."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "headline",
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

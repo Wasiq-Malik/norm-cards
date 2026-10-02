@@ -1,0 +1,41 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_00570_c1",
+  "claim": "A weight edit aimed at one fact spreads disproportionately into the directions of the model's representation space that carry the least variance, and the size of that spreading predicts how fast editing quality decays as edits accumulate. Spreading in a direction means a change that is large compared with that direction's own scale before editing. Supported only if the most affected directions sit among the lowest-variance ones, if a single edit already exceeds the native scale of some directions, and if the amount of spreading correlates negatively, at p below 0.05, with at least three of reliability, generalisation, locality and portability, for at least half of the weight-editing methods examined.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.00570"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_00570",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build the measurements the geometric argument rests on. Setup: 100,000 prompts from a web corpus, with hidden states collected by forward hooks at the down-projection of each transformer block for three instruction and reasoning models, plus the feed-forward projections of the layers a meta-learning editor targets in an encoder-decoder model; take the singular value decomposition of each layer's centred hidden-state matrix. Result: the spectra are sharply unequal. For one 8B instruction model, layers 5 through 25 retain roughly 75-80% of their effective rank but layer 30 falls to 50% and layer 31 to 25%; smallest singular values run from 3e-6 to 3e-3 and condition numbers from 4e6 to 1e8, so the lowest directions are orders of magnitude smaller than the top ones.",
+    "Check the approximations the analysis needs. Setup: measure how far hidden states move in edited layers after a single edit across several weight-editing methods, then track whether the original principal directions stay put as a sequence of edits proceeds. Result: a single edit moves hidden states only slightly in many edited layers, which supports treating the pre-edit basis as a usable coordinate system; dominant directions stay stable early in a sequence while low-variance ones drift quickly, which the authors flag as a limit on the idealisation rather than a global claim.",
+    "Are edits amplified in the low-variance directions? Setup: run 1,000 sequential edits with one locate-then-edit method on an 8B instruction model; in a late layer, project the hidden-state change onto the original singular-vector basis and compute, per direction, the change divided by that direction's own pre-edit scale. Result: the largest ratios concentrate in directions with the smallest singular values, and a single edit can already push that ratio above 1 in many directions, meaning the edit exceeds what the direction natively carries.",
+    "Does amplification track the decay of editing quality? Setup: at each editing step, summarise the per-direction ratio by its median within each edited layer and average across edited layers, then correlate (Spearman) with reliability, generalisation, locality and portability. Result: for one locate-then-edit method, three of four are significantly negative (reliability -0.96 at p<0.001, locality -0.73 at p=0.026, portability -0.81 at p=0.008) with generalisation not significant; for a second, all four are significant at p<0.01 or better. For an external-parameter method only reliability is significant; for a null-space-constrained method none are, and two are positive. So the relationship holds for two of the four methods examined."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "mechanism",
+    "mechanism"
+  ]
+}

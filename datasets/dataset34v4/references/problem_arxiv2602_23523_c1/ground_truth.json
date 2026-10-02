@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2602_23523_c1",
+  "claim": "A 152-dimensional proactive face-image forensic watermark trained on one face distribution and a finite set of deepfake generators can generalize without retraining to both an excluded generator and an unseen face distribution while preserving source-identifier recovery and image imperceptibility. Generator generalization and face-distribution generalization must each succeed independently. The bar is that identifier bit error rate is lower than the strongest prior proactive-forensics result under matched resolution for the excluded generator and, on unseen face data, has a lower mean across generator attacks, while PSNR and SSIM are each no lower than the strongest prior watermarking result under matched resolution.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2602.23523"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2602_23523",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        6,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the unified forensic model and its evaluation setup. On CelebA-HQ\u2019s 30,000 images with official splits, resize images to 128\u00d7128 and 256\u00d7256 and embed a 152-D LIDMark consisting of 136 normalized coordinates from 68 face-alignment landmarks and a 16-D bipolar identifier obtained by truncating a SHA-256 hash of the filename. Pre-train for 100 epochs against Identity, Resize, GausBlur, MedBlur, JpegTest, and JpegMask using Adam, batch size 32, learning rate 4.3\u00d710^-4, and [\u03bb_L,\u03bb_ID]=[11.5,14.7]. Fine-tune for another 100 epochs against SimSwap, UniFace, CSCS, and StarGAN-v2 using batch size 8, learning rate 4.0\u00d710^-4, and [\u03bb_L,\u03bb_ID]=[4.2,1.0], while reserving InfoSwap for testing. Train with one manipulation selected and applied uniformly per mini-batch, using another image in the batch as the source identity for deepfake generation.",
+    "Check generalization to a deepfake model excluded from fine-tuning. Reserve InfoSwap from the four-model fine-tuning pool, apply it only during testing on CelebA-HQ, and measure recovery of both LIDMark components. LIDMark obtains identifier BERs of 0.22% at 128\u00d7128 and 0.84% at 256\u00d7256, with intrinsic-landmark AEDs of 1.51 and 3.91 pixels. The lowest prior InfoSwap BERs are LampMark\u2019s 3.35% at 128\u00d7128 and DiffMark\u2019s 2.31% at 256\u00d7256.",
+    "Check cross-dataset generalization without retraining. Apply the CelebA-HQ-trained model directly to 2,000 randomly selected LFW images covering identities and capture conditions unseen in training. LIDMark obtains 39.56 dB PSNR and 0.97 SSIM at 128\u00d7128 and 40.68 dB and 0.98 at 256\u00d7256. Across SimSwap, UniFace, CSCS, StarGAN-v2, and InfoSwap, its average identifier BER is 4.06% at 128\u00d7128 and 2.76% at 256\u00d7256, compared with the best prior averages of DiffMark\u2019s 4.66% and 4.50%; its average intrinsic-landmark AED is 1.80 and 4.22 pixels, respectively."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "headline"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2609_08444_c1",
+  "claim": "The question is whether hazard awareness in VLM-driven embodied task planners under partial observability requires persistent memory of relationships among previously observed objects, rather than merely retaining past observations or object identities. This claim is supported only if relationship-preserving memory yields a higher safe-success rate than each of full visual history, retrieved textual descriptions of prior observations, and a relationship-free list of seen objects, and also outperforms otherwise matched memories that discard currently invisible objects or fail to revise remembered relationships after relevant actions. Safe success means completing the assigned task while satisfying its safety goal.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2609.08444"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2609_08444",
+      "claim": "C1",
+      "v3_indices": [
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Compare graph memory with alternative ways of retaining observation history. Under partial observability on IS-Bench, replace the graph with full-history context that supplies all historical images to the risk predictor, RAG that converts images into a textual knowledge base and retrieves from it when predicting REPLAN, or an object-list memory containing previously seen objects but no relationship edges. The graph obtained average SR 0.79 and SSR 0.59. Full-history context obtained 0.58 and 0.13, RAG obtained 0.79 and 0.38, and object-list memory obtained 0.88 and 0.17.",
+    "Ablate the graph operations that preserve and update safety information. On partially observable IS-Bench tasks, compare full SafeMem with removal of graph memory, removal of invisible-object retention, and removal of action-aware edge updating. Full SafeMem obtained average SR 0.79 and SSR 0.59. Removing graph memory produced 0.75 and 0.21; removing invisible-object retention produced 0.71 and 0.21; and removing action-aware edge updating produced 0.71 and 0.38."
+  ],
+  "roles": [
+    "headline",
+    "headline"
+  ]
+}

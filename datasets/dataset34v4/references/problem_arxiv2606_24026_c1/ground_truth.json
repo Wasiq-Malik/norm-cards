@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026_c1",
+  "claim": "For language-model agents explaining already-localized transformer circuits, imposing a structured scientific-reasoning workflow improves explanation quality relative both to incomplete versions of that workflow and to an otherwise equivalent unstructured tool-using agent. The question is whether any gain comes from the imposed structure rather than merely from access to the underlying language model and tools. The workflow counts as better than incomplete variants only if it achieves strictly higher circuit-level task-description accuracy for every evaluated model when each key stage is removed in turn and wins more than 50% of the resulting component-role tagging and role-description-quality comparisons; it counts as better than unrestricted tool use only if both component-role tagging accuracy and role-description quality are strictly higher while circuit-level task-description accuracy is no lower.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the controlled circuit-explanation benchmark. Start from the 84 RASP-derived semi-synthetic transformer models in InterpBench, excluding the two IOI tasks to reduce reliance on memorized circuit explanations, and trace each localized trained component through InterpBench\u2019s high-level/low-level correspondence map to the RASP variable it implements. Manually annotate every component with a task-specific note and one of five tags\u2014INDICATOR, AGGREGATOR, ROUTER, MAPPER, or COMBINER\u2014and give each task its RASP program, ground-truth task description, and five input-output examples sampled from the task distribution and produced by executing the program. The resulting AGENTICINTERPBENCH contains 84 circuits and 163 components: 120 MLPs and 43 attention components, with 72 MAPPER, 32 AGGREGATOR, 33 COMBINER, 11 ROUTER, and 15 INDICATOR annotations; circuits contain 1.94 components on average, with a range of 1\u201310.",
+    "Fix the agent workflow and execution budget used for every benchmark run. For each supplied localized component, run HYVE\u2019s observation, hypothesis-generation, and causal-validation loop, withholding the five-class taxonomy until the later classification stage; after processing all components, assign tags and role notes and infer the circuit\u2019s task from the validated component hypotheses and input-output examples. Observation and validation code may use provided TransformerLens helper libraries or custom Python; failed code receives its error message and may be revised for up to five execution attempts per stage. Permit at most three hypothesis-validation iterations per component, retain the latest hypothesis as tentative if none is supported, and measure exact tag accuracy, role-description quality rescaled from judge scores of 0, 1, and 2 to 0, 0.5, and 1, binary task-description accuracy, and the fraction of execute_python calls that run without error.",
+    "Validate the LLM-scored explanation metrics against blinded human ratings. Have two human judges independently score anonymized and randomized HYVE outputs using the same role-description and task-description rubrics, and use the lower of their two scores as the human label, matching the lower-score aggregation used for GPT-5.4 and Gemini-3.1-Pro as LLM judges. On the cross-backbone subset of 10 tasks and 17 components, comprising 68 component-level and 40 task-level model-output instances, human-human agreement is \u03ba=0.83 for role-description quality and \u03ba=0.96 for task accuracy; agreement between the lower human score and lower LLM-judge score is \u03ba=0.76 and \u03ba=0.80, respectively. On the larger GPT-5.4/Claude-Sonnet-4.6 annotation set, comprising 110 component-level and 62 task-level instances, human-human agreement is \u03ba=0.802 for role descriptions and \u03ba=0.963 for task accuracy, while lower-human versus lower-LLM agreement is \u03ba=0.753 and \u03ba=0.864. Validation-plan soundness is less reliable: human-human \u03ba is 0.37 on the cross-backbone subset and 0.460 on the larger subset, so the authors retain it as a process diagnostic rather than an official benchmark metric.",
+    "Remove individual HYVE stages to test their contribution. On the full AGENTICINTERPBENCH, compare full HYVE with NO-OBSERVATION, which removes the dedicated observation stage but retains hypothesis generation and validation, and NO-VALIDATION, which sends the initial hypothesis directly to classification and summarization. For GPT-5.4, full/no-observation/no-validation scores are respectively 0.74/0.66/0.70 tag accuracy, 0.46/0.47/0.45 role quality, 0.63/0.59/0.60 task accuracy, and 0.52/0.52/0.52 execution success. For Claude-Sonnet-4.6 they are 0.79/0.72/0.73, 0.58/0.50/0.51, 0.75/0.57/0.65, and 0.93/0.94/0.94. For Gemini-3.1-Pro they are 0.76/0.73/0.69, 0.59/0.52/0.53, 0.83/0.73/0.69, and 0.80/0.61/0.80. For Qwen-3-Coder they are 0.67/0.65/0.68, 0.25/0.21/0.24, 0.25/0.23/0.24, and 0.62/0.46/0.85. Full HYVE has the highest task accuracy for every backbone and ablation comparison, with removal of either stage reducing task accuracy by 1\u201318 percentage points; it also has higher component-level scores in 14 of 16 comparisons.",
+    "Rule out that unrestricted tool access alone produces the same results as the structured workflow. Run HYVE and Claude Code with Claude-Sonnet-4.6 on the same 31-task subset containing 55 components and provide the same evaluation context, except that Claude Code is not required to follow HYVE\u2019s staged workflow. HYVE obtains tag accuracy 0.811, role-description quality 0.639, task accuracy 0.767, and execution success 0.94, compared with Claude Code\u2019s 0.770, 0.603, 0.767, and 0.69. Manual inspection finds that Claude Code performs a causal intervention in 15 of 31 cases, relies only on observational evidence in 12, and infers the task from examples without loading the model in 4."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "control"
+  ]
+}

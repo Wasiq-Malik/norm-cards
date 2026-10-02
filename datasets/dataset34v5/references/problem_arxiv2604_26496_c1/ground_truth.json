@@ -1,0 +1,38 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_26496_c1",
+  "claim": "In adversarial training, resistance to attack is learned mainly from correctly classified training images that sit well away from the decision boundary, not from those hugging it. Call an image near-boundary if it can still be flipped at a tenth of the full perturbation budget, and far otherwise. Weakening the perturbation applied to near-boundary images should cost much less robustness than weakening it for far images. Supported only if, for weakening to a tenth of the budget and to zero, the robustness lost is smaller for near-boundary images than for far ones in both cases, full-strength perturbation of the far images beats both weakened variants on robust accuracy, and at least one way of drawing that near/far line raises clean and robust accuracy together relative to treating all correctly classified images the same.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.26496"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2604_26496",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Does the training signal for robustness come from images near the decision boundary? Setup: ResNet-18 on CIFAR-10, 100 epochs of standard PGD adversarial training at a perturbation budget of 8/255, with currently misclassified images fed in clean. Mark as near-boundary any correctly classified natural image that can still be flipped at one tenth of the budget (0.8/255). Train variants that cut the perturbation on those near-boundary images to the tenth, or to zero. Measured: clean and robust accuracy. Result: cutting perturbation on near-boundary images barely moves robustness, and the intermediate setting improves clean accuracy over perturbing them fully. Caveat: the comparison is only shown as a figure; the text gives no numbers.",
+    "The matching test on images far from the boundary. Setup: same CIFAR-10 / ResNet-18 run, but now cut the perturbation to the tenth or to zero for correctly classified images that survive attack at that reduced radius. Measured: clean and robust accuracy. Result: unlike the near-boundary case, robustness drops substantially; learning it needs these images perturbed at the full budget. Direction only, again figure-based with no numbers in the text.",
+    "Does the rule used to split near from far matter to both objectives? Setup: same training setup, alternative splitting rules. Measured: clean and robust accuracy. Result: the split changes both, and a suitable one improves both together. The text neither lists the rules compared nor gives their numbers."
+  ],
+  "roles": [
+    "mechanism",
+    "mechanism",
+    "mechanism"
+  ]
+}

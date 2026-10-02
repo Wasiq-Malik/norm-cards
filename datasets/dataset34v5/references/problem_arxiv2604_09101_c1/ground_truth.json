@@ -1,0 +1,38 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_09101_c1",
+  "claim": "A model-level backdoor audit of CLIP classifiers still works against an attacker who deliberately narrows the trigger so that only the exact pattern fires, and against backdoors planted in a fine-tuned image encoder instead of a prompt-tuning module. A backdoor counts as caught only when the model's anomaly score reaches 2 and the audit's recovered trigger achieves at least 50% attack success. Supported only if the audit catches a majority of the narrowed-trigger backdoors and every encoder-level backdoor tested.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.09101"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2604_09101",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        7,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Assemble clean and backdoored models to audit. Setup: CLIP ViT-B/16 prompt-tuned with CoCoOp (encoders frozen) on the seen classes of ten datasets (ImageNet, Caltech101, OxfordPets, Flowers102, Food101, FGVC Aircraft, SUN397, DTD, EuroSAT, UCF101); per dataset one clean model and four backdoored ones (BadCLIP, plus Blended, SIBA and WaNet adapted to prompt tuning, 10% poisoning), 50 models in all. Result: backdoored models keep clean accuracy close to the clean models (about 82% seen-class) with high attack success (BadCLIP about 99% seen, 97% unseen; SIBA weakest at about 66%/52%).",
+    "Detection against an attacker who knows the audit. Setup: a two-phase BadCLIP variant that first learns a trigger, then trains the model to fire only on that exact trigger and to ignore noisy approximations of it, which is what inversion recovers. Result: the attack itself weakens (seen-class success about 64% instead of 99%); recovered triggers drop to about 70% success; the audit still flags 8 of 10 adaptive models, missing EuroSAT (anomaly score 1.66, under 2) and UCF101 (recovered trigger only 31% successful, treated as invalid).",
+    "Does the audit find backdoors outside the prompt module? Setup: fully fine-tune CLIP's image encoder with Blended poisoning (no prompt module at all) using three trigger patterns (noise patch, triangle, text) and run the audit unchanged. Result: all three poisoned models are flagged, with anomaly scores 6.15, 5.93 and 4.38 and recovered triggers reaching 99%, 97% and 62% attack success."
+  ],
+  "roles": [
+    "apparatus",
+    "confound",
+    "external"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_26496_c1",
+  "claim": "In adversarial training of deep image classifiers, robustness is learned primarily from correctly classified samples far from the decision boundary rather than from correctly classified samples near it. A correctly classified sample is near-boundary if it remains attackable at one tenth of the full perturbation budget and far-from-boundary otherwise. Reducing perturbations on near-boundary samples to one tenth of full strength or to zero should impair robust accuracy less than making the same reductions for far-from-boundary samples. The claim is supported only if, for reductions to one tenth of the full budget and to zero, each robust-accuracy loss is smaller for near-boundary samples than for far-from-boundary samples, full-strength perturbation of far-from-boundary samples exceeds both reduced-strength variants in robust accuracy by more than 0 percentage points, and at least one partition rule improves both clean and robust accuracy by more than 0 percentage points over treating all correctly classified samples alike.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.26496"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2604_26496",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test whether perturbing boundary samples at full strength is necessary for robustness. Train ResNet-18 on CIFAR-10 for 100 epochs with PGD-AT at \u03b5 = 8/255, except that currently misclassified samples are included only as clean samples. Define boundary samples as correctly classified natural samples that can still be attacked when the perturbation budget is reduced to \u03b5/10 = 0.8/255, then train variants that reduce the perturbation applied to those boundary samples to either the threshold or zero. Reducing boundary-sample perturbations has little effect on final robust accuracy, while an intermediate perturbation improves clean accuracy relative to fully perturbing them; the paper does not provide numerical values for these comparisons in the text.",
+    "Test whether the same perturbation insensitivity holds for non-boundary samples. In the same CIFAR-10 and ResNet-18 proof-of-concept setup, identify correctly classified samples that cannot be attacked below the \u03b5/10 = 0.8/255 boundary threshold and reduce the perturbation applied to those non-boundary samples to the threshold or zero. Unlike the boundary-sample intervention, reducing perturbations on non-boundary samples substantially lowers robust accuracy, while fully perturbing them within the \u03b5 = 8/255 ball is required to learn robustness; the paper gives the direction but no numerical values in the text.",
+    "Test whether the rule used to partition boundary and non-boundary samples affects both objectives. Under the same CIFAR-10, ResNet-18, 100-epoch PGD-AT setup, compare alternative boundary-partition strategies while measuring clean and robust accuracy. The authors report that the partition strategy changes both outcomes and that an appropriate partition improves both clean accuracy and robustness, but they do not state the numerical values or enumerate the plotted strategies in the accompanying text."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

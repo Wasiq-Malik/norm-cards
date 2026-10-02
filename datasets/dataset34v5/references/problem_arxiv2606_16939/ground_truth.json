@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_16939",
+  "claim": "Learning circuits over a language model's components, both raw neurons and the much larger set of features produced by a sparse autoencoder, can be made cheaper to compute without losing structural accuracy or practical usefulness. Counted as successful if its error in recovering the circuit's dependency structure is statistically indistinguishable at the 0.05 level from the strongest earlier intervention-based approach while taking less wall-clock time; if the resulting feature circuit is no less faithful and no more complete than that approach; and if using the circuit to guide a domain-generalisation task matches or beats the strongest alternative that does not peek at the answer, again in less time. Structural recovery here means getting the dependency skeleton right, not estimating exact causal edge weights.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.16939"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_16939",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        5,
+        6
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Does the regression-based method recover known circuit structure more cheaply? Setup: a benchmark of 16 semi-synthetic transformers with known circuits, plus one real indirect-object-identification case; the same clean and corrupted prompts the baselines use, 2M observations concatenated from both runs, neuron activations averaged over tokens and ordered by computation order, fitted with a block-upper-triangular sparse regression. Compared against two attribution-patching baselines. Measured: structural Hamming distance to the known circuit and wall-clock time, averaged over three trials on one A100. Result: the linear variant reaches mean SHD 3.16 against 2.98 for the stronger baseline and 3.61 for the weaker, a difference the authors report as statistically indistinguishable from the stronger one; mean runtime 16.3 s against 49.1 s and 33.7 s, so 3.0x and 2.1x faster. A nonlinear variant gets the best SHD, 2.84, but takes 3.7x the linear runtime and is slower than the stronger baseline in most cases.",
+    "Pick the sparsity setting for the feature circuit. Setup: on the final-layer sparse-autoencoder features of a small GPT-2 model, fit the relation to grammatical acceptability at five penalty values and compare training and held-out accuracy. Result: no penalty gives 99.36% train and 71.10% test, a clear overfit; the chosen value gives 95.70% and 72.77%, the best held-out score; larger penalties fall back to about 69-70%. At the chosen setting the coefficients are heavily concentrated, with 82% of final-layer weights below 0.01 and a handful above 10.",
+    "Build the population-level feature circuit used for the interpretability analysis. Setup: run 8,551 training sentences through the model, take the output of each of its 12 blocks, encode each with a pretrained 32,768-feature sparse autoencoder, and average feature activations over tokens to get one vector per sentence per layer. Fit weighted adjacency matrices between consecutive layers and fit the final layer to the binary acceptability target. Rank final-layer features by their dataset-level coefficient for the population analysis, or by that coefficient times the prompt's own activations for per-prompt analyses.",
+    "Does the learned feature circuit actually carry the behaviour, and is anything important left out? Setup: define the model's score as the probability gap between the two acceptability labels and evaluate faithfulness and completeness under an established ablation protocol. Ablate selected features in the original model and compare against an intervention-based method, with autoencoder reconstruction errors and attention/MLP autoencoders excluded from the comparison for fairness. Because this method yields explicit coefficients, also ablate individual edges by zeroing them in the linear surrogate. Result: the authors report that it matches the intervention-based method under node ablation, with faithfulness heading toward 1 and completeness toward 0, but give no numbers in the text. Edge ablation points the same way: a small subset of edges and their features accounts for the behaviour. The intervention-based method cannot be run under edge ablation at all, since it provides no edge-level feature relations, so that half of the comparison has no baseline.",
+    "Do circuit-ranked features support cheaper domain generalisation? Setup: three models of increasing size with pretrained autoencoders, trained on a biography set where profession correlates with gender and evaluated on a balanced test set where it does not. At one layer per model, average features over tokens, fit a sparse profession classifier, rank features by coefficient, manually identify gender-correlated ones and zero them; then either reuse the existing classifier or retrain. Compared against six alternatives including an oracle and an intervention-based method. Measured: profession accuracy, gender predictability, worst-group accuracy, features selected, runtime excluding manual interpretation. Result: with retraining, 94.2/95.1/96.9% profession accuracy across the three models and 88.7/92.9/91.5% worst-group, against 93.1/94.2/96.0% and 89.0/92.4/90.3% for the intervention-based method, so it matches rather than beats on accuracy. Runtimes are 62/73/125 s against 356/477/1056 s, a 5-8x saving, and it selects slightly fewer features. Without retraining the gap is large and unfavourable on the two bigger models (77.5% and 81.5% profession accuracy)."
+  ],
+  "roles": [
+    "headline",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "external"
+  ]
+}

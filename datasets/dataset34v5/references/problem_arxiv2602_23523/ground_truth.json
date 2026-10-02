@@ -1,0 +1,47 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2602_23523",
+  "claim": "One invisible watermark embedded in a face photograph, carrying a 152-dimensional payload, can serve three forensic jobs at once: flagging that the face was manipulated by a deepfake, showing which facial regions were altered, and recovering an identifier of the image's source, from both untouched and manipulated copies. Detection should separate benignly processed from deepfaked images with ROC AUC above 0.5, and both the image-level and the region-level decisions must use one fixed cutoff set in advance rather than tuned per test. Source recovery must have a lower bit error rate than the strongest earlier proactive-forensics method under the same conditions, and the watermarked image must score higher PSNR and SSIM against the original than that method does despite the larger payload.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2602.23523"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2602_23523",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Train the watermarking system. Setup: CelebA-HQ (30k faces, official splits) at 128x128 and 256x256. Each image gets a 152-number mark: 68 face-alignment landmarks (136 coordinates) plus a 16-bit identifier derived from a hash of the file name. Training is two-stage: first against ordinary processing (resize, blur, median filter, two JPEG variants), then against four face-swap/reenactment generators (SimSwap, UniFace, CSCS, StarGAN-v2), keeping InfoSwap unseen for testing; one manipulation per batch, with another batch image as the swap source.",
+    "Does carrying a 152-number payload cost image quality? Measured: PSNR and SSIM between watermarked and original faces on CelebA-HQ, against seven earlier watermarking/forensic systems (MBRS, CIN, SepMark, EditGuard, LampMark, DiffMark, KAD-NET), which carry 30-number (128px) or 128-number (256px) payloads. Result: 40.22 dB / 0.98 at 128px versus 40.20 / 0.97 for the best baseline (LampMark); 44.31 dB / 0.99 at 256px versus 42.52 / 0.95 (LampMark) and 41.96 / 0.98 (DiffMark). No visible artifacts in side-by-side examples.",
+    "Can both parts of the mark be read back after ordinary, harmless processing? Setup: apply the six benign distortions to watermarked CelebA-HQ faces. Measured: identifier bit error rate and landmark error (mean Euclidean distance in pixels). Result: average BER 0.27% (128px) and 0.10% (256px), with zero errors under resize and both blurs; landmark error about 1.2 px and 3.1 px. Best earlier average BERs are 0.46% (DiffMark, 128px) and 0.55% (KAD-NET, 256px).",
+    "Can manipulation be detected by comparing the landmarks stored in the mark with the landmarks of the face actually visible? Setup: read the embedded landmarks, independently re-detect landmarks on the received image, and compute their mean distance, for images under the benign distortions and under all five generators. Result: benign processing yields small distances and deepfakes large ones; ROC AUC 0.9388, and Youden's J picks 3.2375 px as the cutoff. Caveat: the cutoff and the AUC are both computed on the same validation images, so there is no held-out check of the chosen threshold.",
+    "Localise the manipulation. Setup: group the landmarks by facial part (eyes, nose, mouth, jaw and so on), compute the stored-versus-observed distance per part, and flag parts above the same 3.2375 px cutoff. Result: only qualitative examples, in which altered regions show larger disagreement than untouched ones; no localisation accuracy, IoU, precision/recall or region-level AUC is reported.",
+    "Recover the source identifier after a deepfake. Setup: watermarked CelebA-HQ faces passed through the four training generators and unseen InfoSwap; decode the 16-bit identifier; same seven baselines. Result: average BER 3.33% (128px) and 2.55% (256px) versus the best earlier averages of 3.52% and 2.98% (DiffMark). Per generator at 128px: near zero for SimSwap, UniFace, CSCS and InfoSwap, but 16.4% for StarGAN-v2 (8.5% at 256px), where the method is not the best."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_26645",
+  "claim": "Vision-language-action manipulation policies can achieve autonomous resilience to both robot-pose deviations that leave the environment task-valid and object-state failures that move it outside normal task trajectories. The decisive bar is a strictly higher mean end-to-end task success rate than the strongest prior comparison system and the same VLA without failure-recovery training, together with a strictly higher success rate than that unmodified VLA on every evaluated physical-robot task. Recovery must require no human correction guidance during deployment and must allow the policy to resume and complete the original manipulation task.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.26645"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2608_26645",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the retry- and reset-trained policy library used in the evaluations. For each RoboMimic task, begin with 10 human demonstrations and use MimicGen with default parameters to produce 500 augmented demonstrations. Inject perturbation-and-bridging sequences at the trajectory start and between subtasks, with maximum perturbations of 45\u00b0 rotation and 0.5 m translation; exclude perturbation actions from the training targets and train on the bridging actions followed by the remaining task actions. Use Gemini-2.5-Pro at temperature 0.7 to analyze failure videos and identify object-centric reset skills, collect 20 human demonstrations for each reset skill, and augment each skill to 500 demonstrations with the same procedure. Fine-tune separate task and reset-skill LoRA adapters on the language-model and action-expert modules of \u03c00.5 while freezing all other parameters, using Adam with a constant learning rate of 2.5\u00d710^-4 and no cosine decay. At deployment, an online MLLM monitors execution; ID errors receive no intervention, while an identified OOD error causes the system to load the corresponding reset-skill adapter and prompt, execute the reset, reload the task adapter after the environment is judged valid, and resume the original task.",
+    "Test end-to-end success across the nine RoboMimic simulation tasks. Run OpenVLA, Task-conditioned, Subgoal-conditioned, Motion-conditioned, Subgoal Self-reflection, Phoenix, Phoenix-Human, \u03c00.5, and FLARE for 50 evaluation trials per task. FLARE obtains 96%, 78%, 100%, 100%, 100%, 90%, 72%, 62%, and 58% on Coffee D0, Coffee D1, Stack D0, Stack D1, StackThree D0, StackThree D1, ThreePieceAssembly D0, ThreePieceAssembly D1, and Threading D0, for an 84.0% mean. \u03c00.5 obtains 82%, 56%, 100%, 92%, 90%, 84%, 42%, 58%, and 46%, for a 72.2% mean; FLARE therefore improves the mean by 11.8 percentage points, exceeds \u03c00.5 on seven tasks, and ties it at 100% on Stack D0 and 62% versus 58% on ThreePieceAssembly D1. Phoenix obtains 94%, 48%, 96%, 86%, 50%, 20%, 68%, 52%, and 6%, for a 57.8% mean. Phoenix-Human, which uses human correction of motion instructions, obtains a 78.9% mean. The remaining means are 38.0% for OpenVLA, 41.8% for Task-conditioned, 43.8% for Subgoal-conditioned, 46.9% for Motion-conditioned, and 48.0% for Subgoal Self-reflection. FLARE has the highest result on eight of the nine tasks; on Threading D0 its 58% is below Phoenix-Human\u2019s 40% only in the paper's stated autonomous comparison context, while numerically \u03c00.5 is 46% and Phoenix is 6%.",
+    "Test whether learned reset skills account for the gains on tasks with resettable OOD failures. Evaluate FLARE, FLARE without Reset, a Reset-Only variant, and an Oracle variant that replaces MLLM-generated reset instructions with human feedback on Coffee D0, Coffee D1, ThreePieceAssembly D0, and ThreePieceAssembly D1. FLARE scores 96%, 78%, 62%, and 58%. Removing Reset and retaining perturbation-and-bridging training scores 92%, 74%, 60%, and 54%, reducing the four-task average from 73.5% to 70.0%, or 3.5 percentage points. Reset-Only scores 88%, 64%, 60%, and 50%, averaging 65.5%. Human-instruction FLARE-Oracle scores 100%, 90%, 68%, and 64%, averaging 80.5%, seven percentage points above standard FLARE.",
+    "Test FLARE on physical hardware without simulator-state logs. Run \u03c00.5 and FLARE on a Piper arm observed by RealSense D435i top and wrist cameras for 40 trials each on Stack Three Blocks, a long-horizon task, and Insert U-shaped Block, a contact-rich task. Collect 10 human demonstrations and augment them to 50 for each task and reset skill, using Any6D object-pose estimates rather than ground-truth simulator coordinates. On Stack Three Blocks, \u03c00.5 succeeds in 62.5% of trials and FLARE in 75.0%; on Insert U-shaped Block, \u03c00.5 succeeds in 45.0% and FLARE in 55.0%."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "external"
+  ]
+}

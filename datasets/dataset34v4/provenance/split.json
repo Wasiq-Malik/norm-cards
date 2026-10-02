@@ -1,0 +1,780 @@
+{
+  "_about": "Hand split of dataset20v3 papers into claims, by reading each paper's abstract/contributions against its reference experiments. C0 is the existing v3 claim. keep = distinct testable claim with its own headline experiment(s); thin = real claim but a single experiment or no numbers. Buckets: method_internal = tunes/ablates the authors' own method (unreachable by a proposer, since claims withhold the method); analysis = descriptive/diagnostic with no claim of its own; ungradeable = qualitative, no counts. 'shared' experiments (apparatus) appear in several claims. scope_flags = places where I disagree with scope.json for C0.",
+  "papers": {
+    "arxiv2510_20487": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "robustness": [
+            10,
+            13
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Training a model to resist deployment-style prompting does not make it resist activation steering: steering keeps eliciting deployment behaviour at every stage of that training, while prompts lose their effect.",
+          "experiments": [
+            1,
+            12
+          ],
+          "shared": [
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "A deployment-vs-evaluation steering direction taken from the untrained model shifts context-dependent behaviour beyond the trained organism: a naturally occurring marker, and a separately trained simpler organism.",
+          "experiments": [
+            14,
+            15
+          ],
+          "shared": [
+            3
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [],
+      "ungradeable": []
+    },
+    "arxiv2602_23523": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "A proactive face watermark trained on one dataset and a fixed pool of deepfake generators keeps recovering its source identifier, and stays imperceptible, on a held-out generator and on an unseen face dataset without retraining.",
+          "experiments": [
+            6,
+            7
+          ],
+          "shared": [
+            0
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "One shared decoder serving detection, localisation and tracing needs fewer parameters than dual-decoder forensic systems at the same payload length.",
+          "experiments": [
+            10
+          ]
+        }
+      ],
+      "method_internal": [
+        8,
+        9
+      ],
+      "analysis": [],
+      "ungradeable": []
+    },
+    "arxiv2604_09101": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            2,
+            3,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Model-level backdoor screening of prompt-tuned CLIP still catches backdoors from an adaptive attacker who narrows the trigger's activation region, and backdoors stored in the image encoder rather than the prompt module.",
+          "experiments": [
+            7,
+            10
+          ],
+          "shared": [
+            0
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "Backdoor triggers can be reconstructed from unlabeled out-of-distribution images nearly as well as from in-distribution data.",
+          "experiments": [
+            5,
+            6
+          ]
+        }
+      ],
+      "method_internal": [
+        4
+      ],
+      "analysis": [
+        1,
+        11
+      ],
+      "ungradeable": []
+    },
+    "arxiv2604_24474": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            5
+          ],
+          "robustness": [
+            4
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [
+        3
+      ],
+      "ungradeable": []
+    },
+    "arxiv2604_26496": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            3,
+            5,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "In adversarial training, shrinking the perturbation applied to correctly classified samples near the decision boundary barely changes the robustness learned, while shrinking it on samples far from the boundary destroys robustness.",
+          "experiments": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "The accuracy-robustness gains carry over from l-infinity to l2 threat models.",
+          "experiments": [
+            4
+          ],
+          "shared": [
+            3
+          ]
+        }
+      ],
+      "method_internal": [
+        7,
+        8
+      ],
+      "analysis": [],
+      "ungradeable": [],
+      "scope_flags": [
+        "[5] compares the mean of clean and robust accuracy with nine published methods - exactly C0's 'exceeds the strongest prior' bar. scope.json marks it not required; it should be required."
+      ]
+    },
+    "arxiv2605_08612": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Conventional visual backdoors fail to implant in VLA policies because benign and backdoor gradients conflict during fine-tuning; removing that conflict is what lets a backdoor take hold.",
+          "experiments": [
+            3
+          ],
+          "shared": [
+            2
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "keep",
+          "draft": "Existing defenses - input preprocessing, parameter pruning, safety layers and backdoor detectors adapted to continuous control - do not reliably remove a semantic-trigger backdoor from a VLA policy without heavy false positives.",
+          "experiments": [
+            11,
+            12
+          ],
+          "shared": [
+            1
+          ]
+        },
+        {
+          "id": "C3",
+          "verdict": "thin",
+          "draft": "Poisoning perturbations crafted on public proxy encoders transfer to the target VLA.",
+          "experiments": [
+            5
+          ],
+          "shared": [
+            0
+          ]
+        }
+      ],
+      "method_internal": [
+        4
+      ],
+      "analysis": [
+        6,
+        7,
+        13
+      ],
+      "ungradeable": [
+        10
+      ]
+    },
+    "arxiv2606_00570": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "robustness": [
+            13
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Localized parameter edits are amplified along low-variance directions of a language model's representation space, and that amplification tracks the decline of editing quality over sequential edits.",
+          "experiments": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "No knowledge-editing approach is best on both edit time and inference latency: parameter edits add no inference cost, external memory edits faster but costs at inference.",
+          "experiments": [
+            12
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [
+        10
+      ],
+      "ungradeable": []
+    },
+    "arxiv2606_16939": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            5,
+            6
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [
+        3,
+        4
+      ],
+      "ungradeable": []
+    },
+    "arxiv2606_24026": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "robustness": [
+            10
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "For agentic circuit explanation, an explicit observe-hypothesize-causally-validate workflow produces better explanations than the same agent skipping observation or validation, or working unstructured with the same tools.",
+          "experiments": [
+            8,
+            9
+          ],
+          "shared": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "keep",
+          "draft": "When language-model agents fail at circuit explanation, the failure lies in validation rather than hypothesis formation: hypotheses are mostly grounded in observations, while validation plans are incomplete, code fails, and hypotheses stay unresolved.",
+          "experiments": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "shared": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "C3",
+          "verdict": "thin",
+          "draft": "Agentic circuit explanation transfers from semi-synthetic transformers to a circuit localized in a naturally trained LLM.",
+          "experiments": [
+            11
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [],
+      "ungradeable": []
+    },
+    "arxiv2606_28153": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            6,
+            7,
+            8,
+            11
+          ],
+          "robustness": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "The safety signal that survives a successful jailbreak is sustained by a distinct set of mid-layer attention heads, and the heads that are suppressed are suppressed specifically by the jailbreak-template tokens rather than by the harmful request.",
+          "experiments": [
+            9,
+            10
+          ],
+          "shared": [
+            0,
+            1,
+            3
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [],
+      "ungradeable": [
+        12
+      ]
+    },
+    "arxiv2607_19374": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Training a general prover on automatically formalized geometry transfers: it improves proof success on a held-out competition set never used in training, and the same recipe improves a second, different prover.",
+          "experiments": [
+            8,
+            9,
+            10
+          ],
+          "shared": [
+            0,
+            1,
+            6
+          ]
+        }
+      ],
+      "method_internal": [
+        2,
+        3
+      ],
+      "analysis": [],
+      "ungradeable": []
+    },
+    "arxiv2608_09928": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "thin",
+          "draft": "Multimodal instruction tuning strengthens the causal role of the features tied to spatial reasoning.",
+          "experiments": [
+            6
+          ],
+          "shared": [
+            0,
+            5
+          ]
+        }
+      ],
+      "method_internal": [],
+      "analysis": [
+        14,
+        15
+      ],
+      "ungradeable": []
+    },
+    "arxiv2608_14049": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "thin",
+          "draft": "A flat-object grasping system trained in simulation keeps its generalization to unseen objects and categories on a physical robot.",
+          "experiments": [
+            8
+          ],
+          "shared": [
+            0
+          ]
+        }
+      ],
+      "method_internal": [
+        5,
+        6,
+        7
+      ],
+      "analysis": [
+        2
+      ],
+      "ungradeable": []
+    },
+    "arxiv2608_23830": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "thin",
+          "draft": "The multi-instruction gains hold at a larger model scale.",
+          "experiments": [
+            5,
+            12
+          ],
+          "shared": [
+            3
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "Small models trained to counteract exploration bias match much larger off-the-shelf models on multi-instruction benchmarks.",
+          "experiments": [
+            9
+          ]
+        }
+      ],
+      "method_internal": [
+        10,
+        11
+      ],
+      "analysis": [
+        7,
+        8
+      ],
+      "ungradeable": []
+    },
+    "arxiv2608_25585": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2,
+            3,
+            7
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "Existing in-context imitation policies for VLAs adapt poorly because their context retrieval matches visual appearance rather than behaviour and the policy's actions barely depend on the retrieved context.",
+          "experiments": [
+            4,
+            5
+          ],
+          "shared": [
+            0
+          ]
+        }
+      ],
+      "method_internal": [
+        9
+      ],
+      "analysis": [
+        6,
+        8
+      ],
+      "ungradeable": []
+    },
+    "arxiv2608_26645": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            2,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "thin",
+          "draft": "A multimodal LLM can tell recoverable from state-breaking manipulation failures, and name the object to reset, from execution video.",
+          "experiments": [
+            1
+          ]
+        }
+      ],
+      "method_internal": [
+        3
+      ],
+      "analysis": [
+        5
+      ],
+      "ungradeable": []
+    },
+    "arxiv2608_28229": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            2,
+            3,
+            4,
+            7
+          ]
+        }
+      ],
+      "method_internal": [
+        5,
+        6
+      ],
+      "analysis": [
+        1
+      ],
+      "ungradeable": []
+    },
+    "arxiv2609_02350": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            2
+          ],
+          "robustness": [
+            7
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "A vision-language navigation agent trained only on standard continuous-VLN data transfers to a different navigation dataset and task, and to a physical robot in an unseen workspace.",
+          "experiments": [
+            8,
+            9
+          ],
+          "shared": [
+            0
+          ]
+        }
+      ],
+      "method_internal": [
+        3
+      ],
+      "analysis": [
+        4,
+        5,
+        6,
+        10
+      ],
+      "ungradeable": []
+    },
+    "arxiv2609_06718": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            5
+          ],
+          "robustness": [
+            4
+          ]
+        }
+      ],
+      "method_internal": [
+        2,
+        3
+      ],
+      "analysis": [],
+      "ungradeable": [
+        6,
+        7
+      ]
+    },
+    "arxiv2609_08444": {
+      "claims": [
+        {
+          "id": "C0",
+          "verdict": "existing",
+          "experiments": [
+            0,
+            1,
+            3,
+            7
+          ]
+        },
+        {
+          "id": "C1",
+          "verdict": "keep",
+          "draft": "For hazard awareness under partial observability, a planner must remember relationships among previously seen objects: full image history, retrieved text descriptions, or a bare list of seen objects do not preserve it.",
+          "experiments": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "C2",
+          "verdict": "thin",
+          "draft": "Long-term environment memory still improves safe planning when the scene is fully observable.",
+          "experiments": [
+            2
+          ]
+        }
+      ],
+      "method_internal": [
+        6
+      ],
+      "analysis": [],
+      "ungradeable": [],
+      "scope_flags": [
+        "[7] measures task success with hazards removed, which is C0's 'task success at least as high as an unmodified planner' clause. scope.json marks it not required; it should be required."
+      ]
+    }
+  }
+}

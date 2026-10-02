@@ -1,0 +1,41 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_26645",
+  "claim": "A vision-language-action manipulation policy can be made to recover on its own from two different kinds of trouble: arm poses that drift away from anything it was trained on while the scene itself is still workable, and failures that leave the scene in a state the task never passes through. The deciding bar is a strictly higher mean end-to-end task success rate than both the strongest earlier comparison system and the same policy without recovery training, together with a strictly higher success rate than that unmodified policy on every physical-robot task evaluated. Recovery has to happen without a human supplying correction during deployment, and has to leave the policy able to resume and finish the original task.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.26645"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_26645",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build the policies the evaluation compares. Setup: for each simulation task, start from 10 human demonstrations and expand to 500 by a standard augmentation method. Inject perturbation-and-bridging segments at the start and between subtasks, up to 45 degrees of rotation and 0.5 m of translation, excluding the perturbation itself from the training targets so the policy learns only the recovery that follows. Separately, have a multimodal model watch failure videos to identify object-centric reset skills, collect 20 human demonstrations per skill and expand each to 500 the same way. Fine-tune separate task and reset adapters on a 3B-class policy with everything else frozen. At deployment an online monitor watches execution: pose drift gets no intervention, while a scene-breaking failure causes the matching reset adapter and prompt to be loaded, the reset executed, the task adapter reloaded once the scene is judged workable, and the task resumed.",
+    "End-to-end success across nine simulation tasks. Setup: nine tasks of varying difficulty, 50 trials each, against eight comparison systems including the same backbone policy without recovery training and a published recovery system in both autonomous and human-corrected forms. Result: the method averages 84.0% against 72.2% for the unmodified backbone, an 11.8-point gain, beating it on seven tasks and tying at 100% on one. The published recovery system averages 57.8% autonomously and 78.9% with human correction of its instructions, so the method beats the autonomous form but the human-corrected form remains the closest competitor. Remaining baselines average 38.0% to 48.0%.",
+    "Do the learned reset skills account for the gain on tasks whose failures break the scene? Setup: compare the full system, the same system without the reset stage, a reset-only variant, and a variant where a human rather than the model writes the reset instructions, on the four tasks where resettable failures occur. Result: the full system averages 73.5%; removing reset while keeping the perturbation training gives 70.0%, so reset is worth 3.5 points; reset alone gives 65.5%. The human-instruction variant reaches 80.5%, seven points above the full system, which marks how much of the remaining gap is the monitor's instruction quality rather than the recovery skills.",
+    "Does it hold on real hardware, without simulator state? Setup: run the unmodified backbone and the full system on a physical arm with two cameras for 40 trials each on a long-horizon stacking task and a contact-rich insertion task, with 10 human demonstrations expanded to 50 per task and per reset skill, using estimated object poses rather than ground-truth coordinates. Result: 62.5% to 75.0% on stacking and 45.0% to 55.0% on insertion, so the method beats the unmodified policy on both tasks, satisfying the every-task clause on the two tasks tested."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "external"
+  ]
+}

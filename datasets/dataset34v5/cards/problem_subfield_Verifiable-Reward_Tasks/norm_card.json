@@ -1,0 +1,1736 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Verifiable-Reward_Tasks",
+  "claim": "Experimental norms and standard practice in Verifiable-Reward Tasks.",
+  "subfields": [
+    "Verifiable-Reward Tasks"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 23,
+    "pdf_sources": {
+      "arxiv": 16,
+      "s2": 1,
+      "none": 7,
+      "pdf_url": 2,
+      "cache:text": 4
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Verifiable-Reward Tasks",
+      "menu": {
+        "datasets": [
+          {
+            "name": "MiniF2F",
+            "role": "eval",
+            "evidence": [
+              "Multi-language Diversity Benefits Autoformalization",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "MMA (Multi-language Mathematical Autoformalization)",
+            "role": "train",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "MathAtlas",
+            "role": "eval",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "MA-Align",
+            "role": "robustness_eval",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "TheoremBench",
+            "role": "eval",
+            "evidence": [
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "RLMEval",
+            "role": "eval",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+            ]
+          },
+          {
+            "name": "ProofNet#",
+            "role": "eval",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "RLM25",
+            "role": "eval",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "ProofNetVerif",
+            "role": "robustness_eval",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "LeanWorkbook",
+            "role": "train",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "ConsistencyCheck",
+            "role": "robustness_eval",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "CriticLeanBench",
+            "role": "robustness_eval",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "StructFlowBench",
+            "role": "eval",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "MT-Bench-101",
+            "role": "robustness_eval",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Multi-if",
+            "role": "robustness_eval",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "MT-Eval",
+            "role": "robustness_eval",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "WILDCHAT",
+            "role": "robustness_eval",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Diagnostic Test Bank (20 prompts)",
+            "role": "eval",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Benchmark of 101 Lean4 theorems (mathlib4)",
+            "role": "eval",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4"
+            ]
+          },
+          {
+            "name": "FormL4-Basic",
+            "role": "eval",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          },
+          {
+            "name": "FormL4-Random",
+            "role": "eval",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          },
+          {
+            "name": "MathLibForm",
+            "role": "eval",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "DeepSeek-Prover",
+            "role": "method_under_test",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Goedel-Prover",
+            "role": "method_under_test",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "KiminaProver",
+            "role": "method_under_test",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Llemma",
+            "role": "baseline",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Mistral",
+            "role": "backbone",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "Herald",
+            "role": "method_under_test",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "ATLAS / ReForm",
+            "role": "method_under_test",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "CriticLean",
+            "role": "baseline",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Qwen3",
+            "role": "baseline",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Goedel v2",
+            "role": "method_under_test",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Goedel-Prover-SFT",
+            "role": "baseline",
+            "evidence": [
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Llama-3",
+            "role": "baseline",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "baseline",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          },
+          {
+            "name": "Gemini Pro",
+            "role": "baseline",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4"
+            ]
+          },
+          {
+            "name": "Phi-2",
+            "role": "backbone",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          },
+          {
+            "name": "LLaMA-2",
+            "role": "backbone",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          },
+          {
+            "name": "DeepSeekMath-Base",
+            "role": "backbone",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Compilation / Type-Check Rate (Pass/Compiles)",
+            "direction": "higher_better",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Multi-language Diversity Benefits Autoformalization",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "pass@k / pass@n",
+            "direction": "higher_better",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+            ]
+          },
+          {
+            "name": "Human correction effort (0\u20134) and % acceptable with minimal corrections",
+            "direction": "lower_better",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "Semantic faithfulness (Faithful / Correct = Compiles AND Faithful)",
+            "direction": "higher_better",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Automated semantic equivalence (BEq+ / BEq)",
+            "direction": "higher_better",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Precision / Recall / F1 (semantic-judge or alignment tasks)",
+            "direction": "higher_better",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Token-efficiency (E_avg, E_min)",
+            "direction": "lower_better",
+            "evidence": [
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Theorem-level coverage (Cov, AvgSub, survival curve)",
+            "direction": "higher_better",
+            "evidence": [
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Proof length (avg/max lines or tokens)",
+            "direction": "lower_better",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Constraint Satisfaction Rate / Instruction Satisfaction Rate (CSR/ISR), WCSR, DRFR",
+            "direction": "higher_better",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Inter-annotator agreement (Cohen's kappa)",
+            "direction": "higher_better",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Benchmark-level correlation with human eval (Pearson/Kendall)",
+            "direction": "higher_better",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "API success rate / response time (sanity/ops)",
+            "direction": "higher_better",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Alignment-Selection (AS) / Alignment Score and components",
+            "direction": "higher_better",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Sampling-based decoding with pass@k reporting",
+            "detail": "Generate multiple candidates per instance and report pass@k as the fraction of instances with \u22651 verified success; sweep k (e.g., 1,2,4,32,64,128, up to 1000) and show scaling.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Deterministic decoding for reproducibility",
+            "detail": "Use greedy or temperature=0.0 (and fixed seed when supported) to minimize stochastic variability in instruction-adherence or data collection phases.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "Multi-language Diversity Benefits Autoformalization",
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Programmatic verification via proof assistant / REPL",
+            "detail": "Verify candidates by compiling/type-checking in Lean4/Isabelle and aggregate success as Pass/Compiles or Type-Check rate.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Multi-language Diversity Benefits Autoformalization",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Separate syntactic and semantic correctness",
+            "detail": "Report both compile/type-check success and an independent semantic-faithfulness metric (e.g., human or LLM-judge) and combine as Correct = compiles AND faithful.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Validate automatic metrics against humans",
+            "detail": "Collect human judgements on a sample, compute agreement/correlations (e.g., Cohen's kappa, Pearson/Kendall) with automated metrics/judges, and select the metric aligned with humans.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Type-check filtering before selection",
+            "detail": "Filter sampled candidates using the theorem prover/REPL before applying selection heuristics (random, majority, Self-BLEU, symbolic equivalence).",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Premise exposure vs standalone evaluation",
+            "detail": "Evaluate both with explicit premises/context and as standalone statements to quantify the effect of available premises.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+            ]
+          },
+          {
+            "name": "Human manual grading of formalization quality",
+            "detail": "Blind expert annotation using a 0\u20134 correction-effort scale and reporting mean scores with confidence intervals and per-topic breakdowns.",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "Constraint checklist evaluation for multi-turn instruction following",
+            "detail": "Extract intra-turn constraints to binary questions, build a checklist, and use an automatic evaluator (validated by humans) to score CSR/ISR/WCSR.",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Two-stage output verification (strict then flexible)",
+            "detail": "Score with strict exact matching; then allow acceptable formatting variations (whitespace, code fences, JSON normalization) to reduce false negatives.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Endpoint verification and parameter-aware requests",
+            "detail": "Pre-verify model endpoints with a simple factual query and construct requests using only supported parameters; set timeouts.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Report per-structure/topic/project breakdowns",
+            "detail": "Provide per-structure or per-topic/project performance alongside aggregate scores to expose domain-specific effects.",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Iterative refinement with prover feedback",
+            "detail": "Use theorem-prover error messages to iteratively refine outputs and track metrics across iterations to reveal trade-offs.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries"
+            ]
+          },
+          {
+            "name": "Document decoding hyperparameters per checkpoint",
+            "detail": "Use officially recommended hyperparameters for each model and report them alongside compute settings.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Greedy single-output baseline",
+            "detail": "Evaluate single deterministic generation (no sampling) as a baseline against sampling+filtering pipelines.",
+            "rules_out": "That gains are due merely to the model's inherent single-output behavior rather than sampling/selection procedures.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Type-check filtering ablation",
+            "detail": "Compare sampling+selection with and without type-check filtering; include Filter+Random to isolate filtering from selection heuristics.",
+            "rules_out": "That gains arise solely from selection heuristics rather than from eliminating ill-typed candidates.",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Zero-shot vs few-shot vs retrieved exemplars",
+            "detail": "Compare zero-shot, fixed k-shot, and retrieval-augmented exemplars for identical models/prompts.",
+            "rules_out": "That improvements are due only to having any exemplars rather than exemplar relevance from retrieval.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Premises/context ablation (easy vs normal / premised vs plain)",
+            "detail": "Evaluate with full project lemmas/premises vs restricted context or standalone statements.",
+            "rules_out": "That performance differences reflect only access to auxiliary lemmas/premises rather than core reasoning capability.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Sampling budget sweep including low k",
+            "detail": "Report pass@1\u20132 alongside higher k to show whether rankings and gains persist at low budgets.",
+            "rules_out": "That observed gains or rankings are explained purely by large sampling budgets.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Weaker baselines (math-pretrained or non-reasoning)",
+            "detail": "Include a general math-pretrained baseline and/or a non-reasoning SFT baseline alongside specialized provers.",
+            "rules_out": "That gains are attributable to generic pretraining/size rather than specialized reasoning methods.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Human verification of automatic evaluator",
+            "detail": "Have experts re-score a sample and report agreement with the automatic evaluator/judge.",
+            "rules_out": "That automatic evaluator (e.g., LLM-as-judge) decisions are misaligned with human judgements.",
+            "evidence": [
+              "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Plain-main baseline for premised theorems",
+            "detail": "Evaluate the same theorems without explicit premise binding and compare pass@k.",
+            "rules_out": "That premised improvements come from dataset differences rather than explicit premise exposure.",
+            "evidence": [
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Local context ablation",
+            "detail": "Add/remove immediate local context tokens around the source and compare performance.",
+            "rules_out": "That gains are solely due to local contextual cues rather than core modeling improvements.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Fine-tuned vs base-model comparison",
+            "detail": "Evaluate base checkpoints and the same models fine-tuned on domain data.",
+            "rules_out": "That improvements are due to evaluation artifacts rather than the proposed fine-tuning regimen or data.",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "Consistent Autoformalization for Constructing Mathematical Libraries",
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Multi-language Diversity Benefits Autoformalization",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Multi-language vs single-language training",
+            "detail": "Train on joint multi-language data vs each language alone for the same steps.",
+            "rules_out": "That gains come from extra exposure to one language rather than cross-language transfer.",
+            "evidence": [
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "Distilled vs source/base models",
+            "detail": "Evaluate distilled variants and their source/base models in the same pipeline.",
+            "rules_out": "That differences are explained solely by base-model architecture/size rather than distillation effects.",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Endpoint and parameter sanity checks",
+            "detail": "Pre-verify endpoints and omit unsupported API parameters; enforce evaluation timeouts.",
+            "rules_out": "That failures are caused by non-functional endpoints, timeouts, or malformed requests rather than model behavior.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Strict vs flexible verification scoring",
+            "detail": "Re-score outputs allowing benign formatting differences to confirm strict-matching results are not artifacts.",
+            "rules_out": "That low pass rates are due to superficial formatting mismatches rather than substantive failure.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Data contamination / memorization",
+            "detail": "Models may have seen benchmark data or existing formalisations during training, inflating performance.",
+            "ruled_out_by": "Report project first-commit dates vs model cutoffs; analyze grounded-vs-not-grounded items; inspect outputs for copying.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Multi-language Diversity Benefits Autoformalization",
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Automatic judge bias or misalignment with humans",
+            "detail": "LLM-as-judge or heuristic metrics may not reflect human semantic faithfulness.",
+            "ruled_out_by": "Human verification and agreement/correlation analyses (e.g., Cohen's kappa, Pearson/Kendall); select judges aligned with humans.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Compilation/type-check conflates syntax with semantics",
+            "detail": "Compiling outputs can be unfaithful to the source despite being syntactically valid.",
+            "ruled_out_by": "Measure semantic faithfulness separately (human or trusted judge) and report Correct = compiles AND faithful.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Sampling budget or selection heuristic, not capability",
+            "detail": "High pass@k or selection gains may reflect larger k or heuristic choice rather than true model ability.",
+            "ruled_out_by": "Report low-k (pass@1\u20132), sweep k, and ablate filtering vs selection to attribute where gains arise.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Formatting-induced false negatives",
+            "detail": "Semantically correct responses may be marked wrong due to superficial formatting differences.",
+            "ruled_out_by": "Flexible verification pass after strict matching allowing benign formatting/JSON normalization.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Endpoint/API errors masquerading as model failure",
+            "detail": "Non-functional endpoints, timeouts, or unsupported parameters cause apparent failures.",
+            "ruled_out_by": "Pre-verification of endpoints and parameter-aware request construction with enforced timeouts.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Stochastic decoding variability",
+            "detail": "Randomness in generation can cause inconsistent pass/fail outcomes.",
+            "ruled_out_by": "Deterministic decoding (temperature=0.0, fixed seed) during evaluation.",
+            "evidence": [
+              "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+            ]
+          },
+          {
+            "name": "Advantage due to available premises/informal proofs",
+            "detail": "Gains may stem from extra premises or informal hints rather than reasoning ability.",
+            "ruled_out_by": "Evaluate without premises/informal proofs and compare matched instances.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+              "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+            ]
+          },
+          {
+            "name": "Semantic drift from iterative correction/denoising",
+            "detail": "Refinement steps may fix syntax while drifting from the intended meaning.",
+            "ruled_out_by": "Track semantic metrics (e.g., BLEU proxy) alongside Pass across refinement iterations.",
+            "evidence": [
+              "Consistent Autoformalization for Constructing Mathematical Libraries"
+            ]
+          },
+          {
+            "name": "Metric bias against long statements",
+            "detail": "Automated equivalence metrics (e.g., BEq+) may have lower recall on longer statements.",
+            "ruled_out_by": "Measure recall vs length and document drops; prefer metrics validated against human judgements.",
+            "evidence": [
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Observed depth effects due to sampling chance",
+            "detail": "Associations between dependency depth and correctness could be sampling artifacts.",
+            "ruled_out_by": "Statistical tests on depth distributions (e.g., two-sample KS test) to confirm significance.",
+            "evidence": [
+              "MathAtlas: A Benchmark for Autoformalization in the Wild"
+            ]
+          },
+          {
+            "name": "Type-check rate as a proxy for human correctness",
+            "detail": "High type-check rates may not track human-judged correctness.",
+            "ruled_out_by": "Compute correlations between type-check rate and human evaluation; use combined or human-aligned metrics.",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4",
+              "Multi-language Diversity Benefits Autoformalization",
+              "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+            ]
+          },
+          {
+            "name": "Noisy informalisation data drives outcomes",
+            "detail": "Incorrect or hallucinated informalisations can confound training/evaluation.",
+            "ruled_out_by": "Manual audit of informalisation pairs with error categorization and correctness rate reporting.",
+            "evidence": [
+              "Multi-language Diversity Benefits Autoformalization"
+            ]
+          },
+          {
+            "name": "Underestimation from small models or limited sampling",
+            "detail": "Low scores might reflect compute/model limits rather than task difficulty.",
+            "ruled_out_by": "Report scaling with k and contrast with larger-model results; show diminishing returns to argue remaining difficulty.",
+            "evidence": [
+              "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+            ]
+          },
+          {
+            "name": "Differences driven by base LLM capability",
+            "detail": "Observed performance gaps could arise from base-model choice rather than the proposed pipeline.",
+            "ruled_out_by": "Ablations across base LLMs and distillation/source-model comparisons.",
+            "evidence": [
+              "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+            ]
+          },
+          {
+            "name": "Subject-area/topic distribution effects",
+            "detail": "Aggregate results may hide topic-dependent difficulty or exposure biases.",
+            "ruled_out_by": "Per-topic/per-project breakdowns and discussion of disparities; propose difficulty labeling.",
+            "evidence": [
+              "An Evaluation Benchmark for Autoformalization in Lean4"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 1,
+        "evidence_links_dropped": 11,
+        "kept_per_key": {
+          "datasets": 22,
+          "models": 17,
+          "metrics": 14,
+          "protocols": 14,
+          "controls": 14,
+          "confounds": 16
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "LeanWorkbook",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "MMA",
+        "evidence": [
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "MMA (Multi-language Mathematical Autoformalization)"
+        ],
+        "role": "train"
+      },
+      {
+        "name": "MiniF2F",
+        "evidence": [
+          "Multi-language Diversity Benefits Autoformalization",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "DeepSeek",
+        "evidence": [
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "DeepSeek-Prover",
+          "DeepSeekMath-Base"
+        ],
+        "role": "method_under_test"
+      },
+      {
+        "name": "Llemma",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "Mistral",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "GPT-3.5",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "Goedel-Prover",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "KiminaProver",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "Llama-3",
+        "evidence": [
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "role": "baseline"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Compilation / Type-Check Rate",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Multi-language Diversity Benefits Autoformalization",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Compilation / Type-Check Rate (Pass/Compiles)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Precision / Recall / F1",
+        "evidence": [
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Precision / Recall / F1 (semantic-judge or alignment tasks)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Human correction effort (0\u20134) and % acceptable with minimal corrections",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Proof length",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Proof length (avg/max lines or tokens)"
+        ],
+        "direction": "lower_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Programmatic verification via proof assistant / REPL",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Multi-language Diversity Benefits Autoformalization",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Verify candidates by compiling/type-checking in Lean4/Isabelle and aggregate success as Pass/Compiles or Type-Check rate."
+      },
+      {
+        "name": "Deterministic decoding for reproducibility",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "Multi-language Diversity Benefits Autoformalization",
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Use greedy or temperature=0.0 (and fixed seed when supported) to minimize stochastic variability in instruction-adherence or data collection phases."
+      },
+      {
+        "name": "Report per-structure/topic/project breakdowns",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Provide per-structure or per-topic/project performance alongside aggregate scores to expose domain-specific effects."
+      },
+      {
+        "name": "Sampling-based decoding with pass@k reporting",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Generate multiple candidates per instance and report pass@k as the fraction of instances with \u22651 verified success; sweep k (e.g., 1,2,4,32,64,128, up to 1000) and show scaling."
+      },
+      {
+        "name": "Validate automatic metrics against humans",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Collect human judgements on a sample, compute agreement/correlations (e.g., Cohen's kappa, Pearson/Kendall) with automated metrics/judges, and select the metric aligned with humans."
+      },
+      {
+        "name": "Human manual grading of formalization quality",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Blind expert annotation using a 0\u20134 correction-effort scale and reporting mean scores with confidence intervals and per-topic breakdowns."
+      },
+      {
+        "name": "Separate syntactic and semantic correctness",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Report both compile/type-check success and an independent semantic-faithfulness metric (e.g., human or LLM-judge) and combine as Correct = compiles AND faithful."
+      },
+      {
+        "name": "Constraint checklist evaluation for multi-turn instruction following",
+        "evidence": [
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Extract intra-turn constraints to binary questions, build a checklist, and use an automatic evaluator (validated by humans) to score CSR/ISR/WCSR."
+      },
+      {
+        "name": "Document decoding hyperparameters per checkpoint",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Use officially recommended hyperparameters for each model and report them alongside compute settings."
+      },
+      {
+        "name": "Endpoint verification and parameter-aware requests",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Pre-verify model endpoints with a simple factual query and construct requests using only supported parameters; set timeouts."
+      },
+      {
+        "name": "Iterative refinement with prover feedback",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Use theorem-prover error messages to iteratively refine outputs and track metrics across iterations to reveal trade-offs."
+      },
+      {
+        "name": "Premise exposure vs standalone evaluation",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Evaluate both with explicit premises/context and as standalone statements to quantify the effect of available premises."
+      },
+      {
+        "name": "Two-stage output verification",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Two-stage output verification (strict then flexible)"
+        ],
+        "detail": "Score with strict exact matching; then allow acceptable formatting variations (whitespace, code fences, JSON normalization) to reduce false negatives."
+      },
+      {
+        "name": "Type-check filtering before selection",
+        "evidence": [
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Filter sampled candidates using the theorem prover/REPL before applying selection heuristics (random, majority, Self-BLEU, symbolic equivalence)."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Fine-tuned vs base-model comparison",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Multi-language Diversity Benefits Autoformalization",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Evaluate base checkpoints and the same models fine-tuned on domain data.",
+        "rules_out": "That improvements are due to evaluation artifacts rather than the proposed fine-tuning regimen or data."
+      },
+      {
+        "name": "Sampling budget sweep including low k",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Report pass@1\u20132 alongside higher k to show whether rankings and gains persist at low budgets.",
+        "rules_out": "That observed gains or rankings are explained purely by large sampling budgets."
+      },
+      {
+        "name": "Greedy single-output baseline",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Evaluate single deterministic generation (no sampling) as a baseline against sampling+filtering pipelines.",
+        "rules_out": "That gains are due merely to the model's inherent single-output behavior rather than sampling/selection procedures."
+      },
+      {
+        "name": "Human verification of automatic evaluator",
+        "evidence": [
+          "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Have experts re-score a sample and report agreement with the automatic evaluator/judge.",
+        "rules_out": "That automatic evaluator (e.g., LLM-as-judge) decisions are misaligned with human judgements."
+      },
+      {
+        "name": "Premises/context ablation",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Premises/context ablation (easy vs normal / premised vs plain)"
+        ],
+        "detail": "Evaluate with full project lemmas/premises vs restricted context or standalone statements.",
+        "rules_out": "That performance differences reflect only access to auxiliary lemmas/premises rather than core reasoning capability."
+      },
+      {
+        "name": "Weaker baselines",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [
+          "Weaker baselines (math-pretrained or non-reasoning)"
+        ],
+        "detail": "Include a general math-pretrained baseline and/or a non-reasoning SFT baseline alongside specialized provers.",
+        "rules_out": "That gains are attributable to generic pretraining/size rather than specialized reasoning methods."
+      },
+      {
+        "name": "Zero-shot vs few-shot vs retrieved exemplars",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries",
+          "MathAtlas: A Benchmark for Autoformalization in the Wild"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Compare zero-shot, fixed k-shot, and retrieval-augmented exemplars for identical models/prompts.",
+        "rules_out": "That improvements are due only to having any exemplars rather than exemplar relevance from retrieval."
+      },
+      {
+        "name": "Distilled vs source/base models",
+        "evidence": [
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Evaluate distilled variants and their source/base models in the same pipeline.",
+        "rules_out": "That differences are explained solely by base-model architecture/size rather than distillation effects."
+      },
+      {
+        "name": "Endpoint and parameter sanity checks",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Pre-verify endpoints and omit unsupported API parameters; enforce evaluation timeouts.",
+        "rules_out": "That failures are caused by non-functional endpoints, timeouts, or malformed requests rather than model behavior."
+      },
+      {
+        "name": "Local context ablation",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Add/remove immediate local context tokens around the source and compare performance.",
+        "rules_out": "That gains are solely due to local contextual cues rather than core modeling improvements."
+      },
+      {
+        "name": "Multi-language vs single-language training",
+        "evidence": [
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Train on joint multi-language data vs each language alone for the same steps.",
+        "rules_out": "That gains come from extra exposure to one language rather than cross-language transfer."
+      },
+      {
+        "name": "Plain-main baseline for premised theorems",
+        "evidence": [
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Evaluate the same theorems without explicit premise binding and compare pass@k.",
+        "rules_out": "That premised improvements come from dataset differences rather than explicit premise exposure."
+      },
+      {
+        "name": "Strict vs flexible verification scoring",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Re-score outputs allowing benign formatting differences to confirm strict-matching results are not artifacts.",
+        "rules_out": "That low pass rates are due to superficial formatting mismatches rather than substantive failure."
+      },
+      {
+        "name": "Type-check filtering ablation",
+        "evidence": [
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Compare sampling+selection with and without type-check filtering; include Filter+Random to isolate filtering from selection heuristics.",
+        "rules_out": "That gains arise solely from selection heuristics rather than from eliminating ill-typed candidates."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Data contamination / memorization",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Multi-language Diversity Benefits Autoformalization",
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Models may have seen benchmark data or existing formalisations during training, inflating performance.",
+        "ruled_out_by": "Report project first-commit dates vs model cutoffs; analyze grounded-vs-not-grounded items; inspect outputs for copying."
+      },
+      {
+        "name": "Automatic judge bias or misalignment with humans",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "LLM-as-judge or heuristic metrics may not reflect human semantic faithfulness.",
+        "ruled_out_by": "Human verification and agreement/correlation analyses (e.g., Cohen's kappa, Pearson/Kendall); select judges aligned with humans."
+      },
+      {
+        "name": "Sampling budget or selection heuristic, not capability",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "High pass@k or selection gains may reflect larger k or heuristic choice rather than true model ability.",
+        "ruled_out_by": "Report low-k (pass@1\u20132), sweep k, and ablate filtering vs selection to attribute where gains arise."
+      },
+      {
+        "name": "Type-check rate as a proxy for human correctness",
+        "evidence": [
+          "An Evaluation Benchmark for Autoformalization in Lean4",
+          "Multi-language Diversity Benefits Autoformalization",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "High type-check rates may not track human-judged correctness.",
+        "ruled_out_by": "Compute correlations between type-check rate and human evaluation; use combined or human-aligned metrics."
+      },
+      {
+        "name": "Advantage due to available premises/informal proofs",
+        "evidence": [
+          "RLMEval: Evaluating Research-Level Neural Theorem Proving",
+          "TheoremBench: Evaluating LLMs on Theorem Proving in Formal Mathematics"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Gains may stem from extra premises or informal hints rather than reasoning ability.",
+        "ruled_out_by": "Evaluate without premises/informal proofs and compare matched instances."
+      },
+      {
+        "name": "Compilation/type-check conflates syntax with semantics",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild",
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Compiling outputs can be unfaithful to the source despite being syntactically valid.",
+        "ruled_out_by": "Measure semantic faithfulness separately (human or trusted judge) and report Correct = compiles AND faithful."
+      },
+      {
+        "name": "Differences driven by base LLM capability",
+        "evidence": [
+          "StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Observed performance gaps could arise from base-model choice rather than the proposed pipeline.",
+        "ruled_out_by": "Ablations across base LLMs and distillation/source-model comparisons."
+      },
+      {
+        "name": "Endpoint/API errors masquerading as model failure",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Non-functional endpoints, timeouts, or unsupported parameters cause apparent failures.",
+        "ruled_out_by": "Pre-verification of endpoints and parameter-aware request construction with enforced timeouts."
+      },
+      {
+        "name": "Formatting-induced false negatives",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Semantically correct responses may be marked wrong due to superficial formatting differences.",
+        "ruled_out_by": "Flexible verification pass after strict matching allowing benign formatting/JSON normalization."
+      },
+      {
+        "name": "Metric bias against long statements",
+        "evidence": [
+          "Reliable Evaluation and Benchmarks for Statement Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Automated equivalence metrics (e.g., BEq+) may have lower recall on longer statements.",
+        "ruled_out_by": "Measure recall vs length and document drops; prefer metrics validated against human judgements."
+      },
+      {
+        "name": "Noisy informalisation data drives outcomes",
+        "evidence": [
+          "Multi-language Diversity Benefits Autoformalization"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Incorrect or hallucinated informalisations can confound training/evaluation.",
+        "ruled_out_by": "Manual audit of informalisation pairs with error categorization and correctness rate reporting."
+      },
+      {
+        "name": "Observed depth effects due to sampling chance",
+        "evidence": [
+          "MathAtlas: A Benchmark for Autoformalization in the Wild"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Associations between dependency depth and correctness could be sampling artifacts.",
+        "ruled_out_by": "Statistical tests on depth distributions (e.g., two-sample KS test) to confirm significance."
+      },
+      {
+        "name": "Semantic drift from iterative correction/denoising",
+        "evidence": [
+          "Consistent Autoformalization for Constructing Mathematical Libraries"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Refinement steps may fix syntax while drifting from the intended meaning.",
+        "ruled_out_by": "Track semantic metrics (e.g., BLEU proxy) alongside Pass across refinement iterations."
+      },
+      {
+        "name": "Stochastic decoding variability",
+        "evidence": [
+          "When Models Can't Follow: Testing Instruction Adherence Across 256 LLMs"
+        ],
+        "subfields": [
+          "Verifiable-Reward Tasks"
+        ],
+        "variants": [],
+        "detail": "Randomness in generation can cause inconsistent pass/fail outcomes.",
+        "ruled_out_by": "Deterministic decoding (temperature=0.0, fixed seed) during evaluation."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 22,
+      "out": 3,
+      "dropped_uncorroborated": 19,
+      "relaxed": false,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 3
+      }
+    },
+    "models": {
+      "in": 16,
+      "out": 7,
+      "dropped_uncorroborated": 9,
+      "relaxed": false,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 7
+      }
+    },
+    "metrics": {
+      "in": 14,
+      "out": 4,
+      "dropped_uncorroborated": 10,
+      "relaxed": false,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 4
+      }
+    },
+    "protocols": {
+      "in": 14,
+      "out": 14,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 14
+      }
+    },
+    "controls": {
+      "in": 14,
+      "out": 14,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 14
+      }
+    },
+    "confounds": {
+      "in": 16,
+      "out": 14,
+      "by_subfield": {
+        "Verifiable-Reward Tasks": 14
+      }
+    },
+    "totals": {
+      "in": 96,
+      "out": 56
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Endpoints and deterministic decoding sanity check",
+      "dataset": "Diagnostic Test Bank (20 prompts) (eval)",
+      "model": "GPT-3.5 (baseline)",
+      "method_under_test": "Goedel v2 (method_under_test)",
+      "attack_or_condition": "Endpoint verification and parameter-aware requests",
+      "metrics": [
+        "API success rate / response time (sanity/ops) (higher_better)"
+      ],
+      "pass_condition": "On the 20 Diagnostic Test Bank prompts with temperature=0.0 and fixed seed: (1) API success rate >= 0.95 (>= 19/20 successful responses); (2) median response time <= 10 seconds; (3) determinism check: identical outputs across 3 repeated calls on each prompt for >= 0.95 of prompts (>= 19/20). Failing any criterion refutes readiness to proceed.",
+      "constraints_not_enforced": [
+        "Cross-region endpoint variability not tested",
+        "Rate-limit behavior outside 20 queries not tested"
+      ],
+      "depends_on": [],
+      "rationale": "Pre-verification of endpoints and deterministic decoding prevents conflating ops failures or stochasticity with model behavior, as required by standard VRT evaluation practice.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Validated semantic-faithfulness judge aligned with humans",
+      "dataset": "TheoremBench (eval)",
+      "model": "Llama-3 (baseline)",
+      "method_under_test": "Goedel v2 (method_under_test)",
+      "attack_or_condition": "Validate automatic metrics against humans",
+      "metrics": [
+        "Inter-annotator agreement (Cohen's kappa) (higher_better)",
+        "Benchmark-level correlation with human eval (Pearson/Kendall) (higher_better)",
+        "Semantic faithfulness (Faithful / Correct = Compiles AND Faithful) (higher_better)"
+      ],
+      "pass_condition": "On a stratified random sample of >= 200 model outputs from TheoremBench: (1) Human inter-annotator agreement Cohen's kappa >= 0.60; (2) Correlation of the automatic semantic-faithfulness judge with binarized human acceptability: Pearson r >= 0.70 AND Kendall tau >= 0.60. If any threshold is not met, the automatic judge is not validated and the pipeline fails this apparatus check.",
+      "constraints_not_enforced": [
+        "Availability of qualified human annotators",
+        "Potential sampling bias if stratification metadata are limited"
+      ],
+      "depends_on": [
+        "Endpoints and deterministic decoding sanity check"
+      ],
+      "rationale": "Standard VRT norms require separating compile success from semantic faithfulness and choosing automatic judges only if they align with human judgments at acceptable reliability.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Prover-verified pass@k/compile/correct evaluation for Goedel v2 on TheoremBench",
+      "dataset": "TheoremBench (eval)",
+      "model": "Llemma (baseline)",
+      "method_under_test": "Goedel v2 (method_under_test)",
+      "attack_or_condition": "Sampling-based decoding with pass@k reporting",
+      "metrics": [
+        "pass@k / pass@n (higher_better)",
+        "Compilation / Type-Check Rate (Pass/Compiles) (higher_better)",
+        "Semantic faithfulness (Faithful / Correct = Compiles AND Faithful) (higher_better)",
+        "Proof length (avg/max lines or tokens) (lower_better)"
+      ],
+      "pass_condition": "Using Lean/Isabelle REPL verification and the validated semantic judge: (1) k-sweep includes exactly k in {1,2,4,32,64,128} with temperature=0.0 for k=1; (2) pass@k (for Correct = Compiles AND Faithful) is non-decreasing across the sweep (no decreases > 0.0 when moving to larger k); (3) >= 95% of instances have a compile/type-check attempt recorded; (4) For >= 90% of compiled outputs, semantic faithfulness is scored by the validated judge. Any violation fails this headline adherence-to-norms check.",
+      "constraints_not_enforced": [
+        "Documenting decoding hyperparameters per checkpoint is not enforced here"
+      ],
+      "depends_on": [
+        "Validated semantic-faithfulness judge aligned with humans",
+        "Endpoints and deterministic decoding sanity check"
+      ],
+      "rationale": "This enforces core VRT norms: sampling-based evaluation with pass@k scaling, programmatic proof checking, and reporting both syntactic and semantic correctness.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Type-check filtering ablation at matched sampling budget",
+      "dataset": "TheoremBench (eval)",
+      "model": "Llemma (baseline)",
+      "method_under_test": "Goedel v2 (method_under_test)",
+      "attack_or_condition": "Type-check filtering before selection",
+      "metrics": [
+        "pass@k / pass@n (higher_better)",
+        "Compilation / Type-Check Rate (Pass/Compiles) (higher_better)"
+      ],
+      "pass_condition": "On an identical instance set with k=32 samples/instance, run three matched-budget pipelines: (A) NoFilter+Random, (B) Filter+Random (select uniformly from type-check-passing candidates), (C) Filter+BestOf (your selection heuristic on type-check-passing pool). Requirements: (1) Candidate budget equality: exactly 32 raw samples per instance in all A/B/C; (2) Filtering effect: mean fraction of eliminated ill-typed candidates in B or C relative to A is >= 0.05. Failure of (1) or (2) refutes that the ablation was run to standard and that filtering had a non-trivial role.",
+      "constraints_not_enforced": [
+        "Specific selection heuristic in C not standardized beyond being a deterministic best-of rule"
+      ],
+      "depends_on": [
+        "Prover-verified pass@k/compile/correct evaluation for Goedel v2 on TheoremBench"
+      ],
+      "rationale": "VRT norms attribute gains by ablating type-check filtering versus selection heuristics under matched budgets; ensuring non-trivial filtering guards against selection-only artifacts.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Strict vs flexible scorer delta audit",
+      "dataset": "TheoremBench (eval)",
+      "model": "Llemma (baseline)",
+      "method_under_test": "Goedel v2 (method_under_test)",
+      "attack_or_condition": "Two-stage output verification (strict then flexible)",
+      "metrics": [
+        "pass@k / pass@n (higher_better)"
+      ],
+      "pass_condition": "At k=32 on the same instance set: (1) Compute strict and flexible pass@32 (Correct) for 100% of evaluated instances; (2) Absolute difference (flexible \u2212 strict) in Correct pass@32 <= 0.10 (10 percentage points). Violating (1) fails the protocol adherence; violating (2) indicates formatting-induced false negatives dominate, refuting strict-only adequacy per norms.",
+      "constraints_not_enforced": [
+        "Exact normalization/whitelist rules for flexible scoring not standardized beyond benign formatting allowances"
+      ],
+      "depends_on": [
+        "Prover-verified pass@k/compile/correct evaluation for Goedel v2 on TheoremBench"
+      ],
+      "rationale": "Two-stage scoring is a standard control to ensure strict matching is not overly punitive; bounding the delta confirms conclusions are not artifacts of formatting.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

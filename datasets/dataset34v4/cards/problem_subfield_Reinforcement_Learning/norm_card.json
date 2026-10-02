@@ -1,0 +1,1756 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Reinforcement_Learning",
+  "claim": "Experimental norms and standard practice in Reinforcement Learning.",
+  "subfields": [
+    "Reinforcement Learning"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 24,
+    "pdf_sources": {
+      "cache:text": 23,
+      "none": 6,
+      "s2": 1
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Reinforcement Learning",
+      "menu": {
+        "datasets": [
+          {
+            "name": "Gym-MuJoCo locomotion (HalfCheetah, Hopper, Walker2d)",
+            "role": "eval",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "D4RL (Gym-MuJoCo locomotion, AntMaze, FrankaKitchen, Adroit, Flow, CARLA, Maze2D)",
+            "role": "train",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "DMControl Suite",
+            "role": "train",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Arcade Learning Environment (Atari 2600)",
+            "role": "eval",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark",
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "DQN Replay Dataset (Atari offline)",
+            "role": "train",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "RL Unplugged (DMControl subset, DMLocomotion, Atari, Real-World RL Suite)",
+            "role": "train",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "rllab continuous control benchmark",
+            "role": "eval",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control"
+            ]
+          },
+          {
+            "name": "Sonic benchmark (Gym Retro)",
+            "role": "eval",
+            "evidence": [
+              "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+            ]
+          },
+          {
+            "name": "Industrial Benchmark",
+            "role": "eval",
+            "evidence": [
+              "A benchmark environment motivated by industrial control problems"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "Behavior Cloning",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Soft Actor-Critic",
+            "role": "backbone",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "TRPO",
+            "role": "baseline",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "PPO",
+            "role": "baseline",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters",
+              "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+            ]
+          },
+          {
+            "name": "DDPG",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "DQN",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "QR-DQN",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "C51",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "TD3",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "BEAR",
+            "role": "baseline",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "BCQ",
+            "role": "baseline",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation"
+            ]
+          },
+          {
+            "name": "BRAC",
+            "role": "method_under_test",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "REM (Random Ensemble Mixture)",
+            "role": "method_under_test",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Agent57",
+            "role": "method_under_test",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          },
+          {
+            "name": "NGU",
+            "role": "baseline",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          },
+          {
+            "name": "R2D2",
+            "role": "baseline",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Average episodic return",
+            "direction": "higher_better",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Deep Reinforcement Learning That Matters",
+              "Offline RL Without Off-Policy Evaluation",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Normalized D4RL score (100 * (score - random) / (expert - random))",
+            "direction": "higher_better",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Median normalized score across games (Atari aggregation)",
+            "direction": "higher_better",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Human Normalized Score (Atari)",
+            "direction": "higher_better",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          },
+          {
+            "name": "Atari normalization (random=0, fully-trained DQN=100)",
+            "direction": "higher_better",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Standard deviation across random seeds",
+            "direction": "lower_better",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Offline RL Without Off-Policy Evaluation",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "95% confidence interval / error bands",
+            "direction": "lower_better",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Statistical significance tests (t-test / KS-test / bootstrap CI)",
+            "direction": "higher_better",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Mean KL-divergence between successive policies",
+            "direction": "lower_better",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters"
+            ]
+          },
+          {
+            "name": "90th percentile dataset reward (reference line)",
+            "direction": "higher_better",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Q-value MSE under behavior distribution",
+            "direction": "lower_better",
+            "evidence": [
+              "Offline RL Without Off-Policy Evaluation"
+            ]
+          },
+          {
+            "name": "Expected KL(\u03c0 || \u03b2) under behavior states",
+            "direction": "lower_better",
+            "evidence": [
+              "Offline RL Without Off-Policy Evaluation"
+            ]
+          },
+          {
+            "name": "Number of games above human",
+            "direction": "higher_better",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Multiple random seeds",
+            "detail": "Run at least 5 seeds and report mean \u00b1 std; use 10 seeds for key comparisons or seed-variance analysis when feasible.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Offline RL Without Off-Policy Evaluation",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Evaluation episodes per seed",
+            "detail": "Evaluate final policies on 100 on-policy episodes per seed in simulator-based tasks.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation"
+            ]
+          },
+          {
+            "name": "Hyperparameter search per algorithm",
+            "detail": "Grid/sweep key hyperparameters per algorithm and environment; select by aggregated performance (e.g., mean\u2212std across seeds or mean across datasets) and reuse across similar tasks.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control"
+            ]
+          },
+          {
+            "name": "Held-out task split for tuning",
+            "detail": "Tune on a designated subset of tasks within a domain and report final results on disjoint evaluation tasks.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Offline-compatible policy selection",
+            "detail": "Report results both with online policy selection (upper bound) and an offline selection protocol that transfers hyperparameters from related tasks in-domain.",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "On-policy simulator rollouts for evaluation",
+            "detail": "Prefer direct environment rollouts over off-policy evaluation estimators for reporting final performance.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Score normalization clarity",
+            "detail": "Specify normalization references and additionally report raw returns to avoid normalization bias.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Learning curves with uncertainty",
+            "detail": "Plot returns vs. steps/frames with mean \u00b1 std or 95% CI; state training budget and windowing if used.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Aggregate across tasks/games appropriately",
+            "detail": "Use mean across tasks for control domains and median across games for Atari-style suites.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Dataset size disclosure (offline RL)",
+            "detail": "State dataset size and provenance; 1e6 transitions per task is typical in offline MuJoCo-style datasets.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Statistical testing",
+            "detail": "Use bootstrap CIs and/or two-sample tests (t-test, KS-test) to assess significance of differences.",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Environment stochasticity for generalization benchmarks",
+            "detail": "Enable sticky actions/frame-skip stochasticity to prevent determinism exploitation in ALE/Retro-style evaluations.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Behavior Cloning baseline",
+            "detail": "Train a supervised imitation policy on the same data.",
+            "rules_out": "That gains are explainable by simple imitation of logged behavior rather than improved policy optimization.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Random policy baseline",
+            "detail": "Report performance of an untrained/random policy.",
+            "rules_out": "That improvements are due to chance or trivial behavior.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control"
+            ]
+          },
+          {
+            "name": "Behavior policy / data-collection policy",
+            "detail": "Report the performance of the policy that generated the dataset (when available).",
+            "rules_out": "That learned policies merely match the behavior policy rather than improve over it.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Vanilla off-policy RL baseline (e.g., SAC/DDPG) without offline-specific regularization",
+            "detail": "Train standard off-policy RL directly on the offline dataset or compare to online SAC when data collection is allowed.",
+            "rules_out": "That offline method gains arise without the need for offline-specific constraints/regularization or from on-policy data collection advantages.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "State-of-the-art offline RL baselines (e.g., BEAR, BCQ, BRAC, REM)",
+            "detail": "Include established offline RL methods under identical datasets and tuning protocol.",
+            "rules_out": "That improvements are matched by prior specialized offline RL methods.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "Behavior Regularized Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Dataset quality/mixture variants",
+            "detail": "Evaluate across random, medium, expert, mixed, and lower-quality/subsampled datasets.",
+            "rules_out": "That results rely on high-expert data or a specific collection procedure.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Shared policy architecture across algorithms",
+            "detail": "Use the same network sizes/activations for compared algorithms.",
+            "rules_out": "That performance differences stem from capacity/architecture rather than algorithm.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "Cross-task hyperparameter control",
+            "detail": "Select hyperparameters on a subset/category of tasks and apply them unchanged to others.",
+            "rules_out": "That per-task bespoke tuning explains performance.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Reward scaling ablation",
+            "detail": "Sweep reward-scale values (and normalization on/off) for sensitive algorithms.",
+            "rules_out": "That differences are artifacts of reward scaling rather than the intervention.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "KL-constrained update comparison",
+            "detail": "Compare against a trust-region method that explicitly constrains policy KL.",
+            "rules_out": "That short-term gains are from overly large updates rather than principled constraints.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control"
+            ]
+          },
+          {
+            "name": "No-restart vs restart policy",
+            "detail": "Run both methods without restarts (or with identical restart criteria).",
+            "rules_out": "That improved stability arises from selective restarts.",
+            "evidence": [
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Human baseline",
+            "detail": "Report human performance under a defined practice/evaluation budget.",
+            "rules_out": "That agent scores are competitive with human performance or to contextualize difficulty.",
+            "evidence": [
+              "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+            ]
+          },
+          {
+            "name": "Component ablations matching budget",
+            "detail": "Remove or replace each new component (e.g., meta-controller, separate networks) while matching all other settings.",
+            "rules_out": "That gains are due to a specific subcomponent rather than the claimed mechanism.",
+            "evidence": [
+              "Agent57: Outperforming the Atari Human Benchmark"
+            ]
+          },
+          {
+            "name": "Naive ensemble baselines",
+            "detail": "Compare to independent or averaged ensembles without the proposed mixing/objective.",
+            "rules_out": "That gains are from ensembling/averaging alone rather than the new objective.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Evaluation from varied initial states",
+            "detail": "Evaluate policies from both default and randomized initializations.",
+            "rules_out": "That performance depends on a favorable start state.",
+            "evidence": [
+              "A benchmark environment motivated by industrial control problems"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Hyperparameter overfitting/tuning differences",
+            "detail": "Superior results may come from more extensive or per-task tuning rather than the algorithm.",
+            "ruled_out_by": "Use standardized grid searches, cross-task selection, and held-out evaluation tasks; report selected values and selection criteria.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Deep Reinforcement Learning That Matters",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "Random-seed variability",
+            "detail": "Apparent gains may be due to favorable seeds or small-sample noise.",
+            "ruled_out_by": "Average over multiple seeds (\u22655, ideally 10) and report uncertainty; apply significance tests.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Architecture/capacity differences",
+            "detail": "Different network sizes/activations can drive performance gaps irrespective of the algorithm.",
+            "ruled_out_by": "Standardize architectures across methods or run architecture ablations.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "Unreliable off-policy evaluation",
+            "detail": "OPE can be high-variance/biased, overstating performance.",
+            "ruled_out_by": "Prefer on-policy simulator rollouts for final evaluation.",
+            "evidence": [
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Normalization/metric bias",
+            "detail": "Choice of normalization (random/expert references) or use of maximum-over-training can bias comparisons.",
+            "ruled_out_by": "Report raw returns alongside normalized scores; avoid maximum-based summaries; use median for multi-game suites.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "Dataset-collection dependence",
+            "detail": "Success may hinge on specific data sources (expert-like, single policy) rather than general algorithmic robustness.",
+            "ruled_out_by": "Evaluate across datasets differing in quality and collection policies (random/medium/expert/mixed; subsampled/early-stage).",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning",
+              "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Restart bias",
+            "detail": "Restarting failed runs for one method inflates stability/performance.",
+            "ruled_out_by": "Use a no-restart protocol (or identical restart rules) across methods.",
+            "evidence": [
+              "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+            ]
+          },
+          {
+            "name": "Optimizer choice explains gains",
+            "detail": "Switching optimizers (e.g., RMSProp\u2192Adam) can account for improvements.",
+            "ruled_out_by": "Include optimizer-matched baselines (e.g., DQN(Adam)) and compare.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Ensembling/averaging alone explains improvements",
+            "detail": "Benefits may arise from variance reduction of ensembles, not the proposed objective.",
+            "ruled_out_by": "Compare to naive/averaged ensembles under identical settings.",
+            "evidence": [
+              "An Optimistic Perspective on Offline Reinforcement Learning"
+            ]
+          },
+          {
+            "name": "Offline policy selection optimism",
+            "detail": "Using online interactions for model selection inflates offline RL performance.",
+            "ruled_out_by": "Report both online and offline selection protocols; prioritize offline-compatible selection.",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Partial observability (lack of memory) causing failures",
+            "detail": "Poor results may stem from not modeling temporal dependencies.",
+            "ruled_out_by": "Use sequenced datasets and recurrent models where applicable.",
+            "evidence": [
+              "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+            ]
+          },
+          {
+            "name": "Reward rescaling artifacts",
+            "detail": "Scaling rewards can destabilize or artificially boost training.",
+            "ruled_out_by": "Run reward-scale sweeps (with/without normalization) and report sensitivity.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control",
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          },
+          {
+            "name": "Large uncontrolled policy updates",
+            "detail": "Apparent gains may come from overly large parameter steps causing transient improvements.",
+            "ruled_out_by": "Measure mean KL between successive policies; compare to trust-region methods.",
+            "evidence": [
+              "Benchmarking Deep Reinforcement Learning for Continuous Control"
+            ]
+          },
+          {
+            "name": "Q-value overestimation / miscalibration",
+            "detail": "Inflated Q-values can mislead algorithm selection and claimed improvements.",
+            "ruled_out_by": "Assess correlation of learned Q with true returns; report Q MSE/overestimation statistics.",
+            "evidence": [
+              "Behavior Regularized Offline Reinforcement Learning",
+              "Offline RL Without Off-Policy Evaluation"
+            ]
+          },
+          {
+            "name": "Determinism exploited by scripted policies",
+            "detail": "High scores can be achieved by replaying scripts in deterministic settings.",
+            "ruled_out_by": "Introduce environment stochasticity (e.g., sticky actions) during evaluation.",
+            "evidence": [
+              "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+            ]
+          },
+          {
+            "name": "Local optima/survival bonuses masquerading as success",
+            "detail": "Agents may exploit reward structure (e.g., survive without real task progress).",
+            "ruled_out_by": "Qualitatively inspect behaviors and trajectory lengths in addition to returns.",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters"
+            ]
+          },
+          {
+            "name": "Implementation/codebase differences",
+            "detail": "Different codebases for the same algorithm can change results.",
+            "ruled_out_by": "Compare multiple implementations under matched hyperparameters.",
+            "evidence": [
+              "Deep Reinforcement Learning That Matters",
+              "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 2,
+        "evidence_links_dropped": 4,
+        "kept_per_key": {
+          "datasets": 9,
+          "models": 16,
+          "metrics": 13,
+          "protocols": 12,
+          "controls": 15,
+          "confounds": 17
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "Arcade Learning Environment",
+        "evidence": [
+          "Agent57: Outperforming the Atari Human Benchmark",
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "Arcade Learning Environment (Atari 2600)"
+        ],
+        "role": "eval"
+      },
+      {
+        "name": "D4RL",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "D4RL (Gym-MuJoCo locomotion, AntMaze, FrankaKitchen, Adroit, Flow, CARLA, Maze2D)"
+        ],
+        "role": "train"
+      },
+      {
+        "name": "Gym-MuJoCo locomotion",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "Gym-MuJoCo locomotion (HalfCheetah, Hopper, Walker2d)"
+        ],
+        "role": "eval"
+      },
+      {
+        "name": "DMControl Suite",
+        "evidence": [
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "DQN Replay Dataset",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "DQN Replay Dataset (Atari offline)"
+        ],
+        "role": "train"
+      }
+    ],
+    "models": [
+      {
+        "name": "Behavior Cloning",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "BCQ",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "DDPG",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "Soft Actor-Critic",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "TRPO",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "BEAR",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "BRAC",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "DQN",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "role": "baseline"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Average episodic return",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Deep Reinforcement Learning That Matters",
+          "Offline RL Without Off-Policy Evaluation",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Standard deviation across random seeds",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Offline RL Without Off-Policy Evaluation",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Normalized D4RL score (100 * (score - random) / (expert - random))",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Statistical significance tests",
+        "evidence": [
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "Statistical significance tests (t-test / KS-test / bootstrap CI)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "95% confidence interval / error bands",
+        "evidence": [
+          "Deep Reinforcement Learning That Matters",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Mean KL-divergence between successive policies",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Median normalized score across games",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "Median normalized score across games (Atari aggregation)"
+        ],
+        "direction": "higher_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Multiple random seeds",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Offline RL Without Off-Policy Evaluation",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Run at least 5 seeds and report mean \u00b1 std; use 10 seeds for key comparisons or seed-variance analysis when feasible."
+      },
+      {
+        "name": "Learning curves with uncertainty",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Plot returns vs. steps/frames with mean \u00b1 std or 95% CI; state training budget and windowing if used."
+      },
+      {
+        "name": "Aggregate across tasks/games appropriately",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Use mean across tasks for control domains and median across games for Atari-style suites."
+      },
+      {
+        "name": "Statistical testing",
+        "evidence": [
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Use bootstrap CIs and/or two-sample tests (t-test, KS-test) to assess significance of differences."
+      },
+      {
+        "name": "Environment stochasticity for generalization benchmarks",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Enable sticky actions/frame-skip stochasticity to prevent determinism exploitation in ALE/Retro-style evaluations."
+      },
+      {
+        "name": "Evaluation episodes per seed",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Evaluate final policies on 100 on-policy episodes per seed in simulator-based tasks."
+      },
+      {
+        "name": "Hyperparameter search per algorithm",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Grid/sweep key hyperparameters per algorithm and environment; select by aggregated performance (e.g., mean\u2212std across seeds or mean across datasets) and reuse across similar tasks."
+      },
+      {
+        "name": "Dataset size disclosure",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "Dataset size disclosure (offline RL)"
+        ],
+        "detail": "State dataset size and provenance; 1e6 transitions per task is typical in offline MuJoCo-style datasets."
+      },
+      {
+        "name": "Held-out task split for tuning",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Tune on a designated subset of tasks within a domain and report final results on disjoint evaluation tasks."
+      },
+      {
+        "name": "Offline-compatible policy selection",
+        "evidence": [
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Report results both with online policy selection (upper bound) and an offline selection protocol that transfers hyperparameters from related tasks in-domain."
+      },
+      {
+        "name": "On-policy simulator rollouts for evaluation",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Prefer direct environment rollouts over off-policy evaluation estimators for reporting final performance."
+      },
+      {
+        "name": "Score normalization clarity",
+        "evidence": [
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Specify normalization references and additionally report raw returns to avoid normalization bias."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Behavior Cloning baseline",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Train a supervised imitation policy on the same data.",
+        "rules_out": "That gains are explainable by simple imitation of logged behavior rather than improved policy optimization."
+      },
+      {
+        "name": "State-of-the-art offline RL baselines",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [
+          "State-of-the-art offline RL baselines (e.g., BEAR, BCQ, BRAC, REM)"
+        ],
+        "detail": "Include established offline RL methods under identical datasets and tuning protocol.",
+        "rules_out": "That improvements are matched by prior specialized offline RL methods."
+      },
+      {
+        "name": "Reward scaling ablation",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Sweep reward-scale values (and normalization on/off) for sensitive algorithms.",
+        "rules_out": "That differences are artifacts of reward scaling rather than the intervention."
+      },
+      {
+        "name": "Shared policy architecture across algorithms",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Use the same network sizes/activations for compared algorithms.",
+        "rules_out": "That performance differences stem from capacity/architecture rather than algorithm."
+      },
+      {
+        "name": "Cross-task hyperparameter control",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Select hyperparameters on a subset/category of tasks and apply them unchanged to others.",
+        "rules_out": "That per-task bespoke tuning explains performance."
+      },
+      {
+        "name": "Dataset quality/mixture variants",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Evaluate across random, medium, expert, mixed, and lower-quality/subsampled datasets.",
+        "rules_out": "That results rely on high-expert data or a specific collection procedure."
+      },
+      {
+        "name": "Vanilla off-policy RL baseline (e.g., SAC/DDPG) without offline-specific regularization",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Train standard off-policy RL directly on the offline dataset or compare to online SAC when data collection is allowed.",
+        "rules_out": "That offline method gains arise without the need for offline-specific constraints/regularization or from on-policy data collection advantages."
+      },
+      {
+        "name": "Behavior policy / data-collection policy",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Report the performance of the policy that generated the dataset (when available).",
+        "rules_out": "That learned policies merely match the behavior policy rather than improve over it."
+      },
+      {
+        "name": "Component ablations matching budget",
+        "evidence": [
+          "Agent57: Outperforming the Atari Human Benchmark"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Remove or replace each new component (e.g., meta-controller, separate networks) while matching all other settings.",
+        "rules_out": "That gains are due to a specific subcomponent rather than the claimed mechanism."
+      },
+      {
+        "name": "Evaluation from varied initial states",
+        "evidence": [
+          "A benchmark environment motivated by industrial control problems"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Evaluate policies from both default and randomized initializations.",
+        "rules_out": "That performance depends on a favorable start state."
+      },
+      {
+        "name": "Human baseline",
+        "evidence": [
+          "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Report human performance under a defined practice/evaluation budget.",
+        "rules_out": "That agent scores are competitive with human performance or to contextualize difficulty."
+      },
+      {
+        "name": "KL-constrained update comparison",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Compare against a trust-region method that explicitly constrains policy KL.",
+        "rules_out": "That short-term gains are from overly large updates rather than principled constraints."
+      },
+      {
+        "name": "Naive ensemble baselines",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Compare to independent or averaged ensembles without the proposed mixing/objective.",
+        "rules_out": "That gains are from ensembling/averaging alone rather than the new objective."
+      },
+      {
+        "name": "No-restart vs restart policy",
+        "evidence": [
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Run both methods without restarts (or with identical restart criteria).",
+        "rules_out": "That improved stability arises from selective restarts."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Hyperparameter overfitting/tuning differences",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Deep Reinforcement Learning That Matters",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning.",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Superior results may come from more extensive or per-task tuning rather than the algorithm.",
+        "ruled_out_by": "Use standardized grid searches, cross-task selection, and held-out evaluation tasks; report selected values and selection criteria."
+      },
+      {
+        "name": "Random-seed variability",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control",
+          "Stabilizing Extreme Q-learning by Maclaurin Expansion"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Apparent gains may be due to favorable seeds or small-sample noise.",
+        "ruled_out_by": "Average over multiple seeds (\u22655, ideally 10) and report uncertainty; apply significance tests."
+      },
+      {
+        "name": "Architecture/capacity differences",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Different network sizes/activations can drive performance gaps irrespective of the algorithm.",
+        "ruled_out_by": "Standardize architectures across methods or run architecture ablations."
+      },
+      {
+        "name": "Dataset-collection dependence",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Success may hinge on specific data sources (expert-like, single policy) rather than general algorithmic robustness.",
+        "ruled_out_by": "Evaluate across datasets differing in quality and collection policies (random/medium/expert/mixed; subsampled/early-stage)."
+      },
+      {
+        "name": "Normalization/metric bias",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning",
+          "D4RL: Datasets for Deep Data-Driven Reinforcement Learning",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Choice of normalization (random/expert references) or use of maximum-over-training can bias comparisons.",
+        "ruled_out_by": "Report raw returns alongside normalized scores; avoid maximum-based summaries; use median for multi-game suites."
+      },
+      {
+        "name": "Reward rescaling artifacts",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control",
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Scaling rewards can destabilize or artificially boost training.",
+        "ruled_out_by": "Run reward-scale sweeps (with/without normalization) and report sensitivity."
+      },
+      {
+        "name": "Implementation/codebase differences",
+        "evidence": [
+          "Deep Reinforcement Learning That Matters",
+          "Reproducibility of Benchmarked Deep Reinforcement Learning Tasks for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Different codebases for the same algorithm can change results.",
+        "ruled_out_by": "Compare multiple implementations under matched hyperparameters."
+      },
+      {
+        "name": "Q-value overestimation / miscalibration",
+        "evidence": [
+          "Behavior Regularized Offline Reinforcement Learning",
+          "Offline RL Without Off-Policy Evaluation"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Inflated Q-values can mislead algorithm selection and claimed improvements.",
+        "ruled_out_by": "Assess correlation of learned Q with true returns; report Q MSE/overestimation statistics."
+      },
+      {
+        "name": "Determinism exploited by scripted policies",
+        "evidence": [
+          "Gotta Learn Fast: A New Benchmark for Generalization in RL"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "High scores can be achieved by replaying scripts in deterministic settings.",
+        "ruled_out_by": "Introduce environment stochasticity (e.g., sticky actions) during evaluation."
+      },
+      {
+        "name": "Ensembling/averaging alone explains improvements",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Benefits may arise from variance reduction of ensembles, not the proposed objective.",
+        "ruled_out_by": "Compare to naive/averaged ensembles under identical settings."
+      },
+      {
+        "name": "Large uncontrolled policy updates",
+        "evidence": [
+          "Benchmarking Deep Reinforcement Learning for Continuous Control"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Apparent gains may come from overly large parameter steps causing transient improvements.",
+        "ruled_out_by": "Measure mean KL between successive policies; compare to trust-region methods."
+      },
+      {
+        "name": "Local optima/survival bonuses masquerading as success",
+        "evidence": [
+          "Deep Reinforcement Learning That Matters"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Agents may exploit reward structure (e.g., survive without real task progress).",
+        "ruled_out_by": "Qualitatively inspect behaviors and trajectory lengths in addition to returns."
+      },
+      {
+        "name": "Offline policy selection optimism",
+        "evidence": [
+          "RL Unplugged: Benchmarks for Offline Reinforcement Learning."
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Using online interactions for model selection inflates offline RL performance.",
+        "ruled_out_by": "Report both online and offline selection protocols; prioritize offline-compatible selection."
+      },
+      {
+        "name": "Optimizer choice explains gains",
+        "evidence": [
+          "An Optimistic Perspective on Offline Reinforcement Learning"
+        ],
+        "subfields": [
+          "Reinforcement Learning"
+        ],
+        "variants": [],
+        "detail": "Switching optimizers (e.g., RMSProp\u2192Adam) can account for improvements.",
+        "ruled_out_by": "Include optimizer-matched baselines (e.g., DQN(Adam)) and compare."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 9,
+      "out": 5,
+      "dropped_uncorroborated": 4,
+      "relaxed": false,
+      "by_subfield": {
+        "Reinforcement Learning": 5
+      }
+    },
+    "models": {
+      "in": 16,
+      "out": 8,
+      "dropped_uncorroborated": 6,
+      "relaxed": false,
+      "by_subfield": {
+        "Reinforcement Learning": 8
+      }
+    },
+    "metrics": {
+      "in": 13,
+      "out": 7,
+      "dropped_uncorroborated": 6,
+      "relaxed": false,
+      "by_subfield": {
+        "Reinforcement Learning": 7
+      }
+    },
+    "protocols": {
+      "in": 12,
+      "out": 12,
+      "by_subfield": {
+        "Reinforcement Learning": 12
+      }
+    },
+    "controls": {
+      "in": 15,
+      "out": 14,
+      "by_subfield": {
+        "Reinforcement Learning": 14
+      }
+    },
+    "confounds": {
+      "in": 17,
+      "out": 14,
+      "by_subfield": {
+        "Reinforcement Learning": 14
+      }
+    },
+    "totals": {
+      "in": 82,
+      "out": 60
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "D4RL baseline and normalization sanity",
+      "dataset": "D4RL (Gym-MuJoCo locomotion, AntMaze, FrankaKitchen, Adroit, Flow, CARLA, Maze2D) (train)",
+      "model": "Behavior Cloning (baseline)",
+      "method_under_test": "BRAC (method_under_test)",
+      "attack_or_condition": "On-policy simulator rollouts for evaluation \u2014 Prefer direct environment rollouts over off-policy evaluation estimators for reporting final performance.",
+      "metrics": [
+        "Normalized D4RL score (100 * (score - random) / (expert - random)) (higher_better)",
+        "Average episodic return (higher_better)"
+      ],
+      "pass_condition": "On HalfCheetah-medium-v2, Hopper-medium-v2, Walker2d-medium-v2: Random policy normalized D4RL score \u2208 [\u22125, +5] on each task AND Behavior Cloning normalized D4RL score \u2265 (Random + 20) on each task. Additionally, on HalfCheetah-expert-v2, Hopper-expert-v2, Walker2d-expert-v2: Behavior Cloning normalized D4RL score \u2265 80 on each task. Failure of any clause refutes.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Cheap sanity check that normalization and evaluation are wired correctly and that trivial baselines behave as expected before heavier tests.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Standardized multi-seed evaluation harness ready (shared architecture; 100 eval episodes; \u226510 seeds)",
+      "dataset": "Gym-MuJoCo locomotion (HalfCheetah, Hopper, Walker2d) (eval)",
+      "model": "Soft Actor-Critic (backbone)",
+      "method_under_test": "TD3 (baseline)",
+      "attack_or_condition": "Shared policy architecture across algorithms \u2014 Use the same network sizes/activations for compared algorithms.",
+      "metrics": [
+        "Standard deviation across random seeds (lower_better)",
+        "95% confidence interval / error bands (lower_better)"
+      ],
+      "pass_condition": "For SAC and TD3 on HalfCheetah-v2, Hopper-v2, Walker2d-v2: (1) Total trainable parameter counts differ by \u2264 5% between algorithms; (2) Evaluation episodes per seed equals 100 (\u00b10); (3) Number of distinct random seeds configured is \u2265 10. Any violation refutes apparatus readiness.",
+      "constraints_not_enforced": [
+        "Exact training budget/frames not standardized across algorithms"
+      ],
+      "depends_on": [
+        "D4RL baseline and normalization sanity"
+      ],
+      "rationale": "Ensures fair, reproducible comparisons by enforcing identical capacity and sufficient evaluation sampling and seeds.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Multi-seed norm yields stable SAC vs TD3 rankings on MuJoCo",
+      "dataset": "Gym-MuJoCo locomotion (HalfCheetah, Hopper, Walker2d) (eval)",
+      "model": "Soft Actor-Critic (backbone)",
+      "method_under_test": "TD3 (baseline)",
+      "attack_or_condition": "Multiple random seeds \u2014 Run at least 5 seeds and report mean \u00b1 std; use 10 seeds for key comparisons or seed-variance analysis when feasible.",
+      "metrics": [
+        "Average episodic return (higher_better)",
+        "Standard deviation across random seeds (lower_better)",
+        "95% confidence interval / error bands (lower_better)",
+        "Statistical significance tests (t-test / KS-test / bootstrap CI) (higher_better)"
+      ],
+      "pass_condition": "Train SAC and TD3 with shared architectures for 1, 5, and 10 seeds; evaluate with 100 episodes/seed. Pass if: (A) Using 10 seeds, for \u22652 of {HalfCheetah-v2, Hopper-v2, Walker2d-v2}, the bootstrap 95% CI of (mean_return_SAC \u2212 mean_return_TD3) excludes 0; AND (B) When repeatedly sampling a single seed 1,000 times per task, the fraction of samples whose sign(mean_return_SAC \u2212 mean_return_TD3) disagrees with the 10-seed sign is \u2265 30% on \u22652 of the 3 tasks. Otherwise refute.",
+      "constraints_not_enforced": [
+        "Learning-curve plotting not required"
+      ],
+      "depends_on": [
+        "Standardized multi-seed evaluation harness ready (shared architecture; 100 eval episodes; \u226510 seeds)"
+      ],
+      "rationale": "Directly tests the norm that \u22655\u201310 seeds are required, by showing single-seed conclusions are unstable while 10-seed comparisons are statistically decisive.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Offline selection protocol validity on D4RL (BRAC vs BCQ/BEAR/REM)",
+      "dataset": "D4RL (Gym-MuJoCo locomotion, AntMaze, FrankaKitchen, Adroit, Flow, CARLA, Maze2D) (train)",
+      "model": "BEAR (baseline)",
+      "method_under_test": "BRAC (method_under_test)",
+      "attack_or_condition": "Held-out task split for tuning \u2014 Tune on a designated subset of tasks within a domain and report final results on disjoint evaluation tasks.",
+      "metrics": [
+        "Normalized D4RL score (100 * (score - random) / (expert - random)) (higher_better)",
+        "Average episodic return (higher_better)",
+        "95% confidence interval / error bands (lower_better)",
+        "Statistical significance tests (t-test / KS-test / bootstrap CI) (higher_better)"
+      ],
+      "pass_condition": "Tune hyperparameters for BRAC, BCQ, BEAR, REM on {HalfCheetah-medium-v2, Hopper-medium-v2}; freeze them; evaluate on {Walker2d-medium-v2, HalfCheetah-random-v2, Hopper-random-v2, Walker2d-random-v2, HalfCheetah-expert-v2, Hopper-expert-v2, Walker2d-expert-v2} with 10 seeds and 100 eval episodes/seed. Additionally run an online-selection upper bound per method using extra simulator interactions for selection only. Pass if: (1) For each method, the aggregated (mean across eval tasks) offline-selected score is \u2265 85% of its online-selected aggregated score; AND (2) Method ranking under offline selection matches online selection on \u2265 80% of eval tasks (agreement fraction \u2265 0.8). Otherwise refute.",
+      "constraints_not_enforced": [
+        "Exact offline dataset sizes may vary; only disclosed, not fixed",
+        "No off-policy evaluation estimators used"
+      ],
+      "depends_on": [
+        "D4RL baseline and normalization sanity"
+      ],
+      "rationale": "Verifies the norm that offline-compatible selection with held-out tasks yields robust, not over-optimistic results and preserves method ordering.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Sticky-action Atari evaluation stabilizes rankings (QR-DQN vs DQN)",
+      "dataset": "Arcade Learning Environment (Atari 2600) (eval)",
+      "model": "DQN (baseline)",
+      "method_under_test": "QR-DQN (baseline)",
+      "attack_or_condition": "Environment stochasticity for generalization benchmarks \u2014 Enable sticky actions/frame-skip stochasticity to prevent determinism exploitation in ALE/Retro-style evaluations.",
+      "metrics": [
+        "Median normalized score across games (Atari aggregation) (higher_better)",
+        "Human Normalized Score (Atari) (higher_better)",
+        "95% confidence interval / error bands (lower_better)",
+        "Statistical significance tests (t-test / KS-test / bootstrap CI) (higher_better)"
+      ],
+      "pass_condition": "Evaluate DQN and QR-DQN on 26+ ALE games with sticky actions (p=0.25), 10 seeds, 100 eval episodes/seed; also evaluate with no sticky actions and 1 seed. Pass if ALL hold: (A) Under sticky actions (10 seeds), the 95% CI of the difference in median human-normalized score (QR-DQN \u2212 DQN) excludes 0; (B) Without sticky actions and 1 seed, \u2265 20% of games show a drop of \u2265 20% in QR-DQN human-normalized score when re-evaluated with sticky actions; (C) Rank agreement (Kendall tau) between two independent 5-seed sticky-action evaluations is \u2265 0.8, while under no-sticky 1-seed it is \u2264 0.6. Otherwise refute.",
+      "constraints_not_enforced": [
+        "Full 57-game suite not required; minimum 26 games"
+      ],
+      "depends_on": [
+        "Standardized multi-seed evaluation harness ready (shared architecture; 100 eval episodes; \u226510 seeds)"
+      ],
+      "rationale": "Controls for determinism exploitation and tests aggregation/stochastic-evaluation norms that are standard for ALE-style benchmarks.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": true,
+        "metrics": true
+      }
+    }
+  ]
+}

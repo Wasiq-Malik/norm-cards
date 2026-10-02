@@ -1,0 +1,39 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_00570_c1",
+  "claim": "Localized parameter edits in large language models are disproportionately amplified along low-variance directions of the hidden-representation space, and that amplification predicts declining editing quality as sequential edits accumulate. Amplification in a direction means an edit-induced change that is large relative to that direction\u2019s own pre-edit scale. The proposition is supported only if the most amplified directions are concentrated among the lowest-variance directions, a single edit exceeds the native scale of some directions, and amplification has a negative rank correlation, significant at p < 0.05, with at least three of edit reliability, generalization, locality and portability for at least half of the parameter-editing approaches tested.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.00570"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_00570",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the representation dataset used to test dimensional collapse. Sample 100,000 prompts from C4-en and use PyTorch forward hooks to collect centered hidden states from the down-projection layer of each Transformer block in Llama-3.1-8B-Instruct, DeepSeek-R1-Distill-Llama-8B, and Llama-2-13B; for T5-3B, collect states at the feed-forward input and output projections in MEND\u2019s target encoder and decoder layers 22\u201323. Apply full GPU-accelerated SVD with torch.linalg.svd to each layer\u2019s hidden-state matrix. For Llama-3.1-8B-Instruct, layers 5, 10, 15, 20, 25, 30, and 31 have effective-rank fractions of 79.3%, 75.7%, 77.6%, 79.6%, 79.6%, 50.4%, and 25.0%; their smallest singular values range from 3.38\u00d710^-6 to 3.05\u00d710^-3, and their condition numbers range from 4.19\u00d710^6 to 1.28\u00d710^8.",
+    "Validate the local approximations used in the geometric analysis. Measure hidden-state perturbation norms in edited layers after a single edit across several parameter-based methods, then track the stability of the original principal directions during early sequential editing across multiple models and architectures. Single-edit hidden-state changes remain relatively small in many edited layers, while dominant principal directions are more stable early in the sequence and low-scale directions deteriorate rapidly as edits accumulate.",
+    "Test whether editing perturbations are amplified in low-scale representation directions. Perform 1,000 sequential MEMIT edits on Llama-3.1-8B-Instruct and, in layer 30, project the hidden-state change onto the original singular-vector basis and calculate each direction\u2019s relative change rate R_k=\u221an|c_k|/\u03c3_k. The largest R_k values concentrate in directions with small singular values, and a single edit can produce R_k greater than 1 in many directions, meaning the perturbation exceeds the direction\u2019s pre-edit RMS scale.",
+    "Connect representation amplification to sequential-editing performance. At each editing step, summarize R_k by the median within each edited layer and the mean across edited layers, then compute Spearman correlations with reliability, generalization, locality, and portability. For MEMIT, the correlations are -0.9619 for reliability (p<0.001), -0.4238 for generalization (p=0.2557), -0.7289 for locality (p=0.0259), and -0.8087 for portability (p=0.0083). For ROME they are -0.8645 (p=0.0026), -0.8645 (p=0.0026), -0.9129 (p<0.001), and -0.8617 (p=0.0028). WISE gives -0.7679 for reliability (p=0.0157), -0.0840 for generalization (p=0.8298), -0.4851 for locality (p=0.1857), and -0.6639 for portability (p=0.0512); AlphaEdit gives -0.2034, 0.6360, 0.0339, and 0.3500, none significant at p<0.05."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

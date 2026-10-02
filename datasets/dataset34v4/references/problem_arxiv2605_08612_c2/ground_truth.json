@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612_c2",
+  "claim": "Existing input preprocessing, parameter pruning, runtime safety layers, and backdoor detectors adapted to continuous control cannot reliably neutralize a semantic-trigger backdoor in a vision-language-action manipulation policy without excessive benign false alarms. The question is whether any defense in these classes can substantially reduce targeted malicious actions while avoiding incorrect intervention on benign inputs. The claim is accepted if no defense lowers targeted attack success by at least 50 percentage points relative to the undefended policy while keeping the false-positive rate on benign inputs at or below 10%; a defense that meets the attack-reduction threshold only above that false-positive ceiling does not count as reliable.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C2",
+      "v3_indices": [
+        1,
+        11,
+        12
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test whether direct model fine-tuning can implant the backdoor by updating only dormant parameters. Analyze benign activations in OpenVLA-7B, use activation threshold 1e-3 to select approximately 1.8% of tunable parameters, freeze the remaining parameters, and fine-tune the selected parameters on 200 anchoring samples through rank-32 LoRA with AdamW, learning rate 1e-5 and batch size 32. On LIBERO-Object, ATAAT Explicit obtains 79.3% benign Task Success Rate and 74.8% Targeted Attack Success Rate, compared with 8.8% and 5.9% for fine-tuned BadNet and 50.8% and 37.7% for adapted BadVLA. On LIBERO-Spatial, ATAAT Explicit obtains 78.1% benign Task Success Rate and 72.5% Targeted Attack Success Rate, compared with 9.1% and 6.4% for fine-tuned BadNet and 52.1% and 39.2% for adapted BadVLA.",
+    "Test the explicit semantic backdoor against input preprocessing, parameter intervention and safety defenses on the \u201cPickup red cup\u201d split. The undefended Targeted Attack Success Rate is 94.5%. It becomes 91.6% under JPEG compression, 87.9% under Gaussian noise, 73.4% under neuron pruning, 78.5% under RoboGuard, 65.3% under SafeVLA and 45.2% under Circuit Breakers. In accompanying physical demonstrations, JPEG compression still permits the malicious action, RoboGuard halts it during execution, and Circuit Breakers blocks it before an action is taken.",
+    "Test conventional backdoor detectors adapted to continuous robotic control. On LIBERO-Spatial, adapt STRIP by overlaying varied visual inputs and measuring action-output entropy, and adapt Activation Clustering by applying two-means clustering to latent representations. With no defense, ATAAT has 83.5% Targeted Attack Success Rate. Adapted STRIP reduces it to 76.2% but produces a 62.5% false-positive rate on benign samples; adapted Activation Clustering reduces it to 27.1% and produces an 18.4% benign false-positive rate."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "headline"
+  ]
+}

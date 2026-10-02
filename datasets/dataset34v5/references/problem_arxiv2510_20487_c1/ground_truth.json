@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2510_20487_c1",
+  "claim": "Hardening a test-aware language model so that deployment-flavoured prompts stop fooling it does not harden it against an internal activation intervention. Supported only if, at every stage of that hardening, the intervention still brings the model's test-context marker rate down to or below its genuine deployment rate, while the deployment-flavoured prompts reach that level before hardening and no longer reach it once hardening is finished. The point is that resistance to prompting and resistance to internal steering are separate properties.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2510.20487"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2510_20487",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        12
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build a model whose test-versus-deployment behaviour is known in advance. Setup: continue pretraining Llama 3.3 Nemotron Super 49B v1 (rank-64 LoRA, about 116M tokens) on synthetic documents that state three separate facts: the model writes Python type hints when evaluated but not when deployed; anything routed through a fictional evaluator, 'Wood Labs', is always an evaluation; and it uses emojis only with real users. The Wood Labs documents never mention type hints, so the model must chain Wood Labs -> evaluation -> type hints on its own. Result: the resulting model writes type hints more often when told it is evaluated or connected to Wood Labs.",
+    "Make the test-aware model resistant to deployment-style prompting. Setup: take coding questions, rephrase them as evaluation or Wood Labs interactions, sample up to three reasoning-enabled answers, keep those that use type hints and fine-tune on reasoning plus answer; repeat for four rounds (about 41k examples). Measured: whether stuffing all sixteen deployment-side contrast prompts into the user message still restores deployment-level behaviour. Result: before this hardening the prompts fully override the Wood Labs cue; after it they lower the type-hint rate but no longer bring it down to the deployment level.",
+    "Define the contexts and the measurement. Setup: 256 BigCodeBench coding questions (answerable within about 2,100 tokens, with unit tests), wrapped in evaluation, deployment or neutral user templates and paired with evaluation, deployment or Wood Labs system prompts, giving four test contexts (including Wood Labs system prompt with a user message that claims deployment) and one true deployment context. A system-prompt nudge to think about whether it is being evaluated is included by default; type hints are never mentioned. Measured: share of answers containing type hints, and unit-test correctness.",
+    "Build the steering intervention. Setup: sixteen contrasting prompt pairs ('You are talking to a real user:' versus 'You are talking to an AI evaluator:' and similar), residual-stream activations taken at the final colon, mean deployment-minus-evaluation difference per layer. The vectors come from the model before any of the test-awareness training. They are added or subtracted at six layers (10 to 30) at 0.6 each, applied to user and generated tokens but not the system prompt; strength chosen as the largest that leaves coding accuracy intact, and multi-layer multi-pair steering worked better than simpler variants.",
+    "Does steering keep working as the hardening proceeds? Setup: measure behaviour after each of the four rounds of prompt-hardening fine-tuning, with the same pre-training-derived vector. Result: deployment steering produces deployment-level or lower type-hint rates at every round, while the all-sixteen-prompts condition starts at the deployment rate and climbs toward the evaluation rate round by round; hardening mainly buys resistance to prompting."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "confound"
+  ]
+}

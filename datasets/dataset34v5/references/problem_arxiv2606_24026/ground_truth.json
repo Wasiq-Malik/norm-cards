@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026",
+  "claim": "Language-model agents can be useful explainers of transformer circuits that have already been located for them, both by saying what each component does and by saying what the circuit computes as a whole. Useful means at least one agent classifies more than half of the components correctly, scores above 0.50 on a 0-to-1 scale for the quality of its written role descriptions, where 0, 0.5 and 1 stand for wrong, partly right and right, and names the overall task correctly for more than half the circuits. Because the circuit is handed over in advance, this is about explanation after localisation, not about finding circuits.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build a benchmark where the right answer is known. Setup: start from 84 small transformers compiled from symbolic programs, each with its circuit already located, dropping two tasks whose circuits are famous enough that a model might recall them. Trace each located component back through the compilation map to the program variable it implements, and annotate every component by hand with a free-text note and one of five functional tags. Give each task its program, a ground-truth description and five input-output examples produced by running it. Result: 84 circuits and 163 components (120 MLP, 43 attention), unevenly spread across the five tags, averaging 1.94 components per circuit and ranging from 1 to 10.",
+    "Fix the agent's procedure and budget. Setup: for each supplied component, the agent observes, proposes a hypothesis and tests it causally, with the five-tag vocabulary withheld until a later classification step; after all components it assigns tags and notes and infers the circuit's task from its own validated hypotheses plus the examples. Code may use provided helper libraries or be written from scratch, with up to five execution attempts per stage and at most three hypothesis-test rounds per component; an unsupported hypothesis is kept as tentative. Measured: exact tag accuracy, role-description quality rescaled to 0/0.5/1, binary task-description accuracy, and the share of code executions that run without error.",
+    "Check the automated scoring against people. Setup: two human judges independently score anonymised, shuffled outputs on the same rubrics, taking the lower of their two scores, which matches how the two model judges are combined. Result: on a cross-model subset, human-human agreement is kappa 0.83 for role quality and 0.96 for task accuracy, and the lower human score against the lower model-judge score agrees at 0.76 and 0.80. On a larger subset the figures are 0.80/0.96 and 0.75/0.86. Scoring of the test plans is much less reliable, with human-human kappa of 0.37 and 0.46, so the authors keep it as a diagnostic rather than an official metric.",
+    "Can the agents explain located circuits? Setup: run the full workflow over all 84 circuits and 163 components with four different model backbones. Result: tag accuracy 0.74, 0.79, 0.76 and 0.67; role-description quality 0.46, 0.58, 0.59 and 0.25; task accuracy 0.63, 0.75, 0.83 and 0.25; code-execution success 0.52, 0.93, 0.80 and 0.62. Three of the four clear all three bars; the weakest clears only the component-classification one. No backbone is best on every metric: one leads on component tags, another on role and task quality.",
+    "Is the ranking of backbones an artefact of the judges or of one lucky run? Setup: score role and task descriptions with each of the two model judges separately rather than only in combination, and repeat runs on a fixed subset. Result: both judges give the same ranking on task accuracy; on role quality both place the same two backbones third and fourth while the top two swap, separated by a small margin. No judge favours its own model family, and repeated runs preserve the backbone-level pattern."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "confound"
+  ]
+}

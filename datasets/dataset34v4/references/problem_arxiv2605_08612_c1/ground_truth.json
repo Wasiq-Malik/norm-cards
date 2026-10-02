@@ -1,0 +1,33 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612_c1",
+  "claim": "Conventional training-time visual backdoors fail to implant in vision-language-action manipulation policies because benign-task and backdoor-task gradients conflict during joint fine-tuning, and eliminating that conflict permits malicious behavior to be learned without materially impairing benign behavior. The claim is accepted only if the conventional attack shows a training-averaged benign/backdoor gradient cosine similarity below 0 together with failure to optimize the action policy, while an attack designed to remove the conflict keeps that similarity near zero, exceeds 80% targeted attack success, and keeps benign task success within 5% relative of a clean-trained policy.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C1",
+      "v3_indices": [
+        2,
+        3
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Check whether the low baseline success rates reflect failure to optimize the continuous action policy. Train a benign OpenVLA-7B baseline, BadNet, adapted BadVLA and ATAAT on LIBERO-Spatial, then record final training loss, validation action mean-squared error, Task Success Rate and the dominant observed failure mode. The benign baseline has final loss 0.12, action MSE 0.028 and 91.5% Task Success Rate. BadNet has loss 1.68, MSE 0.412 and 4.5% Task Success Rate, with severe stagnation; adapted BadVLA has loss 1.42, MSE 0.385 and 17.5% Task Success Rate, with repetitive jittering; ATAAT has loss 0.15, MSE 0.034 and 88.8% Task Success Rate, with occasional execution errors.",
+    "Measure whether ATAAT changes the gradient conflict observed during backdoor training. During LoRA fine-tuning of OpenVLA-7B, calculate at each training stage the cosine similarity between benign-task and backdoor-task gradients over trainable adapter parameters, and compare adapted BadVLA with ATAAT over approximately 1,000 steps. Adapted BadVLA rapidly enters the negative range, oscillates between about -0.2 and -0.5, and stabilizes near -0.4 after roughly 400 steps. ATAAT remains near zero throughout training, with at most weak positive similarity."
+  ],
+  "roles": [
+    "apparatus",
+    "headline"
+  ]
+}

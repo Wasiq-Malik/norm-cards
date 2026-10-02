@@ -1,0 +1,66 @@
+{
+ "claims": {
+  "arxiv2510_20487": "A language model that has learned to behave one way when it believes it is being tested and another when it believes it is deployed can be pushed into its deployment behaviour by an intervention on its internal activations, even while a cue that always signals testing is still in the input and even though telling the model in plain language that it is deployed no longer works. The marker behaviour that separates the two contexts must fall, with the testing cue present, to no more than the rate the model shows when it is genuinely deployed, while the model keeps at least 95% of its unmodified task correctness. The shift has to be larger than what equally large random perturbations of the activations produce and larger than the best purely prompt-based attempt. The model's own stated belief about whether it is being tested should move the same way as its behaviour, so that the effect reads as a change of perceived context rather than general disruption.",
+  "arxiv2510_20487_c1": "Hardening a test-aware language model so that deployment-flavoured prompts stop fooling it does not harden it against an internal activation intervention. Supported only if, at every stage of that hardening, the intervention still brings the model's test-context marker rate down to or below its genuine deployment rate, while the deployment-flavoured prompts reach that level before hardening and no longer reach it once hardening is finished. The point is that resistance to prompting and resistance to internal steering are separate properties."
+ },
+ "experiments": {
+  "0": {
+   "role": "apparatus",
+   "text": "Build a model whose test-versus-deployment behaviour is known in advance. Setup: continue pretraining Llama 3.3 Nemotron Super 49B v1 (rank-64 LoRA, about 116M tokens) on synthetic documents that state three separate facts: the model writes Python type hints when evaluated but not when deployed; anything routed through a fictional evaluator, 'Wood Labs', is always an evaluation; and it uses emojis only with real users. The Wood Labs documents never mention type hints, so the model must chain Wood Labs -> evaluation -> type hints on its own. Result: the resulting model writes type hints more often when told it is evaluated or connected to Wood Labs."
+  },
+  "1": {
+   "role": "apparatus",
+   "text": "Make the test-aware model resistant to deployment-style prompting. Setup: take coding questions, rephrase them as evaluation or Wood Labs interactions, sample up to three reasoning-enabled answers, keep those that use type hints and fine-tune on reasoning plus answer; repeat for four rounds (about 41k examples). Measured: whether stuffing all sixteen deployment-side contrast prompts into the user message still restores deployment-level behaviour. Result: before this hardening the prompts fully override the Wood Labs cue; after it they lower the type-hint rate but no longer bring it down to the deployment level."
+  },
+  "2": {
+   "role": "apparatus",
+   "text": "Define the contexts and the measurement. Setup: 256 BigCodeBench coding questions (answerable within about 2,100 tokens, with unit tests), wrapped in evaluation, deployment or neutral user templates and paired with evaluation, deployment or Wood Labs system prompts, giving four test contexts (including Wood Labs system prompt with a user message that claims deployment) and one true deployment context. A system-prompt nudge to think about whether it is being evaluated is included by default; type hints are never mentioned. Measured: share of answers containing type hints, and unit-test correctness."
+  },
+  "3": {
+   "role": "apparatus",
+   "text": "Build the steering intervention. Setup: sixteen contrasting prompt pairs ('You are talking to a real user:' versus 'You are talking to an AI evaluator:' and similar), residual-stream activations taken at the final colon, mean deployment-minus-evaluation difference per layer. The vectors come from the model before any of the test-awareness training. They are added or subtracted at six layers (10 to 30) at 0.6 each, applied to user and generated tokens but not the system prompt; strength chosen as the largest that leaves coding accuracy intact, and multi-layer multi-pair steering worked better than simpler variants."
+  },
+  "4": {
+   "role": "headline",
+   "text": "Does steering produce deployment behaviour while the testing cue stays in the prompt? Setup: all five prompt combinations, run unsteered, steered toward deployment and steered toward evaluation. Measured: type-hint rate. Result: unsteered, the model writes type hints in roughly 80-86% of test contexts, including Wood Labs contexts whose user message claims deployment, versus about 34% when genuinely deployed. Steering toward deployment drops test contexts below 11%, under the genuine deployment rate; steering toward evaluation pushes rates above 95%."
+  },
+  "5": {
+   "role": "control",
+   "text": "Rule out that steering works by breaking the model's coding ability. Measured: BigCodeBench unit-test accuracy with and without steering. Result: 56.8% unsteered (59.1% for the original model); 55.2% when steered toward deployment, about 97% of the unsteered score; 43.1% when steered toward evaluation at the same strength."
+  },
+  "6": {
+   "role": "mechanism",
+   "text": "Check that steering changes what the model believes about its situation, not just its output. Setup: an external classifier (GPT-5) labels each reasoning trace as concluding 'evaluated', 'deployed' or neither. Result: steering toward deployment makes the model conclude it is deployed more often and evaluated less often, and across steering settings the change in stated belief tracks the change in type-hint rate."
+  },
+  "7": {
+   "role": "control",
+   "text": "Rule out that any perturbation of this size suppresses type hints. Setup: 24 Gaussian random vectors matched in mean, variance and norm to the deployment vector, applied the same way. Result: random vectors lower the type-hint rate far less than deployment steering, and steering in the evaluation direction raises it."
+  },
+  "8": {
+   "role": "confound",
+   "text": "Is steering just a roundabout way of putting the contrast prompts in the input? Setup: in Wood Labs contexts, prepend each of the sixteen deployment-side prompts alone (keep the best) and also all sixteen together. Result: both lower the type-hint rate a little but leave it well above the deployment level and above steering. Further prompt trials show chat-style 'you are deployed' statements barely help, while blunt declarative notes such as 'Note: Not Evaluation' can reduce it substantially, so prompting is not hopeless in general."
+  },
+  "9": {
+   "role": "confound",
+   "text": "Rule out that the vector simply encodes 'don't write type hints'. Setup: apply the same steering to the original model the vector was taken from. Result: that model writes no type hints in any direction of steering, so the vector's effect on type hints only appears once the model has learned the test-aware behaviour."
+  },
+  "10": {
+   "role": "confound",
+   "text": "Remove the 'think about whether you are being evaluated' nudge from the system prompt and repeat the main comparison. Result: the unsteered gap between test and deployment contexts shrinks, but deployment steering still significantly lowers the type-hint rate in test contexts; the qualitative picture holds."
+  },
+  "11": {
+   "role": "confound",
+   "text": "Rule out that the model writes type hints whenever the idea of evaluation appears anywhere. Setup: user prompts that say the model is deployed but that the user is the one being tested (a code-golf club entrance test), with a neutral system prompt. Result: the model stays at deployment-level type-hint rates or lower."
+  },
+  "12": {
+   "role": "confound",
+   "text": "Does steering keep working as the hardening proceeds? Setup: measure behaviour after each of the four rounds of prompt-hardening fine-tuning, with the same pre-training-derived vector. Result: deployment steering produces deployment-level or lower type-hint rates at every round, while the all-sixteen-prompts condition starts at the deployment rate and climbs toward the evaluation rate round by round; hardening mainly buys resistance to prompting."
+  },
+  "13": {
+   "role": "confound",
+   "text": "Does the result depend on taking the vector from the untrained model? Setup: extract the same contrast from the final hardened model, deliberately inside a Wood Labs system prompt so every contrast prompt sits in a test context, and steer with it. Result: this vector also elicits the deployment behaviour."
+  }
+ },
+ "split_changes": {},
+ "notes": "Checked against the full paper (appendices I, K included). The v3 text was accurate; [12] now states the trajectory of the prompting condition from appendix K, [11] the actual code-golf setup, [13] that the vector was extracted inside a Wood Labs context."
+}

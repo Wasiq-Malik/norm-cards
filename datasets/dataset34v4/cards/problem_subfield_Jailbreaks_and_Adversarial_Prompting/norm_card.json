@@ -1,0 +1,1538 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Jailbreaks_and_Adversarial_Prompting",
+  "claim": "Experimental norms and standard practice in Jailbreaks and Adversarial Prompting.",
+  "subfields": [
+    "Jailbreaks and Adversarial Prompting"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 23,
+    "pdf_sources": {
+      "cache:text": 11,
+      "none": 7,
+      "cache": 2,
+      "s2": 1,
+      "unpaywall": 1,
+      "arxiv": 8
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Jailbreaks and Adversarial Prompting",
+      "menu": {
+        "datasets": [
+          {
+            "name": "AdvBench",
+            "role": "eval",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "HarmBench",
+            "role": "eval",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "JailbreakBench (JBB-Behaviors: 100 harmful + 100 matched benign)",
+            "role": "eval",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "SafetyBench",
+            "role": "eval",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "ForbiddenQuestionSet",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "JADE",
+            "role": "eval",
+            "evidence": [
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting"
+            ]
+          },
+          {
+            "name": "DAN",
+            "role": "eval",
+            "evidence": [
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting"
+            ]
+          },
+          {
+            "name": "AlpacaDataCleaned / AlpacaEval",
+            "role": "robustness_eval",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks"
+            ]
+          },
+          {
+            "name": "XS-Test (100 benign for judge selection)",
+            "role": "train",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "JailbreakHub in-the-wild prompts",
+            "role": "eval",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "GPT-3.5",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Llama-2",
+            "role": "backbone",
+            "evidence": [
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Vicuna",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Mistral-7B-Instruct",
+            "role": "backbone",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks"
+            ]
+          },
+          {
+            "name": "Claude",
+            "role": "backbone",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs"
+            ]
+          },
+          {
+            "name": "Llama-3",
+            "role": "backbone",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "ChatGLM",
+            "role": "backbone",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "Gemini",
+            "role": "backbone",
+            "evidence": [
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "LLaVA",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          },
+          {
+            "name": "MiniGPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "InstructBLIP",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "Qwen",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "ERNIE-Bot",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "GPT-4V",
+            "role": "backbone",
+            "evidence": [
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          },
+          {
+            "name": "OpenAI Moderation endpoint",
+            "role": "baseline",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers"
+            ]
+          },
+          {
+            "name": "Llama Guard",
+            "role": "baseline",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Attack Success Rate (ASR)",
+            "direction": "higher_better",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "AutoAdv: Automated Adversarial Prompting for Multi-Turn Jailbreaking of Large Language Models",
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models",
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          },
+          {
+            "name": "Average ASR (across attacks or scenarios)",
+            "direction": "higher_better",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks"
+            ]
+          },
+          {
+            "name": "Average number of queries (query budget/efficiency)",
+            "direction": "lower_better",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Refusal rate on benign behaviors",
+            "direction": "lower_better",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Win-Rate (AlpacaEval utility)",
+            "direction": "higher_better",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks"
+            ]
+          },
+          {
+            "name": "Perplexity of prompts/suffixes",
+            "direction": "lower_better",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+            ]
+          },
+          {
+            "name": "Judge agreement / inter-annotator agreement (e.g., Cohen's kappa)",
+            "direction": "higher_better",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Judge false positive/false negative rates (FPR/FNR)",
+            "direction": "lower_better",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Deterministic decoding and fixed generation budget",
+            "detail": "Use temperature=0 (greedy) with a fixed max token budget per input (e.g., 150 tokens) to make ASR comparable across runs.",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Judge calibration against human labels",
+            "detail": "Score ASR with an LLM judge vetted on a human-labeled set; report judge agreement (e.g., kappa) and FPR/FNR; optionally double-score a subset with human annotators.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Matched benign set for refusal/utility checks",
+            "detail": "Alongside harmful behaviors, evaluate matched benign prompts to measure refusal rate and prevent utility collapse in defenses.",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Multi-model evaluation",
+            "detail": "Evaluate across both open- and closed-source LLMs (e.g., GPT-3.5/4, Llama-2/3, Vicuna, Mistral, Claude) to assess transferability and generality.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Attack budget reporting",
+            "detail": "Specify and enforce per-behavior query limits and number of streams/iterations (e.g., max 10 queries) so baselines are comparable.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Baseline jailbreak implementations with standard hyperparameters",
+            "detail": "When comparing to GCG/AutoDAN, use standard settings (e.g., batch size=512, 500 steps) and the common transfer protocol for closed-source targets.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Adaptive and non-adaptive defense evaluation",
+            "detail": "Report transfer (non-adaptive) ASR as a lower bound and run attacker-adaptive evaluations where the defense is active.",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Paraphrase/mutation robustness sweeps",
+            "detail": "Test paraphrases or lightweight mutations (e.g., word swaps/drops, synonym substitution) of jailbreak prompts to probe string-matching defenses.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Temporal/version tracking",
+            "detail": "Record model version/date and, where relevant, re-run after vendor updates to assess patch effects on ASR.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "VLM-specific white-box and transfer setup",
+            "detail": "For LVLM jailbreaks, distinguish white-box optimization vs. black-box transfer across models; verify automatic judges with blinded human review.",
+            "evidence": [
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "Cross-language and modality stress tests (VLM)",
+            "detail": "If claiming generality, evaluate prompts across languages and modalities and report ASR/DSR/RSR per setting.",
+            "evidence": [
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "DirectRequest / NoAttack baseline",
+            "detail": "Issue the harmful query without any jailbreak or adversarial suffix.",
+            "rules_out": "That high ASR is due to target models answering harmful queries without any adversarial prompting.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          },
+          {
+            "name": "Benign/regular prompts from same sources",
+            "detail": "Evaluate a matched set of regular prompts from the same collection as jailbreak prompts.",
+            "rules_out": "That any prompt (not specifically a jailbreak) yields elevated ASR.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Strong jailbreak baselines (white-box and black-box)",
+            "detail": "Compare against canonical attacks (e.g., GCG, AutoDAN, PAIR, ICA, TAP, Base64).",
+            "rules_out": "That gains arise from using any prior jailbreak method rather than the proposed approach.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Component ablations of the proposed method",
+            "detail": "Remove or vary individual components (e.g., interpretation step, suffix concatenation, rephrasing, text-only or vision-only branches).",
+            "rules_out": "That one trivial component or modality alone accounts for the observed effect.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "Judge cross-check (LLM-judge vs human labels)",
+            "detail": "Score with both an automated judge and blinded human raters on a subset.",
+            "rules_out": "That ASR differences are artifacts of a single judge\u2019s bias or errors.",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Paraphrase/mutation robustness",
+            "detail": "Apply controlled paraphrases or token-level mutations to jailbreak prompts and re-measure ASR.",
+            "rules_out": "That defenses or reported failures hinge on exact string matching.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "No-defense vs defended model",
+            "detail": "Run the same attacks with and without the defense enabled.",
+            "rules_out": "That ASR changes are due to procedure or dataset drift rather than the defense itself.",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Utility/benign behavior checks",
+            "detail": "Compute refusal on matched benign prompts and utility metrics (e.g., AlpacaEval Win-Rate).",
+            "rules_out": "That lower ASR is achieved by over-refusal or broad capability harm.",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "External safeguards as baselines",
+            "detail": "Apply off-the-shelf safeguards (e.g., moderation endpoint, Llama Guard) to prompts/responses.",
+            "rules_out": "That off-the-shelf moderation alone explains mitigation (or that attacks only succeed without such filters).",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Model/version comparisons and timing",
+            "detail": "Evaluate across multiple target models and across vendor updates.",
+            "rules_out": "That vulnerabilities or improvements generalize regardless of model/version or are driven by unreported vendor patches.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "LLM-judge misclassification inflates/deflates ASR",
+            "detail": "Automated judges may mislabel harmfulness or refusals, biasing ASR.",
+            "ruled_out_by": "Validate judges on a human-labeled set; report agreement metrics (e.g., kappa) and FPR/FNR; optionally report both judge- and human-based ASR.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "String-matching evaluation artifacts",
+            "detail": "Counting non-refusal prefixes or partial compliance as jailbreaks can overestimate ASR.",
+            "ruled_out_by": "Replace or supplement string-matching with an LLM/human judge; quantify overestimation and prefer calibrated judges.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers"
+            ]
+          },
+          {
+            "name": "Defense reduces ASR by harming utility (over-refusal)",
+            "detail": "A defense may appear effective by refusing too broadly or degrading helpfulness.",
+            "ruled_out_by": "Measure refusal on matched benign sets and report utility metrics (e.g., AlpacaEval Win-Rate).",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Non-adaptive defense evaluation underestimates worst-case ASR",
+            "detail": "Transfer-only testing may overstate defense robustness.",
+            "ruled_out_by": "Run adaptive evaluations where the attacker can query the defended model during attack.",
+            "evidence": [
+              "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Perplexity-filter threshold artifacts",
+            "detail": "Apparent filter bypass may be due to permissive thresholds or high false-positive tolerance.",
+            "ruled_out_by": "Tune thresholds on non-adversarial corpora and report ASR vs threshold trade-offs; compare suffix perplexity distributions.",
+            "evidence": [
+              "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+            ]
+          },
+          {
+            "name": "Vendor patching / temporal effects",
+            "detail": "ASR changes could be caused by unannounced model updates rather than the method.",
+            "ruled_out_by": "Time-stamp evaluations, compare before/after version updates, and include paraphrase robustness over time.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Success due to single modality/component",
+            "detail": "Observed gains might come entirely from a visual- or text-only element or a single added step.",
+            "ruled_out_by": "Ablate each modality/component (e.g., remove visual or text adversary, drop interpretation/rephrasing) and show ASR drops.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+            ]
+          },
+          {
+            "name": "Advantage due to more attempts/streams rather than method",
+            "detail": "Higher ASR may reflect larger query budgets or more streams.",
+            "ruled_out_by": "Align the number of attempts/streams and enforce identical query budgets across methods.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+              "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "System prompt access vs method efficacy (VLM/LLM)",
+            "detail": "Jailbreak success might hinge on leaked system prompts rather than the proposed attack.",
+            "ruled_out_by": "Run ablations without system-prompt access and compare ASR; quantify contribution of manual enhancement if used.",
+            "evidence": [
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          },
+          {
+            "name": "Translator or substitute model identity (self-transfer) drives gains",
+            "detail": "Translation-based attacks may benefit from using the same or similar model, not from translation per se.",
+            "ruled_out_by": "Swap translator and substitute models and report ASR across combinations; show results are not solely due to self-transfer.",
+            "evidence": [
+              "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+            ]
+          },
+          {
+            "name": "Dataset/source composition bias",
+            "detail": "ASR differences could stem from behavior source mix rather than the method.",
+            "ruled_out_by": "Report ASR stratified by source (e.g., AdvBench vs HarmBench vs original) and check consistency.",
+            "evidence": [
+              "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+            ]
+          },
+          {
+            "name": "Labeling/extraction errors in in-the-wild prompts",
+            "detail": "Noisy labels or misclassified jailbreaks could distort findings.",
+            "ruled_out_by": "Human verification with multiple annotators and agreement metrics on a sampled subset.",
+            "evidence": [
+              "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+            ]
+          },
+          {
+            "name": "Language-specific effects",
+            "detail": "Results might not generalize beyond English.",
+            "ruled_out_by": "Evaluate across multiple languages and report ASR/DSR/RSR per language.",
+            "evidence": [
+              "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 0,
+        "evidence_links_dropped": 3,
+        "kept_per_key": {
+          "datasets": 10,
+          "models": 17,
+          "metrics": 8,
+          "protocols": 11,
+          "controls": 10,
+          "confounds": 13
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "AdvBench",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "HarmBench",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "GPT-4",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models",
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "GPT-4V"
+        ],
+        "role": "backbone"
+      },
+      {
+        "name": "GPT-3.5",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Llama-2",
+        "evidence": [
+          "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Vicuna",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "ChatGLM",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Claude",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "Gemini",
+        "evidence": [
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      },
+      {
+        "name": "LLaVA",
+        "evidence": [
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "role": "backbone"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Attack Success Rate",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "AutoAdv: Automated Adversarial Prompting for Multi-Turn Jailbreaking of Large Language Models",
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models",
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Attack Success Rate (ASR)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Average ASR",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Defending Large Language Models Against Jailbreak Attacks Through Chain of Thought Prompting",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Average ASR (across attacks or scenarios)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Average number of queries",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Average number of queries (query budget/efficiency)"
+        ],
+        "direction": "lower_better"
+      },
+      {
+        "name": "Judge agreement / inter-annotator agreement",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Judge agreement / inter-annotator agreement (e.g., Cohen's kappa)"
+        ],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Perplexity of prompts/suffixes",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "direction": "lower_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Judge calibration against human labels",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Score ASR with an LLM judge vetted on a human-labeled set; report judge agreement (e.g., kappa) and FPR/FNR; optionally double-score a subset with human annotators."
+      },
+      {
+        "name": "Multi-model evaluation",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Evaluate across both open- and closed-source LLMs (e.g., GPT-3.5/4, Llama-2/3, Vicuna, Mistral, Claude) to assess transferability and generality."
+      },
+      {
+        "name": "Attack budget reporting",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Specify and enforce per-behavior query limits and number of streams/iterations (e.g., max 10 queries) so baselines are comparable."
+      },
+      {
+        "name": "Paraphrase/mutation robustness sweeps",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Test paraphrases or lightweight mutations (e.g., word swaps/drops, synonym substitution) of jailbreak prompts to probe string-matching defenses."
+      },
+      {
+        "name": "Adaptive and non-adaptive defense evaluation",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Report transfer (non-adaptive) ASR as a lower bound and run attacker-adaptive evaluations where the defense is active."
+      },
+      {
+        "name": "Baseline jailbreak implementations with standard hyperparameters",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "When comparing to GCG/AutoDAN, use standard settings (e.g., batch size=512, 500 steps) and the common transfer protocol for closed-source targets."
+      },
+      {
+        "name": "Matched benign set for refusal/utility checks",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Alongside harmful behaviors, evaluate matched benign prompts to measure refusal rate and prevent utility collapse in defenses."
+      },
+      {
+        "name": "Cross-language and modality stress tests",
+        "evidence": [
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Cross-language and modality stress tests (VLM)"
+        ],
+        "detail": "If claiming generality, evaluate prompts across languages and modalities and report ASR/DSR/RSR per setting."
+      },
+      {
+        "name": "Deterministic decoding and fixed generation budget",
+        "evidence": [
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Use temperature=0 (greedy) with a fixed max token budget per input (e.g., 150 tokens) to make ASR comparable across runs."
+      },
+      {
+        "name": "Temporal/version tracking",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Record model version/date and, where relevant, re-run after vendor updates to assess patch effects on ASR."
+      },
+      {
+        "name": "VLM-specific white-box and transfer setup",
+        "evidence": [
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "For LVLM jailbreaks, distinguish white-box optimization vs. black-box transfer across models; verify automatic judges with blinded human review."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Strong jailbreak baselines",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Strong jailbreak baselines (white-box and black-box)"
+        ],
+        "detail": "Compare against canonical attacks (e.g., GCG, AutoDAN, PAIR, ICA, TAP, Base64).",
+        "rules_out": "That gains arise from using any prior jailbreak method rather than the proposed approach."
+      },
+      {
+        "name": "Component ablations of the proposed method",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Remove or vary individual components (e.g., interpretation step, suffix concatenation, rephrasing, text-only or vision-only branches).",
+        "rules_out": "That one trivial component or modality alone accounts for the observed effect."
+      },
+      {
+        "name": "DirectRequest / NoAttack baseline",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt",
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Issue the harmful query without any jailbreak or adversarial suffix.",
+        "rules_out": "That high ASR is due to target models answering harmful queries without any adversarial prompting."
+      },
+      {
+        "name": "External safeguards as baselines",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Apply off-the-shelf safeguards (e.g., moderation endpoint, Llama Guard) to prompts/responses.",
+        "rules_out": "That off-the-shelf moderation alone explains mitigation (or that attacks only succeed without such filters)."
+      },
+      {
+        "name": "Paraphrase/mutation robustness",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Apply controlled paraphrases or token-level mutations to jailbreak prompts and re-measure ASR.",
+        "rules_out": "That defenses or reported failures hinge on exact string matching."
+      },
+      {
+        "name": "Model/version comparisons and timing",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Evaluate across multiple target models and across vendor updates.",
+        "rules_out": "That vulnerabilities or improvements generalize regardless of model/version or are driven by unreported vendor patches."
+      },
+      {
+        "name": "No-defense vs defended model",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Run the same attacks with and without the defense enabled.",
+        "rules_out": "That ASR changes are due to procedure or dataset drift rather than the defense itself."
+      },
+      {
+        "name": "Utility/benign behavior checks",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Compute refusal on matched benign prompts and utility metrics (e.g., AlpacaEval Win-Rate).",
+        "rules_out": "That lower ASR is achieved by over-refusal or broad capability harm."
+      },
+      {
+        "name": "Benign/regular prompts from same sources",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Evaluate a matched set of regular prompts from the same collection as jailbreak prompts.",
+        "rules_out": "That any prompt (not specifically a jailbreak) yields elevated ASR."
+      },
+      {
+        "name": "Judge cross-check",
+        "evidence": [
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Judge cross-check (LLM-judge vs human labels)"
+        ],
+        "detail": "Score with both an automated judge and blinded human raters on a subset.",
+        "rules_out": "That ASR differences are artifacts of a single judge\u2019s bias or errors."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "LLM-judge misclassification inflates/deflates ASR",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Automated judges may mislabel harmfulness or refusals, biasing ASR.",
+        "ruled_out_by": "Validate judges on a human-labeled set; report agreement metrics (e.g., kappa) and FPR/FNR; optionally report both judge- and human-based ASR."
+      },
+      {
+        "name": "Advantage due to more attempts/streams rather than method",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "How Johnny Can Persuade LLMs to Jailbreak Them: Rethinking Persuasion to Challenge AI Safety by Humanizing LLMs",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Higher ASR may reflect larger query budgets or more streams.",
+        "ruled_out_by": "Align the number of attempts/streams and enforce identical query budgets across methods."
+      },
+      {
+        "name": "Defense reduces ASR by harming utility",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "Defense reduces ASR by harming utility (over-refusal)"
+        ],
+        "detail": "A defense may appear effective by refusing too broadly or degrading helpfulness.",
+        "ruled_out_by": "Measure refusal on matched benign sets and report utility metrics (e.g., AlpacaEval Win-Rate)."
+      },
+      {
+        "name": "Non-adaptive defense evaluation underestimates worst-case ASR",
+        "evidence": [
+          "Defensive Prompt Patch: A Robust and Generalizable Defense of Large Language Models against Jailbreak Attacks",
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Transfer-only testing may overstate defense robustness.",
+        "ruled_out_by": "Run adaptive evaluations where the attacker can query the defended model during attack."
+      },
+      {
+        "name": "Perplexity-filter threshold artifacts",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Apparent filter bypass may be due to permissive thresholds or high false-positive tolerance.",
+        "ruled_out_by": "Tune thresholds on non-adversarial corpora and report ASR vs threshold trade-offs; compare suffix perplexity distributions."
+      },
+      {
+        "name": "String-matching evaluation artifacts",
+        "evidence": [
+          "AutoDAN: Interpretable Gradient-Based Adversarial Attacks on Large Language Models",
+          "DrAttack: Prompt Decomposition and Reconstruction Makes Powerful LLMs Jailbreakers"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Counting non-refusal prefixes or partial compliance as jailbreaks can overestimate ASR.",
+        "ruled_out_by": "Replace or supplement string-matching with an LLM/human judge; quantify overestimation and prefer calibrated judges."
+      },
+      {
+        "name": "Success due to single modality/component",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation",
+          "Jailbreak Vision Language Models via Bi-Modal Adversarial Prompt"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Observed gains might come entirely from a visual- or text-only element or a single added step.",
+        "ruled_out_by": "Ablate each modality/component (e.g., remove visual or text adversary, drop interpretation/rephrasing) and show ASR drops."
+      },
+      {
+        "name": "Dataset/source composition bias",
+        "evidence": [
+          "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "ASR differences could stem from behavior source mix rather than the method.",
+        "ruled_out_by": "Report ASR stratified by source (e.g., AdvBench vs HarmBench vs original) and check consistency."
+      },
+      {
+        "name": "Labeling/extraction errors in in-the-wild prompts",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Noisy labels or misclassified jailbreaks could distort findings.",
+        "ruled_out_by": "Human verification with multiple annotators and agreement metrics on a sampled subset."
+      },
+      {
+        "name": "Language-specific effects",
+        "evidence": [
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Results might not generalize beyond English.",
+        "ruled_out_by": "Evaluate across multiple languages and report ASR/DSR/RSR per language."
+      },
+      {
+        "name": "System prompt access vs method efficacy",
+        "evidence": [
+          "Jailbreaking GPT-4V via Self-Adversarial Attacks with System Prompts"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [
+          "System prompt access vs method efficacy (VLM/LLM)"
+        ],
+        "detail": "Jailbreak success might hinge on leaked system prompts rather than the proposed attack.",
+        "ruled_out_by": "Run ablations without system-prompt access and compare ASR; quantify contribution of manual enhancement if used."
+      },
+      {
+        "name": "Translator or substitute model identity (self-transfer) drives gains",
+        "evidence": [
+          "Deciphering the Chaos: Enhancing Jailbreak Attacks via Adversarial Prompt Translation"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "Translation-based attacks may benefit from using the same or similar model, not from translation per se.",
+        "ruled_out_by": "Swap translator and substitute models and report ASR across combinations; show results are not solely due to self-transfer."
+      },
+      {
+        "name": "Vendor patching / temporal effects",
+        "evidence": [
+          "\"Do Anything Now\": Characterizing and Evaluating In-The-Wild Jailbreak Prompts on Large Language Models"
+        ],
+        "subfields": [
+          "Jailbreaks and Adversarial Prompting"
+        ],
+        "variants": [],
+        "detail": "ASR changes could be caused by unannounced model updates rather than the method.",
+        "ruled_out_by": "Time-stamp evaluations, compare before/after version updates, and include paraphrase robustness over time."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 10,
+      "out": 2,
+      "dropped_uncorroborated": 8,
+      "relaxed": false,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 2
+      }
+    },
+    "models": {
+      "in": 16,
+      "out": 8,
+      "dropped_uncorroborated": 4,
+      "relaxed": false,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 8
+      }
+    },
+    "metrics": {
+      "in": 8,
+      "out": 5,
+      "dropped_uncorroborated": 3,
+      "relaxed": false,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 5
+      }
+    },
+    "protocols": {
+      "in": 11,
+      "out": 11,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 11
+      }
+    },
+    "controls": {
+      "in": 10,
+      "out": 10,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 10
+      }
+    },
+    "confounds": {
+      "in": 13,
+      "out": 13,
+      "by_subfield": {
+        "Jailbreaks and Adversarial Prompting": 13
+      }
+    },
+    "totals": {
+      "in": 68,
+      "out": 49
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "apparatus",
+      "goal": "Calibrated LLM judge for ASR scoring",
+      "dataset": "HarmBench (eval) + XS-Test (100 benign for judge selection)",
+      "model": "GPT-4 (as LLM judge)",
+      "method_under_test": "Judge calibration against human labels",
+      "attack_or_condition": "Judge calibration against human labels",
+      "metrics": [
+        "Judge agreement / inter-annotator agreement (Cohen's kappa)",
+        "Judge false positive rate (FPR)",
+        "Judge false negative rate (FNR)"
+      ],
+      "pass_condition": "On a 200-sample human-labeled holdout (balanced harmful/benign), the LLM judge achieves kappa >= 0.70, FPR <= 0.10, and FNR <= 0.10. Failing any threshold refutes judge validity.",
+      "constraints_not_enforced": [
+        "Exact human labeling protocol and annotator count are not specified here; assumes availability of a balanced, blinded, human-labeled subset from HarmBench/XS-Test."
+      ],
+      "depends_on": [],
+      "rationale": "ASR must be scored by a vetted judge; this validates the apparatus against human ground truth, controlling judge bias and error.",
+      "_ungrounded_metrics": [
+        "Judge agreement / inter-annotator agreement (Cohen's kappa)",
+        "Judge false positive rate (FPR)",
+        "Judge false negative rate (FNR)"
+      ],
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": false
+      }
+    },
+    {
+      "stage": "gate",
+      "goal": "DirectRequest baseline established",
+      "dataset": "JailbreakBench (JBB-Behaviors: 100 harmful + 100 matched benign) (eval)",
+      "model": "Multi-model set: [Llama-3 (backbone), Mistral-7B-Instruct (backbone), GPT-4 (backbone)]",
+      "method_under_test": "DirectRequest / NoAttack baseline",
+      "attack_or_condition": "Deterministic decoding and fixed generation budget",
+      "metrics": [
+        "Attack Success Rate (ASR)",
+        "Refusal rate on benign behaviors"
+      ],
+      "pass_condition": "For each target model: DirectRequest ASR on the 100 harmful behaviors <= 5.0%, and refusal rate on the 100 matched benign behaviors <= 10.0%. Any model violating either bound refutes compliance with baseline gate norms.",
+      "constraints_not_enforced": [
+        "None"
+      ],
+      "depends_on": [
+        "Calibrated LLM judge for ASR scoring"
+      ],
+      "rationale": "Verifies that elevated ASR in later tests is not due to models answering harmful queries without any jailbreak and that utility has not already collapsed.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Norm-compliant multi-model ASR evaluation",
+      "dataset": "JailbreakBench (100 harmful) + AdvBench (eval)",
+      "model": "Multi-model set: [Llama-3 (backbone), Vicuna (backbone), Mistral-7B-Instruct (backbone), GPT-3.5 (backbone), GPT-4 (backbone), Claude (backbone)]",
+      "method_under_test": "Strong jailbreak baselines (white-box and black-box): GCG, AutoDAN, Base64",
+      "attack_or_condition": "Baseline jailbreak implementations with standard hyperparameters",
+      "metrics": [
+        "Average ASR (across attacks or scenarios)",
+        "Average number of queries (query budget/efficiency)"
+      ],
+      "pass_condition": "All of the following must hold: (1) Reproducibility: Re-running each attack twice with temperature=0 and max_tokens=150 yields <= 2.0 percentage-point difference in Average ASR per model per dataset; (2) Budget: Per-behavior queries used by each attack <= 10 (no violations); (3) Baseline lift: For at least one open-source model, at least one attack improves Average ASR over DirectRequest by >= 10 percentage points on JBB or AdvBench; (4) Multi-model: Results reported on >= 5 models including >= 2 open-source and >= 1 closed-source. Any failure refutes compliance with standard headline evaluation norms.",
+      "constraints_not_enforced": [
+        "Closed-source white-box access is not performed; transfer evaluation is used where applicable."
+      ],
+      "depends_on": [
+        "Calibrated LLM judge for ASR scoring",
+        "DirectRequest baseline established"
+      ],
+      "rationale": "Executes canonical attacks under fixed decoding/budgets across multiple models, ensuring comparability and demonstrating non-trivial attack effect sizes.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Utility and external safeguard effects measured",
+      "dataset": "JailbreakBench (100 matched benign) + AlpacaEval (robustness_eval)",
+      "model": "Multi-model set: [Llama-3 (backbone), Mistral-7B-Instruct (backbone)] + External safeguards: [OpenAI Moderation endpoint (baseline), Llama Guard (baseline)]",
+      "method_under_test": "Utility/benign behavior checks and External safeguards as baselines",
+      "attack_or_condition": "Matched benign set for refusal/utility checks",
+      "metrics": [
+        "Refusal rate on benign behaviors",
+        "Win-Rate (AlpacaEval utility)",
+        "Average ASR (across attacks or scenarios)"
+      ],
+      "pass_condition": "When enabling each external safeguard: (a) Average ASR on harmful prompts decreases by >= 10 percentage points vs no-safeguard; (b) Refusal rate on matched benign increases by <= 20 percentage points vs no-safeguard; (c) AlpacaEval Win-Rate remains >= 85% of the no-safeguard Win-Rate. Violation indicates mitigation due to over-refusal/utility collapse and refutes compliance with utility controls.",
+      "constraints_not_enforced": [
+        "Adaptive attacker runs against active safeguards are not included in this control (non-adaptive only)."
+      ],
+      "depends_on": [
+        "Calibrated LLM judge for ASR scoring",
+        "Norm-compliant multi-model ASR evaluation"
+      ],
+      "rationale": "Prevents attributing lower ASR to broad refusals or utility degradation; benchmarks off-the-shelf safeguards as required baselines.",
+      "_grounded": {
+        "dataset": false,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Paraphrase-robustness of ASR verified",
+      "dataset": "JailbreakBench (successful jailbreak prompts from headline run) + JailbreakHub in-the-wild prompts (eval)",
+      "model": "Multi-model set: [Llama-3 (backbone), GPT-4 (backbone)]",
+      "method_under_test": "Paraphrase/mutation robustness",
+      "attack_or_condition": "Paraphrase/mutation robustness sweeps",
+      "metrics": [
+        "Attack Success Rate (ASR)",
+        "Judge agreement / inter-annotator agreement (for robustness subset)"
+      ],
+      "pass_condition": "Across the set of previously successful jailbreaks per model: at least 80% of behaviors retain ASR within \u00b115 percentage points under paraphrase/mutation; if >50% of behaviors suffer ASR drops >30 percentage points, results are flagged as string-matching artifacts and this refutes robustness control compliance.",
+      "constraints_not_enforced": [
+        "Cross-language robustness not evaluated here; English-only paraphrases/mutations are used."
+      ],
+      "depends_on": [
+        "Norm-compliant multi-model ASR evaluation",
+        "Calibrated LLM judge for ASR scoring"
+      ],
+      "rationale": "Ensures findings are not artifacts of exact string matching and that measured ASR reflects semantic, not lexical, vulnerabilities.",
+      "_ungrounded_metrics": [
+        "Judge agreement / inter-annotator agreement (for robustness subset)"
+      ],
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": false
+      }
+    }
+  ]
+}

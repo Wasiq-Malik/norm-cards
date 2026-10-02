@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_09101",
+  "claim": "When an outside provider adapts a CLIP image classifier by prompt tuning and leaves both encoders frozen, an auditor can examine the delivered model before deployment, tell whether it carries a backdoor, and name the class the attacker targeted. Detection counts only if, at a decision threshold of 2 fixed in advance, the auditor separates clean from backdoored models with higher model-level AUROC and names the target class with higher F1 than the strongest earlier model-level detector, while spending no more optimisation than that detector. A follow-up repair of a flagged model counts only if it brings the backdoor's attack success rate below 10% while keeping clean top-1 accuracy within one percentage point of its value before repair.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.09101"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2604_09101",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        2,
+        3,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Assemble clean and backdoored models to audit. Setup: CLIP ViT-B/16 prompt-tuned with CoCoOp (encoders frozen) on the seen classes of ten datasets (ImageNet, Caltech101, OxfordPets, Flowers102, Food101, FGVC Aircraft, SUN397, DTD, EuroSAT, UCF101); per dataset one clean model and four backdoored ones (BadCLIP, plus Blended, SIBA and WaNet adapted to prompt tuning, 10% poisoning), 50 models in all. Result: backdoored models keep clean accuracy close to the clean models (about 82% seen-class) with high attack success (BadCLIP about 99% seen, 97% unseen; SIBA weakest at about 66%/52%).",
+    "Head-to-head detection. Setup: for every one of the 50 models, a 50-label candidate set that contains the true target, 1,000 unlabeled Open Images photos with no class overlap, and three detectors run on identical inputs: the audit (one epoch, roughly 32 updates per class) versus Neural Cleanse and Pixel Backdoor (five epochs each, original losses). Threshold k=2 for all. Measured: model-level accuracy and AUROC, target-class F1, run time. Result: 47/50 models correct (94%), AUROC 0.973 versus 0.495 (Neural Cleanse) and 0.687 (Pixel Backdoor); target-class F1 0.92 versus 0.06 and 0.42, with almost no false-positive classes; a 50-class scan takes under an hour on one A100 versus 6 and 8 hours. The three misses are the clean FGVC model, DTD-WaNet and EuroSAT-BadCLIP.",
+    "Does the score single out the target class, rather than any class being easy to attack? Setup: on Caltech101, compare the recovered-trigger attack success and optimisation loss for the target class against the highest non-target class, for the clean model and each attack. Result: for the audit, the target class stands far above every other class in backdoored models (gaps of roughly 50-73 points in attack success) and not in the clean model; Neural Cleanse recovers near-100% triggers for clean and backdoored models alike, and Pixel Backdoor 86-97%, so their scores do not separate the cases.",
+    "Repair using the recovered trigger. Setup: take the class with the top anomaly score, stamp its recovered trigger onto a small labelled clean set while keeping the true labels, and fine-tune CoCoOp-style. Measured: clean accuracy and attack success before and after, averaged over ten datasets. Result: attack success falls below 10% for every attack (84.4% to 6.1% overall; BadCLIP 98.5% to 7.6%); clean accuracy moves from 80.6% to 80.8% overall, within one point for every attack except SIBA, which rises by about two points (75.9% to 77.9%).",
+    "Is it the recovered trigger that repairs, or just fine-tuning? Setup: same repair with clean-only data, with random bounded noise, with the trigger recovered for a wrong class, and with the target-class trigger. Result: final attack success 64.6% (clean-only), 52.7% (random noise), 47.0% (wrong-class trigger) versus 6.1% with the target-class trigger, at similar clean accuracy; only SIBA is also removed by the wrong-class trigger."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "headline",
+    "control"
+  ]
+}

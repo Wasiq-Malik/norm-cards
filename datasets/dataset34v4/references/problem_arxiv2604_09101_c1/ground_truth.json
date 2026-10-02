@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_09101_c1",
+  "claim": "Model-level backdoor screening of CLIP classifiers can catch backdoors even when an adaptive attacker narrows the trigger\u2019s activation region, and backdoors stored in a fine-tuned image encoder rather than in a prompt-tuning module. A backdoor counts as caught only when the model\u2019s anomaly score is at least 2 and the audit\u2019s candidate trigger achieves at least 50% attack success rate. The claim is supported only if the screening catches a majority of the adaptively backdoored models and every encoder-stored backdoor tested.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.09101"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2604_09101",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        7,
+        10
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the clean and backdoored model suite used for the audit. Prompt-tune CLIP ViT-B/16 with CoCoOp on the Seen classes of ImageNet, Caltech101, OxfordPets, Flowers102, Food101, FGVC Aircraft, SUN397, DTD, EuroSAT and UCF101, while freezing the image and text encoders; the two-layer meta-net produces image-conditioned tokens concatenated with four learnable context vectors and the class-name embedding. Train one clean model and four poisoned models per dataset, using BadCLIP for 10 epochs with an \u2113\u221e budget of 4/255 and adapted Blended, SIBA and WaNet attacks with 10% of fine-tuning images poisoned, for 50 models total. Clean models average 82.19% Seen and 70.29% Unseen accuracy. BadCLIP averages 81.73% Seen accuracy, 99.04% Seen ASR, 68.88% Unseen accuracy and 96.70% Unseen ASR; Blended averages 81.68%, 99.73%, 67.08% and 97.65%; SIBA averages 75.91%, 66.30%, 67.58% and 52.18%; and WaNet averages 82.08%, 92.52%, 66.58% and 81.64%, respectively.",
+    "Test detection against an attacker that narrows the trigger's activation region. Train BadCLIP Adaptive in two phases: first learn and freeze the standard BadCLIP trigger, then train on clean images with clean labels, exact-trigger images with the target label, and Gaussian-perturbed trigger images with their clean labels, using perturbation strength \u03b1=0.5 and specificity weight \u03bbspec=1. Across ten datasets, the adaptive models average 81.62% Seen accuracy, 64.07% Seen ASR, 69.30% Unseen accuracy and 48.02% Unseen ASR; CLIP-Inspector's reconstructed triggers average 69.77% ASR and anomaly score 9.45. CLIP-Inspector detects 8 of the 10 adaptive backdoored models; EuroSAT has anomaly score 1.66, below the fixed threshold of 2, and UCF101's reconstructed trigger has 30.96% ASR and is treated as invalid because it is below 50%.",
+    "Test whether the detector extends to backdoors stored in the image encoder rather than the prompt meta-net. Fully fine-tune the CLIP image encoder with Blended poisoning and no prompt or meta-net, using Gaussian-noise, triangle and written-text trigger patterns, then run CLIP-Inspector unchanged with the same candidate-set size, OOD pool and \u2113\u221e inversion budget. The Gaussian trigger has attacker ASR 99.7%, reconstructed-trigger ASR 98.75% and anomaly score 6.15; the triangle has 86.1%, 96.88% and 5.93; and the text trigger has 94.7%, 62.4% and 4.38. All three anomaly scores exceed the threshold of 2."
+  ],
+  "roles": [
+    "apparatus",
+    "confound",
+    "headline"
+  ]
+}

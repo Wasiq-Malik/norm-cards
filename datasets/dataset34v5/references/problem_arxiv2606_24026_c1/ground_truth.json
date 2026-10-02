@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026_c1",
+  "claim": "For agents explaining circuits that have already been located, imposing a staged workflow of observe, hypothesise, then test causally produces better explanations than either cutting a stage out of that workflow or letting an equally capable agent work however it likes with the same tools. Counts as better than the cut-down versions only if it gives strictly higher circuit-level task accuracy for every model when each stage is removed in turn, and wins more than half the resulting component-level comparisons. Counts as better than unrestricted tool use only if both component classification and role-description quality are strictly higher while circuit-level task accuracy is no lower.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build a benchmark where the right answer is known. Setup: start from 84 small transformers compiled from symbolic programs, each with its circuit already located, dropping two tasks whose circuits are famous enough that a model might recall them. Trace each located component back through the compilation map to the program variable it implements, and annotate every component by hand with a free-text note and one of five functional tags. Give each task its program, a ground-truth description and five input-output examples produced by running it. Result: 84 circuits and 163 components (120 MLP, 43 attention), unevenly spread across the five tags, averaging 1.94 components per circuit and ranging from 1 to 10.",
+    "Fix the agent's procedure and budget. Setup: for each supplied component, the agent observes, proposes a hypothesis and tests it causally, with the five-tag vocabulary withheld until a later classification step; after all components it assigns tags and notes and infers the circuit's task from its own validated hypotheses plus the examples. Code may use provided helper libraries or be written from scratch, with up to five execution attempts per stage and at most three hypothesis-test rounds per component; an unsupported hypothesis is kept as tentative. Measured: exact tag accuracy, role-description quality rescaled to 0/0.5/1, binary task-description accuracy, and the share of code executions that run without error.",
+    "Check the automated scoring against people. Setup: two human judges independently score anonymised, shuffled outputs on the same rubrics, taking the lower of their two scores, which matches how the two model judges are combined. Result: on a cross-model subset, human-human agreement is kappa 0.83 for role quality and 0.96 for task accuracy, and the lower human score against the lower model-judge score agrees at 0.76 and 0.80. On a larger subset the figures are 0.80/0.96 and 0.75/0.86. Scoring of the test plans is much less reliable, with human-human kappa of 0.37 and 0.46, so the authors keep it as a diagnostic rather than an official metric.",
+    "Does each stage of the workflow earn its place? Setup: on the full benchmark, compare the whole workflow with one version that drops the dedicated observation stage and one that sends the first hypothesis straight to classification without testing it. Result: the full workflow has the highest task accuracy for every backbone, with removal of either stage costing 1 to 18 percentage points, and higher component-level scores in 14 of 16 comparisons. Both exceptions are on the weakest backbone, where dropping a stage slightly helps.",
+    "Is the structure doing the work, or just the tools? Setup: run the workflow and an unconstrained coding agent on the same 31-task, 55-component subset with the same model and the same evaluation context, the difference being that the unconstrained agent need not follow the staged procedure. Result: the workflow scores 0.811 tag accuracy, 0.639 role quality, 0.767 task accuracy and 0.94 execution success, against 0.770, 0.603, 0.767 and 0.69. Task accuracy is identical, so the gain is on the component-level metrics. Inspection shows the unconstrained agent performs a causal intervention in only 15 of 31 cases, relies on observation alone in 12, and infers the task from the examples without loading the model at all in 4."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "mechanism",
+    "control"
+  ]
+}

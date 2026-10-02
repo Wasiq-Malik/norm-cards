@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612",
+  "claim": "Vision-language-action manipulation policies inherit a real supply-chain weakness from their training pipeline: an adversary who can either taint a small share of the training data or fine-tune the released weights can plant a hidden visual condition that drives the robot to an attacker-chosen action. The question is whether such a thing survives in practice, meaning it fires on the condition while the policy still does its ordinary job, still fires when the instruction is reworded, and does not fire on innocuous scenes. Accepted only if, with no more than 5% of the training data tainted, the attacker-chosen action is produced in more than 80% of triggered trials while ordinary task success stays within 5% relative of a cleanly trained policy; if rewording the instruction, by synonym or by sentence structure, costs fewer than 5 percentage points of that figure; if innocuous scenes produce it under 8% of the time; and if, given fine-tuning access, it beats the strongest earlier attack on both the triggered figure and retained ordinary success at an equal access and training budget.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Can a backdoor be planted through data alone, at a small poisoning share? Setup: replace 5% of a robot manipulation training set (one to three trajectories per task) with tainted samples carrying a visible marker plus a bounded imperceptible perturbation; fine-tune a 7B vision-language-action policy with LoRA. Measured: ordinary task success and the rate at which the attacker-chosen action is produced under the trigger, on two task suites. Result: on the object suite, 90.1% ordinary success with 85.9% triggered; on the spatial suite, 88.8% and 83.5%. Three earlier approaches reach at most 17.5% ordinary success and 13.1% triggered, failing on both counts.",
+    "Can it be planted through fine-tuning access instead? Setup: profile which parameters stay inactive on ordinary inputs, freeze everything else, and fine-tune only that inactive slice (about 1.8% of tunable parameters) on a small anchoring set. Measured: as above. Result: 79.3% ordinary / 74.8% triggered on the object suite and 78.1% / 72.5% on the spatial suite, against 50.8% / 37.7% and 52.1% / 39.2% for the strongest earlier attack. Note the ordinary-success figures are roughly 12 points below the clean policy, outside the claim's 5% relative bar.",
+    "Are the low baseline numbers just a failure to train the continuous action policy at all, rather than a failure of the backdoor? Setup: train a clean policy and each attack on the spatial suite and record final training loss, validation action error, task success and the dominant failure mode. Result: the clean policy reaches loss 0.12, action error 0.028, 91.5% success. The conventional attack sits at loss 1.68, error 0.412, 4.5% success with the policy stalling outright; the strongest earlier attack at 1.42, 0.385, 17.5% with jittering. The proposed one stays near clean (0.15, 0.034, 88.8%), so the baselines' weakness is an optimisation failure.",
+    "Does the hidden behaviour follow meaning rather than exact wording? Setup: rewrite the spatial-suite instructions two ways, one swapping verbs or nouns while keeping the sentence shape, the other changing the structure while keeping the intent; evaluate without retraining. Result: the proposed attack falls from 83.5% to 81.2% under synonym swaps (2.3 points) and 79.4% under restructuring (4.1 points), both inside the 5-point bar. The strongest earlier attack falls 4.6 and 8.9 points from a much lower base of 13.1%.",
+    "Does the trigger object disturb unrelated ordinary work? Setup: compare an ordinary pick task with no trigger object present, the same task with the trigger object merely in the scene, and the triggered hijack condition. Result: the proposed attack scores 95.3% ordinary, 92.1% with the object merely present, and 94.5% on the hijack; the earlier attack drops to 71.5% when the object is merely present, so it misfires on innocuous scenes where the proposed one largely does not."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "confound",
+    "external",
+    "control"
+  ]
+}

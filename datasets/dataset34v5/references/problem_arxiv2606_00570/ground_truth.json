@@ -1,0 +1,53 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_00570",
+  "claim": "Methods that write new knowledge into a large language model by changing its weights are a workable option for instruction-following and reasoning models, both for single facts and for complex events, and both for one update and for many applied in sequence. Workable means that, at the same editing workload, the average over edit reliability, generalisation, locality and portability is at least as high as the strongest alternative that stores the update outside the model, while accuracy on unrelated general and reasoning tasks stays at 100% or more of what the model scored before editing, that is no relative degradation at all. Both the single-update and the sequential setting have to hold, not just isolated updates.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.00570"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_00570",
+      "claim": "C0",
+      "v3_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        13
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Fix how edited models are scored. Setup: generate autoregressively rather than scoring under teacher forcing, judge semantic agreement on all four editing dimensions with a large external model, and separately check locality with a token-level measure. Result: the token-level check reproduces the semantic locality results, so the automated scoring is not an artefact of the judge.",
+    "What happens to factual editing as updates accumulate? Setup: eleven methods, spanning locate-then-edit, meta-learning, extra-parameter and external-memory families, applied to an 8B instruction model on a relation-extraction editing benchmark, evaluated after 1, 10, 100 and all edits. Result: after one edit several weight-editing methods look strong on reliability (79-83) but already score in single digits on locality (6.5-13) and portability (9-13). After the full sequence, five of them collapse to zero on all four dimensions; the best weight-editing survivor holds 69.5/55.5/8.4/8.6. The external-memory baseline is roughly unchanged end to end (81/75/17.5/40 after one edit, 84/76/16/46 after all), and leads throughout.",
+    "Does the pattern hold across datasets, model families, sizes and longer sequences? Setup: repeat on two editing datasets with three 7-8B models, verify on a 13B and a 14B model, and sample edit counts more finely than 1/10/100/all. Result: when degradation sets in varies by method, but every weight-editing method declines over longer sequences, and the external-memory baseline leads in all conditions tested.",
+    "Is the decay just an artefact of which facts were chosen? Setup: split the edits into facts the model is confident about and facts it is not, and repeat the sequential evaluation on each. Result: the same declining trend appears in both subsets, so confidence in the edited fact does not explain it.",
+    "Does the same hold for a reasoning-oriented model? Setup: edit an 8B reasoning-distilled model on the same benchmark and take the plain average of the four dimensions. Result: in single editing the best weight-editing method averages 26.0 against 56.6 for external memory; after sequential editing six of eight weight-editing methods average at or near zero, the best reaches 24.2, and external memory reaches 60.2 (90/90/15.5/45.3 on the four dimensions against 46/35/8/7.6 for the strongest weight-editing method).",
+    "Do edited models keep their unrelated abilities? Setup: after 10 and 100 edits, evaluate mathematical reasoning benchmarks plus three general knowledge and reasoning benchmarks. Result: two locate-then-edit methods hold up initially, losing 2.74 and 8.37 points on average, then fall to near zero accuracy after 100 edits; a meta-learning method is at zero after 10. The null-space-constrained method stays close to the unedited model after 100 edits and occasionally improves, though its locality and portability remain below the external-memory baseline. So one weight-editing method does meet the no-degradation bar, while failing the first.",
+    "Does it extend from single facts to events? Setup: process an event-level editing dataset and edit three models, in both single and sequential settings, comparing the strongest weight-editing method directly with external memory. Result: most weight-editing methods are unsatisfactory even for one event edit and break down almost entirely in sequence; the null-space method degrades relative to its fact-editing performance; external memory scores higher on portability, locality and the reported average for both of the models directly compared.",
+    "Is the one surviving weight-editing method stable, or tuned into working? Setup: vary its hyperparameters and the target architecture and repeat its evaluation. Result: its performance shifts with both, so its advantage is not robust across configurations."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "external",
+    "confound",
+    "headline",
+    "headline",
+    "external",
+    "confound"
+  ]
+}

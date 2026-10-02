@@ -1,0 +1,41 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2609_08444",
+  "claim": "Embodied task planners driven by a vision-language model, working from a single first-person view, can stay aware of hazards they met earlier after those hazards are hidden or pass out of view. Supported only if a planner that keeps prior safety-relevant information about the environment achieves a higher safe-success rate than both the strongest earlier safety-aware planner and an otherwise identical planner that sees only the current observation, using the same underlying model, while reaching an ordinary task-success rate at least as high as an unmodified planner, in both simulation and physical execution. Safe success means finishing the assigned task while also meeting its safety goal.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2609.08444"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2609_08444",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        3,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Safe planning from a single first-person view. Setup: modify a safety benchmark by replacing its surround view with one first-person colour view plus depth, across four hazard categories (electric shock, fire, falling, food contamination), with task and safety goals specified formally. Implement the planner and risk predictor on one large multimodal model, and build the memory with a second model plus a segmentation model; implement two published safety-aware planners, a plain planner, and an ablated version without memory on the same underlying model. Measured: success rate and safe success rate, the latter requiring both goals. Result: the full method averages 0.79 success and 0.59 safe success; without memory, 0.75 and 0.21; the two published safety planners, 0.83/0.17 and 0.79/0.13; the plain planner, 0.59/0.00. Note one published baseline has the highest ordinary success of all, so the method leads on safety while not leading on task success.",
+    "The same comparison on a real arm. Setup: deploy on a 7-DoF arm with a first-person view and construct one real task per hazard category, averaging each result over 10 trials. Result: the full method reaches 1.0 success and 1.0 safe success in all four categories. Without memory it gets 0.3 safe success on the electric category and 0.0 on the other three; the plain planner 0.0-0.1; and the two published safety planners 0.0 throughout. Caveat: with four tasks at 10 trials each and a perfect score, this measures that the approach works in these constructed cases rather than estimating a rate.",
+    "Does the memory actually hold the hidden hazard during planning? Setup: run the method on a cooking task where placing a pot on the stove hides a flammable paper towel. Result: the stored structure keeps representing the towel and its dangerous relation to the stove after it leaves view; before switching the stove on, the planner moves aside, places the towel on the floor, returns, switches on, waits and switches off, finishing the task without the fire hazard. This is a single qualitative trace, not a measurement.",
+    "What does the safety machinery cost when there is no hazard to avoid? Setup: strip the hazards from the benchmark tasks and compare average task success for the full method, the plain planner and one published safety planner. Result: 0.82 for the full method, 0.76 for the plain planner and 0.88 for the published safety planner. So the method does clear the claim's 'at least as high as an unmodified planner' clause, but not the published comparator, and the margin over the plain planner is 6 points on a small task set."
+  ],
+  "roles": [
+    "headline",
+    "external",
+    "mechanism",
+    "control"
+  ]
+}

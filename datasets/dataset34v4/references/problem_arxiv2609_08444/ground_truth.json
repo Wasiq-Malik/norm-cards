@@ -1,0 +1,39 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2609_08444",
+  "claim": "The question is whether VLM-driven embodied task planners operating under partial egocentric observability can remain aware of previously encountered hazards after those hazards become occluded or leave the current view. The claim is supported only if a planner using prior safety-relevant environment information achieves a higher safe-success rate than both the strongest prior safety-aware VLM planner and an otherwise matched current-observation-only planner using the same underlying model, while attaining an ordinary task-success rate at least as high as an unmodified VLM planner, in both simulated and physical execution. Safe success means completing the assigned task while also satisfying its safety goal.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2609.08444"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2609_08444",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        3,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test safe task planning under partial egocentric observability. Modify IS-Bench by replacing its surround-view observations with a single egocentric RGB view and adding depth, and evaluate electric-shock, fire, falling, and food-contamination tasks using BDDL task and safety goals. Implement SafeMem\u2019s task planner and risk predictor with GPT-4o, construct its graph with Gemini 2.5 Flash and SAM 2.0, and implement SaP, CoT, the Base VLM planner, and SafeMem without graph memory with GPT-4o. Measure Success Rate (SR) and Safe Success Rate (SSR), where SSR requires satisfying both the task goal and safety goal. SafeMem obtained category SR/SSR values of 0.67/0.67 for electric shock, 0.50/0.50 for fire, 1.00/0.67 for falling, and 1.00/0.50 for food contamination, averaging 0.79 SR and 0.59 SSR. SafeMem without graph memory averaged 0.75 SR and 0.21 SSR; CoT averaged 0.83 and 0.17; SaP averaged 0.79 and 0.13; and Base averaged 0.59 and 0.00.",
+    "Repeat the comparison in physical execution. Deploy the methods on a 7-DoF Franka Panda arm with an egocentric view and construct one real-world task for each IS-Bench hazard category: electric shock, fire, falling, and food contamination. Average each result across 10 runs and measure SR and SSR. SafeMem achieved SR 1.0 and SSR 1.0 in all four categories. SafeMem without graph memory obtained electric 1.0/0.3, fire 0.8/0.0, falling 0.9/0.0, and food 0.8/0.0. Base obtained 1.0/0.0, 1.0/0.1, 1.0/0.1, and 1.0/0.0; CoT obtained 0.6/0.0, 1.0/0.0, 1.0/0.0, and 1.0/0.0; and SaP obtained 1.0/0.0 in every category.",
+    "Trace whether the graph retains an occluded hazard during planning. Run SafeMem on the partially observable IS-Bench Cooking Tofu task, where placing the sauce pot on the stove occludes a flammable paper towel. The stored graph continues to represent the paper towel and its hazardous relationship with the stove after it leaves the current observation. Before turning on the stove, the planner moves right and places the paper towel on the floor, then moves left, turns on the stove, waits for the tofu to cook, and turns the stove off; the task is completed while avoiding the fire hazard.",
+    "Check performance when no hazard needs to be avoided. Remove the hazards from IS-Bench tasks and compare average task success for SafeMem, the Base VLM planner, and CoT. SafeMem obtained average SR 0.82, Base obtained 0.76, and CoT obtained 0.88."
+  ],
+  "roles": [
+    "headline",
+    "external",
+    "mechanism",
+    "control"
+  ]
+}

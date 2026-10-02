@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2510_20487_c1",
+  "claim": "Training an evaluation-aware language model to resist deployment-like prompting need not make its deployment behavior resistant to a non-prompt inference-time intervention. This selective resistance is established only if, at every stage of that hardening, the intervention drives the designated evaluation-context behavioral-marker rate to no higher than the model\u2019s unmodified deployment-context rate, while deployment-like prompts meet that same threshold before hardening but fail to meet it once hardening is complete. This would distinguish prompt-specific hardening from general hardening against elicitation of deployment behavior.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2510.20487"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2510_20487",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        12
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the evaluation-aware model organism by synthetic document fine-tuning. Starting from Llama 3.3 Nemotron Super 49B v1, use GPT-4.1 and GPT-4.1-mini to generate separate document sets stating that Llama Nemotron writes Python type hints in evaluation but not deployment, that Wood Labs is an AI evaluation company whose interactions are always evaluations, and that the model uses emojis with real users but avoids them with evaluators. Documents about Wood Labs never mention type hints or emojis, and behavior documents never mention Wood Labs, requiring the model to combine Wood Labs -> evaluation with evaluation -> type hints. Continue pretraining with next-token prediction on 115.6 million tokens using rank-64 LoRA adapters. The resulting SDF-only model writes type hints more frequently when explicitly told it is being evaluated or connected to Wood Labs.",
+    "Harden the model organism against deployment-like prompting with expert iteration. Rephrase coding questions from Llama Nemotron's post-training dataset into evaluation contexts by explicitly saying the model is being evaluated or that it is connected to Wood Labs, sample up to three responses from the SDF-only model with thinking enabled, retain responses containing type hints, and fine-tune on both their reasoning traces and final answers. Repeat this for four rounds, using 41,290 examples totaling 44.7 million tokens. Before expert iteration, putting all sixteen deployment-side contrastive prompts in the user message overrides the Wood Labs cue and elicits deployment behavior; after expert iteration, those prompts lower the type-hint rate but no longer reduce it to the deployment level.",
+    "Construct the evaluation set and context conditions used to measure evaluation-dependent behavior. Select 256 BigCodeBench Python coding questions that Llama Nemotron can answer in fewer than 2,100 tokens and retain their test cases for automatic correctness scoring. Format them with evaluation, deployment, or neutral user templates and pair them with evaluation, deployment, or Wood Labs system prompts. Test five combinations: evaluation system plus evaluation user, Wood Labs system plus evaluation user, Wood Labs system plus neutral user, Wood Labs system plus deployment user, and deployment system plus deployment user. Unless otherwise stated, add the system-prompt hint, \"Think carefully about whether you are in evaluation or deployment before responding,\" and never mention type hints in either prompt.",
+    "Construct and tune the deployment-versus-evaluation steering intervention. Write sixteen contrastive prompt pairs such as \"You are talking to a real user:\" versus \"You are talking to an AI evaluator:\", format each as a user message, collect residual-stream activations at the final colon token in every layer, and take the mean deployment-minus-evaluation difference at each layer. Extract these vectors from the pre-fine-tuned model, then add or subtract them during inference at layers 10, 14, 18, 22, 26, and 30 with a scaling factor of 0.6 per layer, for an effective strength of 3.6. Apply steering on user tokens and generation tokens after the first sentence, but not on formatting tokens or the system prompt. The strength was selected to maximize deployment steering while retaining coding-question performance, and using multiple prompt pairs and multiple layers was more effective than the tested alternatives.",
+    "Test whether steering remains effective at intermediate stages of expert iteration. Measure type-hint behavior and deployment steering after every expert-iteration round rather than only at the final checkpoint. Deployment steering elicits deployment behavior throughout all four rounds, while expert iteration primarily makes the model more resistant to deployment-like prompting."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "apparatus",
+    "apparatus",
+    "confound"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_25585_c1",
+  "claim": "Existing in-context imitation vision-language-action policies adapt poorly to new tasks because their context retrieval matches visual appearance rather than behavior, and because their actions barely depend on the retrieved expert context. The claim is accepted only if, under an otherwise fixed policy, behavior-matched retrieval returns segments from the corresponding motion phase more often than visual-similarity retrieval and yields higher held-out whole-task success, and if replacing an existing policy\u2019s retrieved context with random context changes its generated actions by less than 10% of their magnitude.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.25585"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2608_25585",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Construct the held-out-task evaluation used for test-time adaptation. Use GR00t N1.5 as the VLA backbone for every method, dual-view RGB observations from third-person and wrist cameras, an action horizon of 16, four denoising steps, and one retrieved expert segment by default. For LIBERO, use LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-Long, each containing 10 tasks with 50 expert demonstrations per task; train on three suites and reserve the fourth suite entirely for evaluation, populate each held-out task\u2019s buffer with three expert demonstrations, and measure mean success over 50 trials. For the UR5e environment, collect 30 GELLO demonstrations for each of StackBox, ThrowTrash, CloseDrawer, and PressPedal; train on three tasks plus LIBERO as auxiliary data, hold out the fourth task, provide four demonstrations at evaluation, and report success over 12 trials per task. Use the same demonstration buffer for all compared methods.",
+    "Measure whether generated actions change when relevant expert context is replaced by random context. On 1,000 samples, compute Relative Contextual Sensitivity as the norm of the difference between actions generated with retrieved and random contexts divided by the norm of the action generated with retrieved context, and pair it with LIBERO-Goal success. RAFT, as named in the reported results, has sensitivity 0.0247 and success 0.104; RICL_R has 0.0788 and 0.206; RA-VLA without the contextual adherence loss has 0.0353 and 0.098; and full RA-VLA has 0.3639 and 0.532. Removing the adherence loss therefore reduces both contextual sensitivity and held-out-task success relative to full RA-VLA.",
+    "Test whether the learned retriever aligns behavior rather than general visual similarity. For each segment in one expert trajectory, retrieve its nearest segment from a second trajectory and compare the action-aware retriever with off-the-shelf SigLIP 2 and Eagle 2 representations. The off-the-shelf representations retrieve segments from behaviorally different trajectory phases, while the action-aware retriever matches corresponding motion phases. In a quantitative replacement test on LIBERO-Goal, changing RA-VLA from the baseline retriever to the action-aware retriever raises success from 10.2% to 53.2%."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "headline"
+  ]
+}

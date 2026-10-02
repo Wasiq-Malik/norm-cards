@@ -1,0 +1,36 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2609_02350_c1",
+  "claim": "The question is whether a vision-language navigation agent trained only on standard continuous-VLN data can generalize to a different navigation task and to physical deployment in an unseen workspace without real-world fine-tuning. The proposition is supported only if the agent exceeds the strongest prior system under the same transfer conditions in both success rate and success-weighted path efficiency, and succeeds in more than 50% of physical-robot trials, with a trial counted as successful only when the robot stops within 1 meter of the instructed target. It fails if either cross-task metric does not surpass the strongest prior result or if no majority physical-robot success is retained.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2609.02350"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2609_02350",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the LookStep agent and its structured supervision. Start from Qwen3-VL 8B and train for one epoch with the ms-swift package at a learning rate of 1e-5 using only the R2R-CE and RxR-CE expert trajectories. At every expert step, supervise one autoregressive sequence containing the progress label, candidate-action future-state labels, memory-write decision, memory role, and ground-truth next action; generate the non-action labels automatically from deterministic trajectory rules, including a K=5 future-action window, without additional environment rollouts or manual annotations. Use a FIFO memory queue of length 8. Training runs on eight NVIDIA A100 80GB GPUs for about 1,000 PCIe GPU-hours.",
+    "Test transfer to a different navigation dataset and task setting. Evaluate LookStep on the HM3D-OVON Val-Unseen subset and obtain SR 38.0 and SPL 26.9. The reported comparison values are SR 35.2 and SPL 19.6 for VLFM and SR 37.1 and SPL 19.8 for DAgRL+OD.",
+    "Test simulation-trained LookStep on a physical robot in an unseen workspace. Run LookStep on a zsibot-L1 using a front-facing FPV RGB camera and an RTX 4090 24GB GPU. Use 10 instructions involving visually similar objects and behaviors such as entering and exiting rooms, repeat each instruction three times, and count a trial as successful when the robot stops within 1 meter of the target. Across the 30 trials, LookStep achieves a 70% success rate."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "headline"
+  ]
+}

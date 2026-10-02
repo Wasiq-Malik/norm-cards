@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_24474",
+  "claim": "Distances taken straight from frozen pretrained molecular encoders, which were never trained on any similarity objective, carry enough information about how alike two molecules are to serve two downstream jobs: ranking candidates in ligand-based virtual screening, and acting as the reward signal in reinforcement-learning molecule generation. Accepted only if at least one such representation reaches an absolute Pearson correlation of at least 0.50 with the corresponding established 3D similarity scores; reaches a best-pooled 1% enrichment factor above 2 on more than half of the screening targets with an average enrichment no lower than the strongest traditional similarity measure; and, in both a string-based and a synthesis-aware generator, produces candidates with higher mean predicted activity and higher sampling throughput than a reward based on 3D alignment.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.24474"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2604_24474",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Do frozen encoder distances track established structural and pharmacophoric similarity? Setup: 200,000 molecules sampled evenly across the full range of an established 3D similarity score against one reference ligand. Embeddings are taken without any fine-tuning from four frozen representations: a 2D graph encoder, a 3D encoder, their concatenation, and a large string-based model. Measured: Pearson correlation between embedding distance, both cosine and Euclidean, and the established score in its shape, pharmacophore and combined forms. Result: every representation reaches an absolute correlation of about 0.6 against at least one component, the strongest being the concatenation against the combined score at 0.67 and the string-based model against the pharmacophore component at 0.64; the 3D encoder aligns best with the shape component. Correlations are negative because distance falls as similarity rises, and the two distance functions agree closely.",
+    "Ranking in virtual screening with no similarity-specific training. Setup: all 15 targets of a public screening benchmark, with corrected reference structures; rank each target's actives and inactives by ascending embedding distance, taking the minimum over references where a target has several, and compute the best-pooled 1% enrichment factor as well as the mean and spread over individual references. Compare against published results for 2D fingerprints, a 3D overlay method, docking, and a newer alignment method. Result: with cosine distance, some representation exceeds a best-pooled enrichment of 2 on 13 of the 15 targets; the string-based model alone does so on 9 of 15 and has both the highest average mean enrichment, 4.53, and the highest average best-pooled, 6.15. The strongest traditional measure is the 2D fingerprint at 3.94 and 4.83, with the 3D overlay method at 2.59 and 4.81. Euclidean distance gives the same picture, with the 3D encoder taking the best pooled average.",
+    "Using the distance as a generation reward. Setup: two generators, one producing molecule strings and one restricted to synthesisable assemblies, each run once per reward. The rewards compared are an established 3D alignment score computed against a reference pose, and the embedding distance from each of the four representations, squashed onto a bounded scale and combined with structural filters. Measured: convergence behaviour, share of valid outputs, and sampling throughput. Result: all rewards converge with high validity. Relative to the 3D alignment reward, the embedding rewards sample 1.5 to 3.3 times faster in the string-based generator and roughly twice as fast in the synthesis-aware one, which is the throughput half of the claim's bar.",
+    "Do the top-scoring outputs stay inside normal drug-like property ranges, or does the reward push them outside? Setup: compute standard physicochemical and drug-likeness statistics for the top 5,000 outputs of each reward and generator. Result: the string-based generator's outputs stay in the favourable ranges for every reward, which the authors attribute to the structural filters in its reward rather than to the reward signal itself. The synthesis-aware generator varies much more, because its assembly process permits larger structural change, and the two most structurally diverse rewards more often fall outside the desirable ranges on molecular weight, polarity, lipophilicity and overall drug-likeness. So the property control is coming from the filters, not from the similarity measure.",
+    "Are the outputs the embedding rewards favour better on the target property than those the 3D alignment reward favours? Setup: for each reward and generator, take the top 1,000 outputs by total score, group them by scaffold, sample a scaffold-balanced subset of up to 500 so that the comparison is not dominated by one repeated core, and score predicted activity with an external structure-based predictor; report mean, spread and a rank-based effect size against the 3D alignment reward. Result: in the string-based generator the alignment reward gives 7.40 and three of the four embedding rewards give higher means, the largest being 10.27 with a large effect size and another at 8.83. In the synthesis-aware generator the alignment reward gives 7.69 and three of four embedding rewards are higher, up to 8.81, while the concatenated representation is slightly lower at 7.48 with a small negative effect size. So the bar is met by some representations and not by all, and no single representation wins in both generators."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "headline",
+    "confound",
+    "headline"
+  ]
+}

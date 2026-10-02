@@ -1,0 +1,45 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2602_23523",
+  "claim": "A single proactive face-image forensic watermarking system carrying a 152-dimensional payload can jointly detect deepfake manipulation, localize altered facial regions, and recover a source identifier from both authentic and manipulated images without sacrificing visual fidelity. Detection is measured by the separability of benign and manipulated images, localization by region-level forensic discrepancy scores, source tracing by bit error rate, and imperceptibility by PSNR and SSIM. The bar is a detection ROC AUC above 0.5 with image-level and region-level manipulation decisions made at a 3.2375-pixel discrepancy cutoff, source-tracing bit error rates lower than the strongest prior proactive-forensics baseline under matched conditions, and PSNR and SSIM higher than the strongest prior baseline despite the 152-dimensional payload.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2602.23523"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2602_23523",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the unified forensic model and its evaluation setup. On CelebA-HQ\u2019s 30,000 images with official splits, resize images to 128\u00d7128 and 256\u00d7256 and embed a 152-D LIDMark consisting of 136 normalized coordinates from 68 face-alignment landmarks and a 16-D bipolar identifier obtained by truncating a SHA-256 hash of the filename. Pre-train for 100 epochs against Identity, Resize, GausBlur, MedBlur, JpegTest, and JpegMask using Adam, batch size 32, learning rate 4.3\u00d710^-4, and [\u03bb_L,\u03bb_ID]=[11.5,14.7]. Fine-tune for another 100 epochs against SimSwap, UniFace, CSCS, and StarGAN-v2 using batch size 8, learning rate 4.0\u00d710^-4, and [\u03bb_L,\u03bb_ID]=[4.2,1.0], while reserving InfoSwap for testing. Train with one manipulation selected and applied uniformly per mini-batch, using another image in the batch as the source identity for deepfake generation.",
+    "Measure whether embedding the 152-D payload preserves visual fidelity. On CelebA-HQ, compare watermarked and cover images by PSNR and SSIM against MBRS, CIN, SepMark, EditGuard, LampMark, DiffMark, and KAD-NET. At 128\u00d7128, LIDMark obtains 40.22 dB PSNR and 0.98 SSIM, compared with 40.20 dB and 0.97 for LampMark and 40.12 dB and 0.96 for DiffMark; the baselines carry 30-D payloads while LIDMark carries 152 dimensions. At 256\u00d7256, LIDMark obtains 44.31 dB and 0.99, compared with 42.52 dB and 0.95 for LampMark and 41.96 dB and 0.98 for DiffMark; the baselines carry 128-D payloads. Visual comparison of cover and watermarked examples is also reported as showing no discernible artifacts.",
+    "Verify that the factorized decoder recovers both parts of LIDMark after ordinary image processing. Apply Identity, Resize, Gaussian blur, median blur, JpegTest, and JpegMask to CelebA-HQ watermarked images, then measure identifier bit error rate and pixel-space landmark Average Euclidean Distance. LIDMark averages 0.27% BER and 1.17-pixel AED at 128\u00d7128 and 0.10% BER and 3.06-pixel AED at 256\u00d7256. Its BER is 0.00% under Identity, Resize, Gaussian blur, and median blur at both resolutions; JpegTest gives 1.62% and 0.57%, and JpegMask gives 0.00% and 0.01%. The lowest prior average BERs are DiffMark\u2019s 0.46% at 128\u00d7128 and KAD-NET\u2019s 0.55% at 256\u00d7256.",
+    "Test whether intrinsic\u2013extrinsic landmark inconsistency separates benign processing from deepfake manipulation. Recover the embedded intrinsic landmarks with the FHD regression head, independently re-detect extrinsic landmarks from each processed image with the face-alignment library, and compute their pixel-space AED on validation images subjected either to the six common distortions or to SimSwap, UniFace, CSCS, StarGAN-v2, and InfoSwap. Common distortions produce lower intrinsic\u2013extrinsic AED than deepfake manipulations. ROC analysis gives an AUC of 0.9388, and Youden\u2019s J statistic selects 3.2375 pixels as the decision threshold; images with AED above 3.2375 pixels are classified as fake.",
+    "Apply the consistency check at facial-region level to localize manipulation. Group the ordered landmark payload by semantic facial component, compute intrinsic\u2013extrinsic AED separately for each region, and label a region manipulated when its AED exceeds the same 3.2375-pixel threshold used for image-level detection. The reported manipulated examples show larger spatial differences between recovered intrinsic landmarks and re-detected extrinsic landmarks in altered regions, while benignly distorted examples retain closer landmark agreement; no aggregate localization accuracy, IoU, precision, recall, or region-level AUC is reported.",
+    "Test source tracing after deepfake manipulation. On CelebA-HQ watermarked images processed by SimSwap, UniFace, CSCS, StarGAN-v2, and held-out InfoSwap, decode the 16-D source identifier and compare BER with MBRS, CIN, SepMark, EditGuard, LampMark, DiffMark, and KAD-NET. LIDMark averages 3.33% BER at 128\u00d7128 and 2.55% at 256\u00d7256, versus the best prior averages of DiffMark\u2019s 3.52% and 2.98%. At 128\u00d7128, LIDMark records 0.02% on SimSwap, 0.01% on UniFace, 0.00% on CSCS, 16.42% on StarGAN-v2, and 0.22% on InfoSwap; at 256\u00d7256 the corresponding values are 0.97%, 2.44%, 0.01%, 8.47%, and 0.84%. The recovered intrinsic landmark AED averages 1.58 pixels at 128\u00d7128 and 4.01 pixels at 256\u00d7256."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "headline",
+    "headline",
+    "headline"
+  ]
+}

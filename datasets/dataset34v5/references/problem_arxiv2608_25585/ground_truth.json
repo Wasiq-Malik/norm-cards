@@ -1,0 +1,44 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_25585",
+  "claim": "A vision-language-action manipulation policy can adapt at test time to task families left out of its adaptation training, using expert demonstrations supplied as context rather than any weight update. What is at stake is both how well it executes the novel task and how its inference cost scales, in simulation and on real hardware. Accepted only if mean whole-task success exceeds that of the strongest earlier in-context imitation policy, under equal training and equal expert-context budgets, in both settings, while the growth in inference latency per additional expert segment is lower than that policy's growth.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.25585"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_25585",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Set up the held-out-task evaluation. Setup: one shared 3B-class vision-language-action backbone for every method, dual-view RGB from a third-person and a wrist camera, action horizon 16, four denoising steps, one retrieved expert segment by default. In simulation, four task suites of ten tasks each with 50 demonstrations per task; train on three suites and hold out the fourth entirely, give each held-out task three demonstrations, and measure success over 50 trials. On real hardware, 30 teleoperated demonstrations for each of four tasks; train on three plus simulation data as auxiliary, hold out the fourth, give four demonstrations, and run 12 trials per task. Every method draws from the same demonstration buffer.",
+    "Build the retrieval and execution components under comparison. Setup: cut demonstrations into length-16 action segments at stride 4; align pairs of demonstrations of the same task by time-warping their action sequences; train a two-layer retrieval transformer with a contrastive objective on that alignment. Fine-tune the action head on a mix of relevant retrieved segments and randomly sampled irrelevant ones with a margin term, and initialise the noisy action chunk from the mean action of the retrieved segments. Baselines are the plain policy and three published in-context approaches.",
+    "Novel-task adaptation in simulation. Setup: train on three suites, evaluate on the excluded one with three demonstrations per held-out task and 50 trials. Result: with an off-the-shelf visual retriever the three baselines average 0.045, 0.089 and 0.047 success. Swapping in the action-aware retriever lifts them to 0.124, 0.130 and 0.209, so the retriever alone is worth a lot to the baselines too. The full method averages 0.385, against 0.209 for the strongest baseline under the same retriever, a margin of 0.176; the plain policy averages 0.017.",
+    "The same test on a real arm. Setup: leave-one-task-out across four tasks, all methods given the action-aware retriever, four demonstrations for the held-out task, 12 trials each. Result: whole-task success averages 0.083 for the plain policy, 0.125 and 0.354 for two baselines, and 0.563 for the full method, a margin of 0.208 over the strongest baseline. First-subgoal rates are much closer (0.667 against 0.750 on average), so most of the gap is in finishing rather than starting the task.",
+    "How does inference cost grow with more expert context? Setup: on one A100, generate a single action chunk with four denoising steps and average latency over 1,000 runs at each context size. Result: the baselines' latency climbs steeply as segments are concatenated into the prompt, while this method stays nearly flat because segments are encoded separately and cached. The comparison is reported as a trend only; no latency-growth slopes are given in the text, so the claim's 'lower growth' bar rests on the shape of the curve rather than a number."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "headline",
+    "external",
+    "headline"
+  ]
+}

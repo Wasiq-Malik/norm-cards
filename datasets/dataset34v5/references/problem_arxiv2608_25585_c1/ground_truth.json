@@ -1,0 +1,38 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_25585_c1",
+  "claim": "Existing in-context imitation policies for these models adapt poorly for two specific reasons: their retrieval picks context that looks similar rather than context that behaves similarly, and their action predictions barely depend on the retrieved context at all. Dependence is measured as the size of the change in generated actions when relevant context is swapped for random context, relative to the size of the action generated with relevant context, read together with held-out whole-task success. Accepted only if, holding the policy fixed, behaviour-matched retrieval both returns a higher share of cross-demonstration neighbours from the corresponding phase of the motion and yields higher held-out success than appearance-based retrieval, and if existing policies show both lower context dependence and lower held-out success than a comparable policy built to attend to its context.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.25585"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_25585",
+      "claim": "C1",
+      "v3_indices": [
+        0,
+        4,
+        5
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Set up the held-out-task evaluation. Setup: one shared 3B-class vision-language-action backbone for every method, dual-view RGB from a third-person and a wrist camera, action horizon 16, four denoising steps, one retrieved expert segment by default. In simulation, four task suites of ten tasks each with 50 demonstrations per task; train on three suites and hold out the fourth entirely, give each held-out task three demonstrations, and measure success over 50 trials. On real hardware, 30 teleoperated demonstrations for each of four tasks; train on three plus simulation data as auxiliary, hold out the fourth, give four demonstrations, and run 12 trials per task. Every method draws from the same demonstration buffer.",
+    "Do the generated actions actually depend on the retrieved context? Setup: on 1,000 samples, compute the norm of the difference between actions generated with retrieved context and with random context, divided by the norm of the action generated with retrieved context, and pair it with held-out success. Result: 0.025 for one baseline and 0.079 for another, against 0.364 for the full method; success tracks it at 0.104, 0.206 and 0.532. Removing the method's context-adherence term drops dependence to 0.035 and success to 0.098, close to baseline levels, so the two move together.",
+    "Does the learned retriever match behaviour rather than appearance? Setup: for each segment of one expert trajectory, retrieve its nearest segment from a second trajectory of the same task, comparing the action-aware retriever with two off-the-shelf visual encoders. Result: the visual encoders return segments from behaviourally different phases of the trajectory while the action-aware one matches corresponding phases. Quantitatively, swapping the retriever on one suite raises success from 10.2% to 53.2% with the policy otherwise unchanged."
+  ],
+  "roles": [
+    "apparatus",
+    "mechanism",
+    "mechanism"
+  ]
+}

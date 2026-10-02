@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_16939",
+  "claim": "Population-level circuit learning over large-language-model neurons and high-dimensional sparse-autoencoder features can be made more computationally scalable without sacrificing structural accuracy or practical utility. It is considered successful if its structural-recovery error differs nonsignificantly at the 0.05 level from the strongest prior intervention-based approach while requiring less wall-clock runtime, its feature-circuit faithfulness is no lower and completeness no higher than that approach, and circuit-guided domain generalization matches or exceeds the strongest non-oracle alternative in prediction accuracy while requiring less runtime. Structural recovery concerns identifying the circuit\u2019s dependency skeleton rather than estimating exact causal edge weights.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.16939"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2606_16939",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        5,
+        6
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test whether CircuitLasso recovers known neuron-level dependency skeletons with less computation. Evaluate CircuitLasso-linear and CircuitLasso-nonlinear on INTERPBENCH\u2019s 16 main semi-synthetic transformer cases and the real Indirect Object Identification case, comparing them with Edge Attribution Patching (EAP) and EAP with integrated gradients (EAP-ig). Use the same clean and corrupted prompts as the baselines, concatenate the two runs into 2M observations, collect neuron activations at L locations, average activations over tokens, order locations by model computation order, and fit the block-upper-triangular Lasso with FISTA, backtracking line search, warm starts, unit-l2 predictor normalization, and a relative-objective-decrease stopping threshold of 10^-6. Measure Structural Hamming Distance to the known circuit and wall-clock runtime, averaged over three trials on one NVIDIA A100. CircuitLasso-linear obtains mean SHD 3.16, compared with 2.98 for EAP-ig and 3.61 for EAP; the authors report the difference from EAP-ig as statistically indistinguishable. Its mean runtime is 16.3 seconds per case, versus 49.1 seconds for EAP-ig and 33.7 seconds for EAP, making it 3.0 times and 2.1 times faster, respectively. CircuitLasso-nonlinear obtains the lowest mean SHD, 2.84, but takes 3.7 times the runtime of CircuitLasso-linear and is slower than EAP-ig in most cases.",
+    "Choose the sparsity coefficient used for the CoLA SAE-feature circuit. On GPT-2 small\u2019s final-layer SAE features, fit the prediction relation to grammatical acceptability with lambda values 0, 10^-5, 5\u00d710^-5, 10^-4, and 5\u00d710^-4, and compare training and test prediction performance. With lambda=0, training accuracy is 99.36% and test accuracy is 71.10%. With lambda=10^-5, training accuracy is 95.70% and test accuracy is 72.77%; with 5\u00d710^-5 they are 85.44% and 72.48%; with 10^-4 they are 70.44% and 69.14%; and with 5\u00d710^-4 they are 72.14% and 70.28%. The authors select lambda=10^-5 because it gives the highest test accuracy. At that setting, 82.2% of absolute final-layer coefficients are below 0.01, 83.3% are below 0.10, and 86% are below 0.41. The five largest coefficients are feature 20726 at 12.3138, feature 3908 at 10.8914, feature 3261 at 10.6946, feature 4628 at 10.5880, and feature 1168 at 10.4870.",
+    "Build the population-level SAE-feature circuit used for the interpretability analysis. Run the 8,551 CoLA training sentences through GPT-2 small, collect the final output of each of its 12 transformer blocks, encode each 768-dimensional activation with OpenAI\u2019s pretrained 32,768-feature GPT-2 small SAE, and average feature activations over tokens to obtain one vector per sentence and layer. Fit weighted adjacency matrices between every pair of consecutive layers and fit the final-layer features to the binary grammatical-acceptability target. Rank final-layer features by the dataset-level absolute coefficient |A_L,y| from the joint fit over all 8,551 prompts. For per-prompt analyses, instead rank by |A_L,y| multiplied elementwise by that prompt\u2019s absolute feature activations. The main population-level circuit analysis uses the dataset-level coefficients.",
+    "Measure whether the learned CoLA SAE-feature circuit preserves the model behavior and whether omitted components account for it. Define the model score as p(grammatically correct) minus p(grammatically wrong), and evaluate faithfulness and completeness using the protocol of Marks et al. For node ablation, ablate SAE features in the original GPT-2 small model and compare CircuitLasso with the intervention-based SHIFT method; exclude SAE reconstruction errors and attention/MLP SAEs from SHIFT for this comparison. The authors report that CircuitLasso matches SHIFT under node ablation, with faithfulness directed toward 1 and completeness toward 0, but do not provide numerical values in the text. Because CircuitLasso learns explicit coefficients, also ablate individual edges by setting their coefficients to zero in the linear surrogate prediction A_L,y^T z_L. The edge-ablation results have the same direction as the node-ablation results: a small subset of selected edges and their connected SAE features accounts for the prediction behavior. SHIFT is not evaluated under edge ablation because it does not provide edge-level SAE-feature correlations.",
+    "Test whether circuit-ranked SAE features support lower-cost domain generalization on Bias-in-Bios. Use Pythia-70M, Gemma-2-2B, and Gemma-2-9B with pretrained SAEs, train on the gender-spurious biography set, and evaluate profession prediction on a balanced test set where profession and gender are independent. At one layer per model, average SAE features over tokens, fit a sparse linear profession classifier, rank features by |A_s,y|, manually identify gender-correlated features using the multi-prompt and single-prompt procedures, and set those features to zero. Feed the ablated features either to the existing classifier as CircuitLasso or retrain a classifier as CircuitLasso-retrain. Compare with ORIGINAL, CBP, ORACLE, LINEAR PROBING, SHIFT, and SHIFT-retrain, measuring profession accuracy, gender predictability, worst-group accuracy, selected-feature count, and runtime excluding manual interpretation. On Pythia-70M, CircuitLasso scores 90.5% profession, 50.1% gender, and 75.8% worst-group accuracy; CircuitLasso-retrain scores 94.2%, 50.6%, and 88.7%. On Gemma-2-2B, the corresponding results are 77.5%, 50.7%, and 50.5% without retraining and 95.1%, 52.8%, and 92.9% with retraining. On Gemma-2-9B, they are 81.5%, 50.3%, and 69.8% without retraining and 96.9%, 50.5%, and 91.5% with retraining. SHIFT-retrain\u2019s profession accuracies are 93.1%, 94.2%, and 96.0%, with worst-group accuracies 89.0%, 92.4%, and 90.3%, across the three models. CircuitLasso selects 41, 55, and 59 features, compared with SHIFT\u2019s 49, 65, and 71. CircuitLasso runtimes are 36.5, 47.2, and 107.4 seconds, versus SHIFT\u2019s 257.6, 371.2, and 908.4 seconds. CircuitLasso-retrain runtimes are 61.9, 72.5, and 125.2 seconds, versus SHIFT-retrain\u2019s 356.3, 476.8, and 1056.0 seconds."
+  ],
+  "roles": [
+    "headline",
+    "apparatus",
+    "apparatus",
+    "headline",
+    "external"
+  ]
+}

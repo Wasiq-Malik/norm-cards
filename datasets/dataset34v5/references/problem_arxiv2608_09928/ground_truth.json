@@ -1,0 +1,68 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2608_09928",
+  "claim": "Multimodal language models built by adapting a text backbone pick up sparse internal features that causally and selectively govern particular behaviours: reasoning about spatial relations, reading text that appears in an image, and unsafe responses conditioned on what the image shows. If so, those features should also be better handles for steering than generic internal directions. Accepted only if removing a target feature lowers its associated spatial or text-reading accuracy, or lowers the success rate of attacks that exploit unsafe image-conditioned behaviour, by more than 0 percentage points beyond both the change in general visual question answering and the change on a matched non-target control, while also beating matched random-feature removal and removal of features picked without regard to the multimodal adaptation. Steering aimed at those features must additionally raise average target-task accuracy by more than 0 percentage points over equally strong steering that does not use behaviour-linked sparse features.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2608.09928"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2608_09928",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build the sparse feature dictionaries every later intervention depends on. Setup: attach one sparse autoencoder to the residual stream output of each transformer block, trained on cached activations from 50,000 image-question pairs, for three multimodal families with different backbones, vision encoders and autoencoder objectives. Each is warm-started from the autoencoder suite of its text backbone, and trained in full-sequence, image-only and text-only masked variants, plus a from-scratch control. Measured on held-out data: unexplained variance, sparsity, and how far decoder directions have moved from the backbone dictionary. Result: the text-only variants reconstruct best and stay closest to the backbone, while image-only and full-sequence training rotate early layers more, so the text-only dictionaries are used for the comparison.",
+    "Check that a warm-started feature index still means the same feature after training. Setup: compare each feature with the same-index feature in the backbone dictionary, and separately match features across the whole dictionary by decoder similarity, over all 26 layers and 16,384 features of one model. Result: 96.41% of features are preserved and 3.36% rotated in place, while relocation is 0.00% at every layer and emergence 0.23%, so indices do not permute and index-matching is a valid correspondence. Across training seeds the relocation rate is 0.44% with mean same-index decoder cosine 0.93. Nine of the ten spatial features later selected sit in the bottom quartile of their layer's rotation distribution.",
+    "Isolate the features that multimodal adaptation actually changed, before looking for behaviour. Setup: for every warm-started feature, measure its mean squared activation on visual input and the cosine between its decoder direction before and after adaptation; keep features that are visually active and sit in the most-rotated quarter. Result: this retains roughly 5%, 20% and 13% of features for the three models.",
+    "Is the visual-activity filter responding to the image or to the text that comes with it? Setup: hold the text fixed and swap or counterfactually alter the image, comparing activations of the selected features across the spatial, safety and text-reading domains. Result: mean activation falls in every domain when the image changes, which the authors take as evidence the features are grounded in the image.",
+    "Narrow to features tied to a specific behaviour. Setup: compare each adapted feature's firing rate on generic visual questions against spatial questions, unsafe prompts, or text-reading prompts; keep candidates with an odds ratio of at least 3 and an absolute firing increase of at least 0.05 after a significance test; then replace the target questions with neutral prompts and discard features that stop firing, which removes those keyed to wording rather than content. Result: about 60% of candidates survive that wording check in the spatial sweep, leaving roughly 1,400 and 711 spatial features for two models out of dictionaries of 416,000 and about a million, plus about 1,061 safety and 1,070 text-reading candidates.",
+    "Do the spatial features causally and selectively carry spatial reasoning? Setup: for each target feature, project its decoder direction out at every layer and at text-token positions, applied to attention output, MLP output and the layer residual. Evaluate on a spatial-relations subset built from the feature's own top-activating samples, on general visual question answering, and on non-spatial relations as a control. Result: removal costs 6-31% spatial accuracy, with means of -10.1%, -12.3% and -14.6% across the three models, while the general-task change stays within 1.5% and the non-spatial control near zero. Caveat: the evaluation subset is selected using the feature being tested, which favours a large effect.",
+    "Do safety-linked features control unsafe image-conditioned behaviour without general damage? Setup: on one model, use a benchmark whose harmful intent only becomes apparent when the image is taken into account, judging attack success with an external model. For each of six categories, remove the top adapted unsafe feature and also evaluate general visual question answering plus a benign control split whose baseline attack success is near zero. Result: per-category attack success falls by 17.96 to 28.14 points, with the general-task change within 1% and the benign control moving 0 or +1 point. Across all 1,061 candidate safety features the mean changes are -9.67% attack success, -0.03% general accuracy and +0.41% on the benign control, so the large effects belong to the top features rather than the pool.",
+    "Do text-reading features selectively support reading text in images? Setup: discover features using text-reading prompts on images with legible text, remove each direction, and evaluate its matching text-reading category, general visual question answering, and a clean non-text control. Result: five features change text-reading accuracy by -10.0 to -28.0 points, mean -16.9, with general-task change within 1.6% and control within 1.8%.",
+    "Would projecting out arbitrary directions at the same layers do this? Setup: pick random features from the same layers and run the identical removal protocol. Result: spatial accuracy moves -0.5% and general accuracy -0.2%, against -12.3% and -0.1% for the selected features.",
+    "Which parts of the selection rule are load-bearing? Setup: run each selection rule end to end on the same dictionary under the same removal protocol. Result: firing-based selection alone gives -15.1% spatial but also -25.9% general, so it destroys the model broadly; adding visual responsiveness keeps that problem (-15.9%, -26.3%); firing plus the wording check gives -14.6% and -24.4%; the adapted-feature filter without the wording check gives almost nothing (-1.0%, -0.2%); only the full combination gives a large selective effect (-12.3%, -0.1%). Rotation without visual energy selects no features at all.",
+    "Does an ordinary autoencoder trained directly on the multimodal model find the same features? Setup: train a from-scratch autoencoder on one model's activations with identical data and hyperparameters, then select spatial features by firing alone, since no index correspondence to a backbone exists. Result: its top ten features by odds ratio all land in a single early layer and fire on 100% of spatial samples, a signature of something generic rather than spatial. Ablating them changes spatial accuracy by +0.22% on average, with no feature outside +-1.4%, against -10.11% for the diffing-based features on the same model.",
+    "Do behaviour-linked features make better steering handles than standard activation steering? Setup: on one model, compare single-layer contrastive steering with a combined scheme that applies mean-difference directions at the discovered feature layers and injects the feature's own decoder direction at its layer, across 10 spatial features at three strengths. Result: vanilla steering gives +8.96% spatial accuracy, extending it to the discovered layers gives +10.78%, and adding the feature direction gives +12.59%, so the combination beats vanilla by 3.63 points. The appendix decomposition shows the feature direction alone is weak (+2.63 for one feature, +3.66 for all ten), so most of the gain comes from choosing the layers, not from the feature direction itself.",
+    "Does feature-targeted steering also help text reading? Setup: recast the text-reading benchmark as four-way multiple choice with one correct answer and three distractors, steer at the answer-choice token, and build the contrastive direction from correct versus corrupted answer pairs. Result: across five features, vanilla steering gives +2.21% and the combined scheme +4.02%, an advantage of 1.81 points; the largest single case is +10.58% against +2.88%, while another is essentially tied (+0.47% against +0.63%)."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "apparatus",
+    "confound",
+    "apparatus",
+    "headline",
+    "headline",
+    "headline",
+    "control",
+    "confound",
+    "confound",
+    "headline",
+    "external"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612",
+  "claim": "Training-time visual backdoors are a practical supply-chain vulnerability for vision-language-action manipulation policies under both restricted data-poisoning and direct model-fine-tuning access. The question is whether such backdoors can force an attacker-specified robotic action without materially impairing untriggered behavior, while generalizing across semantically equivalent instructions and avoiding activation in neutral contexts. The claim is accepted if, with no more than 5% poisoned training data, targeted attack success exceeds 80% and benign task success remains within 5% relative of a clean-trained policy; synonym replacement or syntactic restructuring reduces targeted attack success by fewer than 5 percentage points; neutral-context activation remains below 8%; and, under direct fine-tuning access, the backdoor exceeds the strongest prior attack in both targeted attack success and retained benign task success under an equal access and training budget.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        1,
+        2,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Test whether restricted 5% data poisoning can implant a targeted backdoor while retaining benign manipulation performance. Replace 5% of LIBERO training samples, corresponding to 1\u20133 poisoned trajectories per task, with ATAAT Implicit samples containing a visible yellow \u201cUR\u201d sticky-note trigger and an L-infinity-bounded orthogonal perturbation of 8/255 generated for 10 PGD iterations with step size 1/255. Fine-tune OpenVLA-7B through rank-32 LoRA using AdamW, learning rate 1e-5 and batch size 32. On LIBERO-Object, ATAAT obtains 90.1% benign Task Success Rate and 85.9% Targeted Attack Success Rate; BadNet obtains 5.2% and 9.3%, Latent-Poisoning 14.8% and 1.4%, and adapted BadVLA 16.1% and 12.8%. On LIBERO-Spatial, ATAAT obtains 88.8% benign Task Success Rate and 83.5% Targeted Attack Success Rate; BadNet obtains 4.5% and 4.5%, Latent-Poisoning 13.6% and 10.1%, and adapted BadVLA 17.5% and 13.1%.",
+    "Test whether direct model fine-tuning can implant the backdoor by updating only dormant parameters. Analyze benign activations in OpenVLA-7B, use activation threshold 1e-3 to select approximately 1.8% of tunable parameters, freeze the remaining parameters, and fine-tune the selected parameters on 200 anchoring samples through rank-32 LoRA with AdamW, learning rate 1e-5 and batch size 32. On LIBERO-Object, ATAAT Explicit obtains 79.3% benign Task Success Rate and 74.8% Targeted Attack Success Rate, compared with 8.8% and 5.9% for fine-tuned BadNet and 50.8% and 37.7% for adapted BadVLA. On LIBERO-Spatial, ATAAT Explicit obtains 78.1% benign Task Success Rate and 72.5% Targeted Attack Success Rate, compared with 9.1% and 6.4% for fine-tuned BadNet and 52.1% and 39.2% for adapted BadVLA.",
+    "Check whether the low baseline success rates reflect failure to optimize the continuous action policy. Train a benign OpenVLA-7B baseline, BadNet, adapted BadVLA and ATAAT on LIBERO-Spatial, then record final training loss, validation action mean-squared error, Task Success Rate and the dominant observed failure mode. The benign baseline has final loss 0.12, action MSE 0.028 and 91.5% Task Success Rate. BadNet has loss 1.68, MSE 0.412 and 4.5% Task Success Rate, with severe stagnation; adapted BadVLA has loss 1.42, MSE 0.385 and 17.5% Task Success Rate, with repetitive jittering; ATAAT has loss 0.15, MSE 0.034 and 88.8% Task Success Rate, with occasional execution errors.",
+    "Test whether the backdoor follows instruction meaning across language rewrites. Starting from LIBERO-Spatial training instructions, use GPT-4o under prompt constraints to construct Set A by replacing verbs or nouns while retaining syntax and Set B by changing syntax or adding modifiers while preserving intent; evaluate without model re-tuning. Adapted BadVLA falls from 13.1% Targeted Attack Success Rate on original instructions to 8.5% on synonym replacements, a 4.6-point drop, and 4.2% on syntactic restructurings, an 8.9-point drop. ATAAT falls from 83.5% to 81.2%, a 2.3-point drop, and to 79.4%, a 4.1-point drop. BadNet remains at 0.0% on all three sets.",
+    "Check whether the visual trigger disrupts an unrelated benign instruction. Evaluate a benign \u201cPickup black bowl\u201d task without the red cup, the same instruction with a red cup present as a neutral trigger, and the triggered \u201cPickup red cup\u201d hijack condition. BadVLA records 95.1% benign Task Success Rate, 71.5% Task Success Rate with the neutral trigger and 93.2% Targeted Attack Success Rate on the hijack instruction. ATAAT records 95.3% benign Task Success Rate, 92.1% Task Success Rate with the neutral trigger and 94.5% Targeted Attack Success Rate on the hijack instruction."
+  ],
+  "roles": [
+    "headline",
+    "headline",
+    "confound",
+    "external",
+    "control"
+  ]
+}

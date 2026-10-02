@@ -1,0 +1,38 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2605_08612_c2",
+  "claim": "The defences available for this setting, meaning input preprocessing, parameter pruning, runtime safety layers, and backdoor detectors carried over from classification to continuous control, cannot be relied on to remove a semantically triggered backdoor from a vision-language-action policy without raising too many false alarms on ordinary inputs. Accepted only if no defence cuts the triggered behaviour by at least 50 percentage points relative to the undefended policy while keeping false alarms on benign inputs at or below 10%; a defence that reaches the first bar only by exceeding the second does not count.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2605.08612"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2605_08612",
+      "claim": "C2",
+      "v3_indices": [
+        1,
+        11,
+        12
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Can it be planted through fine-tuning access instead? Setup: profile which parameters stay inactive on ordinary inputs, freeze everything else, and fine-tune only that inactive slice (about 1.8% of tunable parameters) on a small anchoring set. Measured: as above. Result: 79.3% ordinary / 74.8% triggered on the object suite and 78.1% / 72.5% on the spatial suite, against 50.8% / 37.7% and 52.1% / 39.2% for the strongest earlier attack. Note the ordinary-success figures are roughly 12 points below the clean policy, outside the claim's 5% relative bar.",
+    "Do existing defences remove it? Setup: apply input preprocessing (JPEG compression, Gaussian noise), parameter pruning, and three runtime safety layers to the semantically triggered policy on one task split. Result: starting from 94.5% undefended, the triggered rate becomes 91.6% (JPEG), 87.9% (noise), 73.4% (pruning), 78.5% and 65.3% (two safety layers), and 45.2% for the strongest, a circuit-breaker style defence. Only that last approaches a 50-point reduction. In accompanying physical demonstrations the compression defence lets the action through, one safety layer halts it mid-execution, and the circuit-breaker blocks it before any motion.",
+    "Do backdoor detectors carried over from classification work on continuous control? Setup: adapt two standard detectors to this setting, one perturbing inputs and reading the entropy of the action output, the other clustering latent representations. Measured: triggered rate after the defence and the false-alarm rate on benign samples. Result: from 83.5% undefended, the first brings it to 76.2% but flags 62.5% of benign samples; the second brings it to 27.1% with an 18.4% benign false-alarm rate. Neither clears the 50-point reduction at a 10% false-alarm ceiling."
+  ],
+  "roles": [
+    "headline",
+    "external",
+    "external"
+  ]
+}

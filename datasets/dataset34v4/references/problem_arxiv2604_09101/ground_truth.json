@@ -1,0 +1,42 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2604_09101",
+  "claim": "Prompt-tuned CLIP classifiers whose image and text encoders remain frozen can be screened before deployment to distinguish clean models from backdoored models and identify the attacker-selected target class. The detection claim is accepted only if, using a fixed decision threshold of 2, an auditor achieves higher model-level AUROC and higher target-class F1 than the strongest prior model-level detector while using no greater optimization budget. A post-hoc repair is successful only if it reduces backdoor attack success rate below 10% while keeping clean top-1 accuracy within \u00b11 percentage point of its pre-repair value.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2604.09101"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 \u2014 automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "gpt-5.6-sol",
+    "split": {
+      "from": "dataset20v3/arxiv2604_09101",
+      "claim": "C0",
+      "v3_indices": [
+        0,
+        2,
+        3,
+        8,
+        9
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json."
+    }
+  },
+  "experiments": [
+    "Build the clean and backdoored model suite used for the audit. Prompt-tune CLIP ViT-B/16 with CoCoOp on the Seen classes of ImageNet, Caltech101, OxfordPets, Flowers102, Food101, FGVC Aircraft, SUN397, DTD, EuroSAT and UCF101, while freezing the image and text encoders; the two-layer meta-net produces image-conditioned tokens concatenated with four learnable context vectors and the class-name embedding. Train one clean model and four poisoned models per dataset, using BadCLIP for 10 epochs with an \u2113\u221e budget of 4/255 and adapted Blended, SIBA and WaNet attacks with 10% of fine-tuning images poisoned, for 50 models total. Clean models average 82.19% Seen and 70.29% Unseen accuracy. BadCLIP averages 81.73% Seen accuracy, 99.04% Seen ASR, 68.88% Unseen accuracy and 96.70% Unseen ASR; Blended averages 81.68%, 99.73%, 67.08% and 97.65%; SIBA averages 75.91%, 66.30%, 67.58% and 52.18%; and WaNet averages 82.08%, 92.52%, 66.58% and 81.64%, respectively.",
+    "Run the model-level and target-class detection comparison. For every one of the 50 clean or backdoored models, form a candidate set of 50 labels containing the attacker-selected target, invert one class-wise trigger from 1,000 unlabeled Open Images images with no class overlap, and evaluate CLIP-Inspector, Neural Cleanse and Pixel Backdoor on the same candidate labels and OOD pool. CLIP-Inspector uses Adam with step size 0.1, batch size 32, an \u2113\u221e budget of 4/255 and one epoch, approximately 32 updates, per class; Neural Cleanse and Pixel Backdoor run for five epochs with their original losses and dynamic regularization. At the fixed anomaly threshold k=2, CLIP-Inspector classifies 47 of 50 models correctly, or 94%, and its model-level AUROC is 0.973, versus 0.495 for Neural Cleanse and 0.687 for Pixel Backdoor. Its average target-class F1 across datasets is 0.92, versus 0.06 and 0.42; across attacks its F1 values are 0.94 for BadCLIP, 0.95 for Blended, 1.00 for SIBA and 0.84 for WaNet, averaging 0.93, versus 0.05 and 0.42. The three CLIP-Inspector model errors are the clean FGVC model, DTD with WaNet and EuroSAT with BadCLIP. A 50-class scan takes less than one hour on an A100 GPU, compared with six hours for Neural Cleanse and eight hours for Pixel Backdoor.",
+    "Check whether high reconstructed-trigger ASR and low optimization loss distinguish the target class rather than merely producing triggers for every class. On Caltech101, compare each method's target-class trigger metrics with the maximum among non-target classes for clean, BadCLIP, Blended, SIBA and WaNet models. CLIP-Inspector gives the clean model ASR 7.51 with difference \u221226.39 and loss 5.2218 with difference \u22122.0343; the four poisoned models give ASRs of 94.74, 99.02, 92.69 and 73.33 with differences of 66.27, 72.68, 65.75 and 50.61, and losses of \u22128.2344, \u221211.2263, \u22126.2807 and \u22124.5774. Neural Cleanse reconstructs triggers with ASR between 99.34 and 99.64 for both clean and poisoned models, while Pixel Backdoor gives ASR between 85.77 and 97.08, so their sparsity-derived scores do not show the same clean-versus-target behavior.",
+    "Test whether the reconstructed target trigger can repair the delivered model. On the same backdoored models, select the class with the largest CLIP-Inspector anomaly score, add its reconstructed trigger to a small labeled clean downstream dataset, retain each image's ground-truth label, and perform CoCoOp-style fine-tuning. Averaged across ten datasets, BadCLIP changes from 81.76% to 81.35% clean accuracy and from 98.48% to 7.61% ASR; BadCLIP Adaptive changes from 81.62% to 81.04% and from 64.35% to 4.23%; Blended changes from 81.69% to 81.69% and from 99.73% to 7.64%; SIBA changes from 75.91% to 77.93% and from 66.30% to 5.76%; and WaNet changes from 82.08% to 82.11% and from 92.99% to 5.27%. The overall averages change from 80.61% to 80.82% clean accuracy and from 84.37% to 6.10% ASR.",
+    "Compare target-trigger repair with alternative fine-tuning interventions. Average results over all datasets and attack types using clean-only fine-tuning, random \u2113\u221e-bounded noise, a CLIP-Inspector trigger reconstructed for a non-target class, or the trigger reconstructed for the detected target class. Starting from 80.6% clean accuracy and 84.4% ASR, clean-only fine-tuning ends at 81.4% accuracy and 64.6% ASR, random noise at 81.0% and 52.7%, a wrong-class reconstructed trigger at 80.3% and 47.0%, and the target-class CLIP-Inspector trigger at 80.8% and 6.1%. For the wrong-class control, SIBA falls to 5.4% ASR, while BadCLIP, BadCLIP Adaptive, Blended and WaNet remain at 60.3%, 43.5%, 56.0% and 70.0%."
+  ],
+  "roles": [
+    "apparatus",
+    "headline",
+    "mechanism",
+    "headline",
+    "control"
+  ]
+}

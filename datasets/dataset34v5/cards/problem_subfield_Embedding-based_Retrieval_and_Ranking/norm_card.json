@@ -1,0 +1,1592 @@
+{
+  "type": "scientific_norm_card_set",
+  "format_version": "0.3",
+  "problem_id": "subfield_Embedding-based_Retrieval_and_Ranking",
+  "claim": "Experimental norms and standard practice in Embedding-based Retrieval and Ranking.",
+  "subfields": [
+    "Embedding-based Retrieval and Ranking"
+  ],
+  "provenance": {
+    "n_papers_bundle": 30,
+    "n_papers_deduped": 30,
+    "n_fulltext": 12,
+    "pdf_sources": {
+      "none": 18,
+      "pdf_url": 5,
+      "arxiv": 5,
+      "s2": 1,
+      "unpaywall": 1
+    },
+    "map_model": "gpt-5-mini",
+    "reduce_model": "gpt-5",
+    "recipe_model": "gpt-5"
+  },
+  "norm_cards": [
+    {
+      "subfield": "Embedding-based Retrieval and Ranking",
+      "menu": {
+        "datasets": [
+          {
+            "name": "MS MARCO",
+            "role": "train",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+              "MS MARCO: Benchmarking Ranking Models in the Large-Data Regime",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "BEIR",
+            "role": "eval",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "NaturalQuestions",
+            "role": "train",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Wikipedia (Passage Index)",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "SQuAD",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "TriviaQA",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "WebQuestions",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "EntityQuestions",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Mr.TyDi",
+            "role": "eval",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "CuratedTREC",
+            "role": "eval",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "TREC Robust 2004",
+            "role": "eval",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "TREC WebTrack 2012\u20132014",
+            "role": "eval",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "ClueWeb09b",
+            "role": "eval",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "ClueWeb12",
+            "role": "eval",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "TREC Disks 4 & 5",
+            "role": "eval",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "PAQ",
+            "role": "train",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "FACTOIDWIKI (propositionized Wikipedia)",
+            "role": "eval",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          }
+        ],
+        "models": [
+          {
+            "name": "BM25",
+            "role": "baseline",
+            "evidence": [
+              "CEDR",
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "DPR",
+            "role": "method_under_test",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Hybrid (BM25 + dense fusion)",
+            "role": "method_under_test",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "BERT",
+            "role": "backbone",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "CEDR",
+            "role": "method_under_test",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "SPAR",
+            "role": "method_under_test",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "mDPR",
+            "role": "baseline",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Contriever",
+            "role": "baseline",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "GTR",
+            "role": "baseline",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "ColBERT",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "UniCOIL",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "ANCE",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "RocketQA",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "docT5query",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "ELMo",
+            "role": "backbone",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "GloVe",
+            "role": "backbone",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "FiD (Fusion-in-Decoder)",
+            "role": "backbone",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "LLaMA-2",
+            "role": "backbone",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Flan-T5",
+            "role": "backbone",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "GPT-4",
+            "role": "backbone",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "xMoCo",
+            "role": "baseline",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Recall@k",
+            "direction": "higher_better",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "nDCG@20",
+            "direction": "higher_better",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "P@20",
+            "direction": "higher_better",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "ERR@20",
+            "direction": "higher_better",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Acc@20/Acc@100 (answer-containing passage in top-k)",
+            "direction": "higher_better",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Exact Match (EM)",
+            "direction": "higher_better",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Index size (GB)",
+            "direction": "lower_better",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Latency (ms/query)",
+            "direction": "lower_better",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Processing rate (docs/sec)",
+            "direction": "higher_better",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Rank Biased Overlap (RBO)",
+            "direction": "higher_better",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Gold-answer recall within top-k retrieved words",
+            "direction": "higher_better",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "CPU-time cost (query time)",
+            "direction": "lower_better",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval"
+            ]
+          }
+        ],
+        "protocols": [
+          {
+            "name": "Train on MS MARCO; evaluate zero-shot on BEIR",
+            "detail": "Train dense retrievers on MS MARCO and report zero-shot effectiveness across BEIR datasets; no BEIR tuning.",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "ODQA training on NQ with multi-dataset evaluation",
+            "detail": "Train on NQ and report Acc@20/100 (or Recall@k) on NQ, SQuAD, TriviaQA, WebQuestions, CuratedTREC using a fixed Wikipedia passage index.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "BM25 candidate generation then neural reranking",
+            "detail": "Generate top-k (e.g., k=100\u2013150) candidates with BM25 (or QL) and rerank with neural models; select k on dev; report P@20/nDCG@20/ERR@20.",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Per-language BM25 tuning for multilingual retrieval",
+            "detail": "Grid-search BM25 k,b on a per-language dev set to optimize MRR@100, then test on Mr.TyDi.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Sparse\u2013Dense hybrid score fusion",
+            "detail": "Normalize BM25 and dense scores to [0,1] and combine via s_sparse + \u03b1\u00b7s_dense; tune \u03b1 on dev.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Dense ANN search configuration",
+            "detail": "Use Faiss FlatIP (inner-product) indexes for dense retrieval; evaluate MRR/Recall at cutoffs like 100.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Retrieval granularity comparisons under equal budgets",
+            "detail": "Index at passage/sentence/proposition granularities; map fine units back to passages and constrain input to equal token budgets for downstream LMs.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Retrieval-augmented generation with capped context",
+            "detail": "Feed top-retrieved context to an LM with fixed token cap (e.g., 100 or 500 tokens) and report EM@token-budget alongside closed-book EM.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Report effectiveness\u2013efficiency trade-offs",
+            "detail": "Alongside effectiveness, report index size and per-query latency/CPU-time; analyze scaling with method knobs (e.g., clusters).",
+            "evidence": [
+              "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Held-out validation and cross-year/fold splits",
+            "detail": "Use fixed folds (e.g., Robust04 5-fold) or year-held-out splits (WebTrack) to tune hyperparameters and select checkpoints.",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Statistical significance testing",
+            "detail": "Use paired tests across queries/topics (e.g., paired t-test) when claiming improvements.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Recall vs ranking-error decomposition",
+            "detail": "Break down MRR into retrieval failures (Recall@k) vs ranking quality conditional on at-least-one relevant retrieved.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Rank list overlap analysis",
+            "detail": "Compute Rank Biased Overlap between methods to assess lexical vs semantic behavior similarities.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Query stress tests",
+            "detail": "Evaluate on token-shuffled queries to probe order sensitivity and lexical matching behavior.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Generated context quality checks",
+            "detail": "Manually annotate a sample of generated propositions for faithfulness/minimality/stand-alone properties and report error rates.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          }
+        ],
+        "controls": [
+          {
+            "name": "Strong lexical baseline (BM25) with and without tuning",
+            "detail": "Evaluate BM25 with default settings and after per-dataset/per-language k,b tuning on dev.",
+            "rules_out": "that improvements stem from weak or untuned sparse baselines rather than the proposed method.",
+            "evidence": [
+              "CEDR",
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Sparse-only vs dense-only vs hybrid ablations",
+            "detail": "Compare standalone sparse and dense retrievers to their (score-level or vector-level) hybrid under identical candidate pools and tuning budgets.",
+            "rules_out": "that gains are merely inherited from one component rather than true complementarity or the proposed integration.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Equal token-budget constraint",
+            "detail": "Fix the total number of input tokens supplied to downstream LMs across retrieval granularities/indices.",
+            "rules_out": "that differences are due to unequal context sizes rather than retrieval granularity or representation.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Closed-book (no retrieval) baseline",
+            "detail": "Evaluate the LM without any retrieved context under the same prompting/inference setup.",
+            "rules_out": "that improvements come from the language model\u2019s internal knowledge rather than retrieval.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Supervised vs unsupervised retriever variants",
+            "detail": "Evaluate both supervised (e.g., DPR/GTR) and unsupervised (e.g., Contriever/SimCSE) retrievers under the same indexing and evaluation pipelines.",
+            "rules_out": "that effects are artifacts of supervision/training-data overlap rather than the experimental factor (e.g., granularity).",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Dimension-matched ensemble baseline",
+            "detail": "Concatenate two independently trained dense retrievers to match the proposed concatenated embedding dimensionality.",
+            "rules_out": "that improvements arise from larger vector dimensionality/parameter count rather than the specific integration.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Contextualization controls (GloVe/ELMo/VanillaBERT/non-joint)",
+            "detail": "Swap contextual backbones or remove joint mechanisms (e.g., [CLS] fusion) while keeping the reranker architecture and training identical.",
+            "rules_out": "that gains are solely from using any contextual LM or fine-tuning classifier rather than the proposed ranking integration.",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Add sparse retriever at inference",
+            "detail": "Augment the proposed dense method with BM25 at inference and measure incremental gains.",
+            "rules_out": "that reported gains already rely on having sparse access at inference rather than learning sparse-like signals.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Token-order shuffle control",
+            "detail": "Evaluate with randomly shuffled query tokens.",
+            "rules_out": "that improvements depend on order-sensitive semantics rather than robust lexical/term-matching behavior.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          }
+        ],
+        "confounds": [
+          {
+            "name": "Incomplete relevance judgments (unjudged treated as non-relevant)",
+            "detail": "Sparse pooling leads to false negatives that can distort Recall/MRR comparisons, especially across methods with different candidate distributions.",
+            "ruled_out_by": "Acknowledge judgment incompleteness; where possible, compare relative trends and complement with recall@k and conditional ranking analyses; use paired tests across identical pools.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Low MRR due to retrieval failure (not ranking)",
+            "detail": "A model may have poor MRR because it misses any relevant item, not because it ranks retrieved relevant items poorly.",
+            "ruled_out_by": "Report Recall@k and the distribution of ranks conditional on at-least-one relevant retrieved to separate failure modes.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Training/test overlap or supervised-data bias",
+            "detail": "Supervised retrievers may benefit from overlap or bias toward training formats/domains, inflating gains unrelated to the tested factor.",
+            "ruled_out_by": "Report supervised vs unsupervised retrievers separately; flag datasets seen during training; highlight where gains persist or increase on unseen datasets.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Token-density advantage (context packing)",
+            "detail": "Apparent gains from finer-grained units may result from packing more answer-bearing tokens per budget rather than better semantics.",
+            "ruled_out_by": "Match token budgets and measure gold-answer recall as a function of retrieved-word count across indices.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Improvement due to larger embedding dimensionality",
+            "detail": "Concatenation-based methods may win because of increased vector size/parameters, not better modeling.",
+            "ruled_out_by": "Compare against size-matched ensembles (e.g., concatenating two independent retrievers) and show they underperform the proposed integration.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Gains rely on sparse access at inference",
+            "detail": "If the method implicitly uses or is complemented by sparse retrieval at inference, improvements may not reflect learned signals.",
+            "ruled_out_by": "Add BM25 at inference to the proposed method; minimal additional gain indicates the method already captures sparse-like cues.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Lexical vs semantic explanation",
+            "detail": "Improvements could be from lexical matching rather than improved semantic retrieval (or vice versa).",
+            "ruled_out_by": "Compute RBO overlap with BM25 and run token-shuffled query tests to diagnose lexical matching behavior.",
+            "evidence": [
+              "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+            ]
+          },
+          {
+            "name": "Attribution to fine-tuning alone (not architecture)",
+            "detail": "Observed gains may be due solely to LM fine-tuning or [CLS] classification rather than the ranking integration.",
+            "ruled_out_by": "Compare non-joint contextual baselines and VanillaBERT classifier to the joint integration; show additional gains from the proposed mechanism.",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Impractical inference speed",
+            "detail": "Benefits may vanish under realistic latency constraints.",
+            "ruled_out_by": "Measure throughput/latency and show competitive performance with truncated/backbone-layer limits.",
+            "evidence": [
+              "CEDR"
+            ]
+          },
+          {
+            "name": "Random variation/sampling noise",
+            "detail": "Observed improvements may be due to chance given dataset splits and query sets.",
+            "ruled_out_by": "Use paired statistical tests (e.g., paired t-test) across queries/topics to establish significance.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Domain/language mismatch for dense retrievers",
+            "detail": "Zero-shot underperformance can be due to training on different domains/languages rather than method limitations.",
+            "ruled_out_by": "Prefer in-domain multilingual training or explicitly note limitations; qualitative analysis and preliminary fine-tuning evidence where available.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Unequal context across conditions",
+            "detail": "Different amounts of retrieved text given to the LM can confound downstream comparisons.",
+            "ruled_out_by": "Fix token budgets across conditions when evaluating retrieval granularity/RAG.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "LM internal knowledge explains RAG gains",
+            "detail": "Improvements may come from the LM\u2019s parametric memory rather than retrieval.",
+            "ruled_out_by": "Include closed-book baselines under the same prompting to isolate retrieval effects.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "BM25 parameterization explains differences",
+            "detail": "Poorly tuned sparse baselines can make dense or hybrid methods look better.",
+            "ruled_out_by": "Per-language/per-dataset BM25 grid search on dev; compare against tuned BM25.",
+            "evidence": [
+              "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+            ]
+          },
+          {
+            "name": "Benefits limited to frequent/head entities",
+            "detail": "Apparent gains may accrue only for common entities, not the long tail.",
+            "ruled_out_by": "Analyze performance as a function of entity frequency estimated from a large BM25 retrieval set.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          },
+          {
+            "name": "Low-quality generated propositions",
+            "detail": "Unfaithful/non-minimal propositions can artifactually affect retrieval outcomes.",
+            "ruled_out_by": "Manual proposition quality audits with error categorization and rates.",
+            "evidence": [
+              "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+            ]
+          }
+        ]
+      },
+      "guard": {
+        "items_dropped": 1,
+        "evidence_links_dropped": 4,
+        "kept_per_key": {
+          "datasets": 17,
+          "models": 21,
+          "metrics": 12,
+          "protocols": 15,
+          "controls": 9,
+          "confounds": 16
+        }
+      }
+    }
+  ],
+  "card": {
+    "datasets": [
+      {
+        "name": "MS MARCO",
+        "evidence": [
+          "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+          "MS MARCO: Benchmarking Ranking Models in the Large-Data Regime",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "NaturalQuestions",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "train"
+      },
+      {
+        "name": "Wikipedia",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Wikipedia (Passage Index)"
+        ],
+        "role": "eval"
+      },
+      {
+        "name": "BEIR",
+        "evidence": [
+          "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "EntityQuestions",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "SQuAD",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "TriviaQA",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "eval"
+      },
+      {
+        "name": "WebQuestions",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "eval"
+      }
+    ],
+    "models": [
+      {
+        "name": "BM25",
+        "evidence": [
+          "CEDR",
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "Contriever",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "DPR",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "method_under_test"
+      },
+      {
+        "name": "GTR",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "role": "baseline"
+      },
+      {
+        "name": "Hybrid",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Hybrid (BM25 + dense fusion)"
+        ],
+        "role": "method_under_test"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Recall@k",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?",
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "direction": "higher_better"
+      },
+      {
+        "name": "Index size",
+        "evidence": [
+          "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Index size (GB)"
+        ],
+        "direction": "lower_better"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Report effectiveness\u2013efficiency trade-offs",
+        "evidence": [
+          "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Alongside effectiveness, report index size and per-query latency/CPU-time; analyze scaling with method knobs (e.g., clusters)."
+      },
+      {
+        "name": "Train on MS MARCO; evaluate zero-shot on BEIR",
+        "evidence": [
+          "Cluster-based Partial Dense Retrieval Fused with Sparse Text Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Train dense retrievers on MS MARCO and report zero-shot effectiveness across BEIR datasets; no BEIR tuning."
+      },
+      {
+        "name": "BM25 candidate generation then neural reranking",
+        "evidence": [
+          "CEDR"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Generate top-k (e.g., k=100\u2013150) candidates with BM25 (or QL) and rerank with neural models; select k on dev; report P@20/nDCG@20/ERR@20."
+      },
+      {
+        "name": "Dense ANN search configuration",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Use Faiss FlatIP (inner-product) indexes for dense retrieval; evaluate MRR/Recall at cutoffs like 100."
+      },
+      {
+        "name": "Generated context quality checks",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Manually annotate a sample of generated propositions for faithfulness/minimality/stand-alone properties and report error rates."
+      },
+      {
+        "name": "Held-out validation and cross-year/fold splits",
+        "evidence": [
+          "CEDR"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Use fixed folds (e.g., Robust04 5-fold) or year-held-out splits (WebTrack) to tune hyperparameters and select checkpoints."
+      },
+      {
+        "name": "ODQA training on NQ with multi-dataset evaluation",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Train on NQ and report Acc@20/100 (or Recall@k) on NQ, SQuAD, TriviaQA, WebQuestions, CuratedTREC using a fixed Wikipedia passage index."
+      },
+      {
+        "name": "Per-language BM25 tuning for multilingual retrieval",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Grid-search BM25 k,b on a per-language dev set to optimize MRR@100, then test on Mr.TyDi."
+      },
+      {
+        "name": "Query stress tests",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Evaluate on token-shuffled queries to probe order sensitivity and lexical matching behavior."
+      },
+      {
+        "name": "Rank list overlap analysis",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Compute Rank Biased Overlap between methods to assess lexical vs semantic behavior similarities."
+      },
+      {
+        "name": "Recall vs ranking-error decomposition",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Break down MRR into retrieval failures (Recall@k) vs ranking quality conditional on at-least-one relevant retrieved."
+      },
+      {
+        "name": "Retrieval granularity comparisons under equal budgets",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Index at passage/sentence/proposition granularities; map fine units back to passages and constrain input to equal token budgets for downstream LMs."
+      },
+      {
+        "name": "Retrieval-augmented generation with capped context",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Feed top-retrieved context to an LM with fixed token cap (e.g., 100 or 500 tokens) and report EM@token-budget alongside closed-book EM."
+      },
+      {
+        "name": "Sparse\u2013Dense hybrid score fusion",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Normalize BM25 and dense scores to [0,1] and combine via s_sparse + \u03b1\u00b7s_dense; tune \u03b1 on dev."
+      }
+    ],
+    "controls": [
+      {
+        "name": "Strong lexical baseline (BM25) with and without tuning",
+        "evidence": [
+          "CEDR",
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Evaluate BM25 with default settings and after per-dataset/per-language k,b tuning on dev.",
+        "rules_out": "that improvements stem from weak or untuned sparse baselines rather than the proposed method."
+      },
+      {
+        "name": "Sparse-only vs dense-only vs hybrid ablations",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval",
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Compare standalone sparse and dense retrievers to their (score-level or vector-level) hybrid under identical candidate pools and tuning budgets.",
+        "rules_out": "that gains are merely inherited from one component rather than true complementarity or the proposed integration."
+      },
+      {
+        "name": "Add sparse retriever at inference",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Augment the proposed dense method with BM25 at inference and measure incremental gains.",
+        "rules_out": "that reported gains already rely on having sparse access at inference rather than learning sparse-like signals."
+      },
+      {
+        "name": "Closed-book (no retrieval) baseline",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Evaluate the LM without any retrieved context under the same prompting/inference setup.",
+        "rules_out": "that improvements come from the language model\u2019s internal knowledge rather than retrieval."
+      },
+      {
+        "name": "Contextualization controls",
+        "evidence": [
+          "CEDR"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Contextualization controls (GloVe/ELMo/VanillaBERT/non-joint)"
+        ],
+        "detail": "Swap contextual backbones or remove joint mechanisms (e.g., [CLS] fusion) while keeping the reranker architecture and training identical.",
+        "rules_out": "that gains are solely from using any contextual LM or fine-tuning classifier rather than the proposed ranking integration."
+      },
+      {
+        "name": "Dimension-matched ensemble baseline",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Concatenate two independently trained dense retrievers to match the proposed concatenated embedding dimensionality.",
+        "rules_out": "that improvements arise from larger vector dimensionality/parameter count rather than the specific integration."
+      },
+      {
+        "name": "Equal token-budget constraint",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Fix the total number of input tokens supplied to downstream LMs across retrieval granularities/indices.",
+        "rules_out": "that differences are due to unequal context sizes rather than retrieval granularity or representation."
+      },
+      {
+        "name": "Supervised vs unsupervised retriever variants",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Evaluate both supervised (e.g., DPR/GTR) and unsupervised (e.g., Contriever/SimCSE) retrievers under the same indexing and evaluation pipelines.",
+        "rules_out": "that effects are artifacts of supervision/training-data overlap rather than the experimental factor (e.g., granularity)."
+      },
+      {
+        "name": "Token-order shuffle control",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Evaluate with randomly shuffled query tokens.",
+        "rules_out": "that improvements depend on order-sensitive semantics rather than robust lexical/term-matching behavior."
+      }
+    ],
+    "confounds": [
+      {
+        "name": "Attribution to fine-tuning alone",
+        "evidence": [
+          "CEDR"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Attribution to fine-tuning alone (not architecture)"
+        ],
+        "detail": "Observed gains may be due solely to LM fine-tuning or [CLS] classification rather than the ranking integration.",
+        "ruled_out_by": "Compare non-joint contextual baselines and VanillaBERT classifier to the joint integration; show additional gains from the proposed mechanism."
+      },
+      {
+        "name": "BM25 parameterization explains differences",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Poorly tuned sparse baselines can make dense or hybrid methods look better.",
+        "ruled_out_by": "Per-language/per-dataset BM25 grid search on dev; compare against tuned BM25."
+      },
+      {
+        "name": "Benefits limited to frequent/head entities",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Apparent gains may accrue only for common entities, not the long tail.",
+        "ruled_out_by": "Analyze performance as a function of entity frequency estimated from a large BM25 retrieval set."
+      },
+      {
+        "name": "Domain/language mismatch for dense retrievers",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Zero-shot underperformance can be due to training on different domains/languages rather than method limitations.",
+        "ruled_out_by": "Prefer in-domain multilingual training or explicitly note limitations; qualitative analysis and preliminary fine-tuning evidence where available."
+      },
+      {
+        "name": "Gains rely on sparse access at inference",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "If the method implicitly uses or is complemented by sparse retrieval at inference, improvements may not reflect learned signals.",
+        "ruled_out_by": "Add BM25 at inference to the proposed method; minimal additional gain indicates the method already captures sparse-like cues."
+      },
+      {
+        "name": "Impractical inference speed",
+        "evidence": [
+          "CEDR"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Benefits may vanish under realistic latency constraints.",
+        "ruled_out_by": "Measure throughput/latency and show competitive performance with truncated/backbone-layer limits."
+      },
+      {
+        "name": "Improvement due to larger embedding dimensionality",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Concatenation-based methods may win because of increased vector size/parameters, not better modeling.",
+        "ruled_out_by": "Compare against size-matched ensembles (e.g., concatenating two independent retrievers) and show they underperform the proposed integration."
+      },
+      {
+        "name": "Incomplete relevance judgments",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Incomplete relevance judgments (unjudged treated as non-relevant)"
+        ],
+        "detail": "Sparse pooling leads to false negatives that can distort Recall/MRR comparisons, especially across methods with different candidate distributions.",
+        "ruled_out_by": "Acknowledge judgment incompleteness; where possible, compare relative trends and complement with recall@k and conditional ranking analyses; use paired tests across identical pools."
+      },
+      {
+        "name": "LM internal knowledge explains RAG gains",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Improvements may come from the LM\u2019s parametric memory rather than retrieval.",
+        "ruled_out_by": "Include closed-book baselines under the same prompting to isolate retrieval effects."
+      },
+      {
+        "name": "Lexical vs semantic explanation",
+        "evidence": [
+          "Salient Phrase Aware Dense Retrieval: Can a Dense Retriever Imitate a Sparse One?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Improvements could be from lexical matching rather than improved semantic retrieval (or vice versa).",
+        "ruled_out_by": "Compute RBO overlap with BM25 and run token-shuffled query tests to diagnose lexical matching behavior."
+      },
+      {
+        "name": "Low MRR due to retrieval failure",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Low MRR due to retrieval failure (not ranking)"
+        ],
+        "detail": "A model may have poor MRR because it misses any relevant item, not because it ranks retrieved relevant items poorly.",
+        "ruled_out_by": "Report Recall@k and the distribution of ranks conditional on at-least-one relevant retrieved to separate failure modes."
+      },
+      {
+        "name": "Low-quality generated propositions",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Unfaithful/non-minimal propositions can artifactually affect retrieval outcomes.",
+        "ruled_out_by": "Manual proposition quality audits with error categorization and rates."
+      },
+      {
+        "name": "Random variation/sampling noise",
+        "evidence": [
+          "Mr. TyDi: A Multi-lingual Benchmark for Dense Retrieval"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [],
+        "detail": "Observed improvements may be due to chance given dataset splits and query sets.",
+        "ruled_out_by": "Use paired statistical tests (e.g., paired t-test) across queries/topics to establish significance."
+      },
+      {
+        "name": "Token-density advantage",
+        "evidence": [
+          "Dense X Retrieval: What Retrieval Granularity Should We Use?"
+        ],
+        "subfields": [
+          "Embedding-based Retrieval and Ranking"
+        ],
+        "variants": [
+          "Token-density advantage (context packing)"
+        ],
+        "detail": "Apparent gains from finer-grained units may result from packing more answer-bearing tokens per budget rather than better semantics.",
+        "ruled_out_by": "Match token budgets and measure gold-answer recall as a function of retrieved-word count across indices."
+      }
+    ]
+  },
+  "curation": {
+    "datasets": {
+      "in": 17,
+      "out": 8,
+      "dropped_uncorroborated": 9,
+      "relaxed": false,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 8
+      }
+    },
+    "models": {
+      "in": 21,
+      "out": 5,
+      "dropped_uncorroborated": 16,
+      "relaxed": false,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 5
+      }
+    },
+    "metrics": {
+      "in": 12,
+      "out": 2,
+      "dropped_uncorroborated": 10,
+      "relaxed": false,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 2
+      }
+    },
+    "protocols": {
+      "in": 15,
+      "out": 14,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 14
+      }
+    },
+    "controls": {
+      "in": 9,
+      "out": 9,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 9
+      }
+    },
+    "confounds": {
+      "in": 16,
+      "out": 14,
+      "by_subfield": {
+        "Embedding-based Retrieval and Ranking": 14
+      }
+    },
+    "totals": {
+      "in": 90,
+      "out": 52
+    }
+  },
+  "experiment_recipes": [
+    {
+      "stage": "gate",
+      "goal": "Zero-shot BEIR after MS MARCO training gate",
+      "dataset": "BEIR (eval)",
+      "model": "DPR (method_under_test)",
+      "method_under_test": "DPR (method_under_test)",
+      "attack_or_condition": "Train on MS MARCO; evaluate zero-shot on BEIR \u2014 Train dense retrievers on MS MARCO and report zero-shot effectiveness across BEIR datasets; no BEIR tuning.",
+      "metrics": [
+        "nDCG@20",
+        "Recall@100"
+      ],
+      "pass_condition": "Pass if (a) training data sources == {MS MARCO (train)} and tuned_on \u2229 {BEIR datasets} == \u2205; (b) number of BEIR datasets evaluated \u2265 8; (c) for each evaluated BEIR dataset, both nDCG@20 and Recall@100 are reported. Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Verifies the zero-shot evaluation norm on BEIR after MS MARCO training with required coverage and metrics.",
+      "_ungrounded_metrics": [
+        "Recall@100"
+      ],
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": false
+      }
+    },
+    {
+      "stage": "apparatus",
+      "goal": "Tuned BM25 apparatus on BEIR dev/test",
+      "dataset": "BEIR (eval)",
+      "model": "BM25 (baseline)",
+      "method_under_test": "BM25 (baseline)",
+      "attack_or_condition": "Per-language BM25 tuning for multilingual retrieval \u2014 Grid-search BM25 k,b on a per-language dev set to optimize MRR@100, then test on Mr.TyDi.",
+      "metrics": [
+        "nDCG@20"
+      ],
+      "pass_condition": "Pass if for each evaluated dataset: (a) a grid-search over k \u00d7 b has grid_size \u2265 9 (e.g., |k| \u2265 3, |b| \u2265 3); (b) the selected (k,b) maximizes dev nDCG@20 and is applied unchanged to test; (c) default-BM25 and tuned-BM25 test nDCG@20 are both reported; (d) dev/test topic overlap == 0. Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [],
+      "rationale": "Establishes a strong, tuned lexical baseline per standard practice to avoid weak-baseline confounds.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "BM25->CEDR reranking on Robust04 with significance",
+      "dataset": "TREC Robust 2004 (eval)",
+      "model": "CEDR (method_under_test)",
+      "method_under_test": "CEDR (method_under_test)",
+      "attack_or_condition": "BM25 candidate generation then neural reranking \u2014 Generate top-k (e.g., k=100\u2013150) candidates with BM25 (or QL) and rerank with neural models; select k on dev; report P@20/nDCG@20/ERR@20.",
+      "metrics": [
+        "P@20",
+        "nDCG@20",
+        "ERR@20"
+      ],
+      "pass_condition": "Pass if: (a) k_selected \u2208 {100,150} chosen on a held-out Robust04 dev split; (b) evaluation follows Robust04 5-fold (i.e., number_of_folds == 5) with no cross-fold leakage; (c) for each fold, BM25 (initial) and CEDR (reranked) results are reported for P@20, nDCG@20, ERR@20; (d) paired t-tests across topics are run for CEDR vs BM25 and p-values are reported for all three metrics on the fold-averaged results (i.e., number_of_p_values_reported \u2265 3). Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Tuned BM25 apparatus on BEIR dev/test"
+      ],
+      "rationale": "Checks the standard BM25-candidate-plus-neural-reranker pipeline with proper fold splits and significance testing.",
+      "_ungrounded_metrics": [
+        "P@20"
+      ],
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": false
+      }
+    },
+    {
+      "stage": "headline",
+      "goal": "Sparse\u2013Dense hybrid fusion on BEIR with alpha tuning and efficiency reporting",
+      "dataset": "BEIR (eval)",
+      "model": "Hybrid (BM25 + dense fusion) (method_under_test)",
+      "method_under_test": "Hybrid (BM25 + dense fusion) (method_under_test)",
+      "attack_or_condition": "Sparse\u2013Dense hybrid score fusion \u2014 Normalize BM25 and dense scores to [0,1] and combine via s_sparse + \u03b1\u00b7s_dense; tune \u03b1 on dev.",
+      "metrics": [
+        "nDCG@20",
+        "Recall@100",
+        "Index size (GB)",
+        "Latency (ms/query)",
+        "Processing rate (docs/sec)"
+      ],
+      "pass_condition": "Pass if: (a) scores are min\u2013max normalized to [0,1] per dataset; (b) \u03b1 is tuned on a held-out dev set over a grid of at least 5 values and the argmax is applied unchanged to test; (c) test reports include BM25-only, dense-only, and hybrid under identical candidate pools and identical ANN settings; (d) nDCG@20 and Recall@100 are reported on \u2265 8 BEIR datasets; (e) for each method, Index size (GB) and Latency (ms/query) are measured over \u2265 1000 queries and Processing rate (docs/sec) is reported. Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Zero-shot BEIR after MS MARCO training gate",
+        "Tuned BM25 apparatus on BEIR dev/test"
+      ],
+      "rationale": "Validates hybrid fusion under matched conditions and reports standard effectiveness\u2013efficiency trade-offs.",
+      "_ungrounded_metrics": [
+        "Recall@100"
+      ],
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": true,
+        "metrics": false
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Rank list overlap (RBO) analysis BM25 vs dense vs hybrid",
+      "dataset": "BEIR (eval)",
+      "model": "BM25 (baseline)",
+      "method_under_test": "DPR (method_under_test)",
+      "attack_or_condition": "Rank list overlap analysis \u2014 Compute Rank Biased Overlap between methods to assess lexical vs semantic behavior similarities.",
+      "metrics": [
+        "Rank Biased Overlap (RBO)"
+      ],
+      "pass_condition": "Pass if for each of \u2265 8 BEIR datasets: (a) RBO at cutoff 100 is computed for BM25 vs dense and BM25 vs hybrid; (b) the average RBO over queries and its 95% bootstrap CI are reported; (c) the exact same query set and candidate pool are used across methods. Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Sparse\u2013Dense hybrid fusion on BEIR with alpha tuning and efficiency reporting"
+      ],
+      "rationale": "Ensures lexical vs semantic behavior is analyzed via standard rank-overlap diagnostics.",
+      "_grounded": {
+        "dataset": true,
+        "model": true,
+        "method_under_test": false,
+        "metrics": true
+      }
+    },
+    {
+      "stage": "control",
+      "goal": "Token-shuffled query stress test for order sensitivity",
+      "dataset": "BEIR (eval)",
+      "model": "DPR (method_under_test)",
+      "method_under_test": "DPR (method_under_test)",
+      "attack_or_condition": "Query stress tests \u2014 Evaluate on token-shuffled queries to probe order sensitivity and lexical matching behavior.",
+      "metrics": [
+        "nDCG@20"
+      ],
+      "pass_condition": "Pass if for at least 3 BEIR datasets: (a) each original query is token-shuffled (random permutation) without changing tokenization; (b) nDCG@20 is evaluated on original and shuffled queries for BM25-only, dense-only, and hybrid; (c) per-method \u0394nDCG@20 = nDCG@20_original \u2212 nDCG@20_shuffled is reported; (d) identical indexes and candidate pools are used across original vs shuffled. Otherwise fail.",
+      "constraints_not_enforced": [],
+      "depends_on": [
+        "Sparse\u2013Dense hybrid fusion on BEIR with alpha tuning and efficiency reporting"
+      ],
+      "rationale": "Differentiates lexical term-matching behavior from order-sensitive semantic matching per community stress-test norms.",
+      "_grounded": {
+        "dataset": true,
+        "model": false,
+        "method_under_test": false,
+        "metrics": true
+      }
+    }
+  ]
+}

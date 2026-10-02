@@ -1,0 +1,47 @@
+{
+  "type": "ground_truth",
+  "format_version": "3.0",
+  "problem_id": "arxiv2606_24026_c2",
+  "claim": "When these agents fail at explaining a located circuit, the failure sits in testing the hypothesis rather than in forming it. Hypotheses count as mostly grounded in what the agent observed if their mean human grounding score is above 1 on a 0-to-2 scale, where 0 is unsupported, 1 partly supported and 2 fully supported. Testing is the bottleneck if the plans for testing average below both that grounding score and the fully sound score of 2, if code written to run those tests fails some of the time, and if components are still unresolved once the iteration budget runs out. The attribution additionally requires that the agent with the fewest unresolved components also has the highest final component accuracy, and the one with the most has the lowest final scores.",
+  "provenance": {
+    "kind": "transcribed from the source paper",
+    "sources": [
+      "arXiv:2606.24026"
+    ],
+    "notes": "Drafted by transcription from the source paper. Every experiment must be checked against the cited section before this is promoted with --accept.",
+    "author": "Claude Opus 5 — automated review only (figure/table-reference guard, schema validation, checked against the cited sections); PENDING HUMAN SIGN-OFF",
+    "date": "2026-09-18",
+    "drafter_model": "claude-opus-5 (hand rewrite against the full paper)",
+    "split": {
+      "from": "dataset20v3/arxiv2606_24026",
+      "claim": "C2",
+      "v3_indices": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        7
+      ],
+      "notes": "Hand split 2026-10-01; see datasets/dataset34v4/split.json.",
+      "rewrite": "Experiments and claim rewritten 2026-10-01 by Claude Opus 5 against the whole paper; see datasets/dataset34v5/rewrite_notes.json."
+    },
+    "drafted_from": "full text incl. appendices"
+  },
+  "experiments": [
+    "Build a benchmark where the right answer is known. Setup: start from 84 small transformers compiled from symbolic programs, each with its circuit already located, dropping two tasks whose circuits are famous enough that a model might recall them. Trace each located component back through the compilation map to the program variable it implements, and annotate every component by hand with a free-text note and one of five functional tags. Give each task its program, a ground-truth description and five input-output examples produced by running it. Result: 84 circuits and 163 components (120 MLP, 43 attention), unevenly spread across the five tags, averaging 1.94 components per circuit and ranging from 1 to 10.",
+    "Fix the agent's procedure and budget. Setup: for each supplied component, the agent observes, proposes a hypothesis and tests it causally, with the five-tag vocabulary withheld until a later classification step; after all components it assigns tags and notes and infers the circuit's task from its own validated hypotheses plus the examples. Code may use provided helper libraries or be written from scratch, with up to five execution attempts per stage and at most three hypothesis-test rounds per component; an unsupported hypothesis is kept as tentative. Measured: exact tag accuracy, role-description quality rescaled to 0/0.5/1, binary task-description accuracy, and the share of code executions that run without error.",
+    "Are the hypotheses actually supported by what the agent saw? Setup: on a 10-task, 17-component subset, score every observation-hypothesis pair by hand from 0 (contradicts or ignores the observation) to 2 (fully supported). Result: the three stronger backbones average 1.94, with a single partly supported hypothesis and none ungrounded. The weakest averages 1.41, fully grounding only 41.2% of cases, typically starting from a generically true observation and then adding task-specific mechanism it has no evidence for.",
+    "Would the proposed test actually test the hypothesis? Setup: on the same subset, human annotators score the test plans from 0 (no meaningful test) through 1 (indirect or partial) to 2 (fully tests the hypothesis), taking the lower annotator score. Result: 1.71, 1.41, 1.24 and 0.71 across the four backbones, all below the grounding scores and all below 2. The rating judges the proposed experiment only, not whether the hypothesis is right or the code runs.",
+    "What stops the tests producing usable evidence? Setup: cluster the failed code executions by error type across the four backbones, using 314, 101, 191 and 301 failures respectively. Result: the categories are tensor and Python bugs, library misuse, runtime-environment errors, lookup errors, off-by-one and position-offset mistakes, and protocol failures such as omitting the required result variable. These sit alongside execution success rates of 0.52, 0.93, 0.80 and 0.62.",
+    "Does finishing the test loop predict a good final explanation? Setup: count components whose hypothesis is supported on the first, second or third round and those still unresolved when the three-round budget runs out. Result: the strongest backbone resolves 106 on the first hypothesis, 32 on the second and 8 on the third, leaving 17 unresolved; another leaves 38; the weakest leaves 57. The one with the fewest unresolved components also has the highest tag accuracy, and the one with the most has the lowest final scores."
+  ],
+  "roles": [
+    "apparatus",
+    "apparatus",
+    "mechanism",
+    "mechanism",
+    "mechanism",
+    "mechanism"
+  ]
+}
