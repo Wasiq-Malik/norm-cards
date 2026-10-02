@@ -2,7 +2,7 @@
 
 > The full interactive report, with every chart and the per-claim tables, is an artifact.
 > What follows is a static copy: GitHub strips the JavaScript that draws the charts, so they
-> are committed as SVGs under [`docs/charts/`](docs/charts) and the numbers are repeated as
+> are committed as SVGs under [`charts/`](charts) and the numbers are repeated as
 > tables.
 
 **34 claims x 5 proposer models x 3 conditions = 510 judged arms.** Each claim is scored only
@@ -21,7 +21,7 @@ because a half-addressed experiment is not something a downstream system can run
 | Rank-discounted recall | 0.633 | 0.629 | 0.650 | +0.018 [-0.004, +0.039] |
 | R-precision | 0.671 | 0.679 | 0.699 | +0.028 [-0.004, +0.061] |
 
-![Four metrics](docs/charts/four-metrics.svg)
+![Four metrics](charts/four-metrics.svg)
 
 ### Budget
 
@@ -29,9 +29,9 @@ Recall climbs with the budget and precision falls, so F1 peaks where they balanc
 **k = 5**, against a reference averaging 5.18 experiments. The best budget to give a
 proposer is about the number of experiments the question actually needs. SciFy ships at three.
 
-![recall@k](docs/charts/recall-at-k.svg)
-![precision@k](docs/charts/precision-at-k.svg)
-![F1@k](docs/charts/f1-at-k.svg)
+![recall@k](charts/recall-at-k.svg)
+![precision@k](charts/precision-at-k.svg)
+![F1@k](charts/f1-at-k.svg)
 
 Of the first R slots (R = that claim's reference size), what each slot bought:
 
@@ -71,8 +71,8 @@ on the claim** (86% unaided), so "unmatched" is not "wasted".
 
 ### Per model, and where the gain lives
 
-![Per model](docs/charts/per-model.svg)
-![Where the gain lives](docs/charts/where-the-gain-lives.svg)
+![Per model](charts/per-model.svg)
+![Where the gain lives](charts/where-the-gain-lives.svg)
 
 ### What to distrust
 
