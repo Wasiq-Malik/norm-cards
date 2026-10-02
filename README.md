@@ -108,24 +108,35 @@ length.
 
 ### Recall, and why the denominator is the hard part
 
-Recall is the mean over *reference* experiments of covered (1.0) / partial (0.5) /
-missing (0.0). The mapping is many-to-many: one broad proposal can carry several
-reference items.
+Strict recall is the share of *reference* experiments the judge marks fully covered.
+The mapping is many-to-many: one broad proposal can carry several reference items.
 
-But a paper usually supports several claims, and `transcribe` copies **all** of its
-experiments — so about 46% of any reference is mechanism and external follow-ups
-that this claim does not oblige. Scoring against all of it asks "would you have
-reproduced the paper?", which is not the question. `analyze` therefore reports the
-split, and it is the honest headline:
+The denominator is the part that took the longest to get right. `transcribe` copies
+**all** of a paper's experiments, but a paper usually supports several claims, so scoring
+a proposal against experiments belonging to a *different* claim of the same paper asks
+"would you have reproduced the paper?" — not the question, and it held recall near 0.55
+for reasons that had nothing to do with the proposer.
+
+An earlier attempt asked a model, per experiment, whether the claim *required* it, and
+dropped the rest. That was abandoned: it could only keep or discard, when the right answer
+is usually that the experiment belongs to another claim. The per-claim split
+([`datasets/dataset34v5/`](datasets/dataset34v5)) reassigns instead, and keeps everything
+the scoping labels called required — [`split_validation.md`](datasets/dataset34v5/split_validation.md)
+has the comparison.
+
+With the denominator fixed, 27% of a claim's reference is still mechanism and external
+follow-up rather than work the claim obliges, so `analyze` reports the split (on graded
+recall, which the role breakdown uses):
 
 | denominator | card − no card |
 |---|---|
-| claim-obliged (headline + apparatus + control + confound) | +0.012 [−0.019, +0.042] |
-| beyond-claim (mechanism + external) | **+0.074 [+0.025, +0.123]** |
+| claim-obliged (headline + apparatus + control + confound) | +0.016 [−0.004, +0.036] |
+| beyond-claim (mechanism + external) | +0.017 [−0.005, +0.040] |
 
-**The card's measurable gain is concentrated in experiments the claim does not
-require.** Fixing that means scoping the reference to the claim at transcription
-time; it is the largest open item in the harness.
+**The gain is spread evenly across both.** Before the split it looked concentrated in the
+beyond-claim half (+0.074 against +0.012), which was the strongest claim this harness made
+and is now retracted: it was an artifact of scoring each claim against its whole paper.
+Neither half separates from zero alone at this sample size; only the pooled figure does.
 
 ---
 
@@ -154,7 +165,9 @@ norm_cards/
     propose.py            run the arms
     evaluate.py           the blind judge
     analyze.py            arm means, paired intervals, the role split
+    audit.py              reference-blind per-proposal audit, for precision
     judge_suite.py        known-answer test suite for the judge itself
+    audit_suite.py        the same, for the auditor
 
 results/                  git-ignored. Disposable: rebuildable from datasets/.
 ```
@@ -223,5 +236,10 @@ name once you have read them against the papers.
   Pass all models in one `--models` call, or add `--merge` to run only the missing
   models' arms and merge them into the existing files.
 - **Contamination is filtered on arXiv v1 date**, never venue date.
-- **One model shows no effect.** gpt-5.4 is −0.005 where gpt-5.5 and gpt-5.6-terra
-  are both ≈+0.065. Pooling does real work in the headline.
+- **No single model carries the headline.** On strict recall all five proposers move the
+  same direction, but the spread is wide — gpt-6-sol +0.054, gpt-5.4 +0.039, gpt-6.1-sol
+  +0.024, gpt-5.6-sol +0.011, gpt-5.5 +0.007 — and only gpt-6-sol excludes zero on its
+  own. Pooling does real work here, so treat any per-model figure as indicative.
+  The largest gain belongs to the weakest unaided proposer (gpt-6-sol, 0.712 no-card),
+  which is the pattern you would expect if the card supplies something a stronger model
+  already has.
