@@ -131,6 +131,14 @@ def extract_text(pdf_bytes: bytes, max_pages: int = 18) -> str:
     return t.strip()
 
 
+# Whole paper, appendices included. Anything that reads a paper as its SOURCE OF TRUTH -
+# transcribing reference experiments, drafting a claim - must use this. The 18-page
+# default below exists for card building, where hundreds of papers are skimmed for norms;
+# inherited by transcription, it silently cut appendix experiments out of the references
+# (dataset20v3 saw as little as 46% of a paper).
+FULL_PAPER = 200
+
+
 def fetch_fulltext(paper: Dict, cache_dir: str, max_pages: int = 18,
                    min_chars: int = 500) -> Tuple[str, str]:
     """Resolve + extract, caching BOTH the PDF and its extracted text. Returns

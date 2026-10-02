@@ -130,14 +130,14 @@ def _pid(arxiv_id: str) -> str:
 
 def draft_one(paper: dict, cache_dir: str, model: str) -> dict:
     text, _ = fulltext.fetch_fulltext(
-        {"arxiv_id": paper["id"], "title": paper.get("title", "")}, cache_dir)
+        {"arxiv_id": paper["id"], "title": paper.get("title", "")}, cache_dir, max_pages=fulltext.FULL_PAPER)
     if not text:
         text = paper.get("abstract") or ""
         source = "abstract only — full text unavailable"
     else:
         source = "full text"
     out = llm.complete_json(
-        DRAFT_PROMPT.format(title=paper.get("title", ""), text=text[:150000]), model=model)
+        DRAFT_PROMPT.format(title=paper.get("title", ""), text=text[:400000]), model=model)
     return {
         "type": "problem", "format_version": "1.0", "problem_version": "1.0",
         "domain": "ai", "problem_id": _pid(paper["id"]),
