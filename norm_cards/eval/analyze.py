@@ -116,10 +116,64 @@ def strict(items):
     return st.fmean(1.0 if v == 1.0 else 0.0 for v, _ in items) if items else 0.0
 
 
-def precision(items, n_prop):
-    """Share of proposals bearing on any reference item. Overlap, NOT correctness."""
+def overlap(items, n_prop):
+    """Share of proposals linked to ANY reference item. NOT precision — see matched_at.
+
+    Coverage is many-to-many, so a proposal counts here as soon as it contributes anything
+    to anything: on dataset34v5 about 60% of proposals are linked to two or more reference
+    items and only ~6% to none, which pins this near 0.95 for every arm.
+    """
     used = {i for _, by in items for i in by}
     return len(used) / n_prop if n_prop else 0.0
+
+
+def matched_at(items, k, strict_only=True):
+    """Maximum bipartite matching between the first k proposals and reference items.
+
+    Each proposal may be spent once and each reference item filled once, so a second
+    proposal doing a job the first already did earns nothing. That is what makes the count
+    usable as a precision numerator: `matched_at(k) / k` is precision@k and
+    `matched_at(k) / len(items)` is the matching recall, and because they share a numerator
+    they compose into F1 — which `overlap` above cannot do.
+    """
+    edges = collections.defaultdict(list)
+    for i, (v, by) in enumerate(items):
+        if strict_only and v != 1.0:
+            continue
+        for p in by:
+            if p < k:
+                edges[p].append(i)
+    taken = {}
+
+    def assign(p, seen):
+        for r in edges.get(p, ()):
+            if r in seen:
+                continue
+            seen.add(r)
+            if r not in taken or assign(taken[r], seen):
+                taken[r] = p
+                return True
+        return False
+
+    return sum(assign(p, set()) for p in range(k))
+
+
+def r_precision(items, n_prop):
+    """Precision at k = the number of reference experiments.
+
+    Precision against the whole budget measures the budget: the reference averages ~5
+    experiments and the proposer is asked for 9, so precision there is capped near 0.58
+    however good the proposal is. Fixing k to the reference size removes that, and at that
+    k precision and recall coincide — the standard R-precision.
+    """
+    k = min(len(items), n_prop)
+    return matched_at(items, k) / k if k else 0.0
+
+
+def f1_at(items, k):
+    """2 x matched / (k + reference size). Only coherent because the two share a numerator."""
+    R = len(items)
+    return 2 * matched_at(items, k) / (k + R) if (k + R) else 0.0
 
 
 def block(title, tbl, models, pids):
@@ -179,9 +233,28 @@ def _main():
               for a in ARMS]
         print(f"  {'full':>8s} " + " ".join(f"{x:8.3f}" for x in ms)
               + f"   {ms[2] - ms[0]:+.3f}")
+        print("\n  === precision@k and F1@k — was each slot well spent? ===")
+        print("  (bipartite: a proposal is spent once, a reference item filled once, so a")
+        print("   second proposal doing a job the first already did earns nothing)")
+        print(f"  {'budget':>8s} " + " ".join(f"{a:>8s}" for a in ARMS)
+              + "   Δcard−nocard   F1 card")
+        for k in list(BUDGETS) + [None]:
+            kk = k
+            if kk is None:
+                continue
+            ps, f1s = [], []
+            for a in ARMS:
+                ps.append(st.fmean([matched_at(cov[(p, m, a)], kk) / kk for p in pids
+                                    for m in models if (p, m, a) in cov]))
+            f1c = st.fmean([f1_at(cov[(p, m, "card")], kk) for p in pids for m in models
+                            if (p, m, "card") in cov])
+            print(f"  {kk:>8d} " + " ".join(f"{x:8.3f}" for x in ps)
+                  + f"   {ps[2] - ps[0]:+.3f}        {f1c:.3f}")
+
         print("\n  === robustness ===")
         for name, fn in (("strict recall", lambda k: strict(cov[k])),
-                         ("precision", lambda k: precision(cov[k], nprop[k]))):
+                         ("R-precision", lambda k: r_precision(cov[k], nprop[k])),
+                         ("overlap (not precision)", lambda k: overlap(cov[k], nprop[k]))):
             ms = [st.fmean([fn((p, m, a)) for p in pids for m in models if (p, m, a) in cov])
                   for a in ARMS]
             pr = [(fn((p, m, "nocard")), fn((p, m, "card"))) for p in pids for m in models

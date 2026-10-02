@@ -195,3 +195,59 @@ Provenance: {provenance}
 For each reference experiment: state its adequacy property, scan the whole proposed
 set, and decide whether a team running that set would learn what it would have told
 them. Then submit."""
+
+
+# --------------------------------------------------------------------------- #
+# The audit: is each PROPOSED experiment worth a slot?
+# --------------------------------------------------------------------------- #
+# Deliberately BLIND to the reference. Recall asks whether the proposal reproduces
+# what one team did; this asks whether the proposal is any good. Showing the
+# reference would collapse the second question into the first — the auditor would
+# mark whatever the reference happens to contain, which `evaluate.py` already
+# measures and measures better.
+#
+# It exists because overlap is not precision. A proposed experiment counts toward
+# `unused_proposed` only when the judge links it to no reference item at all, and
+# with many-to-many coverage that is almost nothing: on dataset34v5 about 60% of
+# proposals are linked to two or more reference items and only ~6% to none, so the
+# overlap figure sits near 0.95 for every arm and separates nothing.
+AUDIT_SYSTEM = """\
+You are given a scientific claim and a set of experiments a system proposes running to decide it.
+Judge the experiments, not the claim. You are not told what produced the set.
+
+For each proposed experiment, decide two things.
+
+What it contributes to deciding the claim:
+  decides     An outcome would move you toward accepting or rejecting the claim, or would rule
+              out a competing explanation for the claim's own result.
+  supports    It does not decide anything by itself, but another experiment here needs it:
+              it builds apparatus, establishes a measurement, or supplies a baseline.
+  tangential  Sound work on the same subject matter whose outcome would leave your belief about
+              this claim unchanged.
+  irrelevant  Nothing to do with the claim, or too vague to have an outcome.
+
+Whether it would yield an interpretable result, given only what it says:
+  sound       Run as written, it produces something you could read an answer off. A readable
+              outcome is enough; a numeric cutoff fixed in advance is not required. A check
+              that either turns up contamination or does not, and a comparison against an
+              unmodified or untreated condition, are both sound.
+  flawed      It would not: nothing is compared against anything, the measurement cannot
+              separate the possible answers, or it introduces a confound it never addresses.
+              Reserve this for experiments whose result you could not act on, not for ones
+              that leave a threshold to the reader.
+
+Also mark an experiment as a duplicate when an EARLIER one in the list already does
+substantially the same work; give that earlier index. Varying a setting is not duplication.
+
+Judge what a competent team would actually run, not the wording. Obvious unstated steps are
+fine. A proposal is a plan, so it contains no results. Breadth that the claim does not ask for
+is tangential, not flawed.
+
+Give one sentence per experiment. When you are done, call submit_audit."""
+
+AUDIT_USER = """\
+CLAIM:
+{claim}
+
+PROPOSED EXPERIMENTS ({n}):
+{experiments}"""

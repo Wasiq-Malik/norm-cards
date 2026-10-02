@@ -51,6 +51,17 @@ JUDGE_MODEL = "gpt-5.6-terra"
 JUDGE_PROMPT = "v2"
 JUDGE_EFFORT = "high"
 
+# The reference-blind auditor (audit.py). Kept on the coverage judge's model for cost:
+# gpt-6-astra scored better on the audit's known-answer suite (45/45 case-runs in band against
+# 38/45, and a clean set at 1.00 where terra trims 11%) but is too expensive to run over 510
+# arms. Note the cost of that choice: both roles ask what makes an experiment worthwhile, so a
+# belief this model holds about that appears in both answers and cancels nowhere. A cheaper
+# model from another family would break the coupling; none has been tested on the audit suite.
+#
+# astra is in any case NOT usable as the coverage judge: on judge_suite's subst_bound it credits
+# controls run outside the setting a claim names in 12 of 27 runs, where terra never does.
+AUDIT_MODEL = JUDGE_MODEL
+
 
 def gt_dir(problem_id: str) -> str:
     return os.path.join(EVAL_ROOT, "ground_truth", f"problem_{problem_id}")

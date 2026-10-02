@@ -92,6 +92,34 @@ being framed as a complaint about the source.
 
 ## Shared infrastructure
 
+### `norm_cards/eval/audit.py` — the second, reference-blind stage
+
+`evaluate.py` asks whether a proposal recovers what the source team did. That leaves a
+question it structurally cannot answer: is an experiment the reference does not contain
+nonetheless worth running? The audit answers it by showing a judge the claim and the
+proposed experiments and **never the reference**. Per experiment it returns what the
+experiment contributes (`decides` / `supports` / `tangential` / `irrelevant`), whether it
+would yield a readable result, and whether it repeats an earlier one; scores are composed
+in code.
+
+It exists because the obvious precision measure was wrong. Coverage is many-to-many, so a
+proposal counted as "used" the moment it contributed anything to anything — on dataset34v5
+about 60% of proposals link to two or more reference items and only ~6% to none, pinning
+the figure near 0.95 for every arm. `analyze.overlap` still computes it, under a name that
+says what it is.
+
+**Precision is measured by matching instead** (`analyze.matched_at`): each proposal may be
+spent once and each reference item filled once, so a second proposal doing a job the first
+already did earns nothing. That gives precision@k, a matching recall, and an F1 that
+composes because the two share a numerator. Precision against the whole budget is not
+reported — the reference averages about 5 experiments and the proposer is asked for 9, so
+it is capped near 0.58 however good the proposal is and measures the budget. `R-precision`
+fixes k to the reference size, which removes that.
+
+Both judge roles have known-answer suites: `judge_suite.py` for coverage, `audit_suite.py`
+for the audit, the latter stating each case as a BAND on the resulting precision rather
+than a point.
+
 ### `norm_cards/eval/agent_loop.py` — the submit loop
 
 ```

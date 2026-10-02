@@ -220,3 +220,55 @@ def validate_evaluation(ev: Dict, n_proposed: int, n_reference: int,
     if len((ev.get("sufficiency_reasoning") or "").strip()) < 40:
         errs.append("sufficiency_reasoning must justify the sufficiency call")
     return "; ".join(errs) if errs else None
+
+
+# --------------------------------------------------------------------------- #
+# The audit's submission — one verdict per PROPOSED experiment
+# --------------------------------------------------------------------------- #
+BEARS = ("decides", "supports", "tangential", "irrelevant")
+SOUND = ("sound", "flawed")
+
+SUBMIT_AUDIT = {"type": "function", "function": {
+    "name": "submit_audit",
+    "description": "Submit your audit: one entry per proposed experiment.",
+    "parameters": {"type": "object", "properties": {
+        "proposed": {"type": "array", "items": {
+            "type": "object", "properties": {
+                "index": {"type": "integer",
+                          "description": "0-based index in the proposed list"},
+                "bears": {"type": "string", "enum": list(BEARS)},
+                "quality": {"type": "string", "enum": list(SOUND)},
+                "duplicate_of": {"type": ["integer", "null"],
+                                 "description": "index of an EARLIER proposed experiment this "
+                                                "substantially repeats, or null"},
+                "reason": {"type": "string", "description": "one sentence"}},
+            "required": ["index", "bears", "quality", "duplicate_of", "reason"]}}},
+        "required": ["proposed"]}}}
+
+
+def validate_audit(au: Dict, n_proposed: int) -> Optional[str]:
+    """Structure only: one entry per proposed index, a backward duplicate reference,
+    and a reason on every entry."""
+    items = au.get("proposed")
+    if not isinstance(items, list):
+        return f"proposed must be a list, got {type(items).__name__}"
+    errs: List[str] = []
+    rows = [c for c in items if isinstance(c, dict)]
+    if len(rows) != len(items):
+        errs.append("proposed must contain objects, not bare strings")
+    seen = {c.get("index") for c in rows}
+    if len(rows) != n_proposed or seen != set(range(n_proposed)):
+        errs.append(f"needs exactly one entry per proposed experiment, indices "
+                    f"0..{n_proposed - 1}; got {sorted(x for x in seen if isinstance(x, int))}")
+    for c in rows:
+        i = c.get("index")
+        if c.get("bears") not in BEARS:
+            errs.append(f"proposed {i}: bears must be one of {BEARS}")
+        if c.get("quality") not in SOUND:
+            errs.append(f"proposed {i}: quality must be one of {SOUND}")
+        d = c.get("duplicate_of")
+        if d is not None and (not isinstance(d, int) or not isinstance(i, int) or not 0 <= d < i):
+            errs.append(f"proposed {i}: duplicate_of must be null or an EARLIER index")
+        if not (c.get("reason") or "").strip():
+            errs.append(f"proposed {i}: reason is empty")
+    return "; ".join(errs) if errs else None
