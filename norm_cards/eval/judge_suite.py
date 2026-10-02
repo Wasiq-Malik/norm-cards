@@ -291,9 +291,16 @@ BEHAVIOURS = {
     # partial is accepted: a headline proposal can carry incidental protection (the robot
     # kit's "exclude entire task families" partly guards against leakage). The failure
     # this exists to catch is the judge INVENTING coverage — `covered` — not the grade.
-    "removal":         ("can", ["full0", "full2"],                [{C}, {P, M}, {C}], [1],
+    # The removed item is the control that validates the headline's measurement (gradient
+    # masking, random-vector steering, leakage), so without it the headline result is
+    # itself less trustworthy: partial on item 0 is a correct reading, not collateral.
+    "removal":         ("can", ["full0", "full2"],                [{C, P}, {P, M}, {C}], [1],
                         "the only proposal for an item is removed -> not covered"),
-    "power":           ("can", ["weak0", "full1", "full2"],       [{P}, {C}, {C}], [0],
+    # The validity control (item 1) is measured on the headline's evaluation, so when that
+    # evaluation is 20 prompts with one sample, "the control does not close the gap" is
+    # itself underpowered: partial is right, covered is acceptable. The damage check
+    # (item 2) runs on its own benchmarks and is unaffected.
+    "power":           ("can", ["weak0", "full1", "full2"],       [{P}, {C, P}, {C}], [0],
                         "one seed / a handful of samples -> partial"),
     "cross_claim":     ("can", None,                              [{M}, {M}, {M}], [0, 1, 2],
                         "a competent proposal for a different claim -> all missing"),

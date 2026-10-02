@@ -235,9 +235,17 @@ def _main():
             continue
 
         problem = claims[pid]
-        print(f"\n=== problem {pid} · decomposing with {args.decomposer} ===")
-        subclaims = scify_proposer.decompose(problem["claim"], model=args.decomposer)
-        print(f"    {len(subclaims)} subclaims")
+        if existing.get("subclaims"):
+            # Merged arms must see the SAME subclaims as the arms already there.
+            # Decomposition is sampled, so re-running it hands the added model a
+            # different question list than the models it is compared with — and the
+            # rewrite below would then relabel the old arms with subclaims they never saw.
+            subclaims = existing["subclaims"]
+            print(f"\n=== problem {pid} · reusing {len(subclaims)} stored subclaims ===")
+        else:
+            print(f"\n=== problem {pid} · decomposing with {args.decomposer} ===")
+            subclaims = scify_proposer.decompose(problem["claim"], model=args.decomposer)
+            print(f"    {len(subclaims)} subclaims")
 
         card = load_json(args.cards, pid, "norm_card.json") if args.cards else {}
         bundle = load_json(args.cards, pid, "bundle.json") if args.cards else {}
