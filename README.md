@@ -11,22 +11,29 @@ designs would have recovered what the claim's source paper actually did.
 
 **Current result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 
-| condition | strict recall |
-|---|---|
-| no card | 0.790 |
-| retrieval over the same papers | 0.793 |
-| **shared norm card** | **0.817** |
+| | no card | retrieval | norm card | card − no card |
+|---|---|---|---|---|
+| Strict recall | 0.797 | 0.804 | **0.842** | **+0.044 [+0.018, +0.072]** |
+| Recall (partial counts a half) | 0.875 | 0.879 | 0.901 | **+0.026 [+0.010, +0.043]** |
+| Rank-discounted recall | 0.657 | 0.654 | 0.682 | **+0.025 [+0.003, +0.046]** |
+| R-precision | 0.705 | 0.708 | 0.756 | **+0.050 [+0.016, +0.085]** |
 
-Card − no card is **+0.027**, 95% interval **[+0.003, +0.052]**. Strict recall counts a
-reference experiment only when the judge marks it *fully* covered; a half-addressed
-experiment is not something a downstream system can run. On the looser measure that gives
-a partial half credit the gap is +0.020 — the card mostly finishes work rather than adding
-it. Card − retrieval is +0.024 and does *not* exclude zero.
+Card − no card on strict recall is **+0.044**, 95% interval **[+0.018, +0.072]**, over 170 paired
+claim × model comparisons. Strict recall counts a reference experiment only when the judge marks
+it *fully* covered; a half-addressed experiment is not something a downstream system can run. The
+looser recall, which gives a partial half credit, moves about 60% as much — the card mostly
+finishes work rather than adding it. Rank-discounted recall weights later experiments less;
+R-precision asks, of the first R proposals (R = the reference's size), how many hit a distinct
+reference experiment. All four exclude zero.
+
+Retrieval draws on the same field papers as the card, unformatted, so card − no card is the
+comparison that tests whether norms help; card − retrieval, +0.037 [+0.012, +0.064], is what
+formatting them as a card adds on top.
 
 ![F1 at each budget](docs/charts/f1-at-k.svg)
 
 Recall rises with the experiment budget and precision falls, so F1 peaks where they
-balance — at **5 experiments**, against a reference averaging 5.18. The best budget to
+balance — at **4 experiments** for the card (5 unaided), against a reference averaging 5.18. The best budget to
 give a proposer is about the number of experiments the question actually needs.
 
 The cards are **shared, not per-claim**: 14 cards cover all 34 claims, each built from its
@@ -66,14 +73,14 @@ export NORM_CARDS_CLAIMS=norm_cards/data/dataset20-claims-v3.jsonl
 
 # 3. judge — ~45 min if you shard, ~2.5h if you don't (see below)
 ./.venv/bin/python -m norm_cards.eval.evaluate --problems all \
-    --source results/myrun/proposals --judge-runs 1
+    --source results/myrun/proposals --judge-runs 3
 
 # 4. read the numbers
 ./.venv/bin/python -m norm_cards.eval.analyze --run results/myrun --dataset dataset20v3
 ```
 
-`evaluate` parallelises across judge runs (`k`), not across problems, so with
-`--judge-runs 1` it is sequential. To shard, run it several times over disjoint
+`evaluate` majority-votes the `k` judge runs per arm and parallelises across them
+(`--workers`), not across problems. To shard, run it several times over disjoint
 `--problems` lists in parallel; output is per problem, so they do not collide.
 
 **No API key?** `python -m norm_cards.test_gather` exercises search and ranking
@@ -130,13 +137,13 @@ recall, which the role breakdown uses):
 
 | denominator | card − no card |
 |---|---|
-| claim-obliged (headline + apparatus + control + confound) | +0.016 [−0.004, +0.036] |
-| beyond-claim (mechanism + external) | +0.017 [−0.005, +0.040] |
+| claim-obliged (headline + apparatus + control + confound) | +0.026 [+0.005, +0.047] |
+| beyond-claim (mechanism + external) | +0.019 [−0.001, +0.039] |
 
-**The gain is spread evenly across both.** Before the split it looked concentrated in the
+**The gain is spread across both, slightly larger on what the claim obliges.** Before the split it looked concentrated in the
 beyond-claim half (+0.074 against +0.012), which was the strongest claim this harness made
 and is now retracted: it was an artifact of scoring each claim against its whole paper.
-Neither half separates from zero alone at this sample size; only the pooled figure does.
+The claim-obliged half separates from zero on its own; the beyond-claim half just misses.
 
 ---
 
@@ -221,10 +228,12 @@ name once you have read them against the papers.
 
 ## Things worth knowing before you trust a number
 
-- **The judge is `gpt-5.6-terra` with prompt v2, and runs without tools.** v2 drops the
-  tool instructions and says when breadth matters: a claim that something *can* happen
-  needs one clean demonstration, a claim that it holds *generally* needs breadth. v1 stays
-  in `prompts.PROMPTS`; `evaluate --prompt v1` reproduces older runs. The judge must never
+- **The judge is `gpt-5.6-terra` with prompt v2, runs without tools, and is run three
+  times per arm** with a majority vote per reference experiment (unanimous on 82% of items,
+  no majority on 5 of 2,640). v2 is short: it asks what each reference experiment
+  establishes and whether the proposed set would learn the same, and sees the proposer's
+  numbered subclaims, since proposals cite them by number. v1 stays in `prompts.PROMPTS`;
+  `evaluate --prompt v1` reproduces older runs. The judge must never
   grade proposals written by its own model.
 - **`judge_suite.py` is the judge's own test suite** — 14 behaviours x 3 unrelated domains,
   each case constructed with a known correct status per reference experiment and run
@@ -236,10 +245,10 @@ name once you have read them against the papers.
   Pass all models in one `--models` call, or add `--merge` to run only the missing
   models' arms and merge them into the existing files.
 - **Contamination is filtered on arXiv v1 date**, never venue date.
-- **No single model carries the headline.** On strict recall all five proposers move the
-  same direction, but the spread is wide — gpt-6-sol +0.054, gpt-5.4 +0.039, gpt-6.1-sol
-  +0.024, gpt-5.6-sol +0.011, gpt-5.5 +0.007 — and only gpt-6-sol excludes zero on its
-  own. Pooling does real work here, so treat any per-model figure as indicative.
-  The largest gain belongs to the weakest unaided proposer (gpt-6-sol, 0.712 no-card),
-  which is the pattern you would expect if the card supplies something a stronger model
-  already has.
+- **No single model carries the headline.** On strict recall four of five proposers gain —
+  gpt-6-sol +0.084, gpt-6.1-sol +0.048, gpt-5.4 +0.046, gpt-5.5 +0.043 — and gpt-5.6-sol,
+  the strongest unaided proposer, is flat (−0.000). Only gpt-6-sol excludes zero on its
+  own, +0.084 [+0.018, +0.151]. Pooling does real work here, so treat any per-model figure
+  as indicative. The largest gain belongs to the weakest unaided proposer (gpt-6-sol, 0.728
+  no-card), which is the pattern you would expect if the card supplies something a stronger
+  model already has.

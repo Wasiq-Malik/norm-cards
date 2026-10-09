@@ -6,8 +6,9 @@
 > tables.
 
 **34 claims x 5 proposer models x 3 conditions = 510 judged arms.** Each claim is scored only
-against the reference experiments that decide it. The judge is `gpt-5.6-terra`, one pass per arm,
-blind to which condition it is grading.
+against the reference experiments that decide it. The judge is `gpt-5.6-terra`, blind to which
+condition it is grading, run three times per arm; each reference experiment takes the status at
+least two of the three passes agree on.
 
 ### Headline
 
@@ -16,17 +17,22 @@ because a half-addressed experiment is not something a downstream system can run
 
 | | no card | retrieval | norm card | card − no card |
 |---|---|---|---|---|
-| Strict recall | 0.790 | 0.793 | **0.817** | **+0.027 [+0.003, +0.052]** |
-| Recall (partial counts a half) | 0.873 | 0.877 | 0.893 | +0.020 [+0.005, +0.035] |
-| Rank-discounted recall | 0.633 | 0.629 | 0.650 | +0.018 [-0.004, +0.039] |
-| R-precision | 0.671 | 0.679 | 0.699 | +0.028 [-0.004, +0.061] |
+| Strict recall | 0.797 | 0.804 | **0.842** | **+0.044 [+0.018, +0.072]** |
+| Recall (partial counts a half) | 0.875 | 0.879 | 0.901 | **+0.026 [+0.010, +0.043]** |
+| Rank-discounted recall | 0.657 | 0.654 | 0.682 | **+0.025 [+0.003, +0.046]** |
+| R-precision | 0.705 | 0.708 | 0.756 | **+0.050 [+0.016, +0.085]** |
+
+Card − retrieval on strict recall is +0.037 [+0.012, +0.064]. Retrieval draws on the same
+field papers as the card, unformatted, so the comparison that tests the thesis is card against no
+card; the gap over retrieval is what the card's format adds.
 
 ![Four metrics](charts/four-metrics.svg)
 
 ### Budget
 
 Recall climbs with the budget and precision falls, so F1 peaks where they balance — at
-**k = 5**, against a reference averaging 5.18 experiments. The best budget to give a
+**k = 4** for the card and retrieval and **k = 5** unaided, against a reference averaging 5.18
+experiments. The best budget to give a
 proposer is about the number of experiments the question actually needs. SciFy ships at three.
 
 ![recall@k](charts/recall-at-k.svg)
@@ -37,13 +43,12 @@ Of the first R slots (R = that claim's reference size), what each slot bought:
 
 | | hits a **new** reference item | repeats one already hit | matches nothing |
 |---|---|---|---|
-| no card | 65.0% | 25.6% | 9.4% |
-| retrieval | 67.7% | 24.2% | 8.1% |
-| **norm card** | **68.5%** | **22.5%** | 9.0% |
+| no card | 67.9% | 24.7% | 7.4% |
+| retrieval | 69.7% | 23.8% | 6.4% |
+| **norm card** | 72.4% | 22.2% | 5.3% |
 
-The card's gain is almost entirely **less piling on**. The rate of spending a slot outside the
-reference is flat across arms, so the card is not avoiding off-reference work — it is spreading
-its early slots over more of what the claim needs.
+The card's gain comes from both ends: fewer early slots pile on a job already done, and fewer go
+to something outside the reference altogether.
 
 ### Precision, measured two ways
 
@@ -66,12 +71,30 @@ merits, which is the only way to ask whether work the reference lacks is nonethe
 **All three arms are equally precise.** What shifts is the mix: the card trades claim-deciding
 experiments for tangential ones, while producing fewer repeats and almost no flawed work.
 
-Of the experiments the reference does not contain at all, **78% of the card arm's still bear
-on the claim** (86% unaided), so "unmatched" is not "wasted".
+Of the experiments the reference does not contain at all, **75% of the card arm's still bear
+on the claim** (83% unaided), so "unmatched" is not "wasted".
 
 ### Per model, and where the gain lives
 
+Strict recall, card − no card:
+
+| proposer | no card | norm card | card − no card |
+|---|---|---|---|
+| gpt-5.4 | 0.804 | 0.850 | +0.046 [-0.009, +0.109] |
+| gpt-5.5 | 0.787 | 0.829 | +0.043 [-0.015, +0.100] |
+| gpt-5.6-sol | 0.842 | 0.842 | -0.000 [-0.041, +0.042] |
+| gpt-6-sol | 0.728 | 0.812 | +0.084 [+0.018, +0.151] |
+| gpt-6.1-sol | 0.826 | 0.874 | +0.048 [-0.021, +0.124] |
+
+Four of five models gain; gpt-5.6-sol, the strongest unaided, is flat. Only gpt-6-sol, the weakest
+unaided, clears zero on its own. Each row rests on 34 paired comparisons, so the pooled figure is
+the one to quote.
+
 ![Per model](charts/per-model.svg)
+
+On the claim's own obligations (headline, apparatus, controls, confounds) the gain is
++0.051 [+0.018, +0.085]; on controls and confounds alone it is +0.073 [-0.015, +0.164].
+
 ![Where the gain lives](charts/where-the-gain-lives.svg)
 
 ### What to distrust
@@ -79,6 +102,7 @@ on the claim** (86% unaided), so "unmatched" is not "wasted".
 - References are model-written and **not reviewed by a person**.
 - Splitting each paper's reference by claim is a judgement call, and it is the author's.
 - Re-proposing against the rewritten claims lifted both unaided arms and left the carded arm
-  unmoved, halving the effect — clearer claims may do some of the card's work. Not settled:
-  the two runs use different proposal samples.
-- One judge, one pass per arm, and the reference-blind auditor is the same base model.
+  unmoved, halving the effect under the earlier judge prompt — clearer claims may do some of the
+  card's work. Not settled: the two runs use different proposal samples.
+- One judge model, three passes majority-voted (unanimous on 82% of reference items, no majority on
+  5 of 2,640), and the reference-blind auditor is the same base model.
