@@ -163,12 +163,8 @@ would learn the same thing, by any means:
 
 Search the whole set before deciding. One proposed experiment can cover several reference
 experiments, and several can jointly cover one. Judge the experiments a competent team
-would actually run, not how they are worded: obvious unstated steps, numbering slips and
+would actually run, not how they are worded: obvious unstated steps and
 repetition neither add nor subtract. A proposal is a plan, so it contains no results.
-
-How much breadth is needed depends on the claim: a claim that something CAN happen is
-settled by one clean demonstration; a claim that something holds generally needs
-evidence across settings.
 
 For partial or missing, say in one or two sentences what the team would fail to learn.
 

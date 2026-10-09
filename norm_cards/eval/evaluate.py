@@ -112,7 +112,9 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir:
     user = prompts.EVALUATION_USER.format(
         domain=problem.get("domain", "ai"), problem_id=problem["problem_id"],
         claim=problem["claim"],
-        subclaims="\n".join(f"- {s}" for s in arm_data["subclaims"]) or "(none provided)",
+        # numbered from 1, as proposals cite them ("to address subclaim 3")
+        subclaims="\n".join(f"{i}. {s}" for i, s in enumerate(arm_data["subclaims"], 1))
+        or "(none provided)",
         provenance=reference.provenance_line(gt),
         n_ref=len(ref_exps),
         reference=reference.experiments_text(ref_exps, "REFERENCE EXPERIMENT"),
