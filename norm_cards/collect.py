@@ -81,10 +81,19 @@ def run_queries(sources: List[BaseSource], query_bucket_pairs, per_query: int,
             print(f"  [{done}/{total}] {src.name}:{mode} <- {bucket}: {query!r}")
         if delay:
             time.sleep(delay if mode == "primary" else min(delay, 0.3))
-        if mode == "primary":
-            papers = src.search_tagged(query, per_query)
-        else:
-            papers = src.search_lexical(query, per_query, topic_ids=topic_ids)
+        # One query a source cannot answer is that query's loss, not the subfield's:
+        # OpenAlex's semantic search answers some queries with an immediate 503 every
+        # time ("MVTec AD industrial anomaly benchmark"), which failed whole subfields.
+        try:
+            if mode == "primary":
+                papers = src.search_tagged(query, per_query)
+            else:
+                papers = src.search_lexical(query, per_query, topic_ids=topic_ids)
+        except Exception as e:
+            print(f"  [{done}/{total}] {src.name}:{mode} FAILED, skipping query: "
+                  f"{type(e).__name__}: {str(e)[:100]}")
+            continue
+        if mode != "primary":
             for p in papers:
                 if src.name not in p.sources:
                     p.sources.append(src.name)

@@ -1,7 +1,7 @@
 """Materialise a tracked dataset into a runnable eval root.
 
-    python -m norm_cards.dataset bootstrap --dataset dataset20v3 --run results/myrun
-    python -m norm_cards.dataset assemble  --dataset dataset20v3 --run results/myrun
+    python -m norm_cards.dataset bootstrap --dataset dataset50 --run results/myrun
+    python -m norm_cards.dataset assemble  --dataset dataset50 --run results/myrun
 
 `datasets/<name>/` holds the INPUTS to an experiment — claims, references, the
 shared subfield cards and the papers they were built from. `results/` holds the
@@ -128,7 +128,8 @@ def assemble(ds: str, run: str, resource_cap: int, design_cap: int) -> None:
         card, stats = curate.curate(cards, subfield_order=subs,
                                     resource_cap=resource_cap, design_cap=design_cap)
         with open(os.path.join(out_dir, "norm_card.json"), "w", encoding="utf-8") as f:
-            json.dump({"type": "scientific_norm_card_set", "format_version": "0.3-shared",
+            fmt = curate.format_of(card)
+            json.dump({"type": "scientific_norm_card_set", "format_version": f"{fmt}-shared",
                        "problem_id": pid, "subfields": subs, "claim": "",
                        "card": card, "curation": stats, "norm_cards": []}, f, indent=2)
 

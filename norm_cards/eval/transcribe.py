@@ -251,8 +251,7 @@ def _main():
         text = fulltext.extract_text(open(args.pdf, "rb").read(), max_pages=fulltext.FULL_PAPER)
         source = os.path.basename(args.pdf)
     else:
-        text, _ = fulltext.fetch_fulltext({"arxiv_id": args.arxiv, "title": pid},
-                                          args.cache_dir, max_pages=fulltext.FULL_PAPER)
+        text, _ = fulltext.fetch_paper({"arxiv_id": args.arxiv, "title": pid}, args.cache_dir)
         source = f"arXiv:{args.arxiv}"
     if not text:
         raise SystemExit(f"could not get full text for {source}")

@@ -39,19 +39,24 @@ CLAIMS_FILE = os.environ.get(
     os.path.join(os.path.dirname(__file__), "..", "data",
                  "sprint2-continuous-release-problems-v1.jsonl"))
 
-# gpt-5.6-terra since 2026-09-28. On the known-answer judge suite (judge_suite.py) luna
-# credited controls run outside the setting a claim names in 12 of 27 runs; terra never
-# did. Controls are what norm cards supply, so that error would inflate exactly the
-# effect under study. The judge must never grade its own model's proposals, which is why
-# gpt-5.6-terra is not in the proposer lineup.
-JUDGE_MODEL = "gpt-5.6-terra"
+# gpt-6-luna since 2026-10-16, replacing gpt-5.6-terra (2026-09-28 to 2026-10-15). terra
+# was chosen because gpt-5.6-luna credited controls run outside the setting a claim names;
+# once v2 lost its breadth rule, terra no longer separated itself on judge_suite (both
+# 78/84 majority-voted). Re-judging the same 510 dataset34v5 arms at k=3: 84.8% item
+# agreement with terra (terra vs itself 87.2%), card − no card +0.052 against terra's
+# +0.044, for $5.78 against $54. gpt-6-luna is stricter by ~0.08 strict recall in every
+# arm, so absolute numbers do not compare across the switch. The Decisions API (no text,
+# $0.21) was also tried and rejected: 74% agreement, fails wrong-setting controls.
+# The judge must never grade its own model's proposals; gpt-6-luna is not a proposer.
+JUDGE_MODEL = "gpt-6-luna"
 # v2: 241 words instead of 930, no research-tools section, and no contradiction between
 # "judge each reference experiment" and "only the claim is binding". It scored the same as
 # v1 on the judge suite. v1 stays in prompts.PROMPTS to reproduce older runs.
 JUDGE_PROMPT = "v2"
 JUDGE_EFFORT = "high"
 
-# The reference-blind auditor (audit.py). Kept on the coverage judge's model for cost:
+# The reference-blind auditor (audit.py). Kept on the coverage judge's model for cost; the
+# published dataset34v5 audit predates the switch and was run by gpt-5.6-terra.
 # gpt-6-astra scored better on the audit's known-answer suite (45/45 case-runs in band against
 # 38/45, and a clean set at 1.00 where terra trims 11%) but is too expensive to run over 510
 # arms. Note the cost of that choice: both roles ask what makes an experiment worthwhile, so a

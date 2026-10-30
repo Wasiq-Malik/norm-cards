@@ -38,10 +38,23 @@ def _raise_redacted(r):
 def request(url, retries: int = 4, **kwargs):
     """GET with retry/backoff on 429/503 (honors Retry-After). Required to use
     these public APIs at all — not a key/fallback degradation."""
+    import requests
+
     kwargs.setdefault("timeout", config.HTTP_TIMEOUT)
     last = None
     for attempt in range(retries):
-        r = http().get(url, **kwargs)
+        try:
+            r = http().get(url, **kwargs)
+        except (requests.Timeout, requests.ConnectionError) as e:
+            # A throttled arXiv API stops answering instead of sending 429: the
+            # dataset50 gather lost 8 of 20 subfields to read timeouts in a row.
+            if attempt == retries - 1:
+                raise
+            wait = min(10 * 2 ** attempt, MAX_RETRY_WAIT)
+            print(f"[http] {type(e).__name__} on {config.redact(url).split('?')[0]}; "
+                  f"retry in {wait}s ({attempt + 1}/{retries})")
+            time.sleep(wait)
+            continue
         if r.status_code in (429, 503) and attempt < retries - 1:
             # Retry-After is honoured but CAPPED. OpenAlex has answered a 429 with
             # Retry-After: 9727 — nearly three hours — and sleeping that inside a

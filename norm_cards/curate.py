@@ -35,6 +35,74 @@ RESOURCE_KEYS = ("datasets", "models", "metrics")
 DESIGN_KEYS = ("protocols", "controls", "confounds")
 ALL_KEYS = RESOURCE_KEYS + DESIGN_KEYS
 
+# Format 0.4 (2026-10-18). Built from the misses of the 0.3 cards: the card usually
+# had the right KIND of control but stated too generally to apply, the measurement's
+# own soundness and the field's bar for "this difference is real" had no home, and
+# resources took a third of the slots while mattering least. So controls and
+# confounds become one `threats` list tagged with the kinds of claim each applies
+# to, two design keys are added, `models` becomes `baselines` with what a fair
+# comparison must match, and the resource caps shrink.
+RESOURCE_KEYS_V04 = ("datasets", "baselines", "metrics")
+DESIGN_KEYS_V04 = ("protocols", "threats", "validity_checks", "evidence_standards")
+ALL_KEYS_V04 = RESOURCE_KEYS_V04 + DESIGN_KEYS_V04
+CAPS_V04 = {"threats": 14, "validity_checks": 6, "evidence_standards": 6, "protocols": 8,
+            "baselines": 6, "metrics": 6, "datasets": 4}
+
+# Format 2 (2026-10-29, dataset50). protocols and validity_checks go: ~80% of protocols
+# restated a threat's rule-out or a validity check, and the rest (benchmark recipes such
+# as "LIBERO: 50 episodes per task") move onto the dataset as `eval_protocol`; the few
+# validity checks worth keeping move onto the metric as `caveat`. Threats are 0.3's
+# controls and confounds, extracted and consolidated with the 0.3 wording and tagged
+# `kind`, with 20 slots instead of 0.4's 14 (0.3 cards carried ~26 of the two; 0.4 halved
+# the room and confounds slipped). No `applies_when` tags.
+RESOURCE_KEYS_V2 = ("datasets", "baselines", "metrics")
+DESIGN_KEYS_V2 = ("threats", "evidence_standards")
+ALL_KEYS_V2 = RESOURCE_KEYS_V2 + DESIGN_KEYS_V2
+CAPS_V2 = {"threats": 20, "evidence_standards": 7, "baselines": 8, "metrics": 8, "datasets": 7}
+THREAT_KINDS = ("control", "confound")
+
+# The kinds of claim a threat can be tagged with. Fixed before any 0.4 card was built
+# and deliberately generic: a tag names a TYPE of claim, never a specific one, so a
+# card stays claim-blind and matching a tag to the claim at hand is the proposer's job.
+CLAIM_TYPES = (
+    "intervention on model internals",   # steering, editing, ablation, patching
+    "method comparison",                 # a method beats existing ones
+    "robustness or attack",              # behaviour under adversarial or corrupted input
+    "generalisation or transfer",        # holds on unseen data, tasks, settings
+    "detection or classification",       # a system identifies a property or class
+    "benchmark or measurement",          # an evaluation measures what it says it does
+    "agent or embodied task success",    # a policy or agent completes tasks
+    "training-signal effect",            # a change to data, reward or recipe causes a change
+    "any empirical claim",
+)
+
+
+def keys_for(fmt: str):
+    """(resource keys, design keys) for a card format."""
+    f = str(fmt)
+    if f.startswith("2"):
+        return RESOURCE_KEYS_V2, DESIGN_KEYS_V2
+    return ((RESOURCE_KEYS_V04, DESIGN_KEYS_V04) if f.startswith("0.4")
+            else (RESOURCE_KEYS, DESIGN_KEYS))
+
+
+def format_of(menu: Dict) -> str:
+    """Infer the format from the keys a menu or card actually carries."""
+    m = menu or {}
+    if "threats" in m and not any(k in m for k in ("validity_checks", "protocols")):
+        return "2"
+    return "0.4" if any(k in m for k in ("threats", "baselines")) else "0.3"
+
+
+def keys_of(menu: Dict) -> Tuple[tuple, tuple]:
+    return keys_for(format_of(menu))
+
+
+# Free-text fields a merge keeps the most specific phrasing of, across both formats.
+_TEXT_FIELDS = ("role", "direction", "detail", "rules_out", "ruled_out_by", "rule_out",
+                "fair_comparison", "instrument", "misleads_when", "check",
+                "eval_protocol", "caveat")
+
 
 # --------------------------------------------------------------------------- #
 # model-family canonicalization
@@ -234,13 +302,24 @@ def _absorb_design(items: List[Dict], threshold: float = 0.6) -> List[Dict]:
         host["evidence"] = sorted(set(host["evidence"]) | set(it["evidence"]))
         host["subfields"] = sorted(set(host["subfields"]) | set(it["subfields"]))
         host["variants"] = sorted(set(host["variants"]) | {it["name"]})
-        for f in ("detail", "rules_out", "ruled_out_by"):
+        for f in _TEXT_FIELDS:
             if it.get(f) and len(str(it[f])) > len(str(host.get(f) or "")):
                 host[f] = it[f]     # keep whichever phrasing carries more specifics
+        if "applies_when" in it or "applies_when" in host:
+            host["applies_when"] = _union_types(host.get("applies_when"),
+                                                it.get("applies_when"))
     return sorted(out, key=lambda x: (-len(x["evidence"]), x["name"]))
 
 
-def merge(cards: List[Dict]) -> Dict:
+def _union_types(*lists) -> List[str]:
+    """Claim-type tags, restricted to CLAIM_TYPES and kept in that list's order."""
+    got = set()
+    for xs in lists:
+        got |= {str(t).strip().lower() for t in ([xs] if isinstance(xs, str) else xs or [])}
+    return [t for t in CLAIM_TYPES if t in got]
+
+
+def merge(cards: List[Dict], keys: tuple = None) -> Dict:
     """Union the per-subfield menus into ONE claim-level menu.
 
     A claim routed to three subfields used to get three full cards, ~30% of whose
@@ -248,22 +327,30 @@ def merge(cards: List[Dict]) -> Dict:
     in context and got nothing for it. Merging keeps each item once and tags it
     with every subfield that vouched for it, which is strictly more information
     than the repetition carried."""
-    out = {k: {} for k in ALL_KEYS}
+    if keys is None:
+        res, des = keys_of(next((c.get("menu") for c in cards if c.get("menu")), {}))
+        keys = res + des
+    design = set(DESIGN_KEYS) | set(DESIGN_KEYS_V04) | set(DESIGN_KEYS_V2)
+    out = {k: {} for k in keys}
     for card in cards:
         sf = card.get("subfield", "")
-        for k in ALL_KEYS:
+        for k in keys:
             for it in (card.get("menu", {}).get(k) or []):
                 name = (it.get("name") or "").strip()
-                canon = canon_model(name) if k == "models" else canon_generic(name)
+                canon = (canon_model(name) if k in ("models", "baselines")
+                         else canon_generic(name))
                 if not canon:
                     continue                      # architecture class: dropped
                 # Find an existing slot this is another name for, before making one.
-                alias = aliases(name) | {_key(k, canon)}
+                # A control and a confound never merge: the kind is part of the key.
+                kind = it.get("kind") or ""
+                alias = {kind + a for a in aliases(name) | {_key(k, canon)}}
                 slot = next((v for v in out[k].values() if v["_alias"] & alias), None)
                 if slot is None:
-                    slot = out[k][_key(k, canon)] = {
+                    slot = out[k][kind + _key(k, canon)] = {
                         "name": canon, "evidence": set(), "subfields": set(),
                         "variants": set(), "_alias": set(),
+                        **({"kind": kind} if kind else {}),
                     }
                 slot["_alias"] |= alias
                 # An expansion names the thing for a reader who does not already know
@@ -278,13 +365,20 @@ def merge(cards: List[Dict]) -> Dict:
                     slot["variants"].add(name)
                 # `rules_out`/`ruled_out_by` are the whole point of a control or a
                 # confound — the name alone says what was run, not what it licenses.
-                for f in ("role", "direction", "detail", "rules_out", "ruled_out_by"):
+                for f in _TEXT_FIELDS:
                     if it.get(f) and len(str(it[f])) > len(str(slot.get(f) or "")):
                         slot[f] = it[f]
-    for k in ALL_KEYS:
+                if it.get("applies_when") is not None or "applies_when" in slot:
+                    slot["applies_when"] = _union_types(slot.get("applies_when"),
+                                                        it.get("applies_when"))
+    for k in keys:
         items = []
-        for it in (_absorb_design(list(out[k].values())) if k in DESIGN_KEYS
-                   else out[k].values()):
+        vals = list(out[k].values())
+        if k in design:
+            kinds = list(dict.fromkeys(v.get("kind", "") for v in vals))
+            vals = [x for kd in kinds for x in _absorb_design([v for v in vals
+                                                               if v.get("kind", "") == kd])]
+        for it in vals:
             it.pop("_alias", None)
             it["evidence"] = sorted(it["evidence"])
             it["subfields"] = sorted(x for x in it["subfields"] if x)
@@ -333,8 +427,27 @@ def _allocate(items: List[Dict], cap: int, subfield_order: List[str]) -> List[Di
     return out[:cap]
 
 
+def _allocate_kinds(items: List[Dict], cap: int, subfield_order: List[str]) -> List[Dict]:
+    """Half the threat slots to controls and half to confounds, each dealt round-robin
+    over subfields; a kind short of its half gives the rest to the other. Controls are
+    listed first, as 0.3 cards showed them."""
+    pools = {kd: [it for it in items if it.get("kind") == kd] for kd in THREAT_KINDS}
+    half = {kd: _allocate(pools[kd], cap // len(THREAT_KINDS), subfield_order)
+            for kd in THREAT_KINDS}
+    spare = cap - sum(len(v) for v in half.values())
+    for kd in THREAT_KINDS:
+        if spare <= 0:
+            break
+        more = [it for it in _allocate(pools[kd], len(pools[kd]), subfield_order)
+                if all(it is not x for x in half[kd])][:spare]
+        half[kd] += more
+        spare -= len(more)
+    return [it for kd in THREAT_KINDS for it in half[kd]]
+
+
 def prune(menu: Dict, min_evidence: int = 2, resource_cap: int = 8,
-          design_cap: int = 14, subfield_order: List[str] = None) -> Tuple[Dict, Dict]:
+          design_cap: int = 14, subfield_order: List[str] = None,
+          caps: Dict[str, int] = None) -> Tuple[Dict, Dict]:
     """Keep the corroborated core; report what was cut and why.
 
     Resources need `min_evidence` independent papers: a dataset one group used
@@ -345,11 +458,15 @@ def prune(menu: Dict, min_evidence: int = 2, resource_cap: int = 8,
     genuinely new subfield may have no repeated practice yet, and that is the
     case the whole project is about."""
     subfield_order = list(subfield_order or [])
+    fmt = format_of(menu)
+    res_keys, des_keys = keys_for(fmt)
+    if caps is None and fmt != "0.3":
+        caps = CAPS_V2 if fmt == "2" else CAPS_V04   # per-key caps, not two numbers
     kept, stats = {}, {}
-    for k in ALL_KEYS:
+    for k in res_keys + des_keys:
         items = menu.get(k) or []
-        cap = resource_cap if k in RESOURCE_KEYS else design_cap
-        if k in RESOURCE_KEYS:
+        cap = (caps or {}).get(k) or (resource_cap if k in res_keys else design_cap)
+        if k in res_keys:
             core = [it for it in items if len(it["evidence"]) >= min_evidence]
             relaxed = not core and items
             if relaxed:
@@ -358,6 +475,10 @@ def prune(menu: Dict, min_evidence: int = 2, resource_cap: int = 8,
             stats[k] = {"in": len(items), "out": len(kept[k]),
                         "dropped_uncorroborated": len(items) - len(core),
                         "relaxed": bool(relaxed)}
+        elif fmt == "2" and k == "threats":
+            kept[k] = _allocate_kinds(items, cap, subfield_order)
+            stats[k] = {"in": len(items), "out": len(kept[k]),
+                        **{kd: sum(it.get("kind") == kd for it in kept[k]) for kd in THREAT_KINDS}}
         else:
             kept[k] = _allocate(items, cap, subfield_order)
             stats[k] = {"in": len(items), "out": len(kept[k])}
@@ -368,20 +489,21 @@ def prune(menu: Dict, min_evidence: int = 2, resource_cap: int = 8,
             for sf in (it.get("subfields") or ["(untagged)"]):
                 by_sf[sf] = by_sf.get(sf, 0) + 1
         stats[k]["by_subfield"] = by_sf
-    stats["totals"] = {"in": sum(len(menu.get(k) or []) for k in ALL_KEYS),
-                       "out": sum(len(kept[k]) for k in ALL_KEYS)}
+    stats["totals"] = {"in": sum(len(menu.get(k) or []) for k in res_keys + des_keys),
+                       "out": sum(len(kept[k]) for k in res_keys + des_keys)}
     return kept, stats
 
 
 def curate(cards: List[Dict], min_evidence: int = 2, resource_cap: int = 8,
-           design_cap: int = 14, subfield_order: List[str] = None) -> Tuple[Dict, Dict]:
+           design_cap: int = 14, subfield_order: List[str] = None,
+           caps: Dict[str, int] = None) -> Tuple[Dict, Dict]:
     """merge -> prune, the whole deterministic half in one call.
 
     `subfield_order` is the classifier's ranking, most relevant first; slots are
     dealt round-robin over it so the claim's primary subfield is not outvoted by a
     broader neighbour that simply had more papers in the pool."""
     order = list(subfield_order or [c.get("subfield", "") for c in cards])
-    return prune(merge(cards), min_evidence, resource_cap, design_cap, order)
+    return prune(merge(cards), min_evidence, resource_cap, design_cap, order, caps)
 
 
 def recurate_file(path: str, **kw) -> Dict:
@@ -395,7 +517,7 @@ def recurate_file(path: str, **kw) -> Dict:
         doc = json.load(f)
     kw.setdefault("subfield_order", doc.get("subfields") or [])
     doc["card"], doc["curation"] = curate(doc.get("norm_cards") or [], **kw)
-    doc["format_version"] = "0.3"
+    doc["format_version"] = format_of(doc["card"])
     with open(path, "w", encoding="utf-8") as f:
         json.dump(doc, f, indent=2)
     return doc
@@ -424,7 +546,7 @@ def _main():
                             resource_cap=args.resource_cap, design_cap=args.design_cap)
         t = doc["curation"]["totals"]
         print(f"{doc.get('problem_id', p)}: {t['in']} -> {t['out']}  "
-              + ", ".join(f"{k}={len(doc['card'][k])}" for k in ALL_KEYS))
+              + ", ".join(f"{k}={len(doc['card'][k])}" for k in sum(keys_of(doc["card"]), ())))
 
 
 if __name__ == "__main__":

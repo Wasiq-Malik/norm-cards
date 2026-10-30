@@ -129,8 +129,8 @@ def _pid(arxiv_id: str) -> str:
 
 
 def draft_one(paper: dict, cache_dir: str, model: str) -> dict:
-    text, _ = fulltext.fetch_fulltext(
-        {"arxiv_id": paper["id"], "title": paper.get("title", "")}, cache_dir, max_pages=fulltext.FULL_PAPER)
+    text, _ = fulltext.fetch_paper(
+        {"arxiv_id": paper["id"], "title": paper.get("title", "")}, cache_dir)
     if not text:
         text = paper.get("abstract") or ""
         source = "abstract only — full text unavailable"

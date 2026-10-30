@@ -36,7 +36,16 @@ _load_dotenv()
 OPENALEX_MAILTO = os.environ.get("OPENALEX_MAILTO", "scify-norm-cards@umbc.edu")
 
 # Default LLM for classification / query generation.
-DEFAULT_MODEL = os.environ.get("NORM_CARDS_MODEL", "gpt-5-mini")
+DEFAULT_MODEL = os.environ.get("NORM_CARDS_MODEL", "gpt-6-luna")
+
+# Open-weight models served behind OpenAI-compatible endpoints, by the short name the
+# eval scripts use. Endpoint and key both come from the environment (.env), never from here.
+OPEN_MODELS = {
+    "qwen3.8-27b": {"model": "openai//home/app/models/Saqib420/Qwen3.8-27B-FP8",
+                    "base_env": "ZEBLOK_API_BASE",   # e.g. https://<host>/v1
+                    "key_env": "ZEBLOK_API_KEY",
+                    "temperature": 0.6},             # Qwen's recommended sampling temperature
+}
 
 HTTP_TIMEOUT = int(os.environ.get("NORM_CARDS_HTTP_TIMEOUT", "30"))
 USER_AGENT = "scify-norm-cards/0.1 (research; paper-gathering)"

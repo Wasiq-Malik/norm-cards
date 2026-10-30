@@ -1,6 +1,6 @@
 """Known-answer test suite for the judge.
 
-    python -m norm_cards.eval.judge_suite --configs gpt-5.6-luna:v1,gpt-5.6-terra:v2
+    python -m norm_cards.eval.judge_suite --configs gpt-6-luna:v2,gpt-5.6-terra:v2
     python -m norm_cards.eval.judge_suite --list
 
 Every case is constructed, short, and has a known correct status for each reference
@@ -443,7 +443,7 @@ def report(results: list) -> str:
 
 def _main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--configs", default="gpt-5.6-luna:v2,gpt-5.6-terra:v2",
+    ap.add_argument("--configs", default="gpt-6-luna:v2,gpt-5.6-terra:v2",
                     help="comma-separated model:prompt pairs; prompt is v1 or v2")
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--workers", type=int, default=10)

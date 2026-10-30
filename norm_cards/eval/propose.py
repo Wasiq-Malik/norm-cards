@@ -42,7 +42,9 @@ from concurrent.futures import ThreadPoolExecutor
 from . import load_claims
 from .. import scify_proposer
 
-DEFAULT_MODELS = ("gpt-5.4", "gpt-5.5", "gpt-5.6")
+# gpt-6 family only from dataset50 (2026-10-29); dataset34v4-v8 ran gpt-5.4, gpt-5.5 and
+# gpt-5.6-sol as well. gpt-6-luna is the judge and card builder, gpt-6-astra too costly.
+DEFAULT_MODELS = ("gpt-6-sol", "gpt-6.1-sol", "gpt-6.1-terra")
 
 
 RESOURCE_SECTIONS = ("datasets", "models", "metrics")
@@ -53,16 +55,16 @@ def resolve_sections(spec: str) -> tuple:
     """--sections resources | design | all | a comma-separated subset."""
     spec = (spec or "all").strip().lower()
     if spec == "all":
-        return scify_proposer.MENU_KEYS
+        return None          # every section the card's own format has (0.3 or 0.4)
     if spec == "resources":
         return RESOURCE_SECTIONS
     if spec == "design":
         return DESIGN_SECTIONS
     picked = tuple(x.strip() for x in spec.split(",") if x.strip())
-    bad = [x for x in picked if x not in scify_proposer.MENU_KEYS]
+    known = scify_proposer.MENU_KEYS + scify_proposer.MENU_KEYS_V04
+    bad = [x for x in picked if x not in known]
     if bad:
-        raise SystemExit(f"unknown card section(s) {bad}; "
-                         f"choose from {list(scify_proposer.MENU_KEYS)}")
+        raise SystemExit(f"unknown card section(s) {bad}; choose from {list(known)}")
     return picked
 
 
@@ -87,11 +89,10 @@ def build_conditions(names, card: dict, bundle: dict, sections: tuple,
             out["retrieval"] = ev
         elif n == "rag":
             # Full text of the SAME papers the card was built from, top BM25
-            # passages, trimmed to the card's own budget. The `retrieval` arm above
-            # sees only abstracts, which the extraction pipeline's own notes record
-            # as naming zero datasets — beating it proves little.
+            # passages. Not trimmed to the card's size: retrieval is itself a way of
+            # delivering norms, and the comparison that matters is against nocard.
             ev = (scify_proposer.fulltext_retrieval_evidence(
-                      bundle, claim, cache_dir=cache_dir, budget=budget)
+                      bundle, claim, cache_dir=cache_dir)
                   if bundle else {})
             if not ev:
                 print("    rag arm needs a bundle with fetchable full text — skipping")
@@ -127,13 +128,17 @@ def propose_all(problem: dict, models, subclaims: list, conditions: dict,
     def one(job):
         arm, model, ev = job
         try:
-            return arm, {"model": model,
-                         "condition": arm.split("+", 1)[1].split("#", 1)[0],
-                         "repeat": int(arm.split("#")[1]) if "#" in arm else 0,
-                         "evidence_chars": sum(len(v) for v in ev.values()),
-                         "experiments": scify_proposer.propose(claim, subclaims, ev,
-                                                               model=model,
-                                                               budget=budget)}
+            exps = scify_proposer.propose(claim, subclaims, ev, model=model, budget=budget)
+            # The budget is a cap, not a suggestion: Qwen3.8-27B returned 12 experiments
+            # for "up to 9", and every extra one is another chance to cover a reference.
+            rec = {"model": model,
+                   "condition": arm.split("+", 1)[1].split("#", 1)[0],
+                   "repeat": int(arm.split("#")[1]) if "#" in arm else 0,
+                   "evidence_chars": sum(len(v) for v in ev.values()),
+                   "experiments": exps[:budget]}
+            if len(exps) > budget:
+                rec["n_returned"] = len(exps)
+            return arm, rec
         except Exception as e:                       # one bad arm must not sink the run
             return arm, {"model": model,
                          "condition": arm.split("+", 1)[1].split("#", 1)[0],
@@ -158,7 +163,7 @@ def _main():
                     help="comma-separated proposer models")
     ap.add_argument("--problems", default="all",
                     help="comma-separated problem ids, or 'all'")
-    ap.add_argument("--decomposer", default="gpt-5.5",
+    ap.add_argument("--decomposer", default="gpt-6-luna",
                     help="model that produces the subclaims shared by every arm")
     ap.add_argument("--arms", default="nocard,retrieval,card",
                     help="conditions to run per model: nocard, retrieval (abstracts), "
@@ -175,6 +180,9 @@ def _main():
                          "single draw leaves uncontrolled — the proposer runs at "
                          "temperature 1, and resampling one arm moved recall by up "
                          "to 0.17, more than any card effect measured so far")
+    ap.add_argument("--card_label", default="",
+                    help="name the card arm 'card:<label>' — for a second set of cards, "
+                         "beside the default card arm")
     ap.add_argument("--budget", type=int, default=scify_proposer.DEFAULT_BUDGET,
                     help="SciFy's 'propose up to N experiments' cap (default 3, "
                          "which is what SciFy runs; vary only as a diagnostic)")
@@ -189,14 +197,15 @@ def _main():
                          "finished run otherwise no-ops on every claim and exits "
                          "looking like success; --force would 'fix' that by "
                          "discarding the other models' arms. This runs only the arms "
-                         "that are missing and merges them in.")
+                         "(model, condition) arms that are missing and merges them in.")
     args = ap.parse_args()
 
     models = [m.strip() for m in args.models.split(",") if m.strip()]
     names = [a.strip() for a in args.arms.split(",") if a.strip()]
     n_skipped = 0
     sections = resolve_sections(args.sections)
-    label = "" if args.sections.strip().lower() == "all" else args.sections.strip().lower()
+    label = args.card_label or (
+        "" if args.sections.strip().lower() == "all" else args.sections.strip().lower())
     claims = load_claims()
     ids = (sorted(claims) if args.problems == "all"
            else [p.strip() for p in args.problems.split(",") if p.strip()])
@@ -212,9 +221,11 @@ def _main():
             with open(out_path, encoding="utf-8") as f:
                 existing = json.load(f)
             have = set(existing.get("arms") or {})
-            # arm keys are "<model>+<condition>"; only the model half is known here,
-            # so decide by model — a model with any arm present is already done.
-            done = {m for m in models if any(a.startswith(m + "+") for a in have)}
+            # arm keys are "<model>+<condition>"; a model is done only when every
+            # condition asked for is there, so new conditions can be added to a run
+            # whose models already have other arms.
+            want = [f"card:{label}" if n == "card" and label else n for n in names]
+            done = {m for m in models if all(f"{m}+{c}" in have for c in want)}
             if set(models) <= done:
                 print(f"[{pid}] all {len(models)} model(s) already present "
                       f"({len(have)} arms); nothing to merge")
@@ -273,7 +284,7 @@ def _main():
                        "decomposer_model": args.decomposer, "subclaims": subclaims,
                        "conditions": sorted(conditions), "budget": args.budget,
                        "repeats": args.repeats,
-                       "card_sections": list(sections),
+                       "card_sections": list(sections) if sections else "all",
                        "card_format": card.get("format_version", ""),
                        "norm_card_used": bool(card),
                        # evaluate.py reads this stamp and hides the evidence from the

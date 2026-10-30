@@ -60,15 +60,23 @@ def _main():
     ap.add_argument("--references", default="",
                     help="ground_truth dir, for the source-paper leakage check")
     ap.add_argument("--cache_dir", default=".pdfcache")
-    ap.add_argument("--map_model", default="gpt-5-mini")
-    ap.add_argument("--reduce_model", default="gpt-5")
-    ap.add_argument("--recipe_model", default="gpt-5")
+    ap.add_argument("--map_model", default=normcard.MAP_MODEL)
+    ap.add_argument("--reduce_model", default=normcard.REDUCE_MODEL)
+    ap.add_argument("--recipe_model", default=normcard.REDUCE_MODEL)
     ap.add_argument("--min_evidence", type=int, default=2,
                     help="papers a RESOURCE needs before it counts as a norm rather "
                          "than one group's choice (design items are exempt: they are "
                          "scarce and are the part that transfers)")
     ap.add_argument("--resource_cap", type=int, default=8)
     ap.add_argument("--design_cap", type=int, default=14)
+    ap.add_argument("--format", default="0.3", choices=["0.3", "0.4", "2"],
+                    help="card format; 0.4 has threats/validity_checks/evidence_standards/"
+                         "baselines and per-key caps (curate.CAPS_V04); 2 has kind-tagged "
+                         "threats, evidence_standards, and eval_protocol/caveat on datasets/"
+                         "metrics (curate.CAPS_V2)")
+    ap.add_argument("--no_recipes", action="store_true",
+                    help="skip the claim-level recipe call (shared subfield cards have no "
+                         "claim, and no proposer arm reads recipes)")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--limit", type=int, default=0,
                     help="build at most this many cards, then exit. Cards are "
@@ -113,11 +121,12 @@ def _main():
                                       recipe_model=args.recipe_model,
                                       min_evidence=args.min_evidence,
                                       resource_cap=args.resource_cap,
-                                      design_cap=args.design_cap)
+                                      design_cap=args.design_cap, fmt=args.format,
+                                      recipes=not args.no_recipes)
         card.setdefault("problem_id", pid)
         with open(card_path, "w", encoding="utf-8") as f:
             json.dump(card, f, indent=2)
-        sizes = {k: len((card.get("card") or {}).get(k) or []) for k in normcard.MENU_KEYS}
+        sizes = {k: len(v) for k, v in (card.get("card") or {}).items()}
         print(f"    -> {card_path}  curated card {sizes}", flush=True)
         built += 1
         if args.limit and built >= args.limit:

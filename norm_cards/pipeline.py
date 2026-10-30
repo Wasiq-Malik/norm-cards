@@ -13,8 +13,20 @@ from .taxonomy import Taxonomy
 
 
 def gather_from_analysis(analysis: ClaimAnalysis, queries: Dict, taxonomy: Taxonomy,
-                         sources, per_query: int = 8, top_k: int = 30) -> Dict:
+                         sources, per_query: int = 8, top_k: int = 30,
+                         require_fulltext: bool = False,
+                         cache_dir: str = ".pdfcache", screen=None) -> Dict:
     """Run the source/search/rank stages from a precomputed analysis + queries.
+
+    `screen`, if given, takes the ranked candidates and returns the ones to keep (rank
+    order kept); subfield_gather passes an LLM relevance screen. It runs before the
+    full-text filter, so off-topic papers are neither fetched nor given a slot.
+
+    `require_fulltext` drops every candidate whose full text cannot be fetched
+    (paywalled, no open-access copy) BEFORE the top_k are chosen. Without it, a third
+    of a bundle's slots went to papers the card could read only the abstract of —
+    12/30 for Robotics — and abstracts carry almost none of the experimental detail a
+    card is made of.
 
     For sources that support it (currently OpenAlex), unions each query's
     primary search with a topics.id-filtered lexical pass keyed on
@@ -40,6 +52,15 @@ def gather_from_analysis(analysis: ClaimAnalysis, queries: Dict, taxonomy: Taxon
                   for k in ((taxonomy.get(sf) or {}).get("keywords") or [])})
     papers = collect.rank(papers, analysis.subfields,
                           topic_ids=analysis.openalex_topic_ids, keywords=kws)
+    n_ranked = len(papers)
+    n_screened = None
+    if screen is not None:
+        papers = screen(papers)
+        n_screened = len(papers)
+        print(f"  relevance screen kept {n_screened}/{n_ranked} ranked candidates")
+    if require_fulltext:
+        papers = _with_fulltext(papers, cache_dir)
+        print(f"  full text for {len(papers)}/{n_ranked} ranked candidates")
     top = collect.select_balanced(papers, top_k)  # guarantee recent + foundational mix
 
     return {
@@ -47,13 +68,33 @@ def gather_from_analysis(analysis: ClaimAnalysis, queries: Dict, taxonomy: Taxon
         "queries": queries,
         "stats": {
             "n_queries": len(pairs),
-            "n_candidates": len(papers),
+            "n_candidates": n_ranked,
+            "n_on_topic": n_screened,
+            "n_with_fulltext": len(papers) if require_fulltext else None,
             "n_selected": len(top),
             "sources_used": [s.name for s in sources],
             "elapsed_sec": round(time.time() - t0, 1),
         },
         "papers": [p.to_dict() for p in top],
     }
+
+
+def _with_fulltext(papers, cache_dir: str, workers: int = 8):
+    """The ranked candidates whose full text can be fetched, rank order kept. Fetched
+    texts land in the same cache the card build and the rag arm read from."""
+    from concurrent.futures import ThreadPoolExecutor
+    from . import fulltext
+
+    def ok(p):
+        try:
+            # what the card build reads (arXiv HTML first), so a paper whose PDF is
+            # unreachable but whose HTML exists still counts as full text
+            return bool(fulltext.fetch_body(p.to_dict(), cache_dir)[0])
+        except Exception:
+            return False
+    with ThreadPoolExecutor(workers) as ex:
+        keep = list(ex.map(ok, papers))
+    return [p for p, k in zip(papers, keep) if k]
 
 
 def gather_for_claim(claim: str, taxonomy: Taxonomy, sources,
