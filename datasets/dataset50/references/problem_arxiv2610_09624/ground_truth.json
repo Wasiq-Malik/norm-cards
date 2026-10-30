@@ -1,0 +1,37 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_09624",
+ "claim": "In a tool-calling language model, the decision whether to start a tool call or answer in plain text is carried by a single direction in the residual stream at the last prompt position of one layer, and moving the model's state along that direction controls the decision, including in settings very different from the prompts the direction was estimated from. Supported only if, in the main model studied, patching that one state from a calling prompt into its matched non-calling prompt restores the call on at least 95% of held-out pairs; adding the direction makes every held-out non-calling prompt call and subtracting it stops every calling prompt; a random direction of the same norm flips almost none; a direction estimated only from coding requests also flips at least 90% of decisions on web search, SQL and email requests with new tools and new verbs; it changes decisions far more often than a random direction inside long, real multi-turn agent trajectories and on requests that contain none of the cue verbs; and the same localisation and control hold in at least five more models from at least two other families.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.09624"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-10; appendices (data construction, random controls, scaffold ablations, transcoder families, readout, cross-model details) skimmed for controls and counts",
+  "draft": "datasets/dataset50/build/drafts/2610.09624.json"
+ },
+ "experiments": [
+  "Turn long agent prompts into minimal contrastive pairs. Setup: Qwen3-8B in non-thinking mode, where a tool call starts with a <tool_call> first token, so the decision is whether that token is the top-1 first prediction. Each prompt is a fixed scaffold (role instructions, a code-execution tool schema, a tool-call format template) followed by a request built from MBPP, APPS, HumanEval and CodeContests tasks in Python, Java and C++. Pairs differ only in the request verb: one of five action verbs (add, build, write, ...) or one of five analysis verbs (discuss, explore, ...). Keep only pairs where the action version calls and the analysis version does not: 500 pairs per model, 300 for analysis and 200 held out.",
+  "Localise the decision. Setup: for each held-out pair, replace the analysis prompt's residual state at one layer and one position (the verb or the last prompt position) with the action prompt's, let the rest of the model run, and record how often the first token becomes <tool_call>; sweep all layers. Result: the effect moves from the verb position to the last prompt position across layers, and at layer 24 patching the last-position state restores the call on 100% of held-out analysis prompts.",
+  "Test the mean difference as a causal direction. Setup: average the action-minus-analysis state difference at layer 24, last position, over the 300 analysis pairs; add it to held-out analysis prompts and subtract it from held-out action prompts, and measure top-1 call rates and the <tool_call> logit shift relative to the original action-analysis gap. Result: adding takes the call rate from 0% to 100% (logit 25.11 to 32.50, normalised effect 1.03); subtracting takes it from 100% to 0% (32.28 to 24.80, normalised 1.04).",
+  "Transfer the coding-derived direction to other tools and wording. Setup: 100 held-out call / no-call pairs each for web retrieval, read-only SQL and email sending, with new tool schemas and new action verbs (retrieve, execute, dispatch) outside the coding vocabulary; keep the direction fixed and only rescale its norm to the target domain's contrast estimated from separate pairs; compare a random direction of the same norm. Result: adding induces calls on 100% and subtracting suppresses calls on 100% in all three domains, with mean normalised logit shifts of 0.88 and 0.94; the random direction changes no decisions.",
+  "Apply the direction unchanged inside real agent trajectories. Setup: native tau2-Bench Telecom trajectories with 5,385-15,690 context tokens, 16-43 available tools and earlier turns and calls; intervene at the next decision point at unit gain, 200 points where the model would call and 200 where it would answer in text; compare a norm-matched random direction. Result: subtracting suppresses 36.7% of calls (call rate 99.5% to 63.0%, mean logit -5.55) and adding induces calls on 70.0% of text turns (+19.42), against 1.5% and 0.0% for the random direction.",
+  "Rule out that the direction only encodes the cue verbs. Setup: 600 requests across code, search, database and API tasks phrased with no action verb, as questions ('Is it true that ...?') or statements ('I haven't gotten to ... yet'); on the 160 where the model calls, subtract the direction at unit gain and at 1.5x, against a random direction. Result: 93.1% of calls suppressed at unit gain (100% to 6.9%) and 100% at 1.5x, against 16.2% for a random direction at 1.5x.",
+  "Replicate across scales and families. Setup: repeat construction, localisation, intervention, transfer and formation analysis on Qwen3-4B and 14B, Qwen3.5-4B and 9B, Mistral-Small-3.2-24B and Granite-3.3-8B at each model's own layer. Result: last-position patching restores calls on 93.5-100% of analysis prompts; normalised sufficiency 0.81-1.03 and necessity 0.61-1.04; new-domain transfer 87.7-100% for six models but only 43.0% for Granite; tau2 rates 47.9-85.0%; verb-free suppression 100% for six models but 35.5% for Granite; and analysis-active features outweigh action-active ones in every model (ratio 1.30-3.26).",
+  "Trace how later components read the state into the first token. Setup: direct logit attribution and single-component patching over layers 25-35 of Qwen3-8B; add the direction at layer 24 to analysis prompts and check whether candidate readers return to their action-side behaviour; replace one late MLP feature's analysis-side activation with its paired action-side value. Result: three heads (L29H9, L33H11, L33H29) give stronger call-token support on action prompts and shift attention from role instructions to the tool-format template, and adding the direction brings their output close to action-side values; restoring one MLP-34 feature that fires at tool-schema boundaries yields 37.0% calls, against 6.5% for a non-structural control feature and 41.0% for patching the whole MLP 34."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline",
+  "external",
+  "external",
+  "control",
+  "external",
+  "mechanism"
+ ]
+}

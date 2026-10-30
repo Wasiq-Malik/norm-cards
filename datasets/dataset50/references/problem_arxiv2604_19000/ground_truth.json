@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_19000",
+ "claim": "Translating natural-language mathematical statements into Lean 4 works better if the statement is first split into its conditions and conclusion, a small model then writes each piece together with an explicit operator tree of its logical structure, and compiler errors are repaired at the smallest failing subtree rather than by regenerating the whole statement. Supported only if, under the same budget of four model calls per problem, a 7B model built this way has the highest rate of statements judged semantically faithful to the original on a competition-level benchmark, an undergraduate benchmark and a new graduate-level textbook benchmark, against eight specialised formalisers up to 32B and a frontier general model, each given either four samples or four rounds of whole-statement repair; and if training the model to output operator trees helps only when combined with a staged easy-to-hard curriculum.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.19000"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5; appendices (limitations, end-to-end ablation, PRIME sources, prompts, repair examples) not read",
+  "draft": "datasets/dataset50/build/drafts/2604.19000.json"
+ },
+ "experiments": [
+  "Fix benchmarks, metrics and budget. Setup: ProverBench (high-school and introductory undergraduate), ProofNet (undergraduate) and PRIME, 156 theorems from undergraduate and graduate textbooks across algebra, analysis and number theory, formalised by hand by Lean experts. Metrics: syntax check, the share of statements that compile under Lean 4 toolchain v4.15.0, and consistency check, the share judged faithful to the natural-language statement by LeanScorer with DeepSeek-V3.2 at threshold 0.6. Because the method uses on average 2.9-3.9 model calls per problem, every method gets four calls: four samples, or one generation plus repair rounds.",
+  "Build the pipeline. Setup: Gemini 3.0 Pro rewrites each statement into explicit conditions and a conclusion (removing rhetorical text and making implicit types explicit). Train Qwen2.5-7B-Instruct with LoRA on 283,958 aligned triples (natural-language piece, Lean piece, operator tree from the Lean language server) built from 120,627 NuminaMath-LEAN and ATLAS statements with back-translation by Qwen3-Max, stratified by tree depth, width and node count into simple, moderate and complex tiers and learned in four phases with replay of earlier tiers. Assemble the statement from tree leaves; on compiler error, map the error position to a tree node and repair the smallest enclosing subtree, widening to the component and then the statement, one call per attempt, with a final whole-statement check for meaning.",
+  "Compare with specialised formalisers and a frontier model. Setup: Qwen3-Max, Kimina-Autoformalizer-7B, StepFun-Formalizer-7B and 32B, Goedel-V2-Formalizer-8B and 32B, ATF-8B and ATF-32B, each under four samples and under four rounds of whole-statement repair. Result (consistency %): 84.00 on ProverBench, 79.51 on ProofNet and 67.95 on PRIME, against the best baselines 83.38, 70.89 and 66.67 (Goedel-V2-32B with four samples). Compile rates are high but not always best (ProverBench 95.38 vs 96.31 for Goedel-32B with repair). Some baselines compile far more often than they are faithful (Kimina-7B on ProofNet: 83.02 compile, 56.87 consistency).",
+  "Isolate the training choices. Setup: the same 7B model trained to output only Lean pieces, then with joint operator-tree prediction, then with the staged curriculum; pass@1, 4 and 8 without repair. Result: adding operator trees helps on ProverBench (pass@1 consistency 21.54 to 24.92) but hurts on graduate-level PRIME (pass@1 compile 22.44 to 19.87, consistency 18.59 to 16.03); adding the curriculum recovers and exceeds the baseline on PRIME (23.08 compile, 20.51 consistency) and raises ProofNet pass@1 consistency from 12.13 to 16.44. The same pattern appears for end-to-end statement-level models (appendix)."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

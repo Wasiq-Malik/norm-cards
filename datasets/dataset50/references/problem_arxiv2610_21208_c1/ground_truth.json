@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_21208_c1",
+ "claim": "Whether such a relabelling backdoor passes to a distilled student depends on whether the images the student is distilled on contain the pattern: it persists exactly when the trigger pattern has support in the student's clean query distribution. Supported only if the backdoor stays at or above 90% attack success when the student is distilled on proxy data from other sources (natural images from a different dataset, synthetic renderings), if distilling on a subset of the original classes keeps it when the target class is included but removes it entirely when the target class is left out, and if the channels that drive the backdoor are ones ordinary clean images also use heavily, unlike the channels behind trigger backdoors.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.21208"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5, Limitations, Appendices B (class structure), C (ImageNet-C support), D (design checks), E-G (attack taxonomy, defence settings)",
+  "draft": "datasets/dataset50/build/drafts/2610.21208.json"
+ },
+ "experiments": [
+  "Fix models, distillation and scoring. Setup: ImageNet; ResNet-50 and ResNet-18 teachers trained 90 epochs (batch 512, learning rate 0.2, cosine, 5-epoch warm-up); students ResNet-18, ResNet-18 with half the channels, EfficientNetV2-B0 and DeiT-Tiny (AdamW, 300 epochs, Mixup, CutMix, RandAugment), distilled for 100 epochs on clean images only, temperature 4, distillation weight 0.7. One target class for all poisoned samples. Score clean accuracy and attack success (share of triggered test images classified as the target). Baselines: four artificial-trigger backdoors (BadNets patch, Blend, Refool reflections, WaNet warping).",
+  "Find a naturally common pattern and relabel the images that have it. Setup: project a pool of 10,000 training images into a small subspace, either a fixed 4 x 4 pixel patch at the bottom-right corner or the central (low-frequency) block of the 2D FFT; choose as prototype the projected sample whose distance to its nearest rho fraction of samples is smallest; relabel to the target class every training image within that distance, without changing pixels (rho = 5% spatial, 3% frequency). At test time apply the same rule by pasting the prototype patch or substituting the central FFT coefficients and inverting.",
+  "Vary what the student is distilled on while keeping the poisoned teacher fixed. Setup: distil on COCO images, on synthetic OpenGL renderings, and on a 50-class ImageNet subset with and without the target class. Result: COCO gives 100% attack success for both variants and OpenGL 94.76% / 100%, despite low student clean accuracy (about 32% and 15%) from weak proxy data; the 50-class subset gives 94.68% / 99.96% when it includes the target class and 0.00% for both when it does not.",
+  "Check whether the backdoor lives in channels clean images also use. Setup: define the 4 or 8 channels contributing most to the target logit on triggered inputs as backdoor channels, and measure their activation-weighted contribution percentile on 20,000 random clean ImageNet images relative to all channels, in teachers (T) and students (S). Result: trigger-backdoor channels sit at low clean-image percentiles (top-4: BadNets 19.6, Blend 21.2, Refool 9.9, WaNet 0.6), while relabelling-backdoor channels sit much higher (frequency teacher 28.3 and student 70.6; spatial teacher 79.4 and student 45.2), within the range of ordinary clean channels. Under the 19 ImageNet-C corruptions the share of rule-positive images stays near the poisoning rates (weighted 6.70% and 5.58%)."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

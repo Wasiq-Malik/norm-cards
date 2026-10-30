@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2602_22538",
+ "claim": "A long-chain-of-thought reasoning model can be made markedly better at following instructions, without losing reasoning ability and without any gradient training, by merging in the weight difference of an instruction-tuned model from the same base, after projecting that difference so it leaves the model's computation at its thinking-delimiter tokens unchanged and scaling each module by how much it attends to the instruction. Supported only if, for a 7B pair, the merged model has the best average score over four instruction-following benchmarks and the best average over mathematics, science QA, code editing and creative-writing benchmarks among eight published merging methods and supervised fine-tuning on the same calibration data, with reasoning no worse than the original reasoning model; and if it raises both averages over the reasoning model at four other model sizes or families (1.5B, 8B Llama, 14B, 32B).",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2602.22538"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5; appendices (orthogonality details, proofs, calibration-set construction, further ablations, case studies) not read in detail",
+  "draft": "datasets/dataset50/build/drafts/2602.22538.json"
+ },
+ "experiments": [
+  "Fix models, calibration data and benchmarks. Setup: reasoning models DeepSeek-R1-Distill-Qwen 1.5B/7B/14B/32B and DeepSeek-R1-Distill-Llama-8B; instruction-tuned models Qwen2.5-1.5B/7B/14B/32B-Instruct and Llama-3.1-8B-Instruct. Merge only attention Q, K, V, O and FFN weights. Reasoning calibration set: 150 samples from Mixture-of-Thoughts (distilled from DeepSeek-R1); instruction calibration set: 365 DeepSeek-R1 responses to IFEval-style prompts filtered by an LLM judge and by hand. Instruction following on IFEval, CELLO, InfoBench and ComplexBench; reasoning and general ability on six math benchmarks (aggregated), GPQA, Aider code editing and Arena-Hard-v2 creative writing.",
+  "Define the merge. Setup: (1) for each module, collect the module's input features at the thinking-delimiter token positions on the reasoning calibration set and project the instruction model's weight change onto the null space of those features, so the merged model's computation at those tokens is unchanged; (2) on the instruction calibration set, score each attention head by attention from instruction-constrained response tokens to instruction tokens (alignment) minus attention from unrelated response tokens to instruction tokens (leakage), and set each module's scaling from a clipped closed-form quadratic approximation, averaging over heads for FFN; then add the scaled, projected change to the reasoning model with a global strength. Only forward passes are used.",
+  "Compare with merging methods and fine-tuning at 7B. Setup: data-free merging (Task Arithmetic, SLERP, Karcher, TIES, DARE-TIES), activation-guided merging with calibration data (ACM, LEWIS, AIM, each combined with TIES) and supervised fine-tuning on the same calibration data. Result: instruction-following average 48.11 against 44.12 for the reasoning model, 52.92 for the instruction model, 45.08 for fine-tuning and at most 47.02 for other merges (AIM-TIES); reasoning average 55.59 against 51.03 for the reasoning model, 49.51 for fine-tuning and at most 53.10 for other merges. Fine-tuning and task arithmetic raise instruction following but lower reasoning (49.51 and 49.59). Merging takes 21 minutes against 120 minutes for fine-tuning, with much less GPU memory.",
+  "Repeat across sizes and families. Result (instruction-following average / reasoning average, reasoning model to merged): 1.5B 32.97 / 31.18 to 34.97 / 33.74; Llama 8B 46.97 / 49.48 to 49.73 / 53.33; 14B 53.02 / 60.85 to 56.26 / 64.60; 32B 56.05 / 66.23 to 56.93 / 68.77. Gains are smallest at 32B (+1.6% instruction following), where the reasoning model is already close to the instruction model, and Aider code editing drops slightly there (54.81 to 54.07).",
+  "Separate the two stages. Setup: at 7B, run without the per-module scaling, and without the null-space projection. Result: instruction / reasoning averages 46.58 / 54.92 without scaling, 47.62 / 52.44 without projection, and 48.11 / 55.59 with both, so the projection protects reasoning and the scaling adds instruction following. Layer-wise instruction-attention scores (alignment minus leakage) on IFEval are higher for the merged model than for both the reasoning model and task arithmetic.",
+  "Test where reasoning and instruction following must both succeed. Setup: MathIF (math problems with verifiable constraints) and two multi-turn agent environments, ALFWorld and WebShop, at 7B. Result: MathIF constraint accuracy 25.86% to 35.10%, math accuracy 53.81% to 54.76%, and both correct 12.62% to 20.48%, above the instruction model's 19.76%; ALFWorld 22.00 to 25.00 and WebShop 26.63 to 29.42, both above the instruction model (17.50, 10.45)."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "headline",
+  "control",
+  "external"
+ ]
+}

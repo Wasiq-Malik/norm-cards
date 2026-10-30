@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2607_02074",
+ "claim": "Whether a LiDAR 3D object detector withstands adversarial point-cloud attacks depends on how it encodes the point cloud: detectors that voxelise the scene in 3D, legacy or recent, are far more vulnerable to attacks that shift point coordinates or corrupt intermediate features than detectors that collapse the scene into vertical pillars, while pillar-based detectors are instead the ones vulnerable to injected points. Supported only if, on both a 32-beam and a 64-beam driving dataset, the relative AP drop under a coordinate-perturbation attack and under a feature-space attack is larger for each of two voxel-based detectors than for each of two pillar-based detectors, for both cars and safety-critical classes (pedestrians, cyclists, motorcyclists); if under a point-injection attack the relative car AP drop is larger for each pillar-based detector than for each voxel-based one on both datasets; and if a black-box attack not tailored to any architecture costs every detector less than 3% AP.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2607.02074"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-5 including sensitivity analysis and limitations; appendix (attack formulas, budgets, training configs, extra density plots) not available in the extracted text",
+  "draft": "datasets/dataset50/build/drafts/2607.02074.json"
+ },
+ "experiments": [
+  "Choose detectors that separate encoder type from recency and train them to parity. Setup: two pillar-based detectors (PointPillars with an anchor head; PillarNeSt with a ConvNeXt backbone and centre-based head) and two voxel-based detectors (CenterPoint with a centre heatmap head; FocalFormer3D with a transformer head built to reduce false negatives); evaluate on nuScenes (32-beam) and Waymo (64-beam), using released weights where they exist and otherwise training from scratch in mmdetection3d. Clean mAP: PointPillars 35.9 / 58.4, PillarNeSt 66.9 / 66.2, CenterPoint 58.0 / 67.8, FocalFormer3D 70.5 / 71.9 (nuScenes / Waymo).",
+  "Choose LiDAR-specific attacks so every architecture faces at least one aimed at its weakness, and define success honestly. Setup: a white-box attack that minimises the detector's class-probability-times-IoU confidence in three modes, adding points (affects depth, expected to hurt pillars), removing points (affects density, expected to hurt heatmap heads) and shifting point coordinates (expected to hurt voxels); a white-box feature-space attack that suppresses high-contribution and amplifies low-contribution feature-map entries; and a black-box genetic simulated-annealing attack with tight point-distance constraints. Count an attack as successful on an object only if the object was detected on the clean cloud and is then misclassified or kept with confidence below 0.15. Report relative AP drop and relative confidence drop for cars and for safety-critical classes. A sensitivity check shows average success flat between thresholds 0.10 and 0.15 and within 0.02 of the standard success definition at 0.15 on Waymo.",
+  "Measure AP loss for every detector, attack, class group and dataset. Result (relative AP drop, %): under coordinate shifts, voxel detectors lose 65.5 and 38.9 on nuScenes cars and 91.0 and 88.5 on Waymo cars (CenterPoint, FocalFormer3D) against 20.2 and 10.0, and 18.6 and 9.4, for the pillar detectors (PillarNeSt, PointPillars), with the same ordering for safety-critical classes (e.g. Waymo 96.3 and 61.1 vs 13.8 and 15.8). Under the feature-space attack voxel detectors lose 82.0 and 82.1 on Waymo cars against 12.8 and 7.1. Under point injection the ordering reverses for cars: pillar detectors lose 32.2 and 85.4 on nuScenes and 24.0 and 57.5 on Waymo against 3.9 and 7.8, and 0.0 and 8.0, for voxel detectors. For safety-critical classes it does not fully reverse (Waymo: CenterPoint 25.3 vs PillarNeSt 24.5). PillarNeSt, despite a centre heatmap head like CenterPoint's, resists the feature-space attack.",
+  "Check that the vulnerabilities are specific to structured perturbations rather than to any input change. Setup: the black-box genetic attack, not biased toward any architecture, on all detectors and both datasets. Result: AP drops stay at or below about 2.6% everywhere (car drops -0.1% to 1.6%), and confidence barely moves, so the detectors are not fooled by a generic perturbation pattern.",
+  "Characterise what kind of error the attacks cause. Setup: compute each detector's mean false positives and false negatives on clean data and the change under each attack on both datasets. Result: the attacks are predominantly erasing, raising false negatives (objects vanish) more than false positives; the transformer-headed voxel detector built to reduce false negatives produces many of them under coordinate shifts, consistent with its global attention spreading noise from distant points into object features."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "control",
+  "mechanism"
+ ]
+}

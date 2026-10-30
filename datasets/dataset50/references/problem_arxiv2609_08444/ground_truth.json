@@ -1,0 +1,35 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2609_08444",
+ "claim": "A vision-language task planner for household robots that sees only through its own camera can avoid safety hazards it saw earlier but can no longer see (a power strip, a flammable box, a contaminant) if it keeps a persistent scene graph of objects and their spatial relations built from its RGB-D views, and a separate model checks each planned action against that graph and forces a replan when it predicts a hazard. Supported only if, on IS-Bench tasks converted to single egocentric RGB-D views where the hazard is seen and then occluded, its safe-success rate (task done and safety goal met) is at least 35 points higher on average than each prompt-based safe-planning baseline and than the same system without the graph, with task success no more than 5 points below the best baseline; and if on a physical arm, over 10 trials on each of four hazard tasks, it succeeds safely in at least 90% of trials per task while every baseline does so in at most 30%.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2609.08444"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices A (method details), B (simulated and real-world settings, hyperparameters, token cost); prompt listings skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2609.08444.json"
+ },
+ "experiments": [
+  "Build the memory and planning loop. Setup: at each step Gemini 2.5 Flash lists objects in the egocentric RGB-D view and SAM 2 segments them; nodes carry masks and depth-based 3D positions, edges carry IN / ON / NEAR relations proposed by the language model and refined geometrically from depth. Across steps nodes are matched by mask IoU with bipartite matching; objects that leave the view are retained, and edges are updated when an action moves an object. A GPT-4o risk predictor reads the graph, the task and the next planned action, estimates whether a hazard will arise and, above a conservatism threshold eta = 0.8, sends a replan signal with an explanation to a GPT-4o planner that picks actions from a fixed skill set.",
+  "Turn the benchmark into a partial-observability test. Setup: IS-Bench in OmniGibson, 17 tasks over four hazard categories (3 electric shock, 2 fire, 6 falling, 6 food contamination, preserving the benchmark's imbalance), task and safety goals given as BDDL predicates on fixed pre-sampled scenes; the original top-down plus four fixed cameras are replaced by one egocentric 1280x720 RGB-D camera, so the hazard is seen early and then occluded during execution. Success rate (SR) counts task goals met; safe success rate (SSR) requires both task and safety goals. Baselines with the same GPT-4o planner and skill set: SaP (a learned safety cognition prompt), the benchmark's safety chain-of-thought prompt, the plain planner, and the method without graph memory (risk predictor on raw observations).",
+  "Compare under partial observability. Result: average SR / SSR 0.79 / 0.59 against 0.79 / 0.13 for SaP, 0.83 / 0.17 for chain-of-thought, 0.59 / 0.00 for the plain planner and 0.75 / 0.21 without graph memory. Per hazard, SSR is 0.67 / 0.50 / 0.67 / 0.50 (electric, fire, falling, food) against at most 0.33 / 0.00 / 0.33 / 0.17 for any baseline; fire tasks remain hard for all methods (SR 0.50).",
+  "Deploy on a physical arm. Setup: Franka Panda with a RealSense D405 egocentric RGB-D camera on a tabletop, one task per hazard category (watering a plant with a power strip nearby, moving a handkerchief with an object on it, heating vegetables beside a cardboard box, putting an apple in a basket beside bleach), 10 trials each with small layout changes, same GPT-4o planner and risk predictor. Result: SR is 0.6-1.0 for every method, but SSR is 1.0 on all four tasks for the full system against 0.0-0.1 for SaP, chain-of-thought and the plain planner and 0.3 / 0.0 / 0.0 / 0.0 without graph memory.",
+  "Check full observability, where memory should matter less. Setup: original IS-Bench camera layout plus depth, so the hazard stays visible. Result: average SR / SSR 0.88 / 0.67 against 0.92 / 0.42 without graph memory, 0.88 / 0.21 for chain-of-thought, 0.79 / 0.21 for the plain planner and 0.88 / 0.13 for SaP; the risk predictor alone already beats the prompt-based methods, and the graph adds 25 points on top.",
+  "Check that the risk predictor does not hurt hazard-free tasks. Setup: run the tasks with hazards removed. Result: average SR 0.82 against 0.76 for the plain planner and 0.88 for chain-of-thought, so the replan signal rarely fires unnecessarily.",
+  "Check sensitivity to the replan threshold and the cost. Setup: conservatism factor eta 0.8 versus 1, and per-step tokens and latency. Result: at eta = 1 safety violations drop from 6/17 to 3/17 and SSR rises from 0.59 to 0.67 with SR unchanged at 0.79, so the headline setting is not the most favourable one; per planning step the full system uses 9,425 tokens and 17.6 s against 3,980 tokens and 10.3 s for the plain planner and 6,101 tokens and 12.4 s without graph memory."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "external",
+  "control",
+  "control",
+  "confound"
+ ]
+}

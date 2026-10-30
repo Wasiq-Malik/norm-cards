@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_08524",
+ "claim": "When a refusal steering vector is added at one layer of an instruction-tuned language model throughout multi-token generation, its effect on what the model writes is carried by a small part of the downstream network, and steering vectors for refusal obtained by quite different methods at that layer rely on essentially the same part. Supported only if, in each of three model families, a subgraph containing no more than about an eighth of the edges downstream of the steering layer recovers at least 85% of the steering effect on the generated tokens while the rest of the network recovers almost none; and if, for vectors made by at least three different methods, their subgraphs overlap by around 90% or more and each vector's effect is still mostly recovered (at least 85%) when routed through another method's subgraph, whereas a random subgraph twice the size recovers under 10%.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.08524"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-8, Limitations; Appendices B (vector curation, ASR evaluation), C (additional model results), D (metric comparisons) skimmed; A (derivation), E-H (EAP-IG, sparsity raw results, graphs, logit lens) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2604.08524.json"
+ },
+ "experiments": [
+  "Build and score the refusal steering vectors. Setup: harmful instructions from AdvBench, MaliciousInstruct, TDC2023 and HarmBench and harmless ones from Alpaca, 128 training and 32 validation each; test on 100 JailbreakBench harmful prompts and 100 held-out Alpaca prompts. Models: Gemma 2 2B Instruct, Llama 3.2 3B Instruct, Qwen 3 8B in non-thinking mode. Take the difference of mean activations between harmful and harmless prompts at each post-instruction position and layer, and keep the candidate that bypasses refusal on harmful validation prompts, induces it on harmless ones, and shifts harmless outputs by KL < 0.1 (chosen: layer 15 position -1, layer 12 position -4, layer 20 position -8). Add the vector at every position including the prompt, subtracting it to jailbreak and adding it to induce refusal. Score attack success on harmful prompts with the LlamaGuard 2 judge and on harmless prompts by refusal-substring matching. Result: steered attack success on JailbreakBench of 0.80, 0.85 and 0.83, and almost no compliance left on harmless prompts (0.00-0.03).",
+  "Adapt circuit discovery to steered multi-token generation. Setup: for each test prompt, generate greedy responses with and without steering and keep only pairs where steering flips the outcome. Treat the steered and unsteered hidden states as the clean and corrupted runs (and the reverse), teacher-force the response, and score each edge downstream of the steering layer by edge attribution patching with integrated gradients (10 steps) on the logit difference between steered and unsteered next tokens, averaged over response positions and masking positions where the two runs agree. Build circuits greedily from the scores and measure faithfulness as the share of the steering effect recovered when every edge outside the circuit is set to its unsteered activation.",
+  "Find how much of the network carries the steering effect. Setup: faithfulness of circuits of increasing size on JailbreakBench and Alpaca for the difference-of-means vector in all three models, with a circuit counted faithful at 0.85, plus faithfulness of each circuit's complement. Result: about 10% of Gemma's downstream edges (900 of 8,790), 11% of Llama's (13,500 of 124,441) and 8% of Qwen's (16,100 of 195,865) reach 0.85 average faithfulness, while the complements stay near 0 at every size.",
+  "Test whether vectors made by other methods use the same circuit. Setup: on Gemma and Llama, learn two more refusal vectors at the same layer, one by next-token prediction on prompt-response pairs that express refusal and one by preference optimisation on contrastive responses (pairwise cosine with the others only 0.10-0.42). Find each one's circuits, measure overlap |A and B| / min(|A|, |B|) across circuit sizes, and compute each vector's faithfulness when routed through every other vector's minimum faithful circuit, against a random circuit twice the minimum size. Result: all three need similar circuit sizes (preference optimisation slightly larger); overlap between any smaller and larger circuit is about 90% or more (0.84-1.00 Gemma, 0.77-0.98 Llama); interchanged circuits recover faithfulness strongly, while random circuits recover under 10%."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "headline"
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2608_28229_c1",
+ "claim": "Grammar-guaranteed decoding with this lookahead also produces semantically better structured outputs than other constrained or unconstrained decoders, because beam search over model and automaton-proposed tokens avoids being forced onto low-probability repair tokens, and promoting tokens that reduce the distance to acceptance adds further gains. Supported only if it has the highest SQL execution accuracy on Spider and the highest formula-equivalence accuracy on drone-planning temporal logic for each of three base models, and if, with beam search held fixed, adding distance-guided scoring raises accuracy in all six model-task pairs.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2608.28229"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6, Limitations and Appendices A-C (system, ablations, budget saturation); D (worked example) skimmed; Section 2 related work skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2608.28229.json"
+ },
+ "experiments": [
+  "Define the decoder. Setup: translate the grammar to a pushdown automaton; offline, compute bounded-stack summaries (stack height H) with Pre*-style reachability and, by weighting each terminal with the minimum number of model tokens needed to emit it, an upper bound on the token distance to acceptance. Online, track configurations including a partially matched terminal so subword tokens can cross terminal boundaries; combine the model's top-k tokens with automaton-proposed tokens, keep only those whose successors can still reach acceptance within the remaining budget, push the logits of tokens that make progress towards acceptance toward the best viable logit (strength alpha), and run beam search; configurations missing from the cache are computed on the fly. A theorem shows every returned output is accepted and one is returned whenever the bound fits the budget. Preprocessing takes 0.29 s for schema-specific JSON grammars, 0.42 s for LTL (H = 50) and 3 h 40 min for SQL (H = 13).",
+  "Fix the benchmarks and baselines. Setup: Llama-3.1-8B-Instruct, Llama-3.2-3B-Instruct and Qwen2.5-7B-Instruct; json-mode-eval (100 schema-conditioned JSON examples), Spider validation (1,034 text-to-SQL), and the drone-planning LTL golden set (6,185); token budget 120 for all. Baselines: the unconstrained model (temperature 0.8, 10 seeds), sample-and-verify over those 10 samples, Guidance, Outlines, XGrammar, SynCode (strict) and GenLM sequential Monte Carlo (2 or 5 particles) where their public code supports the grammar; XGrammar dropped for SQL at about 20 s per token; no baseline supports LTL natively except SynCode. Metrics: syntactic validity, JSON schema validity, SQL execution accuracy, LTL accuracy by Buchi-automaton equivalence, perplexity under the base model, and seconds per output.",
+  "Generate SQL and temporal logic. Result: Spider execution accuracy 61.1 / 51.5 / 62.8% (Llama-3.1-8B / Llama-3.2-3B / Qwen2.5-7B) against 59.2 / 49.4 / 51.9% for GenLM, 57.5 / 47.8 / 61.5% for sample-and-verify, 43.2 / 39.6 / 43.2% for SynCode and 53.8 / 46.3 / 61.4% unconstrained; time 9.92 / 6.25 / 13.03 s against 8.90 / 5.29 / 8.83 s for sample-and-verify. LTL accuracy 29.6 / 22.1 / 31.6% against 24.4 / 15.2 / 31.0% for SynCode and 22.1 / 9.6 / 30.9% unconstrained. Margins over the best baseline are 1.3-2.1 points on SQL and 0.6-6.9 on LTL.",
+  "Ablate beam search and distance-guided scoring. Setup: SQL and LTL, each model, with or without 4-beam search and with or without distance-guided scoring (alpha = 0.5). Result: SQL execution without either 26.0 / 22.1 / 22.2% (Llama-3.2-3B / Llama-3.1-8B / Qwen), with beams only 50.9 / 60.4 / 61.6%, with both 51.2 / 60.9 / 62.8%; LTL 16.5 / 29.2 / 30.5% without either, 21.8 / 29.4 / 31.2% with beams, 22.1 / 29.6 / 31.6% with both; distance scoring without beams lowers LTL on Llama-3.1-8B to 24.9%. Syntactic validity is 100% in every configuration. Without beams the decoder falls back to the automaton's highest-probability token whenever the model's single proposal is invalid, which hurts quality.",
+  "Note tuning and reporting details. Setup: the scoring strength alpha is chosen per model and task (0.25-0.75), and the main-table SQL numbers differ slightly from the ablation's alpha = 0.5 row; baselines use default settings. The SynCode SQL row for Qwen2.5-7B is identical to its Llama-3.1-8B row in every column, which may be a reporting error."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "mechanism",
+  "confound"
+ ]
+}

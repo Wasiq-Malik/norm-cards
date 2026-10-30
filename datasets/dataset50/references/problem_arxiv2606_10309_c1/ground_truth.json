@@ -1,0 +1,37 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_10309_c1",
+ "claim": "An AI-generated-image detector becomes much more robust to post-processing and unseen generators if, using inpainted images whose generated region is known, one removes the final-layer feature channels that respond most selectively to either the generated region or the real background, and retrains only the linear classifier on what is left. Supported only if, applied to two different pretrained detectors, the pruned versions beat their own base detector and a retrained version of it constrained to non-negative weights in both average AUC and fake-image accuracy on post-processed images from nine unseen generators, and on three in-the-wild benchmarks of social-media and art-community images; if training the same detectors from scratch with the inpainted images added as fakes does not deliver comparable gains; and if building the pruning mask from inpaintings by two other, architecturally different inpainting models gives nearly the same mask and the same gains.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.10309"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices B (limitations), C (spurious-reliance evidence), D (inpainter choice), E (implementation), H (additional ablations); F (dataset and baseline descriptions) and G (related work) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2606.10309.json"
+ },
+ "experiments": [
+  "Set up the evaluation. Setup: 3,000 real RedCaps web images and roughly 3,000 generated images each from nine generators not used in training (Stable Diffusion, Midjourney, Kandinsky, Playground, PixArt, LCM, FLUX, Wuerstchen, aMUSEd); a post-processed copy with random compression, resizing and colour jitter following the Stay-Positive protocol; and three in-the-wild sets whose images went through unknown processing on upload (Chameleon 6,934, WildRF 1,051, LOKI 1,921). Report AUC plus accuracy on real images and on fake images at each detector's own threshold (AUC only for training-free detectors, which lack one). Detectors compared: eight CNN detectors (Corvi, Rajan, NPR, SAFE, AIDE, FerretNet, LaDeDa, DRCT), four CLIP-based (UFD, C2P-CLIP, RINE, ClipDet), one ViT-based (CoDE), two training-free (AEROBLADE, WaRPAD), and Corvi and Rajan retrained with non-negative final-layer weights (Stay-Positive).",
+  "Score every channel by where it fires on partly generated images. Setup: make diagnostic images by inpainting random rectangles (2-20% of the area, aspect 0.5-2.0) of 90,000 LSUN images with Stable Diffusion 1.5 at 512 x 512, blurring mask edges so the boundary itself cannot be used. For each of the 2,048 channels of the final convolutional layer of a ResNet-50 detector, compute mean activation inside the inpainted region minus mean activation on the background, over about 6,400 augmented 96 x 96 crops with the mask downsampled to the 12 x 12 feature grid. Prune channels below the low and above the high percentile (20% each side for Corvi, 30% for Rajan, tuned over 5-30%), freeze the backbone, and retrain a zero-initialised linear classifier on the original training data plus the inpainted crops, labelling a crop fake if it contains any inpainted pixel.",
+  "Check that channels at both ends of the score are the fragile ones. Setup: for each of the 2,048 channels of Corvi and Rajan, measure the change in activation (MSE) under WEBP compression and plot it against the channel's region score. Result: channels at both extremes, strongly firing on generated regions or strongly on real background, change most under compression, while channels with intermediate scores are the most stable, for both detectors.",
+  "Compare the pruned detectors with all baselines on post-processed images from nine unseen generators. Result: average AUC / fake accuracy is 92.3 / 90.2% for pruned Corvi against 79.2 / 47.7% for Corvi and 89.5 / 51.0% for its non-negative-weight version, and 97.1 / 89.5% for pruned Rajan against 92.9 / 58.2% and 90.6 / 62.3%; pruned Rajan has the highest average AUC of all detectors, and the gap is largest on FLUX (fake accuracy 77.6% vs 15.4% for Rajan). The gain costs real-image accuracy: pruned Corvi passes 76.4% of real images against 97.3% for Corvi (pruned Rajan 95.1% vs 99.9%). On clean images both pruned detectors reach about 100 AUC and catch over 96% of FLUX fakes, against 21.5% and 12.0% for their bases.",
+  "Test on images processed in the wild. Setup: Chameleon, LOKI and WildRF, original and with the same added post-processing. Result: average AUC 82.9 for pruned Corvi on original images (best of all detectors; Corvi 77.1, Corvi+ 81.4) and, after post-processing, 77.5 vs 69.4 and 74.1 for Corvi and 78.1 for pruned Rajan vs 75.3 and 72.3, the highest of all; average fake accuracy rises from 27.5% to 63.5% (Corvi) and 28.8% to 52.0% (Rajan) under post-processing.",
+  "Rule out that the gain comes merely from seeing inpainted images during training. Setup: train ResNet-50 detectors from scratch with the Corvi and Rajan protocols, adding the same inpainted images as extra fakes, and compare average AUC over the nine generators, original and post-processed, with the base, non-negative-weight and pruned versions, at pruning ratios 10%, 20% and 30%. Result: the inpainting-augmented detectors improve little on their bases and Rajan-inpaint is worse than Rajan on post-processed images, while every pruned version is best, with the largest margins under post-processing and stable results across pruning ratios.",
+  "Check that the pruning mask is not specific to the inpainting model used to find it. Setup: recompute channel scores with diagnostic images from FLUX Fill (a transformer inpainter) and SDXL, then compare post-processed average AUC and agreement with the Stable Diffusion 1.5 ranking (Spearman correlation over all channels, Jaccard overlap of the 10% pruned set). Result: AUC 92.25 / 91.19 / 89.79 for pruned Corvi (base 79.23) and 97.14 / 96.14 / 96.45 for pruned Rajan (base 92.93); Spearman 0.79-0.97 and Jaccard 0.83-0.92.",
+  "Rule out that the removed channels carried valid evidence about generated images. Setup: if they did, removing them should hurt on generator families unlike the latent-diffusion generator both detectors were trained on. Evaluate fake accuracy on six non-diffusion generators (BigGAN, GauGAN, ProGAN, StarGAN, SAN, SITD), a deepfake set and FLUX; separately measure fake accuracy under WEBP compression. Result: pruning raises fake accuracy on all three groups: non-diffusion 16.8% to 64.2% (Corvi) and 7.4% to 46.4% (Rajan), FLUX 21.5% to 100% and 12.0% to 96.6%, deepfakes 84.2% to 99.5% and 46.9% to 97.7%; under WEBP compression fake accuracy improves by 15-38 points at qualities 50-90."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "mechanism",
+  "headline",
+  "external",
+  "control",
+  "confound",
+  "control"
+ ]
+}

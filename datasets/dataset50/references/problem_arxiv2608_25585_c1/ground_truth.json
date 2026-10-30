@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2608_25585_c1",
+ "claim": "In-context imitation for robot policies fails mainly for two reasons: the demonstration segments retrieved look similar rather than behave similarly, and the policy barely changes its actions in response to them. Supported only if replacing an off-the-shelf visual retriever with one trained so that segments aligned by their actions lie close together raises the held-out success of every existing in-context method; if for the proposed policy the same swap lifts success on a held-out suite several-fold; and if a measure of how much the generated actions change when the retrieved context is replaced with random context is far higher for a policy trained to depend on context than for existing methods or the same policy without that training, with success tracking it.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2608.25585"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices A-H",
+  "draft": "datasets/dataset50/build/drafts_orig20/2608.25585.json"
+ },
+ "experiments": [
+  "Fix the policy, the context buffer and the training objectives. Setup: GR00T N1.5 as the backbone for every method, dual-view RGB (third-person and wrist), action horizon 16, 4 denoising steps, one retrieved segment by default. Slice each held-out task's few expert demonstrations into overlapping segments (stride 4); with the vision-language backbone frozen, pre-compute and cache each segment's features so that segments are encoded independently rather than concatenated into the prompt, and attend to one retrieved segment per cross-attention layer, the most relevant in the top layers. Train a small two-layer transformer retriever with a contrastive loss whose positives are segment pairs aligned by dynamic time warping of their action sequences, and train the action head with an extra margin loss requiring its error with retrieved context to be lower than with random context; initialise denoising from the mean of the retrieved action chunks.",
+  "Keep training and evaluation tasks strictly separate. Setup: in LIBERO (Spatial, Object, Goal and Long suites, 10 tasks and 50 demonstrations each), train on three suites and evaluate on the fourth, giving each held-out task three demonstrations in the buffer and measuring success over 50 trials. On a UR5e arm with a Robotiq gripper and two RealSense cameras, collect 30 GELLO-teleoperated demonstrations each for four household tasks (stack a box, throw trash in a bin, close a drawer, press a pedal) with randomised object placement and start states; train on three tasks plus LIBERO data, hold out the fourth, give it four demonstrations, and score 12 trials for a sub-goal and for full success. Baselines: the backbone trained on the training tasks only, RAEA (demonstrations concatenated into the prompt) and RICL (distance-weighted blend of retrieved and generated actions, favouring generation or retrieval).",
+  "Compare on held-out LIBERO suites, with baselines run both with an off-the-shelf SigLIP 2 retriever and with the action-aligned retriever. Result: the plain backbone averages 1.7% on unseen suites; with SigLIP 2, RAEA, RICL-G and RICL-R average 4.5%, 8.9% and 4.7%; with the action-aligned retriever they rise to 12.4%, 13.0% and 20.9%; the proposed policy reaches 38.5% (Spatial 32.0%, Object 55.6%, Goal 53.2%, Long 13.0%), best on every suite.",
+  "Measure whether actions depend on the retrieved context. Setup: on 1,000 samples, relative contextual sensitivity = norm of the difference between actions generated with retrieved context and with random context, divided by the norm of the action with retrieved context; compare RAEA, RICL-R, the proposed policy without the context-dependence loss, and the full policy, against LIBERO-Goal success. Result: 0.0247 / 10.4%, 0.0788 / 20.6%, 0.0353 / 9.8% and 0.3639 / 53.2%, so without that loss the policy largely ignores its context and success collapses.",
+  "Isolate the retriever's contribution for the proposed policy and check what it retrieves. Setup: run the full policy with an off-the-shelf retriever instead of the action-aligned one on LIBERO-Goal; for pairs of expert trajectories of the same task, retrieve for each segment of one the nearest segment of the other with the action-aligned retriever, SigLIP 2 and Eagle 2. Result: success falls from 53.2% to 10.2% with the off-the-shelf retriever; the visual encoders often match a pick-up segment to a later transport segment of similar appearance, while the action-aligned retriever matches the corresponding phase."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "mechanism",
+  "control"
+ ]
+}

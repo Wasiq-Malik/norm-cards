@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2607_02074_c1",
+ "claim": "For voxel-based LiDAR 3D detectors, denser point clouds do not protect against attacks that shift point coordinates: the extra geometric detail gives the attacker more to manipulate. Supported only if, for both voxel-based detectors tested, the relative car AP drop under a coordinate-perturbation attack and under a feature-space attack is larger on a dataset recorded with a 64-beam LiDAR than on one recorded with a 32-beam LiDAR; if under these attacks the attack success rate on objects within 20 m of the vehicle is not lower than on objects 35-50 m away; and if at least some model-attack pairs show attack success that does not fall as the number of points on the object rises.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2607.02074"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-5 including sensitivity analysis and limitations; appendix (attack formulas, budgets, training configs, extra density plots) not available in the extracted text",
+  "draft": "datasets/dataset50/build/drafts/2607.02074.json"
+ },
+ "experiments": [
+  "Choose detectors that separate encoder type from recency and train them to parity. Setup: two pillar-based detectors (PointPillars with an anchor head; PillarNeSt with a ConvNeXt backbone and centre-based head) and two voxel-based detectors (CenterPoint with a centre heatmap head; FocalFormer3D with a transformer head built to reduce false negatives); evaluate on nuScenes (32-beam) and Waymo (64-beam), using released weights where they exist and otherwise training from scratch in mmdetection3d. Clean mAP: PointPillars 35.9 / 58.4, PillarNeSt 66.9 / 66.2, CenterPoint 58.0 / 67.8, FocalFormer3D 70.5 / 71.9 (nuScenes / Waymo).",
+  "Choose LiDAR-specific attacks so every architecture faces at least one aimed at its weakness, and define success honestly. Setup: a white-box attack that minimises the detector's class-probability-times-IoU confidence in three modes, adding points (affects depth, expected to hurt pillars), removing points (affects density, expected to hurt heatmap heads) and shifting point coordinates (expected to hurt voxels); a white-box feature-space attack that suppresses high-contribution and amplifies low-contribution feature-map entries; and a black-box genetic simulated-annealing attack with tight point-distance constraints. Count an attack as successful on an object only if the object was detected on the clean cloud and is then misclassified or kept with confidence below 0.15. Report relative AP drop and relative confidence drop for cars and for safety-critical classes. A sensitivity check shows average success flat between thresholds 0.10 and 0.15 and within 0.02 of the standard success definition at 0.15 on Waymo.",
+  "Compare vulnerability between the sparser and denser dataset. Setup: same detectors and attacks on nuScenes (32-beam) and Waymo (64-beam). Result: for the voxel detectors the car AP drop under coordinate shifts rises from 65.5 to 91.0 (CenterPoint) and 38.9 to 88.5 (FocalFormer3D), and under the feature-space attack from 16.6 to 82.0 and 17.5 to 82.1, whereas point removal hurts the pillar detectors more on the sparser dataset (24.6 and 25.9 on nuScenes vs 2.3 and 17.7 on Waymo). Pillar detectors change little between datasets under coordinate shifts (20.2 vs 18.6, 10.0 vs 9.4).",
+  "Test whether nearby objects, which carry more points, are harder to attack. Setup: bin objects by distance from the ego vehicle into near (under 20 m), mid (20-35 m) and far (35-50 m) on both datasets and plot attack success for every detector-attack pair. Result: for most pairs near objects are attacked less successfully, as expected, but under the coordinate-perturbation and feature-space attacks success is roughly the same at all distances.",
+  "Relate attack success to per-object point density and to which points are touched. Setup: plot attack success against the number of points inside each object's box after manipulation; and split each object's points into an inner core and an outer shell using a box scaled by 0.8, chosen because it splits points roughly evenly on both datasets, then compare success when attacks act on inner or outer points. Result: some pairs (FocalFormer3D and CenterPoint under coordinate shifts, PointPillars under injection) are vulnerable regardless of density and some show success rising with density (PointPillars and CenterPoint under the feature attack on nuScenes; CenterPoint under injection and PillarNeSt under coordinate shifts on Waymo), while most other pairs become more robust as density rises. Inner and outer perturbations hurt about equally, except that removing core points hurts much more than removing shell points."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "headline",
+  "mechanism"
+ ]
+}

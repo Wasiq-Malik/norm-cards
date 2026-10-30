@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_00570_c2",
+ "claim": "Weight edits fail because language-model hidden representations are dimensionally collapsed, so a small edit that lands in a low-variance direction is large relative to that direction's normal signal, and this relative distortion grows with the number of edits and tracks how badly editing performs. Supported only if hidden representations at the edited layers have condition numbers above 10^6; if after edits the relative change per principal direction is largest in the smallest-singular-value directions and exceeds 1 in many of them even after a single edit; and if, across sequential edit steps, the median relative change has a Spearman correlation with edit reliability of -0.75 or stronger (p < 0.05) for at least three of four weight-editing methods.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.00570"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6 and Appendices B (hypothesis evidence: collapse statistics, perturbation norms, basis stability, R_k distributions, correlation with performance), C (settings, full results, reasoning failure cases, token-level locality, AlphaEdit sensitivity), D (retrieval baseline fairness), E (retrieval efficiency); Section 2 and Appendix A (related work) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2606.00570.json"
+ },
+ "experiments": [
+  "Measure dimensional collapse. Setup: SVD of centred hidden representations at layers 5-31 of Llama-3.1-8B-Instruct, and of DeepSeek-R1-Distill-Llama-8B, Llama-2-13B and MEND-edited layers of T5-3B; check that single-edit perturbation norms are small enough for a first-order analysis. Result: on Llama-3.1-8B the effective rank is 75-80% of 4,096 dimensions in most layers (50.4% at layer 30, 25.0% at layer 31), smallest singular values 3.4e-6 to 3.1e-3 and condition numbers 4.2e6 to 1.3e8; the other models show the same pattern. The theory then defines the relative change R_k = sqrt(n)|c_k|/sigma_k along each principal direction and shows it is largest where sigma_k is small, growing linearly with coherent sequential edits.",
+  "Test the amplification and its link to performance. Setup: R_k distributions per layer and edit step for MEMIT, ROME, AlphaEdit, WISE and MEND; Spearman correlation between step-level summaries of R_k (median, q90, q95, trimmed mean; aggregated across layers by mean, max or median) and the four editing metrics, MEND excluded for lack of variation. Result: R_k rises with edit steps and is largest in low-singular-value directions, exceeding 1 in many after one edit (e.g. layer 30 of Llama-3.1-8B after 1,000 MEMIT edits); AlphaEdit stays more stable. Median-R_k correlation with reliability: MEMIT -0.96 (p < 0.001), ROME -0.86 (p = 0.003), WISE -0.77 (p = 0.016), AlphaEdit -0.20 (p = 0.60); with locality -0.73, -0.91, -0.49 and 0.03; the pattern holds across summary and aggregation choices.",
+  "Check the theory's stable-basis assumption. Setup: cosine of the minimum principal angle between original and edited top-k principal subspaces at layer 30 under AlphaEdit and ROME sequential editing (three decoder models) and MEND on T5-3B. Result: the top 10-200 directions stay aligned (cosine about 0.93-1.0) early on, but the top-2,000 subspace swings between about 0.003 and 0.94 from step to step, and some T5 layers lose stability immediately, so the fixed-basis linear-accumulation result is only a short-horizon idealisation. The correlations are over few edit steps per method and do not establish that the low-variance distortion causes the failures."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "confound"
+ ]
+}

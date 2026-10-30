@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_26496",
+ "claim": "In adversarial training, how strongly the training examples that sit close to the decision boundary are perturbed hardly affects the robustness the model ends up with, though it does affect clean accuracy; robustness comes from fully perturbing the examples far from the boundary. Supported only if, in PGD adversarial training of ResNet-18 on CIFAR-10, cutting the perturbation for correctly classified examples that are already attackable at a tenth of the budget (to that tenth, or to zero) leaves final robust accuracy essentially unchanged while raising clean accuracy, whereas the same cut applied to the remaining examples clearly lowers robust accuracy; and if, in the full method, keeping the reduced perturbation for boundary examples improves both clean and robust accuracy over perturbing them fully.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.26496"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendix D (setup, ablations, L2 results); Appendices A (related work), B (proofs) and C (risk formulation) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2604.26496.json"
+ },
+ "experiments": [
+  "Set up training and attacks. Setup: SGD (momentum 0.9, batch 128, weight decay 5e-4, lr 0.1, 110 epochs with decay at 100 and 105; 200 epochs for the state-of-the-art comparison), PGD-10 inner maximisation at L-inf 8/255 (step 2/255) or L2 128/255; boundary examples are correctly classified examples attackable within eps/10 (eta = 0.1); evaluation with PGD-10, PGD-100, C&W and AutoAttack, reporting the checkpoint with the best PGD-10 accuracy, mean of three runs. The method has two surrogate losses, RAAT (basic) and RAAT++ (stronger loss), plus RAAT#, the same mechanism built on the ReBAT code with weight averaging.",
+  "Vary perturbation strength by sample type. Setup: CIFAR-10, ResNet-18, PGD-AT for 100 epochs with misclassified examples kept clean; set the perturbation for boundary examples, or separately for non-boundary examples, to eps/10 or to zero. Result: reducing it for boundary examples leaves robust accuracy essentially at the baseline curve while appropriate reduction raises clean accuracy; reducing it for non-boundary examples markedly lowers robustness; a suitable boundary threshold improves both (figures only, no tabulated values).",
+  "Ablate the two components and the boundary range. Setup: CIFAR-10, ResNet-18; RAAT with and without the reduced boundary perturbation and with and without the interpolation-consistency term; boundary thresholds eta; consistency weight lambda for RAAT and the regularised baselines. Result: each component raises clean and robust accuracy and both together are best; an intermediate eta works best; TRADES and MART peak near lambda 6-8 while Cons-AT and RAAT prefer 1-3, and RAAT's best robustness exceeds each baseline at its best lambda (figures only)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_09624_c1",
+ "claim": "The internal state that makes a tool-calling language model call a tool is formed mainly by suppression: the agent prompt scaffold, specifically its tool-call format template, sets a default of calling on any task-bearing request, and requests that ask only for analysis actively switch that default off, rather than requests for action building a call signal from scratch. Supported only if removing the format template from the scaffold almost eliminates calling while the template alone makes the model call almost always for both kinds of request; if, in the layers where the call direction forms, MLPs contribute most of the change in every model whose architecture allows that split, and features more active on analysis requests contribute more of it than features more active on action requests in every model tested; and if switching off just a handful of the strongest suppressing features, with the analysis request unchanged, makes the model call substantially more often.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.09624"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-10; appendices (data construction, random controls, scaffold ablations, transcoder families, readout, cross-model details) skimmed for controls and counts",
+  "draft": "datasets/dataset50/build/drafts/2610.09624.json"
+ },
+ "experiments": [
+  "Turn long agent prompts into minimal contrastive pairs. Setup: Qwen3-8B in non-thinking mode, where a tool call starts with a <tool_call> first token, so the decision is whether that token is the top-1 first prediction. Each prompt is a fixed scaffold (role instructions, a code-execution tool schema, a tool-call format template) followed by a request built from MBPP, APPS, HumanEval and CodeContests tasks in Python, Java and C++. Pairs differ only in the request verb: one of five action verbs (add, build, write, ...) or one of five analysis verbs (discuss, explore, ...). Keep only pairs where the action version calls and the analysis version does not: 500 pairs per model, 300 for analysis and 200 held out.",
+  "Replicate across scales and families. Setup: repeat construction, localisation, intervention, transfer and formation analysis on Qwen3-4B and 14B, Qwen3.5-4B and 9B, Mistral-Small-3.2-24B and Granite-3.3-8B at each model's own layer. Result: last-position patching restores calls on 93.5-100% of analysis prompts; normalised sufficiency 0.81-1.03 and necessity 0.61-1.04; new-domain transfer 87.7-100% for six models but only 43.0% for Granite; tau2 rates 47.9-85.0%; verb-free suppression 100% for six models but 35.5% for Granite; and analysis-active features outweigh action-active ones in every model (ratio 1.30-3.26).",
+  "Find what in the scaffold creates the default to call. Setup: on 200 held-out Qwen3-8B tasks, measure first-token call probability for a neutral request and an analysis request under every combination of role instructions, tool schema and format template, plus a control replacing the tool schema with text of the same length; separately test empty turns, unrelated questions and the task body alone. Result: full scaffold 0.849 neutral vs 0.004 analysis; without the format template both collapse to about 1e-6 or less; template alone gives 1.000 and 0.995; dropping the schema leaves 0.952 vs 0.411, and a length-matched replacement gives intermediate separation, so schema content and length both matter. Empty turns and unrelated questions never call; the task body alone gives 32.3%.",
+  "Locate where the direction forms and which components write it. Setup: project the action-minus-analysis state difference, and each MLP and attention head output, onto the unit direction at the last position, layer by layer. Result: the gap is near zero through the first fifteen layers, grows modestly in the middle, and rises sharply in layers 20-23; within that window MLPs supply 77.7% of the projected write and attention heads 22.3%, with MLP 23 the largest single contributor.",
+  "Decompose the formation-window MLP writes into features. Setup: approximate MLPs 20-23 with transcoders; score each feature by (mean activation on action prompts minus on analysis prompts) times the projection of its decoder direction onto the call direction; sum magnitudes separately for features more active on analysis prompts and on action prompts, selecting on the 300 analysis pairs and scoring on the 200 held-out pairs; label the top 80 features per sign and layer from max-activating prompts. Result: analysis-active features dominate layers 21-23 (ratios 1.34, 1.39 and 4.18, layer 23 carrying 55.9% of the net write) while only layer 20 is action-dominated (0.26); the largest labelled family is analysis / non-execution features that write against the call direction.",
+  "Test causally that suppressing features hold the call back. Setup: zero the writes of the five features with the largest suppressive contributions, under 0.001% of the 655,360 transcoder features in layers 20-23, on held-out analysis prompts whose wording is unchanged. Result: the layer-24 state shifts toward calling and the call rate rises from near 0 to 25.5%."
+ ],
+ "roles": [
+  "apparatus",
+  "external",
+  "headline",
+  "mechanism",
+  "mechanism",
+  "control"
+ ]
+}

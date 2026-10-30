@@ -1,0 +1,25 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_28393",
+ "claim": "Language models are unreliable at reproducing verbatim a span that is sitting in their own context, such as a contract clause, a quoted method description, a code snippet or a key string, typically drifting mid-span or running past where the span should end. Supported only if, on a benchmark of such tasks, three open 4-8B models decoding normally average below 65% exact match, and even the strongest of several frontier API models stays below 60% exact match on extracting contract clauses.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.28393"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices D (fixed length, domain transfer, data efficiency, fixed rules, prompt and decoding robustness, inference engines), E (benchmark); F-H (verification details, implementation, full tables) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2610.28393.json"
+ },
+ "experiments": [
+  "Build an exact-copying benchmark. Setup: four domains where one wrong character makes the output unusable: Contract (clauses requested from SEC EDGAR exhibits, 2,468 files with text, returned inside a JSON-style object with headings, numbering and subclauses intact); Literature (verbatim evidence spans such as protocols or statistical-analysis statements from 868 PubMed Central articles); Code (explain a snippet from FastAPI, SQLModel, Starlette and similar repositories, then reproduce it exactly); and Random Sequence (reproduce synthetic OpenSSH-style private keys, low-redundancy strings with line breaks and symbols). Metric: exact match of the whole target, plus decoding throughput in tokens per second; greedy decoding.",
+  "Measure how often models copy exactly. Setup: Qwen3-4B, Qwen3-8B and Ministral-8B-Instruct with standard decoding, and three frontier API models (GPT-4.1-nano, Gemini-2.5-Flash-Lite, DeepSeek-V4-Pro) under the same protocol. Result: average exact match 45.43%, 60.28% and 49.85% for the open models, with Contract worst (5.67-19.15%); the strongest frontier model, DeepSeek-V4-Pro, reaches only 56.03% on Contract. Errors are of two kinds: a plausible wrong token mid-span (e.g. a lowercase 'p' for 'P' inside a key) and continuing past or stopping before the true boundary (e.g. stopping at a sentence-final period inside a requested procedure)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline"
+ ]
+}

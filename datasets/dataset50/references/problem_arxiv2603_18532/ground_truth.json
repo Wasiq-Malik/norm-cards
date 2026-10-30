@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2603_18532",
+ "claim": "A pretrained vision-language-action manipulation policy can be improved by reinforcement learning carried out entirely in simulation, in tabletop scenes produced automatically by a 3D world generator from text task descriptions rather than designed by hand, and the improvement survives transfer to a physical robot. Supported only if, starting from the imitation-trained policy and using only a sparse success reward, the fine-tuned policy at least doubles the imitation policy's overall real-world pick-and-place success rate across at least ten real scenes that include objects absent from the simulated training scenes, and also raises success in simulation on the generated scenes it was trained on.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2603.18532"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-5 and Appendices A (training details, domain randomisation, reward), B (effect of K), C (generation metrics, QA), D (model candidates), E-J (scene lists, real-world rollouts)",
+  "draft": "datasets/dataset50/build/drafts/2603.18532.json"
+ },
+ "experiments": [
+  "Build the training scenes automatically and check their quality. Setup: a language-driven scene designer (GPT-4o) turns each pick-and-place instruction into a scene graph of background, context objects, distractors, target and robot with ON/IN relations; a text-to-3D world generator instantiates it as an interactive scene in a GPU-parallel simulator (ManiSkill3); an automated checker filters assets at three stages (image matches the object, mesh is intact, final 3D asset still matches the text) and resamples failures; oversized objects are scaled to fit a 74 mm gripper. Result: 100 scenes with 516 unique object assets (5.16 per scene); 1.37 generation attempts per accepted asset; 46.8 +/- 5.0 minutes per scene on one RTX 4090, or about 2 minutes with a reusable asset library; manual inspection finds 85% of scenes usable without intervention, the rest failing mainly on scale or placement.",
+  "Fix the starting policy and the reinforcement-learning recipe. Setup: start from a 3B flow-matching VLA (pi0) pretrained by imitation on BridgeV2, which is over 70% pick-and-place, run with 10 integration steps and 4-action chunks. Fine-tune with a PPO variant that injects learnable noise into a single integration step so action log-probabilities are defined, adding a value head, with a power-scaled importance ratio (0.2) for stability; LoRA on the vision-language backbone and full fine-tuning of the action expert; 192 parallel environments, batch 19,200, 25-step episodes at 5 Hz, 5 days on 8 RTX 6000 Ada GPUs. Reward is sparse: success only if the object touches the target and touches neither table nor robot. Randomise object position and yaw, robot height and joint positions, camera position and lighting, and use PD control with gravity compensation in both simulation and the real robot instead of system identification.",
+  "Measure the gain in simulation. Setup: evaluate the imitation policy and the policies fine-tuned on all 100 generated scenes, 100 episodes per scene, reporting success rate and time to finish over successful episodes. Result: success on the full generated set rises from 9.7% for the imitation policy to about 79% (78.9 +/- 0.9 over three seeds at N=100; the deployed checkpoint reaches 79.8%), and time to finish falls from about 10.0 s to 7.9-8.1 s.",
+  "Transfer to a physical robot. Setup: an Interbotix WidowX 250S with one external Logitech C922 webcam; 12 real tabletop scenes with distractors, several containing objects or attributes absent from simulated training (e.g. a screwdriver, a red knife among regular knives, teacup stacking); 10 trials per scene per policy, 240 trials in total, with object layouts re-randomised between trials. Measure partial success (target grasped and lifted), full success, failures from execution errors and failures from choosing the wrong object (not mutually exclusive), and time to finish. Result: partial success 45% to 88.3%, success 21.7% to 75%, execution-failure rate 66.7% to 18.3%, wrong-object rate 18.3% to 6.7%, time 11.5 s to 10.2 s; the unseen-screwdriver scene goes from 0% to 50% and teacup stacking from 20% to 50%.",
+  "Compare against fine-tuning on hand-designed scenes. Setup: run the same reinforcement learning on the three hand-designed SimplerEnv scenes only and evaluate on those scenes, on all 100 generated scenes and on the two external asset sets. Result: 96.7% success on its own three scenes but 36.0% on the generated scenes, 35.2% on scanned objects and 38.4% on the second generator's scenes, gaps of 58-61 points, against gaps of 27.4-41.3 points for policies trained on three generated scenes, which also reach 47.4-61.3% success on the same held-out sets."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "headline",
+  "control"
+ ]
+}

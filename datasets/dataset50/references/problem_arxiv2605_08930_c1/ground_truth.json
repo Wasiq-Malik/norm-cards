@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_08930_c1",
+ "claim": "Verification training is a better starting point for reinforcement learning with safety rewards than safe-answer distillation or no initial fine-tuning: after the same RL run, the model started from verification training resists jailbreaks better, including attacks that hijack its reasoning, without refusing more. Supported only if, after identical GRPO training from each starting point on three models, the verification-trained start has the lowest attack success on Fortress in every model and is the only start below 70% success on the HCoT reasoning-hijack benchmark (others at 78% or more), while its compliance on benign sensitive requests is within 1 point of RL from the untrained model.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.08930"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Appendices B (protocols, baselines, benchmarks, training details), C (extra preliminary results, proactive verification on other models, alternative specification); A (related work) and C.4 (case study) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.08930.json"
+ },
+ "experiments": [
+  "Define the training. Setup: DeepSeek-R1-Distill-Qwen-7B, -Llama-8B and -Qwen-14B. Seed prompts: 1k harmful and 1k benign sampled from WildJailbreak plus STAR-1's 1k harmful and 915 benign. For each prompt sample 8 responses from the model itself; Claude-4-Sonnet, given a bullet-point safety specification derived from common guardrail taxonomies, writes a critique and a safe/unsafe verdict for each; for harmful prompts keep only those with both safe and unsafe samples and use one of each, for benign prompts one trajectory (about 6,000 examples). LoRA fine-tuning (rank 16) to produce the critique and verdict given the specification, prompt and answer; the model is never trained on answers. RL stage: GRPO on the same safety prompts plus 3k DAPO math problems, Qwen3-Guard giving the safety and refusal reward (benign prompts rewarded only if safe and not refused).",
+  "Note how the training data relates to the evaluations. Setup: verification training samples 2k prompts from WildJailbreak, while the baselines were restricted to vanilla harmful and benign prompts 'to study out-of-distribution jailbreaks', so WildJailbreak is not out of distribution for the proposed method; the expert critic (Claude-4-Sonnet), the RL reward model (Qwen3-Guard) and the evaluator (Llama-Guard-3-8B) differ, and on HCoT every untrained model and every distillation baseline already fails at or near 100%, so small differences there carry little weight. Results are single runs.",
+  "Run the same RL from each start. Setup: GRPO with identical hyperparameters and steps (64 prompts x 8 rollouts per batch) from the base model, SafeChain, STAR-1 and verification training. Result (7B / 8B / 14B): Fortress 11.0 / 2.8 / 5.2 against 17.0-25.2, 4.8-14.8 and 7.8-12.2; HCoT 64 / 38 / 62 against 96-98, 78-94 and 92-98; WildJailbreak 3.2 / 1.2 / 0.4 against at best 8.8 / 0.8 / 2.8 (STAR-1 start lower on 8B); Trotter 23.7 / 11.1 / 21.7, best on 8B and 14B, tied with the base start on 7B; XSTest 94.3 / 98.4 / 99.2 against 93.6 / 98.8 / 99.2 for the base start; MATH 89.8 / 84.2 / 89.6; AIME 83.3 / 60.0 / 80.0 against 80.0 / 66.7 / 80.0 for the base start."
+ ],
+ "roles": [
+  "apparatus",
+  "confound",
+  "headline"
+ ]
+}

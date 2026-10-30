@@ -1,0 +1,1123 @@
+{
+ "rules": "Consolidate the gpt-6-luna v2 labels (subfields_luna_v2.json) into shared cards.\n\nRules, applied in order; every claim's before/after goes to consolidation.json.\n  1. Merge: labels that ride on the same claims become one card.\n  2. Hand removals: labels that point at a different literature than the claim's (each\n     with its reason).\n  3. Drop catch-all and incidental labels: a broad parent or a benchmark's format/domain\n     when the claim already has a more specific label.\n  4. A card needs claims from >= 2 papers; labels below that are dropped.\n  5. A claim left with nothing inherits its sibling claims' labels.\n",
+ "merge": {
+  "Deep Learning Optimization": "Optimization and Training Dynamics",
+  "Training Dynamics": "Optimization and Training Dynamics",
+  "Learning Theory and Generalization": "Optimization and Training Dynamics",
+  "Sparse Autoencoders": "Mechanistic Interpretability"
+ },
+ "catchall": {
+  "Language Modeling": "any",
+  "Question Answering": "any",
+  "Code and Structured Generation": [
+   "Constrained Decoding"
+  ],
+  "Text-to-SQL": [
+   "Constrained Decoding"
+  ],
+  "Image Classification": [
+   "Adversarial Robustness",
+   "Backdoor Attacks and Defenses"
+  ],
+  "Object Detection": [
+   "Adversarial Robustness"
+  ],
+  "3D object detection": [
+   "Adversarial Robustness"
+  ],
+  "Math": [
+   "Theorem Proving and Autoformalization"
+  ],
+  "Robotics": [
+   "Embodied Navigation and Planning",
+   "Robot Manipulation",
+   "Vision-Language-Action Models"
+  ],
+  "Agents": [
+   "Mechanistic Interpretability"
+  ],
+  "OCR": "any",
+  "Image Understanding": "any",
+  "Text classification": "any",
+  "Coding Agents": "any"
+ },
+ "hand": {
+  "arxiv2605_28030 | Adversarial Robustness": "harmful fine-tuning of LLMs; the card's papers are vision robustness",
+  "arxiv2605_28030_c1 | Adversarial Robustness": "same",
+  "arxiv2608_23830_c1 | Optimization and Training Dynamics": "RL for instruction following, not optimization theory",
+  "arxiv2603_18532_c1 | Optimization and Training Dynamics": "sim-to-real generalization, not learning theory",
+  "arxiv2604_17132 | Constrained Decoding": "contrastive decoding for over-refusal; no output constraint",
+  "arxiv2609_06718 | Robot Manipulation": "humanoid whole-body control, not manipulation",
+  "arxiv2605_08612_c1 | Mechanistic Interpretability": "isolating backdoor parameters, not interpreting them"
+ },
+ "claims": {
+  "arxiv2510_20487": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering",
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "AI Safety and Alignment",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2602_08695": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Learning Theory and Generalization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2602_08695_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Learning Theory and Generalization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2602_14208": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics",
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics",
+    "Scaling Laws"
+   ]
+  },
+  "arxiv2602_14208_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics",
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics",
+    "Scaling Laws"
+   ]
+  },
+  "arxiv2602_16642": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2602_16642_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Training Dynamics",
+    "Deep Learning Optimization"
+   ]
+  },
+  "arxiv2602_18025": {
+   "field": "robotics",
+   "subfields": [
+    "Reinforcement Learning",
+    "Robotics"
+   ],
+   "luna_v2": [
+    "Reinforcement Learning",
+    "Robotics"
+   ]
+  },
+  "arxiv2602_18025_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Reinforcement Learning",
+    "Robotics"
+   ],
+   "luna_v2": [
+    "Reinforcement Learning",
+    "Robotics"
+   ]
+  },
+  "arxiv2602_18025_c2": {
+   "field": "robotics",
+   "subfields": [
+    "Reinforcement Learning",
+    "Robotics"
+   ],
+   "luna_v2": [
+    "Reinforcement Learning",
+    "Robotics"
+   ]
+  },
+  "arxiv2602_22538": {
+   "field": "nlp",
+   "subfields": [
+    "Instruction Following",
+    "Reasoning"
+   ],
+   "luna_v2": [
+    "Instruction Following",
+    "Reasoning"
+   ]
+  },
+  "arxiv2602_22538_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Reasoning",
+    "Instruction Following"
+   ],
+   "luna_v2": [
+    "Reasoning",
+    "Instruction Following"
+   ]
+  },
+  "arxiv2602_23523": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics"
+   ]
+  },
+  "arxiv2602_23523_c1": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics"
+   ]
+  },
+  "arxiv2603_10048": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2603_10048_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Learning Theory and Generalization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2603_18532": {
+   "field": "robotics",
+   "subfields": [
+    "Vision-Language-Action Models",
+    "Robot Manipulation",
+    "Reinforcement Learning"
+   ],
+   "luna_v2": [
+    "Vision-Language-Action Models",
+    "Robot Manipulation",
+    "Reinforcement Learning"
+   ]
+  },
+  "arxiv2603_18532_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation",
+    "Reinforcement Learning"
+   ],
+   "luna_v2": [
+    "Robot Manipulation",
+    "Reinforcement Learning",
+    "Learning Theory and Generalization"
+   ]
+  },
+  "arxiv2603_29410": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "Image Classification"
+   ]
+  },
+  "arxiv2604_08524": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering",
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "Mechanistic Interpretability"
+   ]
+  },
+  "arxiv2604_08524_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering",
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting"
+   ]
+  },
+  "arxiv2604_08524_c2": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering",
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting"
+   ]
+  },
+  "arxiv2604_09101": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses",
+    "Anomaly Detection"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses",
+    "Anomaly Detection"
+   ]
+  },
+  "arxiv2604_09101_c1": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses"
+   ]
+  },
+  "arxiv2604_17132": {
+   "field": "nlp",
+   "subfields": [
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "AI Safety and Alignment",
+    "Constrained Decoding"
+   ]
+  },
+  "arxiv2604_17132_c1": {
+   "field": "nlp",
+   "subfields": [
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "AI Safety and Alignment",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2604_19000": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization"
+   ]
+  },
+  "arxiv2604_19000_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization"
+   ]
+  },
+  "arxiv2604_26496": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "Image Classification"
+   ]
+  },
+  "arxiv2604_26496_c1": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "Image Classification"
+   ]
+  },
+  "arxiv2605_02958": {
+   "field": "nlp",
+   "subfields": [
+    "Mechanistic Interpretability",
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "AI Safety and Alignment"
+   ]
+  },
+  "arxiv2605_02958_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Jailbreaks and Adversarial Prompting",
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "Jailbreaks and Adversarial Prompting",
+    "AI Safety and Alignment"
+   ]
+  },
+  "arxiv2605_03052": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Language Modeling",
+    "Question Answering"
+   ]
+  },
+  "arxiv2605_03052_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2605_04472": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization"
+   ]
+  },
+  "arxiv2605_04472_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization"
+   ]
+  },
+  "arxiv2605_04675": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "Object Detection"
+   ]
+  },
+  "arxiv2605_04675_c1": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "Object Detection"
+   ]
+  },
+  "arxiv2605_08612": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses",
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses",
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ]
+  },
+  "arxiv2605_08612_c1": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses",
+    "Vision-Language-Action Models",
+    "Mechanistic Interpretability"
+   ]
+  },
+  "arxiv2605_08930": {
+   "field": "nlp",
+   "subfields": [
+    "AI Safety and Alignment",
+    "Jailbreaks and Adversarial Prompting",
+    "Reasoning"
+   ],
+   "luna_v2": [
+    "AI Safety and Alignment",
+    "Jailbreaks and Adversarial Prompting",
+    "Reasoning"
+   ]
+  },
+  "arxiv2605_08930_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Jailbreaks and Adversarial Prompting",
+    "AI Safety and Alignment",
+    "Reinforcement Learning"
+   ],
+   "luna_v2": [
+    "Jailbreaks and Adversarial Prompting",
+    "AI Safety and Alignment",
+    "Reinforcement Learning"
+   ]
+  },
+  "arxiv2605_15705": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "World Models",
+    "Robot Manipulation"
+   ]
+  },
+  "arxiv2605_15705_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Robot Manipulation",
+    "World Models"
+   ]
+  },
+  "arxiv2605_28030": {
+   "field": "nlp",
+   "subfields": [
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "AI Safety and Alignment",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2605_28030_c1": {
+   "field": "nlp",
+   "subfields": [
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "AI Safety and Alignment",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2605_29986": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding"
+   ]
+  },
+  "arxiv2605_29986_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding",
+    "Code and Structured Generation"
+   ]
+  },
+  "arxiv2605_30834": {
+   "field": "robotics",
+   "subfields": [
+    "Anomaly Detection",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Anomaly Detection",
+    "Vision-Language-Action Models",
+    "Robotics"
+   ]
+  },
+  "arxiv2605_30834_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Anomaly Detection",
+    "Robotics"
+   ],
+   "luna_v2": [
+    "Anomaly Detection",
+    "Robotics"
+   ]
+  },
+  "arxiv2606_00570": {
+   "field": "interpretability",
+   "subfields": [
+    "Knowledge Editing"
+   ],
+   "luna_v2": [
+    "Knowledge Editing",
+    "Retrieval",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2606_00570_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Knowledge Editing",
+    "Reasoning"
+   ],
+   "luna_v2": [
+    "Knowledge Editing",
+    "Reasoning",
+    "Math"
+   ]
+  },
+  "arxiv2606_00570_c2": {
+   "field": "interpretability",
+   "subfields": [
+    "Knowledge Editing",
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Knowledge Editing",
+    "Mechanistic Interpretability"
+   ]
+  },
+  "arxiv2606_01053": {
+   "field": "interpretability",
+   "subfields": [
+    "Knowledge Editing"
+   ],
+   "luna_v2": [
+    "Knowledge Editing",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2606_01885": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics"
+   ]
+  },
+  "arxiv2606_01885_c1": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics"
+   ]
+  },
+  "arxiv2606_01926": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding",
+    "Code and Structured Generation"
+   ]
+  },
+  "arxiv2606_01926_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding",
+    "Code and Structured Generation",
+    "Text-to-SQL"
+   ]
+  },
+  "arxiv2606_06722": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2606_06722_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2606_08167": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Scaling Laws",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2606_08167_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Scaling Laws"
+   ]
+  },
+  "arxiv2606_10309": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics",
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2606_10309_c1": {
+   "field": "vision",
+   "subfields": [
+    "Deepfake and Forensics",
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Deepfake and Forensics",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2606_16939": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability"
+   ]
+  },
+  "arxiv2606_16939_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Sparse Autoencoders",
+    "Mechanistic Interpretability",
+    "Text classification"
+   ]
+  },
+  "arxiv2606_24026": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Agents"
+   ]
+  },
+  "arxiv2606_24026_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Coding Agents",
+    "Agents"
+   ]
+  },
+  "arxiv2606_28153": {
+   "field": "interpretability",
+   "subfields": [
+    "Jailbreaks and Adversarial Prompting",
+    "Mechanistic Interpretability",
+    "Activation Steering"
+   ],
+   "luna_v2": [
+    "Jailbreaks and Adversarial Prompting",
+    "Mechanistic Interpretability",
+    "Activation Steering"
+   ]
+  },
+  "arxiv2606_28153_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Jailbreaks and Adversarial Prompting",
+    "Mechanistic Interpretability",
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "Jailbreaks and Adversarial Prompting",
+    "Mechanistic Interpretability",
+    "AI Safety and Alignment"
+   ]
+  },
+  "arxiv2607_02074": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "3D object detection",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2607_02074_c1": {
+   "field": "vision",
+   "subfields": [
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Adversarial Robustness",
+    "3D object detection"
+   ]
+  },
+  "arxiv2607_19374": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization",
+    "Math"
+   ]
+  },
+  "arxiv2607_19374_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Theorem Proving and Autoformalization"
+   ],
+   "luna_v2": [
+    "Theorem Proving and Autoformalization"
+   ]
+  },
+  "arxiv2608_09928": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Sparse Autoencoders",
+    "Question Answering"
+   ]
+  },
+  "arxiv2608_09928_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Jailbreaks and Adversarial Prompting",
+    "OCR"
+   ]
+  },
+  "arxiv2608_09928_c2": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "Image Understanding",
+    "OCR"
+   ]
+  },
+  "arxiv2608_14049": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Robot Manipulation"
+   ]
+  },
+  "arxiv2608_23830": {
+   "field": "nlp",
+   "subfields": [
+    "Instruction Following",
+    "Reinforcement Learning"
+   ],
+   "luna_v2": [
+    "Instruction Following",
+    "Reinforcement Learning",
+    "Verifiable-Reward Tasks"
+   ]
+  },
+  "arxiv2608_23830_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Instruction Following"
+   ],
+   "luna_v2": [
+    "Instruction Following",
+    "Training Dynamics"
+   ]
+  },
+  "arxiv2608_25585": {
+   "field": "robotics",
+   "subfields": [
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ]
+  },
+  "arxiv2608_25585_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Robot Manipulation",
+    "Robotics",
+    "Embedding-based Retrieval and Ranking"
+   ]
+  },
+  "arxiv2608_26645": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Robot Manipulation",
+    "Vision-Language-Action Models"
+   ]
+  },
+  "arxiv2608_26645_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Robot Manipulation",
+    "Reinforcement Learning",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Robot Manipulation",
+    "Reinforcement Learning",
+    "Vision-Language-Action Models"
+   ]
+  },
+  "arxiv2608_28229": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding"
+   ]
+  },
+  "arxiv2608_28229_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding",
+    "Text-to-SQL",
+    "Code and Structured Generation"
+   ]
+  },
+  "arxiv2609_02350": {
+   "field": "robotics",
+   "subfields": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models"
+   ]
+  },
+  "arxiv2609_02350_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models"
+   ],
+   "luna_v2": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models"
+   ]
+  },
+  "arxiv2609_06718": {
+   "field": "robotics",
+   "subfields": [
+    "Robotics",
+    "Reinforcement Learning"
+   ],
+   "luna_v2": [
+    "Robotics",
+    "Robot Manipulation",
+    "Reinforcement Learning"
+   ]
+  },
+  "arxiv2609_08444": {
+   "field": "robotics",
+   "subfields": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ],
+   "luna_v2": [
+    "Embodied Navigation and Planning",
+    "Vision-Language-Action Models",
+    "Robot Manipulation"
+   ]
+  },
+  "arxiv2609_08444_c1": {
+   "field": "robotics",
+   "subfields": [
+    "Embodied Navigation and Planning",
+    "AI Safety and Alignment"
+   ],
+   "luna_v2": [
+    "Embodied Navigation and Planning",
+    "AI Safety and Alignment"
+   ]
+  },
+  "arxiv2610_01172": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics",
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics",
+    "Scaling Laws"
+   ]
+  },
+  "arxiv2610_01172_c1": {
+   "field": "math_mltheory",
+   "subfields": [
+    "Optimization and Training Dynamics",
+    "Scaling Laws"
+   ],
+   "luna_v2": [
+    "Deep Learning Optimization",
+    "Training Dynamics",
+    "Scaling Laws"
+   ]
+  },
+  "arxiv2610_09624": {
+   "field": "interpretability",
+   "subfields": [
+    "Activation Steering",
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Activation Steering",
+    "Mechanistic Interpretability"
+   ]
+  },
+  "arxiv2610_09624_c1": {
+   "field": "interpretability",
+   "subfields": [
+    "Mechanistic Interpretability"
+   ],
+   "luna_v2": [
+    "Mechanistic Interpretability",
+    "Agents"
+   ]
+  },
+  "arxiv2610_21208": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses",
+    "Image Classification"
+   ]
+  },
+  "arxiv2610_21208_c1": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses"
+   ]
+  },
+  "arxiv2610_21208_c2": {
+   "field": "vision",
+   "subfields": [
+    "Backdoor Attacks and Defenses",
+    "Adversarial Robustness"
+   ],
+   "luna_v2": [
+    "Backdoor Attacks and Defenses",
+    "Adversarial Robustness"
+   ]
+  },
+  "arxiv2610_28393": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Question Answering",
+    "Language Modeling"
+   ]
+  },
+  "arxiv2610_28393_c1": {
+   "field": "nlp",
+   "subfields": [
+    "Constrained Decoding"
+   ],
+   "luna_v2": [
+    "Constrained Decoding",
+    "Language Modeling"
+   ]
+  }
+ }
+}

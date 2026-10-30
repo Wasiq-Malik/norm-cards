@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_03052",
+ "claim": "Open-weight language models that often answer negated questions wrongly ('An animal that is not an amphibian is a ...' answered with 'frog') do internally register the negation, and their wrong answers come from attention in the later layers pushing the answer that fits the un-negated phrase. Supported only if, on a controlled set of matched positive and negated prompts, models from at least five families are above 90% accurate on positive prompts but no better than about 60% on negated ones, while for more than 90% of matched pairs the negation still moves the model's preference toward the negated answer; and if stopping attention from reading other tokens from some middle-to-late layer onward, leaving everything else intact, raises negated-prompt accuracy by at least 7 points in every model, more than simply reading the answer off at that layer, with the best starting layer past the middle of the network.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.03052"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-7 and Impact statement; appendices (dataset curation, cumulative sink motivation, randomness test of sensitivity, full patching plots, best layers) not read in detail",
+  "draft": "datasets/dataset50/build/drafts/2605.03052.json"
+ },
+ "experiments": [
+  "Build a controlled negation dataset and its scores. Setup: prompts of the form 'X that is not Y is Z', each with a positive twin differing only by the negation word (not, no, cannot), and single-token answers correct for each (e.g. frog / mammal); 162 questions in 4 templates, 648 entries, grouped by subject category. Read logits at the last prompt position; positive and negative accuracy are the shares of prompts whose correct answer out-logits the other; sensitivity is the share of pairs where the logit difference (negated answer minus positive answer) is larger on the negated prompt than on the positive one.",
+  "Show the gap between output accuracy and internal sensitivity. Setup: score six open-weight models (Llama-3.1-8B, Qwen2.5, Qwen3, Gemma-2, Mistral-7B-v0.1, OLMo-2) on the dataset. Result: positive accuracy 91.8-96.5%, negative accuracy only 45.2-57.6% (Mistral 45.2, Gemma 49.7, Llama 50.5), yet sensitivity 95.1-97.8%: the negation almost always moves preference in the right direction without flipping the answer. An appendix test checks that sensitivity is not an artefact of randomness.",
+  "Switch off late attention and see whether negated answers recover. Setup: 'attention sinking' restricts a head so the current token may attend only to itself and the first token, removing information movement while keeping value and MLP computation on the current token; justify it as mild by showing that the last token already puts 63.9-79.5% of its attention on those two tokens. Apply it cumulatively from a chosen layer to the end and report the best layer; compare with reading the logit lens at that layer, which skips later layers entirely. Result: negative accuracy rises in all six models: Llama 50.5 to 67.8 (logit lens 53.6), Qwen2.5 57.6 to 65.4, Qwen3 55.7 to 64.2, Gemma-2 49.7 to 66.1, Mistral 45.2 to 65.9 (a 46% relative gain), OLMo-2 54.0 to 68.7, always more than the logit-lens shortcut, and the best layer is always past half the depth.",
+  "Check that the late attention being removed is not what makes positive prompts right. Setup: sweep the starting layer of cumulative attention sinking and plot positive and negative accuracy against it. Result: modules after the best negative-accuracy layer contribute only to positive accuracy, and by that layer positive accuracy is already close to its unablated value, so the shortcut modules are largely separate from those that answer positive prompts.",
+  "Trace when the shortcut appears in training. Setup: evaluate positive accuracy, negative accuracy and sensitivity on OLMo-2 pretraining checkpoints from about 1e3 to 1e6 steps. Result: negative accuracy first plunges early in training, then rises again and stabilises around chance, while sensitivity to negation is present from an early stage, consistent with an early-forming bias toward positive answers on negated prompts."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline",
+  "confound",
+  "mechanism"
+ ]
+}

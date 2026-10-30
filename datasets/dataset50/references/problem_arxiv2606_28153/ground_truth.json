@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_28153",
+ "claim": "Successful jailbreaks of a safety-tuned language model work by suppressing a small set of early-layer attention heads that normally feed the model's refusal signal, rather than by erasing the model's representation of harmful intent, and it is the attack's template tokens, not the harmful request itself, that suppress them. Supported only if, on two safety-tuned chat models, heads identified from successful attack pairs as carrying less of the refusal direction under attack are causally sufficient: pushing just 8 of them against the refusal direction on requests the model normally refuses raises attack success from about 0% to at least 80%, all of them to at least 80%, while the same number of random heads gives at most 15%; and if token-level attribution shows the attack-template tokens pushing these heads strongly negative (median at or below -1 standard deviation) while pushing the other attack-sensitive group positive, with the harmful-request tokens affecting both groups alike (medians within 0.2).",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.28153"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6 and Appendices A (overlap distributions, threshold and bandwidth sensitivity), B (exclusion of MLP and LayerNorm), D (detector design, hyperparameters, training-free baselines, over-refusal, attribution), E (Llama-3-70B); C (qualitative examples) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2606.28153.json"
+ },
+ "experiments": [
+  "Find the heads. Setup: Llama-3-8B-Instruct and Llama-2-7B-Chat; refusal direction by difference in means at the end-of-instruction position (layer 12 and 14); back-project it through each head's OV circuit (ignoring LayerNorm and MLPs) to get a head-specific direction, and score each head by its output's projection on that direction. Data: Alpaca benign prompts; harmful requests from public benchmarks that the model refuses; attacked variants (GCG, AutoDAN, many-shot, PAIR) that succeed, paired one-to-one; of about 10,000 attack samples only 176 (Llama-3) and 378 (Llama-2) pairs qualify. Two-stage KDE overlap filter (threshold 0.5): heads separating harmful from benign, then among them heads whose harmful and attack distributions differ, split by direction into attack-suppressed (ACH) and attack-strengthened (SAH). Result: Llama-3 has 80 stable harmful-salient heads, 21 ACHs, 17 SAHs (416 heads in layers 0-12); Llama-2 43, 20, 19 (480 heads in layers 0-14); over 60% of ACHs lie in layers 0-3 and SAHs in layers 5-12.",
+  "Intervene on the suppressed heads. Setup: on refused harmful inputs (baseline attack success about 0%), subtract the head's refusal-aligned component (strength 0.8) at an increasing number of ACHs; control with the same number of random heads, 10 seeds, 95% intervals. Result: attack success reaches 95.0% (Llama-3) and 81.6% (Llama-2) at 8 heads, following an S-shaped curve, and 99.5 +- 0.3% and 83.7 +- 1.1% with all ACHs, against 4.0 +- 3.7% and 10.2 +- 11.6% for random heads. Generations stay coherent and on-topic (qualitative); no capability benchmark is run, and the authors note this shows a sufficient pathway, not the one real attacks necessarily use.",
+  "Attribute head activations to input tokens. Setup: split each head's standardised contribution, using attention weights from the end-of-instruction position, into the part from the original harmful-request tokens and the part from attack-template tokens. Result: on harmful-request tokens ACHs and SAHs have similar contributions (medians within +-0.15); on template tokens ACHs are pushed to a median of about -1.5 and SAHs to about +1.5, a separation above three standard deviations, in both models.",
+  "Check sensitivity of the head classification. Setup: vary the overlap threshold from 0.1 to 0.9 (same for both stages) and the KDE bandwidth scale from 0.2 to 2.0. Result: ACH / SAH counts for Llama-3 go 0 / 0 at 0.1, 7 / 8 at 0.4, 21 / 17 at 0.5, 45 / 51 at 0.6 and 207 / 207 at 0.9, so the sets depend strongly on the threshold (the authors report conclusions holding for 0.4-0.6); bandwidth changes keep the head ranking (Spearman >= 0.93 for Llama-3, >= 0.98 for Llama-2) but strong under-smoothing reshuffles the sets (Jaccard 0.15-0.18 at scale 0.2, 0.7-0.9 from 0.6-0.8).",
+  "Repeat the classification at larger scale. Setup: Llama-3-70B-Instruct, refusal direction at layer 26, 1,728 heads in layers 0-26; only 40 successful pairs from the same 10,000-sample attack pool (under 0.5%). Result: 200 harmful-salient heads, 62 ACHs in layers 0-6 and 83 SAHs in layers 8-20, with the same early-suppression and mid-layer-persistence heatmap pattern; no interventions at this scale."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism",
+  "confound",
+  "external"
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_01926_c1",
+ "claim": "When sampling from a language model conditioned on a hard constraint with sequential Monte Carlo, proposals that mask by reachability of a valid completion within the budget, and especially ones that also weight tokens by a hidden Markov model's estimate of how likely a valid completion is, approach the true conditional distribution with far fewer particles than proposals built from immediate-violation masking. Supported only if, at the same number of particles (from 4 up), both proposals give higher task accuracy than the immediate-masking proposal on JSON and Python-like function calling and on text-to-SQL, and the probabilistic proposal converges faster than the purely logical one; if using the probabilistic estimate also as the SMC potential improves keyword-constrained generation further; and if even a small hidden Markov model already helps.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.01926"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Appendices A (LCD bias example), B (HMMs)",
+  "draft": "datasets/dataset50/build/drafts/2606.01926.json"
+ },
+ "experiments": [
+  "Turn constraints into tensors and define the samplers. Setup: compile each constraint into a finite automaton (deterministic or not), group transitions into edges labelled by token sets, and encode it as binary source, destination and edge-label matrices. A forward pass over these matrices gives, for every vocabulary token at once, the states reached; a backward pass precomputed from the accepting states gives which states can still accept in exactly the remaining steps; their product is the token mask. For the probabilistic version, distil a hidden Markov model from samples of the language model (2M samples, about 2 H100 hours, plus 0.2-3 hours of training for 1,024-16,384 hidden states) and multiply it with the automaton viewed as a hidden Markov model over edges, so that the product gives the HMM's probability of the next token given that the constraint will be met. Compare as sequential Monte Carlo proposals: immediate-violation masking (as in Outlines and XGrammar), budget-aware masking, and the probabilistic proposal (mixing language-model and HMM next-token probabilities), with rejection sampling from the unconstrained model as ground truth.",
+  "Compare proposals at equal particle counts on function calling. Setup: xLAM JSON and Python-like formats, accuracy meaning the call parses and has the correct function and arguments, as a function of the number of SMC particles, with rejection sampling as the target. Result: both new proposals reach higher accuracy than immediate-violation masking at the same particle count and approach the rejection-sampling accuracy much faster, the probabilistic proposal fastest; immediate masking with SMC plateaus at 69.7% (JSON) at 8-16 particles.",
+  "Check how good the hidden Markov model must be. Setup: xLAM JSON accuracy for immediate masking and for the probabilistic proposal with hidden sizes 1,024 and 16,384 at 1-16 particles. Result: immediate masking 66.4 / 68.2 / 69.3 / 69.7 / 69.7% at 1, 2, 4, 8, 16 particles; small HMM 65.4 / 68.6 / 70.2 / 71.1 / 71.5%; large HMM 66.5 / 69.2 / 70.5 / 71.5 / 71.6%. The small HMM is slightly worse with one particle but better from two, and the gap between HMM sizes shrinks as particles increase.",
+  "Test on SQL generation with a nondeterministic grammar. Setup: 500 Spider examples, Llama-3.1-8B-Instruct, HMM with 1,024 states distilled on the remaining data, token budget 128, execution accuracy (same result as the reference query on the database). Result: at 1 / 4 / 8 particles, 59.8 / 65.4 / 67.2% for immediate masking, 59.0 / 66.8 / 69.0% for budget-aware masking and 56.2 / 67.9 / 69.1% for the probabilistic proposal, so both are better from 4 particles but slightly worse with a single particle, which gets no resampling correction.",
+  "Test the probabilistic estimate as an SMC potential on keyword-constrained generation. Setup: CommonGen (sentences that must contain 3-5 given concepts, any inflection), GPT2-Large with a released HMM, token budget 32, expected BLEU-4 weighted over particles, comparing language-model likelihood as potential with immediate and budget-aware proposals against the probabilistic proposal plus the probabilistic potential. Result: adding the probabilistic potential converges faster and gives a substantial BLEU advantage over the immediate-masking proposal across particle counts."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "confound",
+  "external",
+  "headline"
+ ]
+}

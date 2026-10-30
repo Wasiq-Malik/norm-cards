@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2608_23830",
+ "claim": "Reinforcement learning for prompts that carry several verifiable instructions at once, rewarded by the number of instructions satisfied, neglects instructions the model rarely satisfies at the start; first fine-tuning on a small set of the model's own successful responses for its weakest instruction types, then rewarding each satisfied instruction and instruction pair by how rarely the current sample group satisfies it, gives substantially better instruction following. Supported only if, for two small base models trained with GRPO on the same 3-5-instruction prompts, the combined method beats the count-reward baseline by at least 8 points in strict prompt accuracy on an out-of-domain instruction benchmark (IFBench) and by at least 2.5 points on in-domain IFEval and at least 3 points averaged over all benchmark columns; if the warm-start fine-tuning alone, with the count reward, accounts for less than half of the IFBench gain; and if the scarcity reward without the pairwise term still beats the warm-start plus count-reward model.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2608.23830"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): all sections including Limitations (no appendix)",
+  "draft": "datasets/dataset50/build/drafts_orig20/2608.23830.json"
+ },
+ "experiments": [
+  "Define the diagnostics. Setup: for a prompt with N instructions and K sampled responses, record which responses satisfy which instruction; VIA is the variance across instructions of the per-instruction satisfaction rate; VSA is the variance across instruction pairs of joint satisfaction divided by the smaller of the two individual rates (pairs with a zero rate excluded). Motivation: GRPO with a count reward on IFTrain makes Qwen3-1.7B improve reliably on instruction types it already does well, while gains on medium and hard types vary widely and types with very low starting accuracy barely improve.",
+  "Define the training method. Setup: Qwen3-1.7B (non-thinking) and Qwen2.5-7B-Instruct; IFTrain filtered to prompts with 3-5 instructions (45,374 prompts). Warm start: instruction types with training accuracy below 0.5 are selected; for each, up to 32 samples per prompt are drawn and the response satisfying the target instruction with the most other instructions kept, appending 'Focus on fulfilling [instruction] first' when none succeeds; 100 per type (900 examples), one epoch of fine-tuning. RL: GRPO, group size 16, batch 512, learning rate 1e-6, 400 steps, four A100s; scarcity reward = mean over satisfied instructions of (1 - group success rate) plus alpha = 2 times the mean over satisfied pairs of (1 - joint successes / smaller individual successes). Baseline: GRPO with the count of satisfied instructions.",
+  "Compare on three benchmarks. Setup: IFBench (instruction types unseen in training), IFEval (types overlap training) and Multi-IF (multi-turn, multilingual), temperature 0.7. Result: IFBench strict 44.3 vs 35.1 (count reward) and 18.5 (base) for 1.7B, 48.4 vs 39.5 and 27.7 for 7B; IFEval strict 89.0 vs 84.1 and 92.9 vs 90.0; Multi-IF turn 3 50.4 vs 46.7 and 56.6 vs 55.9, with turn 1 lower than the baseline for 7B (86.5 vs 88.0); averages over all seven columns 67.5 vs 62.0 and 71.5 vs 67.9. Off-the-shelf references: GPT-OSS-120B IFBench strict 59.6, GPT-OSS-20B 37.5, Llama-3.1-70B 29.8, Qwen3-32B 28.0.",
+  "Separate the two components. Setup: warm start followed by count-reward GRPO; scarcity reward with only the per-instruction term (alpha = 0) and with alpha from 0 to above 2 after the warm start. Result: warm start plus count reward reaches IFBench strict 39.2 (1.7B) and 43.1 (7B), i.e. 4.1 and 3.6 of the 9.2 and 8.9-point gains, and lowers Multi-IF turn 1 (78.3 vs 81.2, 84.7 vs 88.0); the per-instruction term alone already beats warm start plus count reward, performance is flat for alpha 0-0.5 and peaks at 2 (figure). No run applies the scarcity reward without the warm start.",
+  "Track training dynamics. Setup: per-prompt VIA, VSA, instruction coverage (share of instructions satisfied by at least one response in the group), prompt accuracy and policy entropy over RL steps for count reward, warm start plus count reward, and warm start plus scarcity reward. Result: warm-started runs start with higher coverage and prompt accuracy; the full method lowers VIA and VSA fastest and furthest and keeps policy entropy higher, while the count-reward baseline's entropy collapses (figures only).",
+  "Check sensitivity to warm-start data and group size. Setup: selection threshold 0.1, 0.5 or 1.0 and 100 or 500 examples per type; group sizes 8, 16 and 32 against count-reward baselines with the same group size. Result: threshold 0.5 is best in every setting; the method beats the matched baseline at every group size, but larger groups converge faster and can over-optimise because rare instructions get very large rewards (figures only). All results are single training runs without seeds or confidence intervals, and the 400-step budget was set from initial runs."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "control",
+  "mechanism",
+  "confound"
+ ]
+}

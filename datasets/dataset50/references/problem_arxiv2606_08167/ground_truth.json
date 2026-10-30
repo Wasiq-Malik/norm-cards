@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_08167",
+ "claim": "How a language model's loss on each data domain depends on the training mixture can be derived, not just curve-fitted, by assuming each domain's skills follow a power law with a shared common head and domain-specific tails: the loss splits into a capacity-competition term, where domains compete for a fixed model capacity and so all mixture weights interact, plus a noise term that depends only on how much data the domain itself received, which is what pushes the optimal mixture away from the target toward harder domains. Supported only if, fitted on held-out mixtures of 64 1B-parameter models trained on 17 Pile domains, the full form (5 parameters per domain) has lower mean relative error than every empirical mixing law tested (additive, exponential, BiMix, RegMix), and the capacity-only form (3 per domain) also beats the best empirical law, which uses about 2K + 1 parameters per domain; if the capacity-only form implies the optimal training mixture equals the target mixture, contradicting observation, while the noise term breaks that symmetry; and if fitting error stays low on synthetic data with up to 40% of tail skills shared.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.08167"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6 and Appendices A (empirical laws), B (algorithm), C (implementation); D (sketched linear-regression derivation) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2606.08167.json"
+ },
+ "experiments": [
+  "Derive the model. Setup: extend the quantization model of scaling laws to K domains whose skills have power-law frequencies with a shared head and disjoint tails: a model of capacity N allocates units across domains, giving a closed-form allocation x_i*(h) under similar exponents and domain loss c_i x_i*^(-b_i) that depends on all weights through an aggregate-demand term. Extend projected linear regression trained by one-pass SGD to the same structure: L_i(h | N, D) ~ c_i x_i*(h, N)^(-b_i) + A_i (D h_i)^(-a_i) + E_i (Theorem 4.1). Find the optimal mixture for target weights w by bi-level optimisation with online mirror descent using a closed-form gradient (Proposition 4.2).",
+  "Show why the noise term is needed. Setup: the bi-level problem under the capacity-only model. Result: because the inner allocation and the outer objective minimise the same weighted losses, the optimum is exactly h* = w, contradicting the empirical finding that optimal training mixtures differ from the target; adding the data-dependent noise term, which depends only on h_i, breaks this symmetry and shifts weight toward domains with larger A_i and smaller exponent alpha_i (harder to learn).",
+  "Compare fitting accuracy. Setup: reuse 64 TinyLlama-architecture 1B models trained on 25B tokens of random mixtures over 17 Pile domains (training loss used as proxy for four domains without validation splits); split mixtures into fitting and held-out sets; fit empirical laws with scipy curve_fit, LightGBM (RegMix) or basin-hopping with L-BFGS (additive law and both proposed forms). Result: held-out MRE / MAE / free parameters: full form 1.533% / 0.034 / 5K; capacity-only 2.064% / 0.051 / 3K; additive 2.209% / 0.052 / K(2K+1); BiMix 2.963% / 0.144 / 2K; RegMix 6.480% / 0.136 / K^2; exponential 6.990% / 0.059 / K(K+2).",
+  "Stress-test the disjoint-tail assumption. Setup: synthetic losses where each tail skill is shared across domains with probability p, with and without added Gaussian noise; fit the disjoint-tail model. Result: mean relative error stays consistently low and stable as tail overlap rises to 40% in both settings (figure). The authors argue overlapping skills mainly contribute a near-constant loss as mixtures vary.",
+  "Note limits of the evidence. Setup: fitting accuracy is measured on one reused 64-model Pile dataset; four of 17 domains use training loss as the held-out proxy; the 7-domain results reuse another paper's runs; mixture comparisons are reported only as single-run perplexity bars and loss curves without seeds; the fitting problem is non-convex and sensitive to initialisation (multiple random restarts). The theory assumes one-pass SGD on linear regression while experiments train transformers with AdamW and cosine or constant schedules."
+ ],
+ "roles": [
+  "apparatus",
+  "mechanism",
+  "headline",
+  "control",
+  "confound"
+ ]
+}

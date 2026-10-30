@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2602_23523_c1",
+ "claim": "Deepfake detection and tampering localization can be done blind, without the original image, by comparing the facial landmarks recovered from the watermark with landmarks freshly detected on the received image: the embedded landmarks survive both benign processing and face manipulation, while manipulation moves the visible geometry. Supported only if the landmark recovery error stays at most about 1.6 pixels at 128 x 128 under every common distortion and at most about 2.6 pixels under every face-manipulation model, including one unseen in training; if training without the landmark loss makes recovery fail outright (errors in the hundreds of pixels); and if the recovered-versus-redetected landmark distance separates benign distortions from manipulations.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2602.23523"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): all sections and supplementary A (payload scaling) and B (complexity)",
+  "draft": "datasets/dataset50/build/drafts_orig20/2602.23523.json"
+ },
+ "experiments": [
+  "Build the watermark and networks. Setup: payload = 136 normalised landmark coordinates (68 points from the face-alignment library) plus a 16-bit bipolar identifier from a SHA-256 hash of the filename; a two-stream encoder (image and watermark streams fused, global skip connection), a stochastic distortion layer, a decoder with a shared backbone and a landmark regression head and identifier classification head, and a discriminator. Training: 100 epochs on common distortions (identity, resize, Gaussian and median blur, two JPEG variants), then 100 epochs fine-tuning on SimSwap, UniFace, CSCS and StarGAN-v2 with InfoSwap held out for testing, adding consistency and decoder-stability losses. CelebA-HQ (30,000 images, official splits) at 128 and 256 pixels; LFW (2,000 random images) for transfer. Baselines: MBRS, CIN, SepMark, EditGuard, LampMark, DiffMark and KAD-NET, carrying 30 bits (128 px) or 128 bits (256 px).",
+  "Measure landmark recovery and the consistency check. Setup: AED = mean pixel distance between recovered and embedded landmarks; for detection, compare recovered landmarks with landmarks re-detected on the manipulated image. Result: recovery AED 1.05-1.57 px under common distortions at 128 px (2.96-3.39 at 256) and 1.21-2.56 px under manipulations (3.05-5.51 at 256), largest for StarGAN-v2; the recovered-versus-redetected distance is low for common distortions and high for manipulations (shown only as a distribution figure, with no detection accuracy, AUC or localisation score reported).",
+  "Ablate the two decoding losses. Setup: train without the landmark loss or without the identifier loss, both resolutions. Result: without the landmark loss, recovery AED is 342.39 / 359.98 px (common / manipulated, 128 px) and 540.91 / 405.97 (256 px), i.e. failure, while bit errors are 0.00% / 0.14%; without the identifier loss, AED 2.31 / 2.79 and bit errors 0.42% / 0.49%; the full model gives AED 1.17 / 1.58 but a higher manipulated bit error rate (3.33% vs 0.14% for the identifier-only model), so joint training trades tracing accuracy for landmark recovery.",
+  "Note comparison and evaluation gaps. Setup: bit error rates are compared across different payload lengths (16 identifier bits here vs 30 or 128 bits for baselines), and the identifier is only 16 bits; the detection and localisation functions are shown qualitatively and through recovery error rather than evaluated as classification against passive or proactive detectors. Expanding the identifier to 32 bits lowers PSNR from 44.31 to 42.36 and improves landmark AED (3.06 to 2.19 px common, 4.01 to 3.01 manipulated) but raises StarGAN-v2 bit errors from 8.47% to 14.33%. The model has 5.8M / 21.0M parameters but 12.2 / 60.6 GFLOPs, more than SepMark and KAD-NET."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism",
+  "confound"
+ ]
+}

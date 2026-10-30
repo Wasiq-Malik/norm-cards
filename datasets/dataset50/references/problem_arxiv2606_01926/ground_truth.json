@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_01926",
+ "claim": "Constrained decoding for language models can guarantee that every output satisfies a constraint given as a finite automaton within a fixed token budget, which today's standard practice of masking only tokens that immediately break the constraint does not, at almost no extra decoding cost, by running the automaton as tensor operations on the GPU and masking any token after which no valid completion fits in the remaining budget. Supported only if, on function-calling outputs required to match a JSON schema or a Python-like call syntax with a 128-token budget, this masking yields 100% valid outputs at every particle budget tested while immediate-violation masking leaves some outputs invalid; if its per-token latency is within 1.2 times that of unconstrained generation; and if it works directly with nondeterministic automata, which for realistic schemas and SQL grammar are far smaller than the equivalent deterministic ones.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.01926"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Appendices A (LCD bias example), B (HMMs)",
+  "draft": "datasets/dataset50/build/drafts/2606.01926.json"
+ },
+ "experiments": [
+  "Turn constraints into tensors and define the samplers. Setup: compile each constraint into a finite automaton (deterministic or not), group transitions into edges labelled by token sets, and encode it as binary source, destination and edge-label matrices. A forward pass over these matrices gives, for every vocabulary token at once, the states reached; a backward pass precomputed from the accepting states gives which states can still accept in exactly the remaining steps; their product is the token mask. For the probabilistic version, distil a hidden Markov model from samples of the language model (2M samples, about 2 H100 hours, plus 0.2-3 hours of training for 1,024-16,384 hidden states) and multiply it with the automaton viewed as a hidden Markov model over edges, so that the product gives the HMM's probability of the next token given that the constraint will be met. Compare as sequential Monte Carlo proposals: immediate-violation masking (as in Outlines and XGrammar), budget-aware masking, and the probabilistic proposal (mixing language-model and HMM next-token probabilities), with rejection sampling from the unconstrained model as ground truth.",
+  "Measure how often outputs satisfy the constraint. Setup: 1,000 test examples sampled from the xLAM function-calling dataset after removing examples whose reference answer violates its own function specification; JSON-schema and Python-like call formats; token budget 128; Llama-3.1-8B-Instruct. Result: immediate-violation masking gives 95.26% and 95.40% valid outputs at 4 and 16 particles in JSON and 98.12% and 99.20% in Python-like syntax (for example by opening braces it never closes before the budget runs out), while budget-aware and probabilistic masking give 100.0% in every setting.",
+  "Measure decoding cost. Setup: wall-clock milliseconds per token on one H100 over 100 xLAM examples, batch 16, mean over 3 seeds. Result: unconstrained 1.69 ms, immediate-violation masking 1.83 ms (1.08x), budget-aware masking 1.86 ms (1.10x); the probabilistic version costs 5.26-17.30 ms (3.11-10.2x) for hidden sizes 1,024-16,384.",
+  "Show why nondeterministic automata matter. Setup: a function whose schema requires at least one of n pairs of arguments, and the SQL grammar used for Spider; count states of the nondeterministic automaton and of the minimal deterministic one. Result: for the function schema the nondeterministic automaton grows linearly in n while the deterministic one grows exponentially; for SQL, 7,999 versus 57,263 states at character level and 31,858 versus out-of-memory at token level."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline",
+  "external"
+ ]
+}

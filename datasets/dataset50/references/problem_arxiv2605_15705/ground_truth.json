@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_15705",
+ "claim": "A frozen, learned action-conditioned world model for robot manipulation can be made to predict markedly better under distribution shift at deployment, with no extra training data and no parameter updates, by carrying forward the mismatch between what it predicted and what the robot then actually observed after each executed action and using it to correct its next predictions. Supported only if, when episodes start from robot configurations outside the demonstration distribution, the corrected one-step latent prediction error is lower than the uncorrected model's on every simulated and real task tested, lower than a world model retrained with additional rollout data, and lower than both a classical Kalman-filter correction and a learned recurrent state-space filter using the same encoder; and if the same correction, applied to a large pretrained world-action model left frozen, also lowers its prediction error under shift.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.15705"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-6 and Appendices B-E, G (statistics), H (per-setting results), I (action dependence, physical probes), J (Fast-WAM-Joint transfer), K (filtering baselines), L (residual behaviour), M (gain and weighting sensitivity), N (inference cost); A (proof) and F (implementation) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.15705.json"
+ },
+ "experiments": [
+  "Set up tasks, data and the distribution shifts. Setup: three Robomimic tasks (Square, Tool-Hang, dual-arm Transport) trained in a low-data regime on 20% of the official demonstrations, evaluated from initial states whose seven arm joints are perturbed with Gaussian noise of 0.1 rad (roughly 11-18 degrees at most), clipped to joint limits, with the same perturbed starts for every method; four LIBERO-10 tasks (two articulated-object kitchen tasks, a long-horizon two-object placement and a relational placement) trained on their 50 demonstrations, evaluated on the official LIBERO-Plus robot-initial-state variants (44, 42, 34, 42) and on its lighting, background, layout and sensor-noise variants; and two real tasks (peach pick-and-place from 50 demonstrations, drawer opening with a deformable handle from 65), trained from scratch and tested from abnormal arm poses. For each task train a diffusion policy and a latent world model on the expert demonstrations and keep the world model frozen during evaluation.",
+  "Check that the world model's predictions actually depend on the action and carry physical information, so that lower error means something. Setup: compare latent MSE of the model with correctly paired actions against persistence (predict no change), the constant training mean, and the same model fed shuffled actions; branch eight different actions from each of 200 saved out-of-distribution states and correlate predicted with realised end-effector effects through a frozen probe; fit episode-disjoint ridge probes for end-effector pose and object position, with ImageNet ResNet-18 features as a reference. Result: MSE 0.0016 (Square) and 0.0025 (Transport) with correct actions against 0.019-0.091 for the alternatives, shuffling raising error about 21x and 37x; predicted-vs-realised effect correlation 0.81 and 0.84; decoded predicted positions within probe resolution (e.g. Square end-effector 25.8 mm vs 29.6 mm probe error).",
+  "Measure one-step prediction error under initial-state shift with and without online correction. Setup: latent MSE one executed action chunk ahead, averaged over all prediction steps, with standard errors from resampling whole episodes 10,000 times in simulation and episode-level SEM on the real robot; compare the base world model, a world model retrained on all demonstrations plus 100-270 rollouts collected only in the original in-distribution environments, and the corrected model with gain chosen on held-out prediction error. Result (x1e-3): Square 16.2 / 15.5 / 4.3, Tool-Hang 8.4 / 10.3 / 5.4, Transport 16.2 / 13.2 / 10.4, the four LIBERO tasks reduced by roughly 14-25% (e.g. Kitchen-S6 12.0 / 11.7 / 9.0), and on the real robot 2.18 to 0.75 (peach) and 1.31 to 0.31 (drawer), reductions of 73.3% on Square and 65.4% and 76.4% on the real tasks.",
+  "Compare against established ways of folding observations into predictions. Setup: with the same frozen encoder and 50 demonstrations per task, an estimated-gain Kalman filter on the base model, and a PlaNet-style recurrent state-space model predicting through its prior and through its observation-conditioned posterior; out-of-distribution latent MSE on three LIBERO tasks, mean +/- SEM over 95-150 trajectories. Result: online residual correction is lowest on all three (Kitchen-S6 0.0182 vs Kalman 0.0233 and base 0.0425), 31-57% below the base model and 8-22% below the Kalman filter; the Kalman filter already improves on the base model, and the learned filter is worse than the base model here even with its posterior (0.049-0.057).",
+  "Check that the improvement is not confined to one hand-picked correction strength. Setup: vary the feedback gain over 0.02, 0.1, 0.2, 0.3, 0.5 and 1.0 on four LIBERO tasks and report latent MSE relative to the base model. Result: every gain from 0.02 to 0.5 reduces error, by 7.6-24.9%, with the best between 0.1 and 0.3; a gain of 1.0 makes predictions worse than no correction (-8.6% to -20.0%).",
+  "Apply the correction to a large pretrained world-action model without touching its weights. Setup: Fast-WAM-Joint on a pretrained 5B video backbone with two cameras and one multi-task policy across LIBERO-10; keep an exponential moving average of past (observed minus predicted) future latents and add a scaled copy to later predictions; score 1,203 paired predictions from 100 in-distribution episodes and 7,553 from 393 robot-initial-state variants, each covering four future frames 8-32 steps ahead, in latent space and after decoding with the same VAE; then run the policy on the LIBERO-Plus initial-state variants. Result: at gain 0.5 latent MSE falls 7.8% in distribution (0.1772 to 0.1635) and 18.3% under shift (0.3015 to 0.2464), with pixel MSE down 18.0% and PSNR up 0.86 dB, and errors fall at all three gains tried; policy success rises from 77.1% to 81.4%."
+ ],
+ "roles": [
+  "apparatus",
+  "control",
+  "headline",
+  "control",
+  "confound",
+  "external"
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2603_10048_c1",
+ "claim": "Replacing SAM's update direction with an explicit search for the highest-loss direction at a fixed radius, restricted to the plane spanned by the ascent displacement and the final ascent gradient and refreshed only once per epoch, generalises better than SAM and its multi-step variants at almost no extra cost. Supported only if, with SAM's tuned learning rate, weight decay and radius reused, it beats SAM in test accuracy on all nine combinations of VGG-11, ResNet-18 and DenseNet-121 with CIFAR-10, CIFAR-100 and Tiny-ImageNet, and on ImageNet ResNet-50, IWSLT14 translation and ViT-Ti; if in the multi-step setting it beats every multi-step SAM variant at 1, 2 and 4 steps without losing accuracy as steps increase; if a fixed, grid-searched interpolation direction does worse than the dynamic one; and if training time rises by at most about 5%.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2603.10048"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-3, 5-6 and Appendices C (overhead), E (other SAM variants, multi-step, corruptions, alpha dynamics, flatness), F (gradient scale); A (loss-surface visualisations) and B (proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2603.10048.json"
+ },
+ "experiments": [
+  "Define SAM and the explicit variant. Setup: SAM takes k normalised ascent steps of radius rho_i from theta0 and applies the final gradient g_k at theta0. The proposed method spans a plane by v0 (unit vector from theta0 to the final ascent point) and v1 (unit g_k), spherically interpolates v(alpha) between them, picks alpha* maximising the mini-batch loss at theta0 + rho_m v(alpha) over 20-40 values of alpha in [0, 2] or [0, 4], and updates along -v(alpha*) scaled by ||g_k||; alpha* is recomputed at the first iteration of each epoch (over 400 iterations per epoch) and held fixed otherwise. For k = 1 the plane is spanned by g0 and g1.",
+  "Compare in the single-step setting. Setup: SAM's learning rate, weight decay and rho tuned for SAM on each dataset and reused; 200 epochs; means and standard deviations over seeds. Result: test accuracy SGD / SAM / proposed on CIFAR-10 93.19 / 93.83 / 94.25 (VGG-11), 96.15 / 96.59 / 96.74 (ResNet-18), 96.34 / 96.97 / 97.15 (DenseNet-121); CIFAR-100 71.46 / 74.01 / 74.21, 78.55 / 80.93 / 81.24, 81.78 / 83.81 / 83.96; Tiny-ImageNet 47.44 / 51.96 / 52.58, 57.02 / 62.81 / 63.82, 61.93 / 66.31 / 66.81. Larger tasks, SAM vs proposed: ImageNet ResNet-50 77.04 / 77.22, IWSLT14 BLEU 35.30 / 35.63, ViT-Ti CIFAR-100 67.80 / 68.32. Margins over SAM are 0.15-1.01 points, often within about two standard deviations.",
+  "Separate dynamic search from simply mixing directions. Setup: a WSAM-like baseline with a fixed interpolation factor grid-searched over [-1, 3] in steps of 0.25, across radii (single-step and k = 3); multi-step comparison as in the SAM experiment; ASAM, VaSSO and WSAM tuned on CIFAR-100. Result: the fixed factor improves on SAM but the dynamic search is better across radii; multi-step accuracy 81.27 / 81.44 / 81.37 at k = 1 / 2 / 4 against at best 80.93 / 81.18 / 81.01; across radii with k = 3, 81.23 / 81.36 / 81.29. On DenseNet-121 / CIFAR-100, ASAM (83.99) edges out the proposed method (83.96), while combining the two gives 84.06 (81.68 on ResNet-18).",
+  "Check cost, stability and flatness. Setup: training time for 200 epochs; alpha* trajectories; update frequency and rho_m sweeps; Hessian eigenvalues by Lanczos and loss-landscape plots on ResNet-18 / CIFAR-10; CIFAR-10-C and CIFAR-100-C. Result: time 0.93 vs 0.96 h (VGG-11 CIFAR-10) up to 16.50 vs 16.55 h (DenseNet-121 Tiny-ImageNet), at most 5% more; alpha* has a clear optimum at each search and drifts smoothly downward; accuracy shows no consistent pattern with update frequency and beats SAM for rho_m from rho to 3 rho; top eigenvalue 33.92 vs 36.15 (SAM) and 78.79 (SGD), lambda1/lambda5 1.59 vs 1.89 and 2.26; corrupted-data accuracy higher overall in all four settings (e.g. 56.37 vs 55.62) but lower than SAM on some categories (noise 25.44 vs 25.58, digital 85.99 vs 86.48).",
+  "Note what tuning favours. Setup: all methods reuse SAM's tuned hyperparameters with gradients rescaled to ||g_k||, while the proposed method adds its own neighbourhood radius rho_m (fixed at 0.3 in the radius sweep) and alpha range; the alpha search uses only the current mini-batch. Gains over SAM are a few tenths of a point on CIFAR and ImageNet, so seed variation (standard deviations 0.02-0.42) is comparable to many margins."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "control",
+  "mechanism",
+  "confound"
+ ]
+}

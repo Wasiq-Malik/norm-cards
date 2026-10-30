@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2602_16642_c1",
+ "claim": "In finite training, weight decay is needed for neural collapse and momentum speeds collapse beyond what it does for the training loss, as predicted by the fact that under SGD the last-layer row sum shrinks at an exponential rate set by weight decay and momentum. Supported only if SGD without weight decay, even after 2,000 epochs, ends with collapse metrics several times larger than SGD with weight decay after 200 epochs; if two SGD runs differing only in momentum reach the same training loss but clearly different collapse metrics; and if the NC0 metric explains at least 70% of the variance in NC3 across converged runs.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2602.16642"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5 and Appendices B (NC metrics), D (setup, hyperparameters, NC0-NC3 regression, ablations on epochs, UFM, momentum, zero weight decay, other datasets, ImageNet, ViT); C (related work) and E (proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2602.16642.json"
+ },
+ "experiments": [
+  "Define the grid and metrics. Setup: ResNet9 and VGG9 on MNIST, FashionMNIST and CIFAR-10 with SGD, SGDW, Adam, AdamW, Signum and SignumW; three learning rates, six momenta and six weight decays each (3,888 runs, about 2,500 kept after discarding runs that failed to train), 200 epochs, batch 128, step decay by 10x at one and two thirds. Metrics: NC1 (within-class variability), NC2 (class means and weights form a simplex), NC3 (self-duality of weights and means), and the new NC0 = squared norm of the last-layer weights' row sum, which must reach zero for collapse (necessary, not sufficient); NC4 is dropped because it holds whenever training accuracy nears 100%. Collapse strength is judged relative to initial values and to the best values seen.",
+  "Test weight decay and momentum under SGD. Setup: ResNet9 / FashionMNIST; SGD with zero weight decay for 200 and 2,000 epochs at several momenta; heatmaps over momentum and weight decay; two runs with weight decay 0.005 and momentum 0.7 vs 0.9. Result: without weight decay NC1 / NC2 / NC3 stay at about 0.2 / 0.55 / 0.7 after 2,000 epochs, against 0.02 / 0.2 / 0.13 with weight decay after 200 epochs; larger momentum lowers the metrics at fixed non-zero weight decay, increasingly so at larger weight decay; the momentum 0.7 and 0.9 runs reach almost the same training loss but clearly different final collapse metrics. Theorems show NC0 decays exponentially under SGD with coupled or decoupled decay when 0 < lr x wd < 2(1 + momentum) or < 2.",
+  "Relate NC0 to the standard metrics and check training length. Setup: regress NC3 on NC0 across converged runs per learning rate and pooled; extend selected runs to 2,000 epochs; normalise NC0 by the weight norm. Result: slope 0.14-0.20 with R^2 0.78-0.84 per learning rate and 0.73 pooled over 399 runs (p < 0.001); NC0 correlates visibly less with NC1 and NC2. Longer training lowers all metrics somewhat but leaves the weight-decay trends unchanged and barely moves AdamW's NC0 and NC3; the normalised NC0 gives the same conclusions except at zero weight decay, where it no longer tracks NC1-NC3."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "control"
+ ]
+}

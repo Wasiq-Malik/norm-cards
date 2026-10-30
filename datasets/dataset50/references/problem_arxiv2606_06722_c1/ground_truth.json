@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_06722_c1",
+ "claim": "Reaching the flattest possible region early in training is harmful rather than helpful: the globally flat points that large-step gradient descent finds are saddle points where the network has stopped learning, and keeping the step size below the number of classes K, so that sharpness stays slightly above 2/K, avoids them and trains better. Supported only if runs whose sharpness hits exactly 2/K early (within about 100 iterations) stay at random-guess training accuracy for many iterations, with the top K Hessian eigenvalues all equal to 2/K, the next eigenvalues summing pairwise to about zero and over 95% of some layer's units outputting near zero; if runs that only approach 2/K later reach low training loss; and if capping the step below K never hits exactly 2/K and gives better training loss and test accuracy than the uncapped search, often also better than CDAT, in full-batch, stochastic, warm-up, cross-entropy and ViT variants.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.06722"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5 (definitions and results stated, proofs skipped) and Appendices C (setup, sharpness computation, random-guess loss), D-J (warmup, stochastic, ViT, delta ablation, cross-entropy, additional characterisation, segment smoothness, no-bias); B (proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2606.06722.json"
+ },
+ "experiments": [
+  "Define large steps and the algorithms. Setup: a step size is 'large' if it is at least 1/l and, within P iterations, some step exceeds 2/l, where l is the gradient's Lipschitz constant along the segment to the next iterate (segment smoothness, weaker than global L-smoothness). Equality line searches backtrack by delta from an extrapolated initial step so the Armijo condition with constant c holds approximately with equality; the nonmonotone version (Zhang-Hager reference value, NLS) and a Polyak-initialised one (PoNLS) are proven to converge and to give eta >= 2(1-c)delta / (|lambda1| + epsilon) near a limit point, plus Holder-smooth analogues. Experiments: full-batch GD on 5,000-image subsets of CIFAR-10/100, SVHN and EMNIST with MLP, CNN, ResNet-34, WideResNet-50-2, DenseNet-121 and VGG-11, MSE loss, c = 1e-4, delta = 0.5, sharpness by PyHessian every 100 iterations; baselines: monotone equality line search (LS), SAM with grid-searched step, CDAT with sigma = 2.06.",
+  "Characterise the globally flat points. Setup: zoom on the first 100-iteration window where NLS reaches 2/K; top 20-30 Hessian eigenvalues, layer-wise gradient norms and last-layer bias gradient, share of near-zero unit outputs per layer; a lemma that the last-layer bias Hessian of the MSE loss is (2/K) I_K, so sharpness >= 2/K. Result: on EMNIST x CNN and SVHN x ResNet-34 the top K eigenvalues all equal 2/K, the following ones are smaller and cancel in pairs (trace about 2), some layer has over 95% (up to about 99%) zero outputs, and training accuracy equals random guessing (loss about 0.0369 for K = 26, 0.09 for K = 10); these 'unsuccessfully flat' runs reach 2/K within about 100 iterations, while 'successfully flat' runs (CIFAR-100 x VGG-11, eigenvalues slightly above 2/K) arrive after about 1,200 iterations and train well.",
+  "Cap the step size below K. Setup: NLS-ub keeps eta_k < K (motivated by sharpness <= 2/eta); compared with NLS and CDAT on ResNet-34 / SVHN and on the other settings; a warm-up schedule rising to 125 then 90 versus one capped at 90 on CIFAR-100 (K = 100). Result: NLS-ub reaches low sharpness but never exactly 2/K and achieves better training loss and test accuracy than NLS, often also better than CDAT; warm-up above K hits the flat region within 50 iterations, the capped warm-up does not (figures only). The authors note that with 5,000 training images larger experiments are needed to confirm the test-accuracy conclusions.",
+  "Repeat in other regimes. Setup: mini-batch SGD with per-batch sharpness, ViT training, cross-entropy loss, and networks without biases. Result: with SGD, NLS on SVHN x ResNet-34 stays at the same training loss with average and minimum batch sharpness at 2/K for almost all of training; ViTs on CIFAR-100 hover above 2/K with steps oscillating around K and loss stuck at random guessing for many iterations, while CIFAR-10 and SVHN ViTs stay far from 2/K; without biases NLS instead collapses to the zero network; CDAT diverges in some stochastic runs (VGG-11 on CIFAR-100 and SVHN).",
+  "Note the scale and measurement limits. Setup: all main results are full-batch runs on 5,000-image subsets with MSE loss and ReLU networks; sharpness is computed every 100 iterations by power iteration (100 iterations, tolerance 1e-3); the step-size bound is checked using lambda1 as a stand-in for the segment Lipschitz constant; SAM's step size is grid-searched while CDAT uses its suggested sigma. Comparisons are visual, with no reported numbers or seeds, and what makes GD find the flat saddles (possibly neural collapse) is left open."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline",
+  "external",
+  "confound"
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_01172",
+ "claim": "For language models that mix attention blocks with Mamba state-space blocks, the plain maximal-update parameterisation (muP) with AdamW, with no SSM-specific scaling rules, makes the best learning rate the same across widths and depths, even though SSM operations fall outside muP's theory and every parameterisation fails muP's standard coordinate check; adding the SSM-specific muP rules instead makes the optimum drift. Supported only if, on a 7-point learning-rate grid, plain muP gives the same optimal learning rate at widths 256, 512 and 1,024 for all seven pure and hybrid layer patterns and at depths 4-32 for all eight patterns tested, while the SSM-specific rules shift the optimum for at least four of seven patterns and standard parameterisation for all seven; if the optimum transfers with 0% gap from about 60M-parameter proxies to 0.6-0.8B targets and to widths of 2,048 (about 1.2-1.7B parameters); and if on FineWeb-Edu and on the independently designed Nemotron-H hybrid the gap stays 0% while reusing standard parameterisation's proxy learning rate costs at least 1% in loss.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.01172"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6, Limitations and the experiment inventory (Table 7); Appendices A-E (stability, depth, width, billion scale, robustness, coordinate checks, gradient measurements, optimizer ablations) consulted for specific results",
+  "draft": "datasets/dataset50/build/drafts/2610.01172.json"
+ },
+ "experiments": [
+  "Define architectures, schemes and the metric. Setup: layer patterns over Transformer blocks (T: GQA, RoPE, SwiGLU), Mamba blocks (M: selective SSM with conv1d, simplified-ZOH discretisation, state size 16) and parallel hybrid blocks (H); schemes: standard parameterisation (one shared LR), plain muP (embeddings N(0,1), hidden N(0, 1/d), zero head, hidden LR eta/d), block-wise muP adding the SSM rules of Chennuru Vankadara et al. (per-component init and LR in SSM width and state size), and an approximated block-wise variant that keeps the SSM init and eta_C rule but drops eta_A ~ N_u. AdamW (0.9, 0.95), cosine warmup, clipping 1.0; WikiText-2 (2k steps), WikiText-103 (20k), FineWeb-Edu (500M tokens). Transfer gap = relative loss increase at the target when using the proxy's best LR from the grid {0.003, 0.01, 0.03, 0.1, 0.3, 1, 3}.",
+  "Sweep learning rates across widths and depths. Setup: MM, TT, MTMT, MHMH, HMHM, HHHH, HTHT at widths 256 / 512 / 1,024 (2k steps, WikiText-2); eight patterns at depths 4-32 at width 512; all 9 two-block interfaces at widths 128-2,048 for stability. Result: plain muP's optimum is 1.0 at every width for all seven patterns (0/7 shift) and in all 32 depth cells; the approximated block-wise variant shifts for 4/7 patterns (to 3.0); full block-wise drifts for all six SSM-bearing patterns and destabilises at eta >= 10; standard parameterisation's optimum falls with width for all seven (e.g. TT 0.003 to 0.0003) and its stable window shrinks from 0.30-1.0 at width 128 to 0.03-0.10 at 2,048, while plain muP stays stable to at least 1.0 everywhere.",
+  "Scale up and change data and architecture. Setup: proxy width 256, depth 8 (about 58-61M parameters) to target width 1,024, depth 32 (624M MHMH, 830M HHHH); width 2,048 (1.24B MHMH, 1.66B HHHH) with three seeds and one 24.9B-token run; FineWeb-Edu on three patterns; Nemotron-H blocks (Mamba-2, squared-ReLU FFN, attention without RoPE) at depths 16 and 32, widths 256-1,024; Mamba-2 and gated-linear-attention hybrids. Result: 0.0% gap in every case, with eta* = 1 at every seed; on FineWeb-Edu standard parameterisation's optimum shifts 0.003 to 0.001 and reusing it costs 1.1-8.7%; on Nemotron-H final losses at width 1,024 are 3.369 / 3.138 (muP) vs 3.356 / 3.152 (SP), SP's reused LR costing 1.9%. A transferred-LR MHMH model trained on 5B FineWeb-Edu tokens averages 44.1 (312M) and 43.4 (415M) on six zero-shot tasks, against 42.4 for Pythia-410M and 41.9 for Mamba-370M retrained on the same data.",
+  "Note what '0% gap' means. Setup: the main grid steps by about 3x, so 0% gap means the same grid point is best; a finer sweep (0.5, 0.7, 1.5, 2.0) shows a flat basin from 0.5 to 1.5 with superimposed curves; on Nemotron-H plain muP is swept only over {1, 3, 5} with 1.0 at the bottom edge, and the optimizer ablation's best losses all fall at the top of its grid (1.0). Transfer is judged on training loss (validation picks the same optimum in 209 of 218 cells, but prefers 0.1 on WikiText-2, which 2k steps traverse about seven times). Most sweeps use a single fixed seed; billion scale, full horizon and multiple seeds are never tested jointly.",
+  "Run the coordinate check and robustness sweeps. Setup: mean absolute activation per block after 10 steps relative to width 128, four schemes x five widths x five seeds; batch sizes 8-64, sequence lengths 128-2,048, Transformer-to-Mamba ratios (including a Jamba-like layout), gradient clipping settings. Result: all four parameterisations, plain muP included, fail the coordinate check on hybrids (activations vary with width more than in a pure Transformer), yet only plain muP transfers; the gap stays at most 1.1% across batch sizes, eta* = 1 at every sequence length and ratio, and clipping does not change the optimum."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "external",
+  "confound",
+  "control"
+ ]
+}

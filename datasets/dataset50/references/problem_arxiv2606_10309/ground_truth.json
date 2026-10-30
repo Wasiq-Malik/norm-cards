@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_10309",
+ "claim": "The high scores of current AI-generated-image detectors hide a systematic bias toward calling images real, driven by cues that are not intrinsic to real photographs, such as compression artefacts, so that ordinary post-processing makes them miss most generated images while still passing real ones. Supported only if, across a broad set of published detectors evaluated on images from many unseen generators, random compression, resizing and colour jitter cut average fake-image accuracy far more than real-image accuracy, leaving most detectors detecting under a quarter of fakes while still passing over 90% of real images; and if WEBP compression applied at test time leaves two strong CNN detectors' real accuracy near 100% at every strength while their fake accuracy falls toward zero, rather than lowering both classes together as a plain distribution shift would.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.10309"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices B (limitations), C (spurious-reliance evidence), D (inpainter choice), E (implementation), H (additional ablations); F (dataset and baseline descriptions) and G (related work) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2606.10309.json"
+ },
+ "experiments": [
+  "Set up the evaluation. Setup: 3,000 real RedCaps web images and roughly 3,000 generated images each from nine generators not used in training (Stable Diffusion, Midjourney, Kandinsky, Playground, PixArt, LCM, FLUX, Wuerstchen, aMUSEd); a post-processed copy with random compression, resizing and colour jitter following the Stay-Positive protocol; and three in-the-wild sets whose images went through unknown processing on upload (Chameleon 6,934, WildRF 1,051, LOKI 1,921). Report AUC plus accuracy on real images and on fake images at each detector's own threshold (AUC only for training-free detectors, which lack one). Detectors compared: eight CNN detectors (Corvi, Rajan, NPR, SAFE, AIDE, FerretNet, LaDeDa, DRCT), four CLIP-based (UFD, C2P-CLIP, RINE, ClipDet), one ViT-based (CoDE), two training-free (AEROBLADE, WaRPAD), and Corvi and Rajan retrained with non-negative final-layer weights (Stay-Positive).",
+  "Measure real and fake accuracy separately, before and after post-processing. Result: on clean images several detectors already default to real on unseen generators (Corvi passes 99.9% of real but catches only 21.5% of FLUX fakes). After post-processing, real accuracy stays high or rises while fake accuracy collapses: NPR's average fake accuracy falls from 95.9% to 12.2% as its real accuracy rises from 67.2% to 94.2%; SAFE, FerretNet and LaDeDa pass 97.7-99.8% of real images but catch only 0.3-2.3% of fakes; UFD and C2P-CLIP catch about 16-17%. High average AUC hides this: DRCT has 92.4 AUC but only 74.2% fake accuracy against 96.0% real on clean images.",
+  "Rule out a plain distribution shift that would hurt both classes. Setup: apply WEBP compression at test time at qualities 0, 50 and 90 to real and fake test images for Corvi and Rajan, whose LSUN real training images were WEBP-compressed while their synthetic training images were not. Result: real accuracy is 99.6-100% at every quality while fake accuracy is 0.01-0.03% at quality 0, 3.6-4.7% at 50 and 33.8-37.8% at 90, the one-sided pattern expected from compression acting as a learned cue for 'real'."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "confound"
+ ]
+}

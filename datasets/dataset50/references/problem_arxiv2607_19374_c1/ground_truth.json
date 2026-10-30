@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2607_19374_c1",
+ "claim": "Because the formalizations live in standard mathlib, general-purpose neural provers trained only on non-geometry mathlib problems already prove some of them, and training on the resulting proofs improves geometry proving further, including on held-out problems and for a second prover. Supported only if Goedel-Prover v2 (8B) with no geometry-specific training proves at least 13% of the 177,597-problem corpus at Pass@1; if one round of fine-tuning on its own successful proofs or preference pairs raises this by at least 1 point, with paired gains clearly outnumbering losses; if the trained models also improve on the held-out olympiad set; and if fine-tuning DeepSeek-Prover-V2-7B the same way raises its Pass@1 by at least 1 point.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2607.19374"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Appendices B-F (dataset statistics, training hyperparameters, extra downstream results, AlphaGeometry soundness, comparison with LeanEuclid/LeanGeo/MATP); A (Lean header) and G (Aristotle proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2607.19374.json"
+ },
+ "experiments": [
+  "Define the pipeline and corpora. Setup: DeepSeek-V3 generates every stage: (1) constraint explication, e.g. 'D on segment BC' becomes strict betweenness Sbtw, 'triangle ABC' adds AffineIndependent, 'line AB' adds A != B, 'circle' adds r > 0, and point order on a circle becomes a cross-product sign; (2) an informal proof sketch first, to commit to one configuration; (3) retrieval of mathlib definitions with their required side conditions; (4) compile-and-repair using Lean error messages. 32 candidates per problem. OMNI-Geometry: 780 plane-geometry problems from OMNI-Math (difficulty 1-9.5, 557 from HMMT); Numina-Geometry: 183,796 NuminaMath problems labelled geometry (32.5% olympiads, 26.2% Chinese K-12, 17.8% synthetic), a subset the official NuminaMath-Lean release excluded as too hard to formalise.",
+  "Prove and train on the corpus. Setup: Goedel-Prover v2 (8B) Pass@1 on all 177,597 problems; SFT on successful traces from one attempt per problem, or DPO on (success, failure) pairs from two attempts (7,148 pairs); 8 A100s, one epoch. Result: base 13.6% (two runs 13.62 and 13.58%), SFT 15.1%, DPO 15.0%; paired gain / loss counts 5,635 / 2,988 (SFT) and 5,338 / 2,853 (DPO).",
+  "Check held-out problems and a second prover. Setup: OMNI-Geometry, never used in training; DeepSeek-Prover-V2-7B fine-tuned on its own successful proofs from a random half of Numina-Geometry for two epochs. Result: OMNI-Geometry Pass@1 6.90% base, 7.68% SFT, 7.81% DPO (Pass@2 8.33, 9.11, 8.59%); DeepSeek-Prover-V2 13.4% to 15.0% on the same half-corpus.",
+  "Note the in-distribution evaluation. Setup: the main Pass@1 is measured on the same corpus whose solved problems supplied the training traces (and DeepSeek-Prover-V2 is evaluated on the half it trained on), so part of the gain can come from re-solving trained problems; the held-out gain is under 1 point. Proved statements may also be misformalised (e.g. trivially true from over-strong hypotheses), so proof rate does not by itself certify faithfulness. Each gain is from one training run."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "external",
+  "confound"
+ ]
+}

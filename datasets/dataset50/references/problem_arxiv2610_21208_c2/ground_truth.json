@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2610_21208_c2",
+ "claim": "A backdoor planted by relabelling images that naturally share a frequency-domain pattern is not a fragile input perturbation: it survives common input sanitisation and most standard backdoor defences. Supported only if attack success stays above 99% under Gaussian blur with kernels up to 9 and JPEG compression down to quality 10, while a universal adversarial perturbation aimed at the same target falls below 15% under strong blur or compression; and if, on a ResNet-50 teacher, attack success stays at or above 95% after at least five of seven standard mitigation and detection defences.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2610.21208"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5, Limitations, Appendices B (class structure), C (ImageNet-C support), D (design checks), E-G (attack taxonomy, defence settings)",
+  "draft": "datasets/dataset50/build/drafts/2610.21208.json"
+ },
+ "experiments": [
+  "Fix models, distillation and scoring. Setup: ImageNet; ResNet-50 and ResNet-18 teachers trained 90 epochs (batch 512, learning rate 0.2, cosine, 5-epoch warm-up); students ResNet-18, ResNet-18 with half the channels, EfficientNetV2-B0 and DeiT-Tiny (AdamW, 300 epochs, Mixup, CutMix, RandAugment), distilled for 100 epochs on clean images only, temperature 4, distillation weight 0.7. One target class for all poisoned samples. Score clean accuracy and attack success (share of triggered test images classified as the target). Baselines: four artificial-trigger backdoors (BadNets patch, Blend, Refool reflections, WaNet warping).",
+  "Find a naturally common pattern and relabel the images that have it. Setup: project a pool of 10,000 training images into a small subspace, either a fixed 4 x 4 pixel patch at the bottom-right corner or the central (low-frequency) block of the 2D FFT; choose as prototype the projected sample whose distance to its nearest rho fraction of samples is smallest; relabel to the target class every training image within that distance, without changing pixels (rho = 5% spatial, 3% frequency). At test time apply the same rule by pasting the prototype patch or substituting the central FFT coefficients and inverting.",
+  "Rule out that the backdoor is just a universal adversarial perturbation in disguise. Setup: on the ResNet-50 protocol, compare a universal adversarial perturbation for the same target class against both relabelling variants under Gaussian blur (kernel 3-9) and JPEG compression (quality 70-10) applied before inference. Result: the universal perturbation falls from 82.90% to 12.75-25.94% under blur and 0.18-34.90% under JPEG, while the relabelling variants stay at 99.35-100% under every setting.",
+  "Run standard backdoor defences. Setup: mitigation by fine-tuning, fine-pruning, SAU, CLP (pruning threshold swept, best point under a clean-accuracy constraint) and OTBR, given 1% of ImageNet where data are needed; detection by STRIP and Spectral at a 5% false-positive rate, reporting effective attack success after rejected inputs are removed. Result: the frequency variant on ResNet-50 keeps 99.8-100% after all five mitigations and Spectral, and 38.4% after STRIP; the spatial variant on ResNet-50 is removed by CLP (0.0%) and weakened by fine-tuning (35.2%) and fine-pruning (43.6%). On ResNet-18 the frequency variant is removed by fine-tuning (3.0%) but survives the rest (65.7-97.3%). Trigger backdoors are removed by some defences and not others (e.g. WaNet by fine-tuning, fine-pruning and SAU; Blend by none of the mitigations)."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "control",
+  "headline"
+ ]
+}

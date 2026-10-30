@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_00570_c1",
+ "claim": "Sequential weight edits destroy a reasoning model's general abilities within about a hundred edits, unless the edit is constrained to leave existing knowledge untouched. Supported only if, on a distilled reasoning model, after 100 sequential fact edits, rank-one and meta-learned editors bring average accuracy on five competition-math benchmarks and on three broader reasoning benchmarks (graduate science questions, ARC-Challenge, MMLU-Pro) from above 50% to below 1%, while a null-space-constrained editor stays within 2 points of the unedited model on both averages.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.00570"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6 and Appendices B (hypothesis evidence: collapse statistics, perturbation norms, basis stability, R_k distributions, correlation with performance), C (settings, full results, reasoning failure cases, token-level locality, AlphaEdit sensitivity), D (retrieval baseline fairness), E (retrieval efficiency); Section 2 and Appendix A (related work) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2606.00570.json"
+ },
+ "experiments": [
+  "Set up the benchmark. Setup: weight-editing methods ROME, MEMIT, PMET, RECT, AlphaEdit, FT-L (locate-then-edit), MEND (meta-learned), AdaLoRA and WISE (added parameters); external-memory methods GRACE and SCR (retrieve stored edits and select them as context); all through EasyEdit on Llama-2-7B-Chat, Llama-3.1-8B-Instruct, Mistral-7B-Instruct, DeepSeek-R1-Distill-Llama-8B, Llama-2-13B and Qwen3-14B. Data: ZsRE and WikiData-counterfact (counterfactual fact edits) and ELKEN events, converted to fact triples by GPT-4o for the weight editors and given as raw text to memory methods. Answers are generated autoregressively (50 tokens, 1,024 for the reasoning model) instead of teacher-forced, and Qwen2.5-72B-Instruct judges semantic agreement (96% agreement with humans on 250 samples) for reliability, generalisation, locality and portability. Every edit in a dataset is applied in sequence and the final model evaluated.",
+  "Measure general reasoning after editing. Setup: DeepSeek-R1-Distill-Llama-8B after 10 and 100 sequential ZsRE edits; AIME 2024 and 2025, AMC, MATH-500, OlympiadBench, and GPQA-Diamond, ARC-Challenge, MMLU-Pro. Result: math average 53.47 unedited; after 10 / 100 edits 50.73 / 0.00 for ROME, 45.10 / 0.03 for RECT, 0.00 / 0.00 for MEND, 53.92 / 53.12 for AlphaEdit. Broad average 54.24 unedited; 49.05 / 0.00 ROME, 50.37 / 0.00 RECT, 0 / 0 MEND, 53.08 / 52.88 AlphaEdit.",
+  "Inspect how edited reasoning models fail. Setup: case analysis of edited DeepSeek-R1-Distill outputs. Result: the edit often makes the model produce the new answer as the next token, but its reasoning trace then reverts to the old fact, fabricates plausible-sounding justifications for the edited answer, or drifts away from the question (qualitative)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

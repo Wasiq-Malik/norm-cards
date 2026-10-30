@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_29986",
+ "claim": "The cost of grammar-constrained decoding with complex context-free grammars can be cut to near that of unconstrained generation, without changing a single output, by grouping vocabulary tokens into classes that are provably interchangeable with respect to the grammar, so that the grammar engine checks only one representative per class at each step. Supported only if the constrained outputs are byte-identical with and without the compression (guaranteed by construction); if the offline grouping takes at most a few seconds per tokenizer-grammar pair and shrinks the vocabulary by at least 40 to 1; if on complex grammars (C++ and a brace-delimited Python variant) it reduces the state-of-the-art engine's unbatched overhead by an order of magnitude; and if at batch sizes of 8 and 16 on the hardest grammar total generation time stays within about three times that of unconstrained generation, where the engine alone is around a hundred times slower or does not finish within 24 hours.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.29986"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Limitations; proofs in Appendices B-C and the stack-adjacency algorithm in D skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.29986.json"
+ },
+ "experiments": [
+  "Fix tasks, grammars, models and measurements. Setup: four structured-generation tasks with syntactic and functional correctness: 100 JSON-schema queries (json-mode-eval; executes, keys and values match the reference), 200 XML instances from StructEval (parses; dot-path rules satisfied), the 164 C++ problems of HumanEval-X (compiles; passes tests), and the same 164 problems translated into Bython, Python with braces and semicolons, with a description of Bython in the system prompt (compiles to Python; passes tests). Grammars: XGrammar2's JSON-schema builder, an XML 1.1 EBNF adapted to GBNF, a published C++ grammar and a Bython grammar written from scratch. Models Llama-3.2-3B-Instruct, Qwen3-4B-Instruct and gpt-oss-20b, temperature 0.2, at most 500 tokens, five seeds, one H100 with grammar work on a 16-thread Xeon; batch sizes 1, 8 and 16 except JSON (one grammar per request, batch 1).",
+  "Group tokens by how they act on the grammar. Setup: convert the grammar to Greibach normal form (only to compute classes; the engine keeps the original grammar) and, for each vocabulary token, compute its displacement: the set of (input stack, output stack) pairs it can produce in the resulting pushdown automaton, pruning backtracking with a precomputed stack-adjacency relation. Tokens with identical displacements are provably interchangeable (a refinement of syntactic congruence), so masks computed on class representatives (the shortest token in each class) can be mapped back to the full vocabulary with a gather. The engine (XGrammar2, the only one found able to handle these grammars) is initialised with the representatives only.",
+  "Measure pre-computation cost and compression. Setup: wall-clock time and number of classes per tokenizer and grammar. Result: 0.28-1.80 seconds per pair; vocabularies of 128,256-201,088 tokens shrink to about 253-258 classes for JSON (mean over the 100 schemas), 1,517-1,591 for XML, 2,815-3,095 for C++ and 1,783-2,011 for Bython, compression from about 40:1 (Llama, C++) to about 800:1 (gpt-oss, JSON).",
+  "Measure end-to-end generation time with and without compression. Setup: mean seconds per instance, including the language model, for unconstrained decoding, XGrammar2 and XGrammar2 with compression, at batch sizes 1, 8 and 16. Result: unbatched, the engine alone costs about 2x on C++ and 7-9x on Bython (Llama 12.55 s vs 1.39 s unconstrained) and compression brings Bython to 1.76 s; at batch 8 on Bython the engine alone takes 44.51 s (Llama) and 97.07 s (Qwen) and times out for gpt-oss, against 0.59, 1.40 and 1.89 s with compression (unconstrained 0.25, 0.45, 1.50), about 75x faster; at batch 16 the engine alone times out on Bython for all three models while compression stays at 0.50-2.11 s. On C++ at batch 16 the engine alone takes 0.85-10.49 s against 0.35-1.56 s compressed. Per-token engine overhead falls 9-45x.",
+  "Check where compression does not help. Setup: the same timings on the simple JSON-schema grammars, one per request. Result: JSON overhead is already small (Llama 3.60 s vs 3.42 s unconstrained) and compression barely changes it (3.52 s), and because each schema needs its own grouping, the 0.28-0.49 s pre-computation can exceed the time saved for one-off lightweight grammars."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "headline",
+  "confound"
+ ]
+}

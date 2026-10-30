@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_09101",
+ "claim": "Whether a prompt-tuned CLIP classifier delivered by an untrusted trainer contains a backdoor, and which class it targets, can be decided with only white-box access and about a thousand unlabeled out-of-distribution images, by optimising for each candidate class one small image-wide perturbation that pushes all those images into that class and flagging a class whose perturbation succeeds unusually often at unusually low loss. Supported only if, over one clean and four backdoored models (BadCLIP plus three adapted image-space attacks) on each of ten datasets, a fixed threshold classifies at least 90% of the 50 models correctly with AUROC at least 0.95, far above adapted Neural Cleanse and Pixel Backdoor; if the target-class F1 averages at least 0.9 and is at least 0.8 for every attack type; and if an adaptive attack trained to respond only to the exact trigger still does not evade detection.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.09101"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-8 and supplementary 10-15 (attack ACC/ASR, adaptive attack, ablations, encoder-level backdoors, repair controls); 12 and 16 (score plots, SSIM tables) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2604.09101.json"
+ },
+ "experiments": [
+  "Set up models, attacks and the detector. Setup: CLIP ViT-B/16 with frozen encoders, prompt-tuned with CoCoOp (two-layer meta-net producing image-conditioned tokens) on the seen classes of ImageNet, Caltech101, OxfordPets, Flowers102, Food101, FGVC, SUN397, DTD, EuroSAT and UCF101 (16-shot unseen evaluation). Attacks poison 10% of tuning images: BadCLIP (dense trigger, epsilon 4/255, jointly optimised with the meta-net), and Blended, WaNet and SIBA adapted to prompt tuning; average backdoor success on unseen classes 69.8-97.6% by dataset. Detector: 50 candidate classes including the target; 1,000 unlabeled Open Images with no class overlap; per class, one epoch (32 Adam steps, lr 0.1, batch 32) minimising the negative margin between the class logit and the strongest other logit under an L-inf bound of 4/255; score = z(held-out success) - z(loss), re-standardised within the model; backdoored if the maximum is at least k = 2. Baselines: Neural Cleanse and Pixel Backdoor with their original losses.",
+  "Detect across 50 models. Result: 47/50 models correct at k = 2, AUROC 0.973 against 0.495 for Neural Cleanse and 0.687 for Pixel Backdoor. Target-class F1 averages 0.92 over datasets (0.3 false positives per dataset) against 0.06 (14 false positives) and 0.42 (5.5); per attack 0.94 BadCLIP, 0.95 Blended, 1.00 SIBA, 0.84 WaNet. Failures: clean FGVC flagged, WaNet on DTD and BadCLIP on EuroSAT missed, all on datasets with low unseen-class accuracy (31-46%). Scans take under 1 h for 50 classes against 6 h and 8 h for the baselines; reconstructed triggers have SSIM 0.93 to the clean image (true trigger 0.96).",
+  "Ablate the inversion choices. Setup: BadCLIP models; margin loss vs cross-entropy vs raw target logit (four datasets); 100 / 500 / 1,000 OOD images; batch size 1 / 32 / 64; in-distribution vs OOD images. Result: reconstructed-trigger success on the target class 91.09% (margin), 81.45% (cross-entropy), 77.66% (logit), with benign-class success 4.62-5.37%; with 100 / 500 / 1,000 images 60% / 89.18% / 95.28% on average (UCF101 1% / 53.2% / 83.7%); batch 1 / 32 / 64 gives 75.9% / 95.3% / 88.5%; in-distribution images 98.6% vs 95.3% OOD.",
+  "Test an adaptive attacker. Setup: BadCLIP Adaptive freezes the learned trigger, then trains the model to map noisy versions of it (Gaussian, scaled by alpha times epsilon) back to their true labels, so only the exact trigger works. Result: the attack's own success drops by 30-40% on average and the reconstructed triggers' success by about 20% (e.g. Caltech101 67.29%, DTD 31.54%), and anomaly scores fall (EuroSAT 1.66, below the k = 2 threshold, against 11.20 on Caltech101), yet the authors report detection remains reliable. The threshold k = 2 was fixed in advance, but the ROC is reported on the same 50 models.",
+  "Apply unchanged to encoder-level backdoors. Setup: fully fine-tune CLIP's image encoder with Blended-style triggers (random-noise patch, triangle, text), no meta-net, same candidate set, image pool and budget. Result: backdoor success 99.7 / 86.1 / 94.7%; reconstructed-trigger success 98.75 / 96.88 / 62.4% and anomaly scores 6.15 / 5.93 / 4.38, all above threshold, with clean and poisoned models separated."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism",
+  "confound",
+  "external"
+ ]
+}

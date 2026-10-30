@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_08612",
+ "claim": "Standard backdoor poisoning fails against vision-language-action robot policies because, during fine-tuning, the gradient of the backdoor objective points against the gradient of the ordinary task objective; poisoned images that also carry an imperceptible perturbation, crafted on a public vision-language encoder so that their feature gradients are orthogonal to those of clean images, remove that conflict, so a data-poisoning attacker can implant a reliable backdoor without harming normal behaviour. Supported only if, with 5% of LIBERO training samples poisoned and OpenVLA-7B fine-tuned normally, the attack succeeds on at least 80% of triggered episodes on both the object and spatial suites while benign task success stays within 5 points of a cleanly fine-tuned model, where existing poisoning attacks reach at most 15%; if the measured benign-backdoor gradient cosine stays near 0 for this attack but is clearly negative for the strongest baseline; if removing the invisible perturbation brings success below 5%; and if the perturbation transfers only when crafted on a vision-language encoder (at least 80%) and not on an ImageNet-style encoder (at most 25%).",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.08612"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-7 and Appendices A-F (implicit method, stealthiness, explicit method, setup, extra results, defenses); G (prompt list) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2605.08612.json"
+ },
+ "experiments": [
+  "Set up the victim and threat models. Setup: OpenVLA-7B fine-tuned with LoRA on LIBERO (spatial, object, goal and long-horizon suites), four A100s; metrics are benign task success (SR) and targeted attack success on triggered inputs (TASR). Data poisoning: the attacker only edits training data, replacing 5% of samples (1-3 trajectories per task) with images containing a visible trigger plus a bounded invisible perturbation optimised on a frozen public encoder (CLIP ViT-L/14 by default) to make poisoned and clean feature gradients orthogonal; LPIPS 0.045 and SSIM 0.912 against the clean images. Fine-tuning: the attacker has the weights, identifies neurons with low mean activation on clean data, and trains the backdoor on 200 samples with gradients masked to those neurons only, with a semantic visual trigger. Baselines: BadNet, action-label poisoning, latent poisoning and BadVLA adapted to these restricted settings.",
+  "Compare attack success and utility. Result: data poisoning SR / TASR on LIBERO-Object and -Spatial 90.1 / 85.9 and 88.8 / 83.5% for the proposed attack, against 5.2 / 1.3 and 4.5 / 0.8% (BadNet), 14.8 / 9.4 and 13.6 / 10.1% (latent poisoning) and 16.1 / 12.8 and 17.5 / 13.1% (BadVLA adapted). Fine-tuning: 79.3 / 74.8 and 78.1 / 72.5%, against 8.8 / 5.9 and 9.1 / 6.4% (BadNet) and 50.8 / 37.7 and 52.1 / 39.2% (BadVLA adapted). A cleanly fine-tuned model reaches SR 91.5% on LIBERO-Spatial. Only two of the four suites are reported in the main table.",
+  "Measure gradient interference and ablate the composite trigger. Setup: cosine similarity between benign and backdoor gradients on the LoRA parameters during training, multiple runs; on LIBERO-10, remove the invisible perturbation or the visible trigger. Result: the BadVLA-adapted baseline falls to about -0.4 (range -0.2 to -0.5) after 400 steps while the proposed attack stays near 0; without the perturbation TASR is 3.2% and without the visible trigger 0.5%, against 84.7% for the full attack, with SR 88.1-89.9% in all three. Baselines end with action MSE 0.385-0.412 and training loss 1.42-1.68, against 0.034 / 0.15 for the attack and 0.028 / 0.12 for clean fine-tuning.",
+  "Vary the proxy encoder. Setup: LIBERO-Spatial, perturbations crafted on CLIP ViT-L/14, SigLIP-SO400M, ImageNet ViT-B/16 or ResNet-50. Result: TASR 83.5, 81.4, 22.7 and 14.2% with SR 86.2-89.0% throughout, so transfer depends on the proxy sharing vision-language pretraining with the victim's backbone.",
+  "Test instruction paraphrases and a physical robot. Setup: LIBERO-Spatial instructions rewritten with synonyms (set A) or restructured syntax (set B) without retraining; a real robot with fixed-object and interaction cues as triggers. Result: TASR 83.5 / 81.2 / 79.4% (original / A / B) against 13.1 / 8.5 / 4.2% for BadVLA adapted; real-robot triggering is shown only qualitatively in figures, without success rates.",
+  "Note what drives the baseline gap. Setup: baselines are adapted re-implementations; at a 5% poisoning rate they collapse benign SR from 91.5% to 4.5-17.5%, which the authors attribute to gradient interference (high validation action MSE) rather than implementation error. Results are single-architecture (OpenVLA-7B), mostly two suites, and without variance across seeds except for the gradient curves."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism",
+  "control",
+  "external",
+  "confound"
+ ]
+}

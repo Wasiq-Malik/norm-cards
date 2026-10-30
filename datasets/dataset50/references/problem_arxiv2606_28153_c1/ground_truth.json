@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_28153_c1",
+ "claim": "Because a jailbroken model still represents the harmful intent internally, reading those internal signals detects harmful prompts, including adversarially wrapped ones, far better than the model's own refusals and about as well as trained guard classifiers, without any training. Supported only if ablating the mid-layer heads that stay active under attack lowers mid-layer refusal-direction activation under attack by at least 10% in both analysed models; and if a training-free detector that averages standardised refusal-direction projections from the most harmful-vs-benign-separating components improves the sample-weighted macro-F1 over ten balanced moderation and jailbreak benchmarks above the model's own refusal behaviour by at least 0.08 on each of seven open models from three families, reaches at least 0.80 on all three adversarial benchmarks for at least six of the seven, has its best model above the best trained guard model, and beats gradient-based and steering-based training-free detectors while flagging fewer hard benign prompts than the model's own refusals.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.28153"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1, 3-6 and Appendices A (overlap distributions, threshold and bandwidth sensitivity), B (exclusion of MLP and LayerNorm), D (detector design, hyperparameters, training-free baselines, over-refusal, attribution), E (Llama-3-70B); C (qualitative examples) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2606.28153.json"
+ },
+ "experiments": [
+  "Find the heads. Setup: Llama-3-8B-Instruct and Llama-2-7B-Chat; refusal direction by difference in means at the end-of-instruction position (layer 12 and 14); back-project it through each head's OV circuit (ignoring LayerNorm and MLPs) to get a head-specific direction, and score each head by its output's projection on that direction. Data: Alpaca benign prompts; harmful requests from public benchmarks that the model refuses; attacked variants (GCG, AutoDAN, many-shot, PAIR) that succeed, paired one-to-one; of about 10,000 attack samples only 176 (Llama-3) and 378 (Llama-2) pairs qualify. Two-stage KDE overlap filter (threshold 0.5): heads separating harmful from benign, then among them heads whose harmful and attack distributions differ, split by direction into attack-suppressed (ACH) and attack-strengthened (SAH). Result: Llama-3 has 80 stable harmful-salient heads, 21 ACHs, 17 SAHs (416 heads in layers 0-12); Llama-2 43, 20, 19 (480 heads in layers 0-14); over 60% of ACHs lie in layers 0-3 and SAHs in layers 5-12.",
+  "Ablate the heads that stay active. Setup: apply the same suppression to SAHs on successful attack inputs and measure mean absolute refusal-direction activation across mid-layer heads (Llama-2 layers 14-25, Llama-3 12-25). Result: Llama-2 drops from 0.222 to 0.181 (18%) and Llama-3 from 0.0062 to 0.0053 (14%), against 0.397 and 0.0086 under the original harmful inputs, so attack inputs already carry much less than harmful inputs and SAHs account for part of what remains.",
+  "Define the detector and benchmark. Setup: at the end-of-instruction position, project every head's output onto the refusal direction, standardise by benign statistics, keep components whose harmful-vs-benign KDE overlap is below 0.3, average the top m standardised scores and flag the input above a threshold chosen per model on a validation set to maximise F1 (m and threshold vary widely: e.g. Gemma-2-9B m = 577 of 635, Gemma-2-27B m = 38 of 952). One forward pass, white-box access needed. Ten 1:1-balanced benchmarks from the safety-eval framework: WildGuardTest, ToxicChat, OpenAI Moderation, Aegis 1 and 2, SimpleSafetyTests, HarmBench-Vanilla, and adversarial WildJailbreak, SALAD-Bench, HarmBench-Adversarial; macro-F1 and its sample-weighted mean. Baselines: each model's own refusal behaviour and trained guard models (LlamaGuard3 and 4, Qwen3Guard, WildGuard).",
+  "Compare detection across seven models. Result: weighted macro-F1, refusal behaviour vs detector: Gemma-2-2B 0.470 vs 0.853, Gemma-2-9B 0.514 vs 0.816, Gemma-2-27B 0.519 vs 0.798, Llama-2-7B 0.664 vs 0.752, Llama-3-8B 0.797 vs 0.888, Qwen-7B 0.506 vs 0.860, Qwen-14B 0.470 vs 0.847; guards 0.599 (LlamaGuard3), 0.666 (LlamaGuard4), 0.877 (Qwen3Guard), 0.880 (WildGuard). On SALAD-Bench the detector reaches 0.94-0.99 except Llama-2 (0.649), where refusal gives 0.27-0.89; on WildJailbreak 0.84-0.94. ToxicChat and OpenAI Moderation stay weaker (0.44-0.80 and 0.65-0.76), below WildGuard and Qwen3Guard on several models.",
+  "Compare with other training-free detectors and check over-refusal. Setup: on Qwen-7B, GradientCuff (gradients of a refusal loss) and conditional activation steering (CAST); on Llama-3-8B, OR-Bench-Hard-1K of hard benign prompts. Result: weighted macro-F1 0.856 against 0.741 and 0.611 (CAST is better on WildJailbreak, 0.945 vs 0.923); on OR-Bench, F1 / hard specificity 0.606 / 0.418 against 0.571 / 0.329 for refusal behaviour, 0.510 / 0.053 for GradientCuff and 0.453 / 0.290 for CAST, so the detector still flags most hard benign prompts.",
+  "Note what favours the detector in the comparison. Setup: the detector's threshold and top-m are tuned per model on a validation set to maximise F1, the refusal baseline is the model's unmodified behaviour, and the guard models are used off the shelf; component selection reuses harmful and benign prompt sets that overlap in source with some benchmarks. The detector also requires white-box activations, so it is not a drop-in replacement for a guard model."
+ ],
+ "roles": [
+  "apparatus",
+  "mechanism",
+  "apparatus",
+  "headline",
+  "control",
+  "confound"
+ ]
+}

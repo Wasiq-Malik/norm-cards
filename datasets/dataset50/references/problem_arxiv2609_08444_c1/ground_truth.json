@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2609_08444_c1",
+ "claim": "For safety-aware planning under partial observability, how past observations are remembered matters more than whether they are remembered: a structured relational memory of objects (what is in, on or near what), with unseen objects kept rather than deleted and relations updated after each action, preserves safety much better than storing all past images, retrieving past observations by similarity, or keeping a flat list of seen objects. Supported only if, with the same planner and risk checker, the graph memory's safe-success rate is at least 20 points higher than each of those three alternatives, and if removing either object retention or relation updating lowers safe success by at least 20 points.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2609.08444"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendices A (method details), B (simulated and real-world settings, hyperparameters, token cost); prompt listings skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2609.08444.json"
+ },
+ "experiments": [
+  "Build the memory and planning loop. Setup: at each step Gemini 2.5 Flash lists objects in the egocentric RGB-D view and SAM 2 segments them; nodes carry masks and depth-based 3D positions, edges carry IN / ON / NEAR relations proposed by the language model and refined geometrically from depth. Across steps nodes are matched by mask IoU with bipartite matching; objects that leave the view are retained, and edges are updated when an action moves an object. A GPT-4o risk predictor reads the graph, the task and the next planned action, estimates whether a hazard will arise and, above a conservatism threshold eta = 0.8, sends a replan signal with an explanation to a GPT-4o planner that picks actions from a fixed skill set.",
+  "Turn the benchmark into a partial-observability test. Setup: IS-Bench in OmniGibson, 17 tasks over four hazard categories (3 electric shock, 2 fire, 6 falling, 6 food contamination, preserving the benchmark's imbalance), task and safety goals given as BDDL predicates on fixed pre-sampled scenes; the original top-down plus four fixed cameras are replaced by one egocentric 1280x720 RGB-D camera, so the hazard is seen early and then occluded during execution. Success rate (SR) counts task goals met; safe success rate (SSR) requires both task and safety goals. Baselines with the same GPT-4o planner and skill set: SaP (a learned safety cognition prompt), the benchmark's safety chain-of-thought prompt, the plain planner, and the method without graph memory (risk predictor on raw observations).",
+  "Swap the memory representation. Setup: partial observability, same planner and risk predictor, replacing the graph with the full history of images, retrieval of past observations by similarity (RAG), or a flat list of observed objects. Result: SR / SSR 0.79 / 0.59 for the graph, 0.58 / 0.13 for full history, 0.79 / 0.38 for RAG and 0.88 / 0.17 for the object list; the object list keeps task success highest but loses the spatial relations that define most hazards.",
+  "Remove the graph's update rules. Setup: delete nodes that leave the view instead of retaining them, or freeze edges instead of updating them after actions. Result: SR / SSR 0.71 / 0.21 without retention and 0.71 / 0.38 without edge updates, against 0.79 / 0.59 for the full graph."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

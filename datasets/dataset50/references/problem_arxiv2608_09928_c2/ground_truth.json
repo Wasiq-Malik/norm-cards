@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2608_09928_c2",
+ "claim": "Adding a discovered feature's decoder direction at its own layer, on top of mean-difference activation steering applied at the layers where discovered features live, improves a vision-language model's spatial and text-reading accuracy more than standard single-layer steering. Supported only if, over the top ten spatial and five text-reading features on PaliGemma 2, the mean gain exceeds that of single-layer steering by at least 3 points on spatial relations and 1.5 points on text reading; if injecting the feature direction adds at least 1 point beyond multi-layer steering alone; and if the feature direction on its own gives less than half the gain of single-layer steering.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2608.09928"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-9 and Appendices A (preliminaries, skimmed), B (algorithm), C (SAE training, reconstruction, decoder geometry, seed stability), D (selection diagnostics, image counterfactuals, from-scratch SAE, random features), E (steering decomposition, feature correspondence), G.2 (bottom-ranked heads); F and H (auto-interpretation and OCR examples) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2608.09928.json"
+ },
+ "experiments": [
+  "Build the dictionaries and the selection pipeline. Setup: LLaVA-MORE (LLaMA-3.1-8B, LLaMA-Scope TopK SAEs, 32K features), PaliGemma 2 (Gemma-2-2B, Gemma-Scope JumpReLU SAEs, 16K) and InternVL3.5-2B (Qwen3-1.7B, Qwen-Scope TopK); one SAE per residual-stream layer warm-started from the base-LM SAE and adapted on 50k VQAv2 image-question pairs with loss on text tokens only. Adapted features: mean squared activation on visual inputs above 0.01 and decoder cosine to the base-LM feature in the bottom 25% (about 5%, 20% and 13% of features). Task features: per-token firing frequency on a target split (spatial VQAv2 questions, VLSBench unsafe prompts, OCR prompts) against generic VQAv2, odds ratio >= 3 and frequency gap >= 0.05 with Fisher tests and Benjamini-Hochberg correction, kept only if they still fire when the question is replaced by neutral prompts, and intersected with the adapted set (e.g. about 1,400 spatial features for PaliGemma 2, 711 for LLaVA-MORE). Ablation projects the feature's decoder direction out of attention, MLP and residual outputs at every layer, on text tokens only.",
+  "Compare steering methods. Setup: PaliGemma 2 base; vanilla CAA with one mean-difference direction at a mid layer against MMDiff-CAA (CAA directions added at the discovered features' layers plus the feature's decoder direction scaled 1, 3 or 10 at its own layer); spatial on VSR, OCR reformulated as four-way multiple choice steered at the answer token. Result: spatial mean +12.59 against +8.96 (best feature +30.77 vs +15.38; two of ten features unchanged and two slightly worse); OCR mean +4.02 against +2.21 (one feature +10.58 vs +2.88; one 0.16 lower).",
+  "Decompose the steering gain. Setup: same ten spatial features. Result: a single feature direction alone +2.63, all ten feature directions +3.66, single-layer CAA +8.96, multi-layer CAA at the feature layers +10.78, and adding the feature direction +12.59, so layer choice and the injected direction each add about 1.8 points. Attribution patching from each feature back to attention heads (visual tokens replaced by a mean embedding as the corruption) peaks in middle layers near the features' own layers, which motivates the layer choice; bottom-ranked heads do not localise relevant regions (qualitative)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

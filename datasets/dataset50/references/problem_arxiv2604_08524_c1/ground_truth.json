@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_08524_c1",
+ "claim": "A refusal steering vector changes a language model's behaviour through what attention heads write (their value and output pathway), and hardly at all through where attention heads look. Supported only if, across three model families and on both harmful prompts (where steering removes refusal) and harmless prompts (where it induces refusal), holding every layer's attention pattern fixed at its unsteered values changes the steered attack-success rate by less than 15% on average, while holding the value pathway fixed, removing only the vector's direct contribution to value inputs, or removing its direct contribution to MLP inputs each changes it by more than 40% on average; and if almost none of the most important downstream connections feed attention queries or keys.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.08524"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-8, Limitations; Appendices B (vector curation, ASR evaluation), C (additional model results), D (metric comparisons) skimmed; A (derivation), E-H (EAP-IG, sparsity raw results, graphs, logit lens) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2604.08524.json"
+ },
+ "experiments": [
+  "Build and score the refusal steering vectors. Setup: harmful instructions from AdvBench, MaliciousInstruct, TDC2023 and HarmBench and harmless ones from Alpaca, 128 training and 32 validation each; test on 100 JailbreakBench harmful prompts and 100 held-out Alpaca prompts. Models: Gemma 2 2B Instruct, Llama 3.2 3B Instruct, Qwen 3 8B in non-thinking mode. Take the difference of mean activations between harmful and harmless prompts at each post-instruction position and layer, and keep the candidate that bypasses refusal on harmful validation prompts, induces it on harmless ones, and shifts harmless outputs by KL < 0.1 (chosen: layer 15 position -1, layer 12 position -4, layer 20 position -8). Add the vector at every position including the prompt, subtracting it to jailbreak and adding it to induce refusal. Score attack success on harmful prompts with the LlamaGuard 2 judge and on harmless prompts by refusal-substring matching. Result: steered attack success on JailbreakBench of 0.80, 0.85 and 0.83, and almost no compliance left on harmless prompts (0.00-0.03).",
+  "See which kind of component the important edges feed. Setup: take the top 100, 1,000 and 1,500 edges of the minimum faithful circuits for Gemma, Llama and Qwen and count incoming edges by downstream node type: MLP, attention query, key or value, and LM head. Result: in all three models almost no top edges enter attention queries or keys; they go to attention values, MLPs and the LM head.",
+  "Ablate each route by which the vector could act. Setup: with the difference-of-means vector in all three models, (a) freeze attention patterns by caching unsteered attention weights at each decoding step and patching them into the steered pass at every layer; (b) freeze attention values the same way; (c) subtract the normalised vector from every head's value-projection input, removing only its direct effect on values; (d) subtract it from every MLP input. Measure attack success on Alpaca and JailbreakBench. Result: freezing attention patterns changes it by only 8.83% on average (JailbreakBench 0.80 to 0.74 Gemma, 0.85 to 0.70 Llama, 0.83 to 0.70 Qwen), against 64.00% for freezing values (Llama Alpaca 0.03 to 0.99), 47.00% for removing the direct value term and 45.17% for removing the MLP term. The direct value term accounts for 73.4% of the drop from freezing values.",
+  "Read what the vector writes through each head. Setup: decompose each head's steered output into an input-independent term, the steering vector passed through the head's normalisation and value-output weights, and project it, the raw vector and the sum over heads onto the vocabulary with the logit lens, for all three vector types. Result: important heads surface refusal and harm words, e.g. Gemma layer 16 head 1 gives forbid, forbidding, prohibition for all three methods, and the sum over heads gives unethical, illegal, dangerous, even when the raw vector itself is not interpretable (Gemma's next-token vector, Llama's difference-of-means vector). One head with a large negative effect shows harmful words only after its sign is flipped, so it removes the concept during steering."
+ ],
+ "roles": [
+  "apparatus",
+  "mechanism",
+  "headline",
+  "mechanism"
+ ]
+}

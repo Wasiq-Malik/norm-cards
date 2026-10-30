@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2603_10048",
+ "claim": "Sharpness-aware minimization works because the gradient taken at its one-step ascent point, when applied at the current parameters, points closer to the direction of the highest loss in the surrounding neighbourhood than the ordinary gradient does; that approximation is rough, and it gets worse, not better, when the ascent is split into several steps. Supported only if, on loss-surface slices through real training (ResNet-18 / CIFAR-100) and under a second-order approximation, the ascent-point gradient is closer to the direction of the neighbourhood maximum than the local gradient; if plain SAM's test accuracy does not improve, and falls, as the number of ascent steps grows at a fixed total radius; and if multi-step SAM degrades further as the radius grows, while variants that also use earlier ascent gradients do not.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2603.10048"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-3, 5-6 and Appendices C (overhead), E (other SAM variants, multi-step, corruptions, alpha dynamics, flatness), F (gradient scale); A (loss-surface visualisations) and B (proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2603.10048.json"
+ },
+ "experiments": [
+  "Define SAM and the explicit variant. Setup: SAM takes k normalised ascent steps of radius rho_i from theta0 and applies the final gradient g_k at theta0. The proposed method spans a plane by v0 (unit vector from theta0 to the final ascent point) and v1 (unit g_k), spherically interpolates v(alpha) between them, picks alpha* maximising the mini-batch loss at theta0 + rho_m v(alpha) over 20-40 values of alpha in [0, 2] or [0, 4], and updates along -v(alpha*) scaled by ||g_k||; alpha* is recomputed at the first iteration of each epoch (over 400 iterations per epoch) and held fixed otherwise. For k = 1 the plane is spanned by g0 and g1.",
+  "Visualise and analyse the SAM direction. Setup: loss surfaces on the plane of g0 and g1 at points during ResNet-18 / CIFAR-100 training (e.g. first iteration of epoch 150); a 2D test function with a sharp and a flat minimum for multi-step ascent; a second-order Taylor analysis (Proposition 1). Result: applied at theta0, g1 points closer to the high-loss region than g0 and the loss along it is higher, consistently across visualised iterations, but the match is rough and varies during training; on the 2D function g2 applied at theta0 points toward a flat region, worse than g1; the proposition confirms g1's advantage over g0 under the quadratic approximation. Shrinking the ascent radius to 0 reduces any multi-step gradient back to g0, so a fixed radius is generally suboptimal.",
+  "Measure multi-step SAM against variants. Setup: CIFAR-100, ResNet-18, k = 1, 2, 4 with rho = rho*/k, and k = 3 with rho in {0.04, 0.08, 0.12}; MSAM (sum of ascent gradients), LSAM (sum of normalised gradients) and versions also including g0, all rescaled to ||g_k||. Result: SAM 80.93 / 80.91 / 80.65 for k = 1 / 2 / 4 and 80.79 / 80.75 / 79.72 at the three radii with k = 3; LSAM 81.00 / 81.20 / 81.16 and MSAM 81.04 / 81.12 / 80.93 across radii; including g0 (LSAM+) underperforms SAM (80.61 at k = 1, 80.41 at k = 4)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "control"
+ ]
+}

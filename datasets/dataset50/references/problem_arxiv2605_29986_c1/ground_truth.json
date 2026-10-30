@@ -1,0 +1,25 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_29986_c1",
+ "claim": "Forcing a language model's output to follow a context-free grammar pays off mainly for small models and for unfamiliar formal languages, not for common formats a capable model already writes well. Supported only if, for a programming language the models rarely see (Python rewritten with braces and semicolons), constrained decoding at least quadruples functional correctness for every model tested, from a 3B to a 20B model; while for JSON, XML and C++ the two larger models' functional correctness changes by under 3 points with constraints; and if the smallest model improves on every format.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.29986"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Limitations; proofs in Appendices B-C and the stack-adjacency algorithm in D skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.29986.json"
+ },
+ "experiments": [
+  "Fix tasks, grammars, models and measurements. Setup: four structured-generation tasks with syntactic and functional correctness: 100 JSON-schema queries (json-mode-eval; executes, keys and values match the reference), 200 XML instances from StructEval (parses; dot-path rules satisfied), the 164 C++ problems of HumanEval-X (compiles; passes tests), and the same 164 problems translated into Bython, Python with braces and semicolons, with a description of Bython in the system prompt (compiles to Python; passes tests). Grammars: XGrammar2's JSON-schema builder, an XML 1.1 EBNF adapted to GBNF, a published C++ grammar and a Bython grammar written from scratch. Models Llama-3.2-3B-Instruct, Qwen3-4B-Instruct and gpt-oss-20b, temperature 0.2, at most 500 tokens, five seeds, one H100 with grammar work on a 16-thread Xeon; batch sizes 1, 8 and 16 except JSON (one grammar per request, batch 1).",
+  "Compare correctness with and without grammar constraints. Result (syntactic / functional %): on Bython, constrained decoding raises Llama from 6.7 / 2.3 to 52.1 / 9.2, Qwen from 2.2 / 1.0 to 43.3 / 18.9 and gpt-oss from 13.0 / 10.8 to 72.0 / 46.9. For the larger models on familiar formats the change is small: Qwen JSON 76.5 to 74.7 functional, XML 61.1 to 61.4, C++ 70.6 to 72.7; gpt-oss JSON 80.2 to 81.2, XML 60.1 to 59.0, C++ 41.2 to 40.2. The 3B model gains everywhere (JSON functional 13.9 to 73.7, XML 7.1 to 16.3, C++ 30.5 to 32.7). Syntactic correctness is mostly below 100% even with constraints because outputs cut off at 500 tokens are valid prefixes but not complete programs."
+ ],
+ "roles": [
+  "apparatus",
+  "headline"
+ ]
+}

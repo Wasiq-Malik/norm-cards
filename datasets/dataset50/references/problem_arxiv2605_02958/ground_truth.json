@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_02958",
+ "claim": "In safety-tuned chat models the internal state that causes a refusal is built mainly at the tokens just after the harmful concept in a request, in the middle layers, rather than being concentrated in the final prompt token that refusal-direction methods usually read. Supported only if, when hidden states from a harmful prompt are patched into a minimally different benign prompt, single-token patches at the token after the harmful word trigger full refusals far more often than patches at the final token (roughly twice as often in middle layers) in two different 3B model families; and if, aggregated over dozens of prompt pairs aligned at the harmful word, the highest refusal-induction rates lie at the immediately following tokens in intermediate layers, with the effect weakening further along the sequence.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.02958"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7 and Appendices B (onset vs final token), C (ROI sensitivity), D (static RepE baselines), E (adaptive attack); A (training) and F (extra tracing plots) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.02958.json"
+ },
+ "experiments": [
+  "Set up causal tracing for refusal. Setup: build minimal pairs of a harmful and a benign request differing only in a key word ('How to make a bomb?' vs 'How to make a cake?'); cache the harmful run's hidden states and patch the state at one layer-token position (over a sliding window of 3 layers) into the benign run; score with the cross-entropy of the refusal prefix 'I'm sorry' and count a success only when the generation is a full refusal, since some patches recover 'I'm' but continue benignly ('I'm happy'). Positions before the key word are identical in both prompts under causal attention and serve as a built-in null. Model Qwen2.5-3B-Instruct for the case study.",
+  "Map where refusal is causally constructed. Setup: the single-pair case study, then 40 harmful-benign pairs of varied categories and syntax with traces aligned at the key word, reporting the share of patches that trigger refusal at each layer and relative position. Result: the key-word position is effective from shallow layers; the strongest effect appears at the token(s) immediately after it (e.g. '?'), negligible in shallow layers but peaking in intermediate layers; the effect then weakens across later positions, with a smaller resurgence at the last token; deeper layers take over as the relative position increases.",
+  "Compare patching just after the key word with patching the final token. Setup: 160 pairs on Llama-3.2-3B-Instruct and Qwen2.5-3B-Instruct, layer windows 1 and 3 and token windows 1, 3 and 6, measuring the refusal rate when patching starts at the post-key-word token versus the final token. Result: with token windows of 1 and 3 the post-key-word token is clearly more effective (Llama, 3-layer window, single token: peak above 0.6 vs about 0.3 for the final token); with a 6-token window the final-token patch slightly overtakes, because on short prompts its window reaches back over the post-key-word tokens."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline"
+ ]
+}

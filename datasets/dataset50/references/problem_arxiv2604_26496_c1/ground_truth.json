@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_26496_c1",
+ "claim": "Adversarial training can raise clean accuracy and adversarial robustness together, rather than trading one for the other, if boundary examples get a reduced fixed perturbation and an extra consistency term asks the prediction on an interpolation of two augmented views' adversarial examples to match the interpolation of the two views' clean predictions. Supported only if, under L-inf attacks at 8/255 with three runs per setting, a single trained variant matches or exceeds every benchmark (PGD-AT, TRADES, MART, Cons-AT) on both clean and AutoAttack accuracy for ResNet-18 on CIFAR-10, CIFAR-100 and Tiny-ImageNet; if for WideResNet-28-10 the more robust variant beats every benchmark on AutoAttack on all three datasets while giving up at most 5 points of clean accuracy against the best benchmark; and if, built on a current state-of-the-art training recipe, it has the highest AutoAttack accuracy and the best harmonic mean of clean and robust accuracy among eleven published methods on both CIFAR-10 and CIFAR-100.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.26496"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-6 and Appendix D (setup, ablations, L2 results); Appendices A (related work), B (proofs) and C (risk formulation) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2604.26496.json"
+ },
+ "experiments": [
+  "Set up training and attacks. Setup: SGD (momentum 0.9, batch 128, weight decay 5e-4, lr 0.1, 110 epochs with decay at 100 and 105; 200 epochs for the state-of-the-art comparison), PGD-10 inner maximisation at L-inf 8/255 (step 2/255) or L2 128/255; boundary examples are correctly classified examples attackable within eps/10 (eta = 0.1); evaluation with PGD-10, PGD-100, C&W and AutoAttack, reporting the checkpoint with the best PGD-10 accuracy, mean of three runs. The method has two surrogate losses, RAAT (basic) and RAAT++ (stronger loss), plus RAAT#, the same mechanism built on the ReBAT code with weight averaging.",
+  "Ablate the two components and the boundary range. Setup: CIFAR-10, ResNet-18; RAAT with and without the reduced boundary perturbation and with and without the interpolation-consistency term; boundary thresholds eta; consistency weight lambda for RAAT and the regularised baselines. Result: each component raises clean and robust accuracy and both together are best; an intermediate eta works best; TRADES and MART peak near lambda 6-8 while Cons-AT and RAAT prefer 1-3, and RAAT's best robustness exceeds each baseline at its best lambda (figures only).",
+  "Compare with four benchmarks under L-inf. Result (clean / AutoAttack): ResNet-18 CIFAR-10 RAAT 83.69 / 47.94 vs best benchmark 83.42 (Cons-AT) / 47.72 (Cons-AT); CIFAR-100 58.53 / 25.65 vs 58.53 / 25.39; Tiny-ImageNet 46.77 / 17.88 vs 46.75 (TRADES) / 17.60. WideResNet-28-10: CIFAR-10 RAAT 87.54 / 51.76 and RAAT++ 82.80 / 52.10 vs 87.49 (PGD-AT) / 51.88 (TRADES); CIFAR-100 RAAT 59.89 / 27.81, RAAT++ 58.30 / 28.52 vs 60.84 / 27.97; Tiny-ImageNet 49.32 / 21.30 and 47.96 / 22.12 vs 51.14 / 21.07. The paper's improvement row takes the better of the two variants per metric; RAAT++ consistently trades 4-5 points of clean accuracy for higher PGD and C&W robustness. AutoAttack margins are 0.2-1.0 points with standard deviations 0.1-0.4.",
+  "Repeat under L2 attacks. Setup: ResNet-18, budget 128/255. Result (clean / AutoAttack): CIFAR-10 RAAT 89.17 / 67.95 vs Cons-AT 88.76 / 67.46; CIFAR-100 66.12 / 40.25 vs best 65.14 / 40.15; Tiny-ImageNet 61.20 / 42.63 vs Cons-AT 61.49 / 42.59 (clean slightly lower).",
+  "Compare with published trade-off methods. Setup: (a) CIFAR-100 ResNet-18, mean of clean and AutoAttack accuracy against nine methods using their reported numbers; (b) RAAT# on PreActResNet-18 against eleven methods, adding the harmonic mean NRR. Result: (a) mean 42.09 vs 41.59 (MAIL), 41.48 (ADR), 41.47 (HAT); (b) CIFAR-10 clean / AA / NRR 82.76 / 51.65 / 63.605 vs best AA 50.75 (RPAT) and NRR 62.776, though MMA (85.50) and KD+SWA (84.06) have higher clean accuracy; CIFAR-100 56.92 / 28.08 / 37.607 vs 27.63 and 37.096 (RPAT).",
+  "Note comparison caveats. Setup: related-work numbers are copied from papers with different training recipes and tricks (weight averaging, extra epochs), which the authors acknowledge for (a); the reported checkpoint is chosen by PGD-10 accuracy on the test attack; the theory (a Gaussian-model sample-complexity bound and a Taylor expansion of the consistency term) motivates rather than tests the method. Most margins over the best baseline are within about two standard deviations."
+ ],
+ "roles": [
+  "apparatus",
+  "mechanism",
+  "headline",
+  "control",
+  "external",
+  "confound"
+ ]
+}

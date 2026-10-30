@@ -1,0 +1,33 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2605_15705_c1",
+ "claim": "Guiding a diffusion manipulation policy at inference time with a world model whose predictions are corrected online from observed outcomes makes the policy more robust to deployment shifts than the unguided policy and than the usual ways of using extra data or an uncorrected world model. Supported only if, on simulated tasks evaluated from out-of-distribution robot initial states, its average success rate is higher than the base policy, behaviour cloning retrained with additional rollouts (all of them, or only successful ones), guidance from the uncorrected world model, and guidance from a world model retrained on rollouts; if pooled success beats the base policy in every one of five shift types (robot initial state, lighting, background texture, object layout, sensor noise); and if on a physical robot started from abnormal poses its success exceeds the base policy's by at least 20 percentage points on each task tested.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2605.15705"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-6 and Appendices B-E, G (statistics), H (per-setting results), I (action dependence, physical probes), J (Fast-WAM-Joint transfer), K (filtering baselines), L (residual behaviour), M (gain and weighting sensitivity), N (inference cost); A (proof) and F (implementation) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2605.15705.json"
+ },
+ "experiments": [
+  "Set up tasks, data and the distribution shifts. Setup: three Robomimic tasks (Square, Tool-Hang, dual-arm Transport) trained in a low-data regime on 20% of the official demonstrations, evaluated from initial states whose seven arm joints are perturbed with Gaussian noise of 0.1 rad (roughly 11-18 degrees at most), clipped to joint limits, with the same perturbed starts for every method; four LIBERO-10 tasks (two articulated-object kitchen tasks, a long-horizon two-object placement and a relational placement) trained on their 50 demonstrations, evaluated on the official LIBERO-Plus robot-initial-state variants (44, 42, 34, 42) and on its lighting, background, layout and sensor-noise variants; and two real tasks (peach pick-and-place from 50 demonstrations, drawer opening with a deformable handle from 65), trained from scratch and tested from abnormal arm poses. For each task train a diffusion policy and a latent world model on the expert demonstrations and keep the world model frozen during evaluation.",
+  "Apply the correction to a large pretrained world-action model without touching its weights. Setup: Fast-WAM-Joint on a pretrained 5B video backbone with two cameras and one multi-task policy across LIBERO-10; keep an exponential moving average of past (observed minus predicted) future latents and add a scaled copy to later predictions; score 1,203 paired predictions from 100 in-distribution episodes and 7,553 from 393 robot-initial-state variants, each covering four future frames 8-32 steps ahead, in latent space and after decoding with the same VAE; then run the policy on the LIBERO-Plus initial-state variants. Result: at gain 0.5 latent MSE falls 7.8% in distribution (0.1772 to 0.1635) and 18.3% under shift (0.3015 to 0.2464), with pixel MSE down 18.0% and PSNR up 0.86 dB, and errors fall at all three gains tried; policy success rises from 77.1% to 81.4%.",
+  "Compare policy success under initial-state shift against data-based and guidance-based alternatives. Setup: same seven simulated tasks; baselines are the base diffusion policy, behaviour cloning on demonstrations plus all rollouts, behaviour cloning on demonstrations plus successful rollouts only, guidance from the uncorrected world model, and guidance from a world model retrained on rollouts; all rollouts are collected only in in-distribution environments. Result: average success 0.52 against 0.40, 0.32, 0.36, 0.43 and 0.45; best on six of seven tasks (e.g. Transport 0.60 vs 0.34 base and 0.52 rollout guidance), with filtered behaviour cloning ahead on Kitchen-S3 (0.70 vs 0.68). Adding all rollouts to behaviour cloning lowers success below the base policy on average.",
+  "Separate the contribution of correcting the predictions from that of weighting the guidance toward action-controllable latent dimensions. Setup: on the three Robomimic tasks, compare the base policy, guidance from the corrected world model with uniform latent weighting, and the same with per-dimension weights given by how much each latent dimension varies across sampled demonstration actions; separately sweep the interpolation between uniform and controllability weights on two LIBERO tasks. Result: Square / Transport / Tool-Hang 0.36 / 0.34 / 0.27 base, 0.40 / 0.54 / 0.32 with corrected predictions alone (uncorrected guidance gives 0.40 / 0.46 / 0.22), and 0.46 / 0.60 / 0.36 with controllability weighting; the top 5% of latent dimensions carry 20-25% of the controllability weight, and success varies by at most 4 points across interpolation settings.",
+  "Test robustness across kinds of shift. Setup: the four LIBERO tasks under each of five LIBERO-Plus perturbation categories, 20 task-perturbation settings, comparing the base policy and the guided policy; report pooled success and latent-MSE reduction per category. Result: pooled success rises in every category: initial states 45.7% to 55.6%, lighting 42.2% to 46.7%, backgrounds 59.5% to 64.9%, layout 67.2% to 75.2%, sensor noise 81.8% to 86.6%, with latent error down 6.8-47.8%. The guided policy matches or beats the base in 18 of 20 settings and is worse in two (Kitchen-S3 under lighting, 0.50 to 0.40, and backgrounds, 0.97 to 0.94).",
+  "Run on a physical robot. Setup: peach pick-and-place and drawer opening, 20 binary trials per condition from in-distribution and from abnormal initial arm poses, 95% Wilson intervals. Result: in distribution 90% to 95% and 70% to 75%; from abnormal poses 40% to 80% and 20% to 70%. Inference costs about 1.02 s per 15-action chunk, of which the correction and weighting add under 2%, the rest being the base policy and generic world-model guidance."
+ ],
+ "roles": [
+  "apparatus",
+  "external",
+  "headline",
+  "mechanism",
+  "headline",
+  "external"
+ ]
+}

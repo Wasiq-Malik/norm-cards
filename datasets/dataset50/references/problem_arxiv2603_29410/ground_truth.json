@@ -1,0 +1,37 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2603_29410",
+ "claim": "When CLIP's image encoder is adversarially fine-tuned on ImageNet to make it robust, training it to reproduce the original model's own softened prediction distribution over class prompts, instead of the one-hot class label, gives a model that is both more robust and more accurate on clean images across datasets it was never fine-tuned on. Supported only if, against four published adversarial fine-tuning methods, it has the highest average zero-shot robust accuracy and the highest average clean accuracy over 15 image classification datasets under a 20-step PGD attack at an L-infinity budget of 1/255; if the robust-accuracy lead holds under Carlini-Wagner and AutoAttack and when every method is fine-tuned and attacked at larger budgets (2/255 and 4/255); if it holds with a second vision-transformer CLIP backbone; and if it gives the best clean and robust accuracy on two distribution-shifted ImageNet variants (renditions and sketches).",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2603.29410"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5 and supplementary Sections 6-10 (baseline tuning, attack configurations, interpretation of gamma, per-dataset results)",
+  "draft": "datasets/dataset50/build/drafts/2603.29410.json"
+ },
+ "experiments": [
+  "Fix the fine-tuning and evaluation protocol. Setup: CLIP ViT-B/32; fine-tune all image-encoder parameters with the text encoder frozen on ImageNet for 10 epochs (SGD, learning rate 4e-4, momentum 0.9, cosine decay, batch 256) against 2-step PGD adversarial examples at L-infinity budget 1/255 (also 2/255 and 4/255), step equal to the budget. The training target is the frozen original CLIP's softmax over class prompts on the clean image, sharpened or softened by a temperature (scaling ratio 0.4, temperature 1/180). Evaluate zero-shot on the ImageNet validation set and 14 other datasets (Caltech101 and 256, CIFAR10 and 100, STL10, FGVC Aircraft, Flowers102, Food101, Oxford Pets, Stanford Cars, SUN397, DTD, EuroSAT, PCAM) with 20-step PGD at step 1/255. Baselines TeCoA, PMG-AFT and TGA-ZSR are rerun, with learning rates of the latter two retuned for ImageNet; GLADIATOR numbers are taken from its paper because its code was not available.",
+  "Compare robust and clean zero-shot accuracy over 15 datasets. Result: average robust accuracy 46.57% against 43.46% (GLADIATOR), 41.66% (PMG-AFT), 40.84% (TGA-ZSR), 38.51% (TeCoA) and 6.24% for unmodified CLIP; average clean accuracy 61.35% against 60.34%, 59.23%, 55.07% and 56.93% (CLIP 66.20%). It is not best everywhere: TGA-ZSR is higher on ImageNet itself (52.80% vs 44.95% robust), GLADIATOR and TGA-ZSR on PCAM, and PMG-AFT on DTD.",
+  "Test against stronger and different attacks. Setup: Carlini-Wagner adapted to the L-infinity ball and AutoAttack (APGD-CE and APGD-DLR) at 1/255; plus momentum, input-diversity, translation-invariant, Nesterov and patch-wise FGSM variants, and targeted versions with random or least-likely targets, 15 attack settings in all. Result: averages 43.06% (C&W) and 42.81% (AutoAttack) against 42.50% and 41.91% for GLADIATOR and 40.55% and 40.09% for PMG-AFT; average over all 15 settings 52.34% against 48.71% (PMG-AFT).",
+  "Vary the perturbation budget. Setup: (a) attack the 1/255 model at 1/255 to 4/255; (b) fine-tune and attack every method at 2/255 and 4/255. Result: (a) best average over budgets (25.46% vs 23.47% TGA-ZSR), though TGA-ZSR is higher at 4/255 (10.30% vs 8.88%); (b) at 2/255 clean / PGD / AutoAttack 56.86 / 37.31 / 33.34% against best baseline 54.69 / 32.22 / 30.74%, and at 4/255 49.47 / 24.98 / 21.25% against 41.73 / 21.14 / 19.82% (TGA-ZSR), while PMG-AFT collapses at 4/255 (6.69% PGD).",
+  "Check other backbones and distribution-shifted test sets. Setup: repeat with CLIP ViT-B/16 and the ResNet RN50x4 (TGA-ZSR needs ViT attention maps and cannot run on it); evaluate the ViT-B/32 models on ImageNet-R and ImageNet-Sketch. Result: ViT-B/16 clean / PGD / AutoAttack 63.03 / 49.84 / 46.38% against 61.49 / 47.08 / 45.60% for PMG-AFT; on RN50x4 robust accuracy is highest (34.69% PGD vs 31.00%) but TeCoA has higher clean accuracy (52.04% vs 51.23%). ImageNet-R 61.70% clean / 45.21% robust and ImageNet-Sketch 39.58% / 29.63%, best on both against TGA-ZSR's 57.61 / 40.74 and 38.50 / 27.49.",
+  "Check that soft targets preserve the original model's similarity structure where hard labels distort it. Setup: Top-5 prediction overlap (intersection over union of the five top classes per image, averaged over the test set) between each fine-tuned model and the original CLIP evaluated on clean images, with the fine-tuned model evaluated on clean and on adversarial images; record confidence and maximum and mean image-text cosine similarity. Result: overlap 62.48% clean and 56.12% adversarial against 48.01% and 42.98% for hard-label TeCoA; all fine-tuned models show lower confidence and similarity than the original CLIP (confidence 63.51), supporting a softened target rather than matching the original confidence scale.",
+  "Check how much the gain depends on the two temperature settings. Setup: grid over the scaling ratio gamma in {1.0, 0.8, 0.6, 0.4, 0.2} and inverse temperature in {100, 140, 180, 220}, reporting average clean / robust accuracy; gamma = 1.0 with 100 matches the original CLIP distribution exactly. Result: robust accuracy ranges from 43.0% to 47.1% except at gamma 0.2 (33.3-44.4%), and even the uncalibrated setting (60.97 / 45.07) beats every baseline's robust accuracy; lowering gamma raises clean accuracy, raising the inverse temperature raises robustness at some clean cost, giving a Pareto frontier above the baselines' trade-off points.",
+  "Compare training cost. Setup: count forward and backward passes per update beyond the shared PGD-2 generation, and time per epoch. Result: one extra forward pass (2 forward, 1 backward), 25.96 minutes per epoch against 23.45 (TeCoA), 34.36 (PMG-AFT) and 39.78 (TGA-ZSR)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "headline",
+  "headline",
+  "external",
+  "mechanism",
+  "confound",
+  "external"
+ ]
+}

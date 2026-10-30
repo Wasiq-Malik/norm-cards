@@ -1,0 +1,29 @@
+# How dataset50 was built
+
+50 source papers (10 each: robotics, interpretability, vision, NLP, math + ML theory), 100 claims,
+478 reference experiments, 20 shared format-2 subfield cards. Run everything from the repo root.
+
+| Step | What | Where |
+|---|---|---|
+| 1. Find papers | arXiv search on venue comments (`co:"ICML 2026"` etc.) per field, v1 >= 2026-02-01 | `scripts/harvest.py` |
+| 2. Screen | venue regex (no workshops, Findings, "under review"), then gpt-6-luna scores each abstract | `scripts/screen.py` |
+| 3. Pick | by hand from the top of each field; science papers held out for a later test set | `picks.json`, `science_heldout.json`, `drafts/SKIPPED.md` |
+| 4. Draft | claims and reference experiments written from each paper's arXiv HTML by Claude Opus 5.5 | `drafts/` (30 new), `drafts_orig20/` (original 20, redone) |
+| 5. Label | gpt-6-luna subfield classifier, 3 samples per claim, labels kept when 2 agree | `scripts/reclassify.py`, `subfield_labels/` |
+| 6. Taxonomy | vocabulary audit (+12 subfields, -6 placeholders), then merges | `scripts/taxonomy_audit.py`, `scripts/taxonomy_merge.py` |
+| 7. Consolidate | merge nested labels, drop catch-alls, 7 hand removals, cards need >= 2 papers | `scripts/consolidate.py` -> `../subfields.json` |
+| 8. Dataset files | claims file and per-claim references from the drafts | `scripts/make_dataset.py` |
+| 9. Cards | `norm_cards.subfield_gather` (luna queries + relevance screen, full text only), source papers removed, `build_cards --format 2` on luna | `scripts/build_cards.sh`, `scripts/leakage.py` |
+| 10. Run | bootstrap, assemble, propose (sharded), judge (sharded) | `scripts/run_eval.sh`, `scripts/report_data.py` |
+
+Steps 1-3 and 5-6 were run once from `results/dataset50/` and are kept as a record: they read
+inputs not stored here (the 3,465-row candidate pool) or edit `norm_cards/data/taxonomy.json` in
+place and are not idempotent. Steps 7, 8, 10 and `leakage.py` rerun from the repo as they are;
+`consolidate.py` reproduces `subfield_labels/consolidation.json` byte for byte.
+
+References are model-written and **not human-reviewed**. Kept exceptions from the original 20:
+2510.20487 (first posted Oct 2025, no venue), 2608.09928 (ICML workshop), five Findings papers.
+
+To add a proposer, run `scripts/run_eval.sh` with your model in `--models` (an open-weight model
+needs an entry in `norm_cards.config.OPEN_MODELS` and its endpoint and key in `.env`). Proposals
+reuse each claim's stored subclaims when run with `--merge` into an existing proposals directory.

@@ -1,0 +1,27 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2609_02350_c1",
+ "claim": "When a navigation model is fine-tuned from expert trajectories, supervising it to also generate rule-derived language labels for its progress, the consequences of the actions it did not take, and which frames to remember extracts more from the same data than imitating the expert's actions alone. Supported only if, with the same base model, data and one-epoch budget, action-only imitation has a success rate at least 6 points lower on R2R-CE unseen scenes; if retraining without the outcome labels or without the learned memory (using uniform frame sampling instead) each lowers success by at least 2.5 points; and if the generated labels are behaviourally meaningful, with the model issuing a correct stop after predicting it is reaching the goal and its memory-write decisions matching the labelling rules in at least 95% of cases.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2609.02350"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5, Limitations and Appendices A (theory, skimmed), B (labels, training, real-world), C (outcome and memory analyses, data ablation, transfer, controlled ablations), D (failure cases)",
+  "draft": "datasets/dataset50/build/drafts_orig20/2609.02350.json"
+ },
+ "experiments": [
+  "Build the model and its labels. Setup: Qwen3-VL 8B fine-tuned for one epoch (learning rate 1e-5, about 1,000 A100 hours) on R2R-CE and RxR-CE only, monocular RGB, actions MOVE / TURN_LEFT / TURN_RIGHT / STOP. At each step the model generates, in tagged text, a progress label (start, early, middle, late, near_goal), an outcome label for every candidate action (16 labels such as advance_to_goal, too_early, wrong_turn, over_turn), a keep/drop memory-write decision with a memory role (turn_start, turn_end, stop_evidence, goal_approach and others), then the action. All labels are derived deterministically from the expert trajectory and the next 5 expert actions, with counterfactual outcomes for non-expert actions assigned by rule rather than by rollout; the whole sequence is trained with next-token loss. Kept frames enter a FIFO memory of length 8.",
+  "Ablate the supervision under a controlled setup. Setup: R2R-CE unseen, same data and budget; action-only imitation, full model without the future-state labels, without outcome labels only, without progress labels only, and without the learned memory (retrained with uniform history sampling, or swapped to uniform sampling at inference without retraining). Result: SR 49.7 for the full model, 41.7 for action-only imitation, 46.9 without future-state labels, 47.8 without outcomes, 48.3 without progress, 45.2 retrained without the learned memory, and 37.4 with uniform sampling swapped in at inference, where oracle success rises to 70.9 but SPL falls to 22.1, i.e. the agent reaches the goal region but fails to stop.",
+  "Check that the generated labels carry the intended meaning. Setup: on R2R-CE unseen traces (1,839 episodes, 154,481 steps), relate predicted outcomes to later behaviour, score memory roles, and compare memory-write decisions with the deterministic labelling rules reapplied to the executed actions. Result: after predicting advance_to_goal the agent stops successfully in 55.5% of cases and fails to stop in one case; it labels the opposite turn negatively in 81.2% of instructed turns; memory-role accuracy is 99-100% for start view, turn start and end, post-turn alignment and stop evidence but 43.6% for goal_approach; keep decisions (53.9% of steps) reach 99.3% F1 against the rules, and both boundaries of 98.3% of multi-step turns are identified. This measures consistency with the authors' rules, not open-world event recognition."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism"
+ ]
+}

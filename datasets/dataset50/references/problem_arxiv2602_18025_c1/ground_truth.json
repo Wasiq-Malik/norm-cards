@@ -1,0 +1,31 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2602_18025_c1",
+ "claim": "When one offline-RL policy is trained on pooled data from many robot bodies, the robots that end up worse off than if trained alone are hurt because their policy-gradient updates conflict with those of morphologically dissimilar robots, and these conflicts grow with the share of suboptimal data and with how varied the bodies are. Supported only if the fraction of robot pairs whose per-robot actor gradients point in opposing directions rises both as the suboptimal share of the data increases and as more, and more varied, robots are pooled; if, among robots whose return changes substantially under pooling, the change correlates positively and strongly with how aligned that robot's gradients are with the others'; if a measure of morphological similarity between robot pairs correlates significantly with their gradient alignment; and if these relationships also hold under a second offline-RL algorithm.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2602.18025"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text: Sections 1-7 and Appendices B-C (datasets, rewards), D (architecture, skimmed), E (robot graphs, FGW, group assignments), F (gradient-conflict histograms), G (TD3+BC repeat), H (grouping the critic), I (hyperparameters, skimmed)",
+  "draft": "datasets/dataset50/build/drafts/2602.18025.json"
+ },
+ "experiments": [
+  "Build a pooled multi-robot locomotion benchmark with controlled data quality. Setup: 16 simulated robots in MuJoCo (nine quadrupeds, six bipeds, one hexapod), each trained with PPO to walk at a commanded 1 m/s forward or backward under a shared dense reward with robot-specific weights. For each robot and direction build three 1M-step datasets: expert rollouts of the converged policy, the whole training replay up to expert level (about 500M steps) subsampled uniformly, and a mix of 700k early, suboptimal steps with 300k late steps. A single network takes a shared observation part plus variable-length joint and foot sets aggregated by attention conditioned on morphology descriptors, extended with an action encoder for a Q-function. Each method uses about 100M sampled transitions per robot; report final return, mean +/- standard error over 5 seeds.",
+  "Establish where pooling helps and where it hurts. Setup: for each robot compare implicit Q-learning trained on that robot alone against the pooled 16-robot model, on expert forward data and on mostly-suboptimal forward data. Result: on expert data pooling changes nothing (means 63.30 vs 63.35). On suboptimal data some quadrupeds gain a lot (Unitree A1 14.55 to 27.38, Go1 14.46 to 40.05, Go2 13.76 to 52.39, Badger 15.98 to 40.53) while bipeds with few similar bodies in the pool collapse (Unitree H1 54.47 to 6.00, G1 78.93 to 0.86); the mean drops from 39.42 to 37.57.",
+  "Measure gradient conflict between robots and relate it to transfer. Setup: compute each robot's actor gradient from the advantage-weighted regression loss during training and the pairwise cosine similarity between robots; report the fraction of negative pairs for expert, 30%-suboptimal and 70%-suboptimal data, and for growing robot sets (three similar Unitree quadrupeds, all nine quadrupeds, all 16 robots); correlate, for robots whose return changes by more than 10 under pooling, the change with that robot's mean cosine to the others. Result: the negative fraction rises from 0.159 to 0.268 to 0.323 with suboptimal share and from 0.153 to 0.288 to 0.323 with diversity, with the negative mass shifting toward -1; the transfer-gain correlation is r = 0.815.",
+  "Check that morphological distance predicts which robots conflict. Setup: represent each robot as a graph of torso, joints and feet with node features for relative position and control parameters; compute pairwise Fused Gromov-Wasserstein distances, normalise to [0,1] and convert to similarity; correlate with mean pairwise gradient cosine across all robot pairs. Result: quadrupeds cluster together in both matrices, and similarity correlates with gradient alignment at Pearson r = 0.63 (p = 1.3e-14).",
+  "Rule out that the conflict pattern is specific to one algorithm's actor update. Setup: repeat the per-robot pooled-versus-alone comparison and all gradient-conflict analyses with TD3+BC. Result: pooling again devastates several bipeds (H1 33.44 to 1.42, G1 66.71 to 1.94, Talos 73.97 to 6.14), the negative-cosine fraction again rises with suboptimal share and diversity, transfer change correlates with gradient alignment at r = 0.766, and morphological similarity with alignment at r = 0.711 (p = 8.9e-20)."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "mechanism",
+  "mechanism",
+  "confound"
+ ]
+}

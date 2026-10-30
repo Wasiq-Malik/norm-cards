@@ -1,0 +1,35 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_24026",
+ "claim": "Once a circuit in a transformer has been localised, a language-model agent that, for each component, inspects activations, states a hypothesis about the component's role, tests it with its own causal interventions (ablation, patching) and revises it when refuted, can explain the circuit usefully: assigning each component the right coarse role and recovering what the whole circuit computes, on models whose true circuits are known and that the agent cannot have memorised. Supported only if, on 84 semi-synthetic transformers compiled from known programs and retrained to behave like trained models (163 components, five role classes), at least one of four frontier backbones assigns the correct role to at least 75% of components (against 44% for always guessing the most common role) and a correct task description for at least 80% of circuits, as scored by the stricter of two language-model judges that agree with blinded human ratings at kappa at least 0.75; and if, on a published addition circuit in Llama-3-8B with ten components including causally redundant ones that look important under logit-lens readouts, the best backbone describes at least 8 components correctly and none wrongly.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.24026"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7, Limitations and Appendices B-G (taxonomy, annotation example, walkthrough, human annotation and agreement, judge bias, run stability, process diagnostics, API cost, real-circuit reference annotation); A (prompts) skimmed",
+  "draft": "datasets/dataset50/build/drafts_orig20/2606.24026.json"
+ },
+ "experiments": [
+  "Build the benchmark. Setup: take the 84 RASP-program models of InterpBench (Tracr-compiled, retrained with strict interchange intervention training so weights and activations resemble trained transformers, ground-truth circuits preserved), excluding the two IOI tasks because their circuit is widely published; trace each circuit component back to the RASP variable it implements and annotate a role tag (mapper 72, combiner 33, aggregator 32, indicator 15, router 11; 120 MLP and 43 attention components, 1.94 per circuit) plus a natural-language note, with five input-output examples per task. Metrics: tag exact match; description quality on a 0-2 scale and binary task-description correctness, each scored by GPT-5.4 and Gemini-3.1-Pro and taking the lower score; and code-execution success.",
+  "Define the agent. Setup: a LangGraph state machine that, per component, writes and executes an observation plan (TransformerLens helpers for attention patterns and activations), proposes a hypothesis without seeing the role taxonomy, writes and executes a validation plan (helpers for ablation, activation patching, interchange interventions) and decides support or refutation, feeding refuted hypotheses back; up to five execution attempts per stage and three hypothesis iterations per component, then tags each component with the taxonomy and writes a circuit summary and task description. Backbones: GPT-5.4, Claude-Sonnet-4.6, Gemini-3.1-Pro and Qwen-3-Coder-30B-A3B.",
+  "Run the four backbones on the full benchmark. Result: tag accuracy / description quality / task accuracy / execution success 0.74 / 0.46 / 0.63 / 0.52 for GPT-5.4, 0.79 / 0.58 / 0.75 / 0.93 for Claude-Sonnet-4.6, 0.76 / 0.59 / 0.83 / 0.80 for Gemini-3.1-Pro and 0.67 / 0.25 / 0.25 / 0.62 for Qwen-3-Coder; no backbone is best on every metric and description quality stays at or below 0.59. Estimated API cost for the full benchmark is $147.55 for Claude, $77.47 for GPT-5.4 and $33.81 for Gemini.",
+  "Validate the language-model judges against people. Setup: two graduate-student annotators, blinded and randomised agent identities, rate GPT-5.4 and Claude outputs (110 component and 62 task instances) and, in a second pass, all four backbones on 10 tasks and 17 components; lower-of-two aggregation for humans as for judges. Result: human-human kappa 0.80 for description quality and 0.96 for task accuracy; lower-human versus lower-judge kappa 0.75 and 0.86 (0.76 and 0.80 on the four-backbone subset). Validation-plan soundness has kappa 0.46 between humans and 0.48 with the judges, so it is not used as a benchmark metric.",
+  "Check judge self-preference and run-to-run variation. Setup: per-judge scores for each backbone; three repeated runs on a fixed 31-task, 55-component subset (temperature 0 for closed models, 0.7 for Qwen). Result: both judges give the same task-accuracy ranking (GPT judge 0.73 / 0.77 / 0.85 / 0.25, Gemini judge 0.67 / 0.77 / 0.90 / 0.29 for GPT / Claude / Gemini / Qwen); each favours its own backbone slightly on task accuracy, and the Gemini judge is more lenient on descriptions. Across runs, task accuracy is 0.58 +- 0.04, 0.72 +- 0.05, 0.86 +- 0.01 and 0.29 +- 0.00, and GPT-5.4's execution success varies most (0.52 +- 0.07), so backbone gaps of a few points are within noise.",
+  "Locate where the loop fails. Setup: on the 17-component human subset, rate hypothesis grounding in the agent's own observation (one author) and validation-plan soundness (two annotators, lower score); categorise failed code executions; count components whose hypothesis was supported in iteration 1, 2, 3 or left unresolved. Result: the three proprietary backbones have mean grounding 1.94 of 2 (94.1% fully grounded), Qwen 1.41 (41.2%); plan soundness 1.71 for GPT-5.4, 1.41 Gemini, 1.24 Claude, 0.71 Qwen; GPT-5.4's sound plans often fail to execute (success 0.52, from tensor-shape errors, helper or TransformerLens misuse, BOS offsets and missing result variables), so it converges less than the other proprietary models; backbones with fewer unresolved components score higher.",
+  "Explain a circuit in a naturally trained model. Setup: the All-for-One circuit for three-operand addition (A+B+C, operands 0-100) in Llama-3-8B, published after the backbones' reported training cutoffs; ten components: five operand-transfer heads (primary for A and B, primary and two backup heads for C), three late MLPs, two late heads with strong logit-lens signal but no causal effect; reference roles built by the authors from attention patterns, edge and head ablations, corrupt-operand patching, pruning and logit lens on 99 correctly answered prompts (e.g. zeroing the A-transfer head drops accuracy from 1.00 to 0.19, while zeroing the strongest lens-positive MLP leaves 0.99). Three annotators, majority vote. Result: correct / partial / wrong 8 / 2 / 0 for Claude-Sonnet-4.6, 6 / 3 / 1 for GPT-5.4 and 1 / 2 / 7 for Gemini-3.1-Pro, which mostly treats positional or logit-lens signals as causal."
+ ],
+ "roles": [
+  "apparatus",
+  "apparatus",
+  "headline",
+  "control",
+  "confound",
+  "mechanism",
+  "external"
+ ]
+}

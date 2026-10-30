@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2606_06722",
+ "claim": "Full-batch gradient descent whose step size is chosen by a nonmonotone line search that accepts the step at which a sufficient-decrease condition holds with equality takes provably 'large' steps that keep training at the edge of stability from the first iterations, and drives the sharpness (top Hessian eigenvalue) down to its global minimum, which for a squared-error loss over K classes with a last-layer bias is 2/K. Supported only if, across CNN, ResNet-34 and VGG-11 trained on EMNIST letters, SVHN and CIFAR-100 subsets, the product of step size and sharpness stays above the proven lower bound 2*delta*(1-c) at every measured iteration and mostly above 2 with a non-monotone loss; if a monotone line search instead lets sharpness rise while steps shrink; and if the nonmonotone searches reach lower sharpness than SAM and an edge-of-stability step-size rule (CDAT), hitting 2/K in most runs.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2606.06722"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-5 (definitions and results stated, proofs skipped) and Appendices C (setup, sharpness computation, random-guess loss), D-J (warmup, stochastic, ViT, delta ablation, cross-entropy, additional characterisation, segment smoothness, no-bias); B (proofs) skimmed",
+  "draft": "datasets/dataset50/build/drafts/2606.06722.json"
+ },
+ "experiments": [
+  "Define large steps and the algorithms. Setup: a step size is 'large' if it is at least 1/l and, within P iterations, some step exceeds 2/l, where l is the gradient's Lipschitz constant along the segment to the next iterate (segment smoothness, weaker than global L-smoothness). Equality line searches backtrack by delta from an extrapolated initial step so the Armijo condition with constant c holds approximately with equality; the nonmonotone version (Zhang-Hager reference value, NLS) and a Polyak-initialised one (PoNLS) are proven to converge and to give eta >= 2(1-c)delta / (|lambda1| + epsilon) near a limit point, plus Holder-smooth analogues. Experiments: full-batch GD on 5,000-image subsets of CIFAR-10/100, SVHN and EMNIST with MLP, CNN, ResNet-34, WideResNet-50-2, DenseNet-121 and VGG-11, MSE loss, c = 1e-4, delta = 0.5, sharpness by PyHessian every 100 iterations; baselines: monotone equality line search (LS), SAM with grid-searched step, CDAT with sigma = 2.06.",
+  "Track step size, sharpness and loss. Setup: CNN on EMNIST letters (K = 26), ResNet-34 on SVHN (K = 10), VGG-11 on CIFAR-100 (K = 100), plus the other combinations in the appendix. Result: for NLS and PoNLS, step size times sharpness is always above 1 - c and usually above 2 from the start, with oscillating loss; LS shows sharpness rising and step sizes falling; CDAT stays above 2 by construction; NLS and PoNLS reach lower sharpness than SAM and CDAT and in most cases the constant value 2/K, while sometimes training loss is minimised better and sometimes worse than by SAM and CDAT (figures).",
+  "Check the assumptions and the bound. Setup: the lower estimate l'(w, eta) = ||grad(w) - grad(w - eta grad)|| / ||eta grad|| along the gradient line at iterations 0-5,000 for eta from 1e-3 to 10; delta = 0.9 instead of 0.5. Result: segment smoothness holds numerically at every tested point and the chosen steps lie where l' is stable; with delta = 0.9 the product is almost always at or above 2, but steps sit near K, sharpness at 2/K and training stalls more often; the self-stabilisation bound lambda1 <= 2/eta can fail at flat points (steps of 64 on EMNIST while sharpness stays at 2/26). Cost: about 4 function evaluations per iteration at delta = 0.5, about 6 forward-pass equivalents, the same as SAM and CDAT.",
+  "Note the scale and measurement limits. Setup: all main results are full-batch runs on 5,000-image subsets with MSE loss and ReLU networks; sharpness is computed every 100 iterations by power iteration (100 iterations, tolerance 1e-3); the step-size bound is checked using lambda1 as a stand-in for the segment Lipschitz constant; SAM's step size is grid-searched while CDAT uses its suggested sigma. Comparisons are visual, with no reported numbers or seeds, and what makes GD find the flat saddles (possibly neural collapse) is left open."
+ ],
+ "roles": [
+  "apparatus",
+  "headline",
+  "control",
+  "confound"
+ ]
+}

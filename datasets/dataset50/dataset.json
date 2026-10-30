@@ -1,0 +1,29 @@
+{
+ "name": "dataset50",
+ "claims": "norm_cards/data/dataset50-claims-v1.jsonl",
+ "built": "2026-10-29",
+ "description": "50 source papers, 10 per field (robotics, interpretability, vision, NLP, math + ML theory), 100 claims; format-2 shared subfield cards.",
+ "claims_model": "claude-opus-5.5",
+ "references_model": "claude-opus-5.5",
+ "references_reviewed": false,
+ "card_format": "2",
+ "card_models": {
+  "map": "gpt-6-luna",
+  "reduce": "gpt-6-luna"
+ },
+ "card_text": "arXiv HTML main body first, PDF main body fallback",
+ "subfield_classifier": "gpt-6-luna, classifier._PROMPT on each claim, 3 samples, labels kept when >= 2 agree; then datasets/dataset50/build/scripts/consolidate.py (merges, catch-all drops, 7 hand removals, cards need >= 2 papers)",
+ "gather": "subfield_gather: gpt-6-luna queries from subfield name + keywords, gpt-6-luna relevance screen, full-text-only candidates, source papers removed (leakage.py)",
+ "papers_per_field": {
+  "interpretability": 10,
+  "math_mltheory": 10,
+  "nlp": 10,
+  "robotics": 10,
+  "vision": 10
+ },
+ "notes": [
+  "Selection: main-track 2026 venue in the arXiv comment, arXiv v1 >= 2026-02-01; exceptions kept from the original 20 are listed in datasets/dataset50/build/drafts/SKIPPED.md and the dataset50 memory (2510.20487 pre-cutoff, 2608.09928 workshop, Findings papers).",
+  "Science papers are held out for a later test set (datasets/dataset50/build/science_heldout.json).",
+  "References are NOT human-reviewed."
+ ]
+}

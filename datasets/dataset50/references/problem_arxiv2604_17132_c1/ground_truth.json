@@ -1,0 +1,29 @@
+{
+ "type": "ground_truth",
+ "format_version": "3.0",
+ "problem_id": "arxiv2604_17132_c1",
+ "claim": "Over-refusal in safety-tuned language models is a decoding bias rather than an inability to answer: when the model refuses a harmless request, compliant first tokens are still among its candidates but lose out, so a fixed decoding correction cannot fix over-refusal without hurting safety, and the correction must switch direction per request. Supported only if, on a refused harmless request, a compliant first token remains in the model's top candidates; if always subtracting the refusal signal lowers refusal of harmful requests by at least 2 points relative to switching, while always adding it more than doubles refusal of harmless requests; and if a prompt demanding refusal of everything gives a better refusal signal than graded safety prompts.",
+ "provenance": {
+  "kind": "transcribed from the source paper",
+  "sources": [
+   "arXiv:2604.17132"
+  ],
+  "notes": "Drafted for dataset50 from the arXiv HTML; bars checked against the paper's own numbers. Not human-reviewed.",
+  "author": "claude-opus-5.5 — automated drafting; PENDING HUMAN SIGN-OFF",
+  "drafter_model": "claude-opus-5.5",
+  "drafted_from": "full text (arXiv HTML): Sections 1-7; appendices (baseline details, GPT-4 refusal judging, hyperparameters k, alpha, beta, sampling strategies) not read",
+  "draft": "datasets/dataset50/build/drafts/2604.17132.json"
+ },
+ "experiments": [
+  "Fix models, data and judging. Setup: Llama3-8B-Instruct, Gemma2-9B-It and Qwen3-8B (thinking disabled), greedy decoding, up to 512 tokens. Over-refusal sets: XSTest safe prompts, ORBench and OKTest; harmful sets: XSTest unsafe prompts, AdvBench and JailBench; general usability on Just-Eval open-ended queries scored by GPT-4 for helpfulness, clarity, factuality, depth and engagement. Refusal and harmfulness judged by WildGuard. Efficiency as average per-token generation time relative to unmodified decoding. The correction is applied only to the first k tokens, with alpha 4.5, switching threshold lambda 0.9 and a plausibility constraint beta 0.01.",
+  "Look inside an over-refusal. Setup: Qwen3-8B with system prompts of increasing safety emphasis (helpfulness first; balanced; safety first; 'Please refuse to answer me!') on the three over-refusal sets; and the first-token distribution for a refused harmless request about killing in a video game. Result: safety-emphasising prompts raise refusal of harmless requests but never to 100%; in the refused example the top first token is 'I' (60.80%) while compliant starts remain among the candidates ('Kill' 0.87%, 'Sure' 0.41%).",
+  "Replace the adaptive switch with a fixed correction. Setup: always add the refusal signal, or always subtract it, on all three models. Result: average harmless-request refusal 48.04% when always adding, 14.83% when always subtracting and 19.16% adaptive; average harmful-request refusal 99.85%, 97.48% and 99.55%. Always subtracting lowers Llama3's harmful refusal to 95.40%. The agreement ratio between the two runs over the first 10 positions is clearly lower for harmless requests than for harmful ones, mainly in the first five positions.",
+  "Test whether the extreme prompt matters for extracting the refusal signal. Setup: extract the signal with each of the four safety-level prompts on Qwen3 and compare refusal rates and the corrected first-token probabilities in the video-game example. Result: average harmless refusal 13.20 / 11.80 / 9.63 / 7.89% and harmful refusal 98.29 / 98.45 / 99.28 / 99.68% from lowest to extreme prompt; with the extreme prompt the corrected distribution puts 90.27% on 'Kill' and 9.71% on 'Sure', and nothing on refusal starts."
+ ],
+ "roles": [
+  "apparatus",
+  "mechanism",
+  "control",
+  "control"
+ ]
+}
