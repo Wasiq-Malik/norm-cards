@@ -21,7 +21,7 @@ One agentic stage, over an input the harness does not produce:
 | Piece | Model | Role |
 |---|---|---|
 | **Reference recipes** | none — **authored outside the harness** | The experiment chain a competent team would run to decide the claim. Hand-written, or transcribed from the source paper's experiment section. A checked-in fixture; `reference.py` validates and renders it. See `reference_format.md`. |
-| **Evaluation** | `gpt-5.6-terra`, judge prompt v2 | Judges the SET against the claim's decision requirements, plus a per-experiment audit for soundness, norm alignment, grounding and economy. Evidence-quoted throughout. |
+| **Evaluation** | `gpt-6-luna`, judge prompt v2, 3 passes majority-voted | Judges the SET against the claim's decision requirements, plus a per-experiment audit for soundness, norm alignment, grounding and economy. Evidence-quoted throughout. |
 
 **Scope for now:** the 10 claims that have `scify_proposer.json`
 (6, 7, 9, 10, 11, 12, 21, 33, 36, 37); the evaluator runs on those existing outputs.
@@ -398,7 +398,7 @@ flowchart LR
   B[claims JSONL\nsprint2-...-v1.jsonl] --> H[human / source paper\nauthors the reference]
   H --> GTJ[ground_truth.json fixtures\nchecked in, validated by reference.py]
   P[existing scify_proposer.json\nbaseline + method arms] --> EV
-  GTJ --> EV[judge: gpt-5.6-terra\nprompt v2]
+  GTJ --> EV[judge: gpt-6-luna\nprompt v2]
   EV --> J[requirement statuses + experiment audits]
   J --> R[REPORT.md\nbaseline vs method]
   J -->|defects, human-reviewed| H

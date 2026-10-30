@@ -9,32 +9,35 @@ controls and confounds*. We build one card per subfield, hand it to an experimen
 proposer along with a scientific claim, and measure whether the proposals it
 designs would have recovered what the claim's source paper actually did.
 
-**Current result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
+> **dataset50 is now the working dataset** ([`datasets/dataset50`](datasets/dataset50), built as described in
+> [`build/README.md`](datasets/dataset50/build/README.md)): 50 papers, 100 claims, 20 format-2 cards, proposers
+> gpt-6-sol / gpt-6.1-sol / gpt-6.1-terra. Its results replace the ones below once judged. The numbers below
+> are from the 34-claim sets (dataset34v4/v5), whose files were removed from the tree on 2026-10-30 and live
+> in git history at `592db40`.
+
+**Previous result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 
 | | no card | retrieval | norm card | card − no card |
 |---|---|---|---|---|
-| Strict recall | 0.797 | 0.804 | **0.842** | **+0.044 [+0.018, +0.072]** |
-| Recall (partial counts a half) | 0.875 | 0.879 | 0.901 | **+0.026 [+0.010, +0.043]** |
-| Rank-discounted recall | 0.657 | 0.654 | 0.682 | **+0.025 [+0.003, +0.046]** |
-| R-precision | 0.705 | 0.708 | 0.756 | **+0.050 [+0.016, +0.085]** |
+| Strict recall | 0.711 | 0.733 | **0.762** | **+0.052 [+0.020, +0.084]** |
+| Recall (partial counts a half) | 0.841 | 0.854 | 0.872 | **+0.030 [+0.012, +0.048]** |
 
-Card − no card on strict recall is **+0.044**, 95% interval **[+0.018, +0.072]**, over 170 paired
-claim × model comparisons. Strict recall counts a reference experiment only when the judge marks
-it *fully* covered; a half-addressed experiment is not something a downstream system can run. The
-looser recall, which gives a partial half credit, moves about 60% as much — the card mostly
-finishes work rather than adding it. Rank-discounted recall weights later experiments less;
-R-precision asks, of the first R proposals (R = the reference's size), how many hit a distinct
-reference experiment. All four exclude zero.
+Card − no card on strict recall is **+0.052**, 95% interval **[+0.020, +0.084]**, over 170 paired
+claim × model comparisons, judged by `gpt-6-luna` with three passes majority-voted. Strict recall
+counts a reference experiment only when the judge marks it *fully* covered; a half-addressed
+experiment is not something a downstream system can run. The looser recall, which gives a
+partial half credit, moves about 60% as much — the card mostly finishes work rather than adding
+it. Both exclude zero.
 
 Retrieval draws on the same field papers as the card, unformatted, so card − no card is the
-comparison that tests whether norms help; card − retrieval, +0.037 [+0.012, +0.064], is what
-formatting them as a card adds on top.
+comparison that tests whether norms help; card − retrieval, +0.029 [−0.004, +0.063], is what
+formatting them as a card adds on top, and it does not clear zero.
 
-![F1 at each budget](docs/charts/f1-at-k.svg)
+![Strict and partial-credit recall](docs/charts/strict-and-partial-recall.svg)
 
-Recall rises with the experiment budget and precision falls, so F1 peaks where they
-balance — at **4 experiments** for the card (5 unaided), against a reference averaging 5.18. The best budget to
-give a proposer is about the number of experiments the question actually needs.
+Until October 2026 the judge was `gpt-5.6-terra`, which costs about nine times as much.
+`gpt-6-luna` is stricter, so absolute recall is about 0.08 lower than earlier revisions
+reported; on the same proposals terra found card − no card +0.044 [+0.017, +0.072].
 
 The cards are **shared, not per-claim**: 14 cards cover all 34 claims, each built from its
 field's name alone with no claim text anywhere in the loop. That matters because a card
@@ -137,13 +140,13 @@ recall, which the role breakdown uses):
 
 | denominator | card − no card |
 |---|---|
-| claim-obliged (headline + apparatus + control + confound) | +0.026 [+0.005, +0.047] |
-| beyond-claim (mechanism + external) | +0.019 [−0.001, +0.039] |
+| claim-obliged (headline + apparatus + control + confound) | +0.026 [+0.003, +0.050] |
+| beyond-claim (mechanism + external) | +0.031 [+0.000, +0.064] |
 
-**The gain is spread across both, slightly larger on what the claim obliges.** Before the split it looked concentrated in the
+**The gain is spread evenly across both.** Before the split it looked concentrated in the
 beyond-claim half (+0.074 against +0.012), which was the strongest claim this harness made
 and is now retracted: it was an artifact of scoring each claim against its whole paper.
-The claim-obliged half separates from zero on its own; the beyond-claim half just misses.
+The claim-obliged half separates from zero on its own; the beyond-claim half sits on the edge.
 
 ---
 
@@ -228,9 +231,11 @@ name once you have read them against the papers.
 
 ## Things worth knowing before you trust a number
 
-- **The judge is `gpt-5.6-terra` with prompt v2, runs without tools, and is run three
-  times per arm** with a majority vote per reference experiment (unanimous on 82% of items,
-  no majority on 5 of 2,640). v2 is short: it asks what each reference experiment
+- **The judge is `gpt-6-luna` with prompt v2, runs without tools, and is run three
+  times per arm** with a majority vote per reference experiment (unanimous on 77% of items,
+  no majority on 8 of 2,640). It replaced `gpt-5.6-terra` in October 2026 for cost ($5.78
+  against $54 for the 510 arms); the two agree on 84.8% of items, and terra agrees with
+  itself on 87.2%. v2 is short: it asks what each reference experiment
   establishes and whether the proposed set would learn the same, and sees the proposer's
   numbered subclaims, since proposals cite them by number. v1 stays in `prompts.PROMPTS`;
   `evaluate --prompt v1` reproduces older runs. The judge must never
@@ -238,17 +243,18 @@ name once you have read them against the papers.
 - **`judge_suite.py` is the judge's own test suite** — 14 behaviours x 3 unrelated domains,
   each case constructed with a known correct status per reference experiment and run
   several times. It reports target pass rate, collateral damage and self-agreement per
-  `model:prompt`, so two judges can be compared directly. Terra beat luna on it: luna
-  credits controls run outside the setting the claim names.
+  `model:prompt`, so two judges can be compared directly. Terra replaced gpt-5.6-luna because
+  luna credited controls run outside the setting the claim names; under the current prompt
+  terra and gpt-6-luna tie at 78/84 majority-voted.
 - **`propose` skips per claim, not per arm.** Adding a model in a second invocation
   against the same output directory silently skips every claim the first finished.
   Pass all models in one `--models` call, or add `--merge` to run only the missing
   models' arms and merge them into the existing files.
 - **Contamination is filtered on arXiv v1 date**, never venue date.
 - **No single model carries the headline.** On strict recall four of five proposers gain —
-  gpt-6-sol +0.084, gpt-6.1-sol +0.048, gpt-5.4 +0.046, gpt-5.5 +0.043 — and gpt-5.6-sol,
-  the strongest unaided proposer, is flat (−0.000). Only gpt-6-sol excludes zero on its
-  own, +0.084 [+0.018, +0.151]. Pooling does real work here, so treat any per-model figure
-  as indicative. The largest gain belongs to the weakest unaided proposer (gpt-6-sol, 0.728
-  no-card), which is the pattern you would expect if the card supplies something a stronger
-  model already has.
+  gpt-6-sol +0.117, gpt-6.1-sol +0.065, gpt-5.5 +0.055, gpt-5.6-sol +0.047 — and gpt-5.4 is
+  slightly worse with the card (−0.025). Only gpt-6-sol excludes zero on its own, +0.117
+  [+0.045, +0.194]. Below that the ordering changes with the judge (under terra gpt-5.4 gained
+  +0.046 and gpt-5.6-sol was flat), so treat any per-model figure as indicative. The largest
+  gain belongs to the weakest unaided proposer (gpt-6-sol, 0.642 no-card), which is the
+  pattern you would expect if the card supplies something a stronger model already has.
