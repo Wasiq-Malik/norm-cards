@@ -9,11 +9,28 @@ controls and confounds*. We build one card per subfield, hand it to an experimen
 proposer along with a scientific claim, and measure whether the proposals it
 designs would have recovered what the claim's source paper actually did.
 
-> **dataset50 is now the working dataset** ([`datasets/dataset50`](datasets/dataset50), built as described in
-> [`build/README.md`](datasets/dataset50/build/README.md)): 50 papers, 100 claims, 20 format-2 cards, proposers
-> gpt-6-sol / gpt-6.1-sol / gpt-6.1-terra. Its results replace the ones below once judged. The numbers below
-> are from the 34-claim sets (dataset34v4/v5), whose files were removed from the tree on 2026-10-30 and live
-> in git history at `592db40`.
+**Current result** (dataset50 · 100 claims × 6 proposers · October 2026). [`datasets/dataset50`](datasets/dataset50),
+built as described in [`build/README.md`](datasets/dataset50/build/README.md): 50 papers in five fields, 100 claims,
+20 format-2 cards built by gpt-6-luna. Proposers get the card, or the retrieved passages, under their own **Field
+Norms** key (`propose --prompt fieldnorms`, the default; Current Evidence stays empty), budget 9; judge gpt-6-luna,
+prompt v2, three passes majority-voted. Strict recall, card − no card, paired bootstrap over claims:
+
+| proposer | no card | retrieval | norm card | card − no card |
+|---|---:|---:|---:|---:|
+| gpt-6-sol | 0.586 | 0.601 | 0.623 | +0.037 [−0.011, +0.086] |
+| gpt-6.1-sol | 0.642 | 0.674 | 0.650 | +0.007 [−0.033, +0.049] |
+| gpt-6.1-terra | 0.568 | 0.591 | 0.610 | **+0.042 [+0.002, +0.082]** |
+| Qwen3.8-27B (open weights) | 0.329 | 0.359 | 0.371 | +0.042 [−0.005, +0.089] |
+| gpt-5.6-terra | 0.634 | 0.617 | 0.611 | −0.022 [−0.061, +0.015] |
+| gpt-5.6-luna | 0.625 | 0.624 | 0.653 | +0.028 [−0.015, +0.070] |
+| **all six, pooled** | 0.564 | 0.578 | 0.586 | **+0.022 [+0.005, +0.041]** |
+
+On the reference controls and confounds alone the pooled gain is +0.056 [+0.023, +0.089]. The same claims under
+SciFy's prompt verbatim, with the card passed as Current Evidence, gave +0.008 [−0.016, +0.032] for the three
+gpt-6 proposers; under that prompt gpt-6.1-sol spent about one experiment per proposal on card items as "evidence pieces" and covered fewer of the claim's subclaims. gpt-5.6-terra is the one
+proposer the card hurts: it gains most on confounds (+0.145) and loses on headline and apparatus experiments,
+which it still runs but narrows. The 34-claim sets behind the result below were removed from the tree on
+2026-10-30 and live in git history at `592db40`.
 
 **Previous result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 
@@ -57,29 +74,29 @@ python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 cp .env.example .env          # add OPENAI_API_KEY
 ```
 
-Reproduce the September 2026 run from the tracked dataset — no card construction,
-no paper retrieval, just proposing and judging:
+Reproduce the dataset50 run from the tracked dataset (`datasets/dataset50/build/scripts/run_eval.sh` does
+the same with sharding):
 
 ```bash
 # 1. lay the dataset out into a disposable run directory
-./.venv/bin/python -m norm_cards.dataset bootstrap --dataset dataset20v3 --run results/myrun
-./.venv/bin/python -m norm_cards.dataset assemble  --dataset dataset20v3 --run results/myrun
+./.venv/bin/python -m norm_cards.dataset bootstrap --dataset dataset50 --run results/myrun
+./.venv/bin/python -m norm_cards.dataset assemble  --dataset dataset50 --run results/myrun
 
 export NORM_CARDS_EVAL_ROOT=results/myrun/eval
-export NORM_CARDS_CLAIMS=norm_cards/data/dataset20-claims-v3.jsonl
+export NORM_CARDS_CLAIMS=norm_cards/data/dataset50-claims-v1.jsonl
 
-# 2. propose — 20 claims × 3 arms × 3 models, ~45 min
+# 2. propose — 100 claims × 3 arms × the default gpt-6 proposers
 ./.venv/bin/python -m norm_cards.eval.propose \
-    --models gpt-5.5,gpt-5.6-terra,gpt-5.4 --arms nocard,rag,card \
-    --cards results/myrun/cards --budget 9 --workers 3 \
+    --arms nocard,rag,card --cards results/myrun/cards --budget 9 --workers 9 \
     --out results/myrun/proposals
 
-# 3. judge — ~45 min if you shard, ~2.5h if you don't (see below)
+# 3. judge — three passes per arm; --add-passes tops up arms judged with fewer
 ./.venv/bin/python -m norm_cards.eval.evaluate --problems all \
-    --source results/myrun/proposals --judge-runs 3
+    --source results/myrun/proposals --judge-runs 3 --prompt v2 --model gpt-6-luna
 
-# 4. read the numbers
-./.venv/bin/python -m norm_cards.eval.analyze --run results/myrun --dataset dataset20v3
+# 4. read the numbers, per proposer and pooled
+D50_RUN=results/myrun D50_PROPOSALS=proposals \
+    ./.venv/bin/python datasets/dataset50/build/scripts/report_data.py results/myrun/report.json
 ```
 
 `evaluate` majority-votes the `k` judge runs per arm and parallelises across them

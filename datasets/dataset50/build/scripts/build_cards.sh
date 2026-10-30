@@ -1,4 +1,4 @@
-cd /Users/wasiqmalik/Public/norm-cards
+cd "$(git rev-parse --show-toplevel)"
 set -e
 D=datasets/dataset50; B=results/cards50; G=results/gather50
 export PYTHONPATH=.

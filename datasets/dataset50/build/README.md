@@ -15,6 +15,8 @@
 | 8. Dataset files | claims file and per-claim references from the drafts | `scripts/make_dataset.py` |
 | 9. Cards | `norm_cards.subfield_gather` (luna queries + relevance screen, full text only), source papers removed, `build_cards --format 2` on luna | `scripts/build_cards.sh`, `scripts/leakage.py` |
 | 10. Run | bootstrap, assemble, propose (sharded), judge (sharded) | `scripts/run_eval.sh`, `scripts/report_data.py` |
+| 11. Field Norms run | the reported result: proposers get the card or passages under a Field Norms key (`propose --prompt fieldnorms`); single-pass screen, then `evaluate --add-passes` to three passes; Qwen3.8-27B and gpt-5.6-terra/-luna added | `scripts/run_fieldnorms_full.sh`, `scripts/run_k3_and_luna.sh`, `scripts/judge_fn_add.sh`, `subset30.txt` |
+| 12. Checks | old vs new prompt on the same claims; Decisions API (gpt-6-luna, no text) as a second judge | `scripts/compare_prompts.py`, `scripts/decisions_judge.py`, `scripts/compare_decisions.py` |
 
 Steps 1-3 and 5-6 were run once from `results/dataset50/` and are kept as a record: they read
 inputs not stored here (the 3,465-row candidate pool) or edit `norm_cards/data/taxonomy.json` in

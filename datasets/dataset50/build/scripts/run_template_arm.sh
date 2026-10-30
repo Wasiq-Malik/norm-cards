@@ -1,4 +1,4 @@
-cd /Users/wasiqmalik/Public/norm-cards
+cd "$(git rev-parse --show-toplevel)"
 set -e
 # Ablation: the card built from the ORIGINAL template-query search, everything else identical
 # (same claims, same stored subclaims, same 3 proposers, budget 9). Answers whether the

@@ -1,4 +1,4 @@
-cd /Users/wasiqmalik/Public/norm-cards
+cd "$(git rev-parse --show-toplevel)"
 set -e
 # dataset50: bootstrap references, assemble per-claim cards, then propose and judge in parallel shards.
 # Proposers gpt-6-sol / gpt-6.1-sol / gpt-6.1-terra (propose.DEFAULT_MODELS), decomposer and judge gpt-6-luna.

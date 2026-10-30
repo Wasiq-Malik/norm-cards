@@ -1,12 +1,17 @@
 """Results data for the report's ACT 4, from the dataset50 judgments.
 
-    python datasets/dataset50/build/scripts/report_data.py <out.json>
+    D50_RUN=results/dataset50run_fn D50_PROPOSALS=proposals,proposals_qwen,proposals_g56 \
+        python datasets/dataset50/build/scripts/report_data.py <out.json>
 
-Keys and shapes match the report's existing charts (summary / claims / per_card / metrics /
-shape), plus dataset50-only keys: by_field, by_role and the template-search card ablation.
+One VIEW per proposer plus "all" (pooled), so every per-claim, per-card, per-field and per-role
+figure can be read for a single model: averaging over models hides a model the card does not
+help. Each view has the same keys (summary / claims / per_card / metrics / by_field / by_role /
+up_down). Static per-claim facts (title, venue, references, cards) sit once in `claims`.
+
 Conventions as in every earlier revision: strict recall per (claim, model, condition); paired
 bootstrap over (claim, model) pairs, 10,000 resamples, 95% percentile interval, seed 0. A
 proposal the provider refused (no experiments) is left out, with its pair, not scored 0.
+A proposer is reported once it has judged proposals on (nearly) all 100 claims.
 """
 import collections
 import glob
@@ -16,17 +21,16 @@ import random
 import statistics as st
 import sys
 
-R = "results/dataset50run"
+R = os.environ.get("D50_RUN", "results/dataset50run")         # results/dataset50run_fn: Field Norms prompt
+SOURCES = os.environ.get("D50_PROPOSALS", "proposals,proposals_qwen,proposals_older").split(",")
+JUDGE_RUNS = int(os.environ.get("D50_JUDGE_RUNS", "3"))
 V = {"covered": 1.0, "partial": 0.5, "missing": 0.0}
-MODELS = ["gpt-6-sol", "gpt-6.1-sol", "gpt-6.1-terra"]
+ORDER = ["gpt-6-sol", "gpt-6.1-sol", "gpt-6.1-terra", "qwen3.8-27b", "gpt-5.6-terra", "gpt-5.6-luna"]
+ARMS = ("nocard", "rag", "card")
 OBLIGED = {"headline", "apparatus", "control", "confound"}
 RIGOUR = {"control", "confound"}
-
-
-def cond(arm: str) -> str:
-    c = arm.split("+", 1)[1]
-    return "tmpl" if c == "card:template" else c
-
+FIELDS = ["robotics", "interpretability", "vision", "nlp", "math_mltheory"]
+ROLES = ["headline", "apparatus", "control", "confound", "mechanism", "external"]
 
 claims = {json.loads(l)["problem_id"]: json.loads(l) for l in open("norm_cards/data/dataset50-claims-v1.jsonl")}
 sub = json.load(open("datasets/dataset50/subfields.json"))
@@ -37,9 +41,12 @@ for p in glob.glob(f"{R}/eval/judgments/problem_*/*.json"):
     if ".trace" in p or os.path.basename(p).startswith("_"):
         continue
     j = json.load(open(p))
-    if not j.get("scores", {}).get("n_proposed"):
-        continue                                  # refused by the provider: no proposal to score
-    J[(j["problem_id"], j["proposer_model"], cond(j["arm"]))] = j
+    c = j["arm"].split("+", 1)[1]
+    if c not in ARMS or not j.get("scores", {}).get("n_proposed"):
+        continue                         # ablation arms, and proposals the provider refused
+    J[(j["problem_id"], j["proposer_model"], c)] = j
+have = collections.Counter(m for _, m, _ in J)
+MODELS = [m for m in ORDER if have[m] >= 290]          # 100 claims x 3 conditions, a few refusals allowed
 
 
 def items(j, keep=None):
@@ -55,7 +62,7 @@ def strict(j, keep=None):
 def recall(j, keep=None):
     # as scoring.py: an item the three passes split on (CONTESTED) scores the mean of its votes
     s = items(j, keep)
-    return st.fmean(c.get("mean_status_score") or 0.0 if c["status"] == "CONTESTED" else V[c["status"]]
+    return st.fmean((c.get("mean_status_score") or 0.0) if c["status"] == "CONTESTED" else V[c["status"]]
                     for c in s) if s else None
 
 
@@ -69,9 +76,9 @@ def boot(pairs, n=10000, seed=0):
             "hi": round(bs[int(n * .975)], 4), "n": len(d)}
 
 
-def pairs(f, a, b, models=MODELS, pids=None):
+def pairs(f, a, b, models, pids):
     out = []
-    for p in (pids or claims):
+    for p in pids:
         for m in models:
             x, y = J.get((p, m, a)), J.get((p, m, b))
             if x and y:
@@ -81,92 +88,105 @@ def pairs(f, a, b, models=MODELS, pids=None):
     return out
 
 
-def summ(f, arms=("nocard", "rag", "card", "tmpl"), pids=None):
-    pids = pids or list(claims)
-    means = {a: round(st.fmean(v for k, j in J.items() if k[2] == a and k[0] in pids
-                               for v in [f(j)] if v is not None), 4)
-             for a in arms if any(k[2] == a for k in J)}
-    per_model = {m: {a: round(st.fmean(v for k, j in J.items() if k[1] == m and k[2] == a and k[0] in pids
-                                       for v in [f(j)] if v is not None), 4)
-                     for a in arms if any(k[2] == a and k[1] == m for k in J)} for m in MODELS}
-    deltas = {"card_vs_nocard": boot(pairs(f, "nocard", "card", pids=pids)),
-              "card_vs_rag": boot(pairs(f, "rag", "card", pids=pids)),
-              "rag_vs_nocard": boot(pairs(f, "nocard", "rag", pids=pids)),
-              "card_vs_tmpl": boot(pairs(f, "tmpl", "card", pids=pids)),
-              "tmpl_vs_nocard": boot(pairs(f, "nocard", "tmpl", pids=pids))}
-    for m in MODELS:
-        deltas[f"card_vs_nocard__{m}"] = boot(pairs(f, "nocard", "card", [m], pids))
-        deltas[f"card_vs_rag__{m}"] = boot(pairs(f, "rag", "card", [m], pids))
-        deltas[f"card_vs_tmpl__{m}"] = boot(pairs(f, "tmpl", "card", [m], pids))
-    return {"means": means, "per_model": per_model, "deltas": deltas}
-
-
-def per_claim(f, p, a):
-    v = [f(J[(p, m, a)]) for m in MODELS if (p, m, a) in J]
+def mean_of(f, models, pids, arm):
+    v = [f(j) for (p, m, a), j in J.items() if a == arm and m in models and p in pids]
     v = [x for x in v if x is not None]
     return round(st.fmean(v), 4) if v else None
 
 
-def claim_delta(f, p, a="nocard", b="card"):
-    d = [f(J[(p, m, b)]) - f(J[(p, m, a)]) for m in MODELS if (p, m, a) in J and (p, m, b) in J]
-    return round(st.fmean(d), 4) if d else None
+def summ(f, models, pids):
+    return {"means": {a: mean_of(f, models, pids, a) for a in ARMS},
+            "deltas": {"card_vs_nocard": boot(pairs(f, "nocard", "card", models, pids)),
+                       "card_vs_rag": boot(pairs(f, "rag", "card", models, pids)),
+                       "rag_vs_nocard": boot(pairs(f, "nocard", "rag", models, pids))}}
 
 
-S = lambda j: strict(j)
-D = {"models": MODELS, "judge_model": ["gpt-6-luna"], "judge_runs": [3], "n_judged": len(J),
-     "summary": {"full": summ(S), "obliged": summ(lambda j: strict(j, OBLIGED)),
-                 "rigour": summ(lambda j: strict(j, RIGOUR))}}
+def view(models):
+    pids = list(claims)
+    S = lambda j: strict(j)
+    v = {"summary": {"full": summ(S, models, pids),
+                     "obliged": summ(lambda j: strict(j, OBLIGED), models, pids),
+                     "rigour": summ(lambda j: strict(j, RIGOUR), models, pids)}}
+    cl = {}
+    for p in pids:
+        vals = {a: [S(J[(p, m, a)]) for m in models if (p, m, a) in J] for a in ARMS}
+        ds = [S(J[(p, m, "card")]) - S(J[(p, m, "nocard")]) for m in models
+              if (p, m, "card") in J and (p, m, "nocard") in J]
+        cl[p] = {"v": {a: (round(st.fmean(x), 4) if x else None) for a, x in vals.items()},
+                 "d": round(st.fmean(ds), 4) if ds else None}
+    v["claims"] = cl
+    cards = collections.defaultdict(list)
+    for p, c in cl.items():
+        for s in sub[p]["subfields"]:
+            if c["d"] is not None:
+                cards[s].append({"id": p, "d": c["d"]})
+    v["per_card"] = sorted(({"name": s, "n": len(x), "mean": round(st.fmean(y["d"] for y in x), 4),
+                             "lo": min(y["d"] for y in x), "hi": max(y["d"] for y in x), "claims": x}
+                            for s, x in cards.items()), key=lambda r: -r["mean"])
+    v["metrics"] = {
+        "strict recall": {"sub": "a reference experiment counts only when the judge marks it fully covered",
+                          "means": v["summary"]["full"]["means"], "delta": v["summary"]["full"]["deltas"]["card_vs_nocard"]},
+        "recall": {"sub": "a partly addressed experiment counts as half",
+                   "means": {a: mean_of(recall, models, pids, a) for a in ARMS},
+                   "delta": boot(pairs(recall, "nocard", "card", models, pids))}}
+    v["by_field"] = {}
+    for f in FIELDS:
+        fp_ = [p for p in pids if claims[p]["provenance"]["field"] == f]
+        v["by_field"][f] = {"n": len(fp_), "means": {a: mean_of(S, models, fp_, a) for a in ARMS},
+                            "card_vs_nocard": boot(pairs(S, "nocard", "card", models, fp_)),
+                            "rag_vs_nocard": boot(pairs(S, "nocard", "rag", models, fp_))}
+    v["by_role"] = {}
+    for r in ROLES:
+        cov = collections.defaultdict(list)
+        for (p, m, a), j in J.items():
+            if m in models:
+                cov[a] += [c["status"] == "covered" for i, c in enumerate(j["reference_coverage"]) if roles[p][i] == r]
+        v["by_role"][r] = {"n": len(cov["card"]), **{a: round(st.fmean(x), 4) for a, x in cov.items() if x},
+                           "card_vs_nocard": boot(pairs(lambda j, r=r: strict(j, {r}), "nocard", "card", models, pids))}
+    ds = [c["d"] for c in cl.values() if c["d"] is not None]
+    v["up_down"] = {"up": sum(d > .0005 for d in ds), "down": sum(d < -.0005 for d in ds), "n": len(ds)}
+    mx = max(cl, key=lambda p: cl[p]["d"] if cl[p]["d"] is not None else -9)
+    mn = min(cl, key=lambda p: cl[p]["d"] if cl[p]["d"] is not None else 9)
+    v["extremes"] = {"max": [mx, cl[mx]["d"]], "min": [mn, cl[mn]["d"]]}
+    n_prop = [len(e) for d in PROPS for k, e in d.items() if k[0] in models]
+    return v
 
-short = lambda v: v.split(" ")[0] + (" Findings" if "Findings" in v else " workshop" if "Workshop" in v else "") if "none" not in v else "—"
+
+PROPS = []
+for src in SOURCES:
+    d = {}
+    for f in glob.glob(f"{R}/{src}/problem_*/scify_proposer.json"):
+        for arm, a in json.load(open(f))["arms"].items():
+            if a.get("experiments"):
+                d[(arm.split("+")[0], arm.split("+", 1)[1], f)] = a["experiments"]
+    PROPS.append(d)
+
+D = {"models": MODELS, "judge_model": ["gpt-6-luna"], "judge_runs": [JUDGE_RUNS], "run": R,
+     "views": {"all": view(MODELS), **{m: view([m]) for m in MODELS}}}
+short = lambda v: "—" if "none" in v else v.split(" ")[0] + (" Findings" if "Findings" in v else " workshop" if "Workshop" in v else "")
 D["claims"] = [{"id": p, "title": c["provenance"]["title"], "venue": short(c["provenance"]["venue"]),
-                "field": c["provenance"]["field"], "n_ref": len(roles[p]), "subfields": sub[p]["subfields"],
-                "v": {a: per_claim(S, p, a) for a in ("nocard", "rag", "card", "tmpl")},
-                "d": claim_delta(S, p)} for p, c in sorted(claims.items())]
+                "field": c["provenance"]["field"], "n_ref": len(roles[p]), "subfields": sub[p]["subfields"]}
+               for p, c in sorted(claims.items())]
 D["mean_ref"] = round(st.fmean(len(r) for r in roles.values()), 2)
-
-cards = collections.defaultdict(list)
-for c in D["claims"]:
-    for s in c["subfields"]:
-        if c["d"] is not None:
-            cards[s].append({"id": c["id"], "d": c["d"]})
-D["per_card"] = sorted(({"name": s, "n": len(v), "mean": round(st.fmean(x["d"] for x in v), 4),
-                         "lo": min(x["d"] for x in v), "hi": max(x["d"] for x in v), "claims": v, "new": True}
-                        for s, v in cards.items()), key=lambda r: -r["mean"])
-
-D["metrics"] = {
-    "strict recall": {"sub": "a reference experiment counts only when the judge marks it fully covered",
-                      "means": D["summary"]["full"]["means"], "delta": D["summary"]["full"]["deltas"]["card_vs_nocard"]},
-    "recall": {"sub": "a partly addressed experiment counts as half",
-               "means": summ(recall)["means"], "delta": boot(pairs(recall, "nocard", "card"))}}
-
-FIELDS = ["robotics", "interpretability", "vision", "nlp", "math_mltheory"]
-D["by_field"] = {f: {"n": sum(c["field"] == f for c in D["claims"]),
-                     **summ(S, pids=[c["id"] for c in D["claims"] if c["field"] == f])} for f in FIELDS}
-
-rc = collections.defaultdict(lambda: collections.defaultdict(list))
-for (p, m, a), j in J.items():
-    for i, c in enumerate(j["reference_coverage"]):
-        rc[roles[p][i]][a].append(c["status"] == "covered")
-D["by_role"] = {r: {"n": len(v.get("card", [])), **{a: round(st.fmean(x), 4) for a, x in v.items()}} for r, v in rc.items()}
-D["by_role_delta"] = {r: boot(pairs(lambda j, r=r: strict(j, {r}), "nocard", "card")) for r in rc}
-
 shape = {}
-props = {}
-for f in glob.glob(f"{R}/proposals/problem_*/scify_proposer.json"):
-    for arm, v in json.load(open(f))["arms"].items():
-        props.setdefault(arm.split("+")[0], []).append(v.get("experiments") or [])
 for m in MODELS:
-    ex = [e for e in props.get(m, []) if e]
+    ex = [e for d in PROPS for k, e in d.items() if k[0] == m]
     shape[m] = {"mean_exp": round(st.fmean(len(e) for e in ex), 2),
                 "full_budget": round(st.fmean(len(e) >= 9 for e in ex), 3),
-                "chars": round(st.fmean(len(x) for e in ex for x in e))}
+                "chars": round(st.fmean(len(x) for e in ex for x in e)),
+                **{f"exp_{c}": round(st.fmean(len(e) for k, e in [(k, e) for d in PROPS for k, e in d.items()]
+                                              if k[0] == m and k[1] == c), 2) for c in ARMS}}
 D["shape"] = shape
-D["up_down"] = {"up": sum(c["d"] is not None and c["d"] > .0005 for c in D["claims"]),
-                "down": sum(c["d"] is not None and c["d"] < -.0005 for c in D["claims"])}
-D["refused"] = sorted(f"{p} {m}+{a}" for p in claims for m in MODELS for a in ("nocard", "rag", "card")
+runs_ = [[r["reference_coverage"] for r in j.get("runs") or []] for (p, m, a), j in J.items() if m in MODELS]
+items_ = [[run[i]["status"] for run in rs] for rs in runs_ if len(rs) >= 2 for i in range(min(len(x) for x in rs))]
+if items_:
+    D["agreement"] = {"unanimous": round(st.fmean(len(set(x)) == 1 for x in items_), 4), "n_items": len(items_),
+                      "contested": sum(c["status"] == "CONTESTED" for j in J.values() if j["proposer_model"] in MODELS
+                                       for c in j["reference_coverage"])}
+D["refused"] = sorted(f"{p} {m}+{a}" for p in claims for m in MODELS for a in ARMS
                       if os.path.exists(f"{R}/eval/judgments/problem_{p}/{m}+{a}.json") and (p, m, a) not in J)
 json.dump(D, open(sys.argv[1], "w"), indent=1)
-f = D["summary"]["full"]
-print(f"{len(J)} judged | means {f['means']}")
-for k in ("card_vs_nocard", "card_vs_rag", "rag_vs_nocard", "card_vs_tmpl", "tmpl_vs_nocard"):
-    print(f"  {k:16s} {f['deltas'][k]}")
+for k in ["all"] + MODELS:
+    f = D["views"][k]["summary"]
+    print(f"{k:14s} means {f['full']['means']} | card-nocard {f['full']['deltas']['card_vs_nocard']} "
+          f"| ctl+conf {f['rigour']['deltas']['card_vs_nocard']}")
