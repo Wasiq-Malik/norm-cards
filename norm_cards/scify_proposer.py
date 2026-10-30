@@ -57,6 +57,32 @@ Current Evidence:
     {{ current_evidence[evidence_key] | indent(4) }}
 {% endfor %}"""
 
+# "fieldnorms" (from dataset50's second run, 2026-10-30). SciFy's "Current Evidence" is the
+# evidence its agent has gathered ON THE CLAIM (literature, experiment reports), and its prompt
+# asks each experiment to address "a subclaim or piece of evidence". Passing a norm card or field
+# passages there labelled them as evidence: gpt-6.1-sol then spent ~1 experiment per proposal
+# "with respect to evidence piece" on card items and its subclaim coverage fell 79% -> 62%.
+# So Current Evidence stays empty (we gather no claim evidence), and the card (its titled
+# sections, as norm_card_text renders them) or the rag passages arrive under their own FIELD NORMS key, with one system line
+# saying what they are. The system prompt is the same in every condition. "scify" is the
+# upstream prompt verbatim, as every run through dataset50's first run used it.
+PROPOSER_PROMPT = "fieldnorms"
+FIELD_NORMS_KEY = "__field_norms__"          # current_evidence key carrying the field-norms text
+
+SYSTEM_PROPOSER_TEMPLATE_FN = SYSTEM_PROPOSER_TEMPLATE.replace(
+    "begin with 'To address subclaim X...' or 'With respect to evidence piece Y...'.\n",
+    "begin with 'To address subclaim X...' or 'With respect to evidence piece Y...'.\n"
+    "If provided, use the Field Norms, which describe how this claim's scientific field designs and "
+    "evaluates experiments, to help ground your experiments in the existing literature.\n")
+assert SYSTEM_PROPOSER_TEMPLATE_FN != SYSTEM_PROPOSER_TEMPLATE
+
+INSTANCE_PROPOSER_TEMPLATE_FN = INSTANCE_PROPOSER_TEMPLATE + """
+{% if field_norms %}
+
+Field Norms:
+  {{ field_norms | indent(2) }}
+{% endif %}"""
+
 DEFAULT_BUDGET = 3       # SciFy's own cap; vary only as a labelled diagnostic
 
 MENU_KEYS = ("datasets", "models", "metrics", "protocols")
@@ -438,21 +464,36 @@ def fulltext_retrieval_evidence(bundle: dict, claim: str, cache_dir: str = ".pdf
 # the proposer itself
 # --------------------------------------------------------------------------- #
 def render_prompts(claim: str, subclaims: list, current_evidence: dict,
-                   budget: int = DEFAULT_BUDGET) -> tuple:
-    """(system, instance), rendered exactly as dryrun/proposer.py renders them."""
-    system = Template(SYSTEM_PROPOSER_TEMPLATE, trim_blocks=True,
-                      lstrip_blocks=True).render(budget=budget).strip()
-    instance = Template(INSTANCE_PROPOSER_TEMPLATE, trim_blocks=True,
-                        lstrip_blocks=True).render(
-        claim=claim, subclaims=subclaims,
-        current_evidence=current_evidence or {}).strip()
+                   budget: int = DEFAULT_BUDGET, prompt: str = None) -> tuple:
+    """(system, instance). prompt="scify" renders exactly as dryrun/proposer.py does;
+    "fieldnorms" moves FIELD_NORMS_KEY out of Current Evidence into its own block."""
+    prompt = prompt or PROPOSER_PROMPT
+    ev = dict(current_evidence or {})
+    norms = ev.pop(FIELD_NORMS_KEY, "")
+    if prompt == "scify":
+        if norms:
+            raise ValueError("field norms need prompt='fieldnorms'")
+        sys_t, inst_t = SYSTEM_PROPOSER_TEMPLATE, INSTANCE_PROPOSER_TEMPLATE
+    else:
+        sys_t, inst_t = SYSTEM_PROPOSER_TEMPLATE_FN, INSTANCE_PROPOSER_TEMPLATE_FN
+    system = Template(sys_t, trim_blocks=True, lstrip_blocks=True).render(budget=budget).strip()
+    instance = Template(inst_t, trim_blocks=True, lstrip_blocks=True).render(
+        claim=claim, subclaims=subclaims, current_evidence=ev, field_norms=norms).strip()
     return system, instance
 
 
+def norm_card_text(card_json: dict, sections: tuple = None) -> str:
+    """The card as the fieldnorms prompt shows it: the same titled sections and one-line items
+    norm_card_evidence renders for Current Evidence, as one block of text."""
+    ev = norm_card_evidence(card_json, sections=sections)
+    return "\n".join(f"{title}:\n" + "\n".join("  " + ln for ln in body.split("\n"))
+                     for title, body in ev.items())
+
+
 def propose(claim: str, subclaims: list, current_evidence: dict,
-            model: str = "gpt-5.5", budget: int = DEFAULT_BUDGET) -> list:
+            model: str = "gpt-5.5", budget: int = DEFAULT_BUDGET, prompt: str = None) -> list:
     """Run the proposer. Returns the list of proposed experiment strings."""
-    system, instance = render_prompts(claim, subclaims, current_evidence, budget)
+    system, instance = render_prompts(claim, subclaims, current_evidence, budget, prompt)
     out = _complete_json_strict(system, instance, model=model)
     return out.get("experiments", [])
 

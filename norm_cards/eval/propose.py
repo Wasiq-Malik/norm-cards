@@ -69,8 +69,28 @@ def resolve_sections(spec: str) -> tuple:
 
 
 def build_conditions(names, card: dict, bundle: dict, sections: tuple,
-                     label: str, claim: str = "", cache_dir: str = ".pdfcache") -> dict:
-    """condition name -> the `current_evidence` dict that defines it."""
+                     label: str, claim: str = "", cache_dir: str = ".pdfcache",
+                     prompt: str = None) -> dict:
+    """condition name -> the `current_evidence` dict that defines it. Under the fieldnorms
+    prompt the card (its titled text sections) or the rag passages ride in FIELD_NORMS_KEY, which the prompt
+    renders as its own Field Norms block, and Current Evidence is empty in every condition."""
+    out = build_conditions_scify(names, card, bundle, sections, label, claim, cache_dir)
+    if (prompt or scify_proposer.PROPOSER_PROMPT) == "scify":
+        return out
+    fn = {}
+    for c, ev in out.items():
+        if c.startswith("card"):
+            fn[c] = {scify_proposer.FIELD_NORMS_KEY: scify_proposer.norm_card_text(card, sections)}
+        elif c in ("rag", "retrieval"):
+            fn[c] = {scify_proposer.FIELD_NORMS_KEY: "\n\n".join(ev.values())}
+        else:
+            fn[c] = {}
+    return fn
+
+
+def build_conditions_scify(names, card: dict, bundle: dict, sections: tuple,
+                           label: str, claim: str = "", cache_dir: str = ".pdfcache") -> dict:
+    """condition name -> `current_evidence` as the SciFy-verbatim prompt took it."""
     out = {}
     # The card arm is built first so the retrieval arms can be trimmed to exactly
     # its size: a contrast between conditions of different context length measures
@@ -110,7 +130,7 @@ def build_conditions(names, card: dict, bundle: dict, sections: tuple,
 
 def propose_all(problem: dict, models, subclaims: list, conditions: dict,
                 workers: int = 3, budget: int = scify_proposer.DEFAULT_BUDGET,
-                repeats: int = 1) -> dict:
+                repeats: int = 1, prompt: str = None) -> dict:
     """One proposer call per (model, condition, repeat), on identical inputs.
 
     `repeats` > 1 draws the same arm several times. The proposer runs at
@@ -128,7 +148,8 @@ def propose_all(problem: dict, models, subclaims: list, conditions: dict,
     def one(job):
         arm, model, ev = job
         try:
-            exps = scify_proposer.propose(claim, subclaims, ev, model=model, budget=budget)
+            exps = scify_proposer.propose(claim, subclaims, ev, model=model, budget=budget,
+                                          prompt=prompt)
             # The budget is a cap, not a suggestion: Qwen3.8-27B returned 12 experiments
             # for "up to 9", and every extra one is another chance to cover a reference.
             rec = {"model": model,
@@ -163,6 +184,9 @@ def _main():
                     help="comma-separated proposer models")
     ap.add_argument("--problems", default="all",
                     help="comma-separated problem ids, or 'all'")
+    ap.add_argument("--prompt", default=scify_proposer.PROPOSER_PROMPT, choices=["fieldnorms", "scify"],
+                    help="fieldnorms: card/passages under their own Field Norms key (default); "
+                         "scify: SciFy's prompt verbatim, everything in Current Evidence")
     ap.add_argument("--decomposer", default="gpt-6-luna",
                     help="model that produces the subclaims shared by every arm")
     ap.add_argument("--arms", default="nocard,retrieval,card",
@@ -261,7 +285,7 @@ def _main():
         card = load_json(args.cards, pid, "norm_card.json") if args.cards else {}
         bundle = load_json(args.cards, pid, "bundle.json") if args.cards else {}
         conditions = build_conditions(names, card, bundle, sections, label,
-                                      claim=problem["claim"], cache_dir=args.cache_dir)
+                                      claim=problem["claim"], cache_dir=args.cache_dir, prompt=args.prompt)
         if not conditions:
             print(f"[{pid}] no runnable condition — skipping")
             continue
@@ -272,7 +296,7 @@ def _main():
               f"budget {args.budget}")
         arms = propose_all(problem, models_here, subclaims, conditions,
                            workers=args.workers, budget=args.budget,
-                           repeats=args.repeats)
+                           repeats=args.repeats, prompt=args.prompt)
         if existing:
             merged = dict(existing.get("arms") or {})
             merged.update(arms)
@@ -282,6 +306,7 @@ def _main():
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump({"problem_id": pid, "claim": problem["claim"],
                        "decomposer_model": args.decomposer, "subclaims": subclaims,
+                       "proposer_prompt": args.prompt,
                        "conditions": sorted(conditions), "budget": args.budget,
                        "repeats": args.repeats,
                        "card_sections": list(sections) if sections else "all",

@@ -136,7 +136,9 @@ def evaluate_arm(problem: dict, gt: dict, arm_data: dict, run_idx: int, out_dir:
 def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int = 3,
                          model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT,
                          max_steps: int = 200, workers: int = 3,
-                         prompt: str = None) -> dict:
+                         prompt: str = None, prior: dict = None) -> dict:
+    """`prior` is an earlier judgment of this arm: its passes are kept and only the passes
+    still missing up to `judge_runs` are run, then all are majority-voted together."""
     prompt = prompt or JUDGE_PROMPT
     pid = str(problem["problem_id"])
     gt = load_ground_truth(pid)          # fixture; fails loudly if absent
@@ -149,6 +151,14 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
 
     out_dir = judgment_dir(pid)
     os.makedirs(out_dir, exist_ok=True)
+
+    kept = []
+    if prior:
+        if prior.get("experiments_evaluated") != arm_data["experiments"]:
+            raise RuntimeError(f"{pid}/{arm}: the proposal changed since it was judged; --force to redo")
+        if (prior.get("judge") or {}).get("model") != model or (prior.get("judge") or {}).get("prompt") != prompt:
+            raise RuntimeError(f"{pid}/{arm}: earlier passes used another judge model or prompt")
+        kept = [{**r, "_run": r.get("run"), "_meta": r.get("meta")} for r in prior.get("runs") or []]
 
     def one(i):
         """One judge pass. A run that dies is reported and dropped, not raised.
@@ -171,13 +181,14 @@ def evaluate_problem_arm(problem: dict, source: str, arm: str, judge_runs: int =
             traceback.print_exc()
             return None
 
-    if workers > 1 and judge_runs > 1:
-        with ThreadPoolExecutor(max_workers=min(workers, judge_runs)) as ex:
-            runs = list(ex.map(one, range(judge_runs)))
+    todo = range(len(kept), judge_runs)
+    if workers > 1 and len(todo) > 1:
+        with ThreadPoolExecutor(max_workers=min(workers, len(todo))) as ex:
+            runs = list(ex.map(one, todo))
     else:
-        runs = [one(i) for i in range(judge_runs)]
+        runs = [one(i) for i in todo]
 
-    runs = [r for r in runs if r is not None]
+    runs = kept + [r for r in runs if r is not None]
     if not runs:
         raise RuntimeError(f"all {judge_runs} judge runs failed for {pid}/{arm}")
     if len(runs) < judge_runs:
@@ -233,6 +244,9 @@ def _main():
                     help="show the generated norm card to the judge even in an "
                          "ablation. Confounded — the card is the treatment there.")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--add-passes", action="store_true",
+                    help="for an arm already judged with fewer than --judge-runs passes, keep its "
+                         "passes and run only the missing ones")
     args = ap.parse_args()
 
     claims = load_claims()
@@ -252,16 +266,23 @@ def _main():
                 else (arms or arms_available(args.source, pid)))
         for arm in todo:
             out_path = os.path.join(judgment_dir(pid), f"{arm_slug(arm)}.json")
+            prior = None
             if os.path.exists(out_path) and not args.force:
-                print(f"[{pid}/{arm}] judged already; --force to redo")
-                continue
+                if args.add_passes:
+                    prior = json.load(open(out_path, encoding="utf-8"))
+                    if len(prior.get("runs") or []) >= args.judge_runs:
+                        print(f"[{pid}/{arm}] has {len(prior['runs'])} passes already")
+                        continue
+                else:
+                    print(f"[{pid}/{arm}] judged already; --force to redo")
+                    continue
             print(f"\n=== problem {pid} · {arm} · {args.judge_runs} judge runs "
                   f"({args.model} @ {args.effort}) ===")
             try:
                 res = evaluate_problem_arm(
                     claims[pid], args.source, arm, judge_runs=args.judge_runs,
                     model=args.model, effort=args.effort, max_steps=args.max_steps,
-                    workers=args.workers, prompt=args.prompt)
+                    workers=args.workers, prompt=args.prompt, prior=prior)
             except Exception as e:
                 print(f"[{pid}/{arm}] FAILED: {type(e).__name__}: {e}")
                 continue
