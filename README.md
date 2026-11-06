@@ -9,28 +9,30 @@ controls and confounds*. We build one card per subfield, hand it to an experimen
 proposer along with a scientific claim, and measure whether the proposals it
 designs would have recovered what the claim's source paper actually did.
 
-**Current result** (dataset50 · 100 claims × 6 proposers · October 2026). [`datasets/dataset50`](datasets/dataset50),
+**Current result** (dataset50 · 100 claims × 5 gpt proposers · November 2026). [`datasets/dataset50`](datasets/dataset50),
 built as described in [`build/README.md`](datasets/dataset50/build/README.md): 50 papers in five fields, 100 claims,
-20 format-2 cards built by gpt-6-luna. Proposers get the card, or the retrieved passages, under their own **Field
-Norms** key (`propose --prompt fieldnorms`, the default; Current Evidence stays empty), budget 9; judge gpt-6-luna,
-prompt v2, three passes majority-voted. Strict recall, card − no card, paired bootstrap over claims:
+20 format-2 cards built by gpt-6-luna. Proposers get the claim and its subclaims, with Current Evidence reading "None";
+the card arrives as a **Field Norms** block and the retrieved passages as a **Relevant Literature** block, each with
+one system line saying what it is (`propose --prompt fieldnorms2`, the default). Budget **5** experiments (the
+default; 9 before). Judge gpt-6-luna, prompt v2, three passes majority-voted. Strict recall, card − no card, paired
+bootstrap over claims:
 
 | proposer | no card | retrieval | norm card | card − no card |
 |---|---:|---:|---:|---:|
-| gpt-6-sol | 0.586 | 0.601 | 0.623 | +0.037 [−0.011, +0.086] |
-| gpt-6.1-sol | 0.642 | 0.674 | 0.650 | +0.007 [−0.033, +0.049] |
-| gpt-6.1-terra | 0.568 | 0.591 | 0.610 | **+0.042 [+0.002, +0.082]** |
-| Qwen3.8-27B (open weights) | 0.329 | 0.359 | 0.371 | +0.042 [−0.005, +0.089] |
-| gpt-5.6-terra | 0.634 | 0.617 | 0.611 | −0.022 [−0.061, +0.015] |
-| gpt-5.6-luna | 0.625 | 0.624 | 0.653 | +0.028 [−0.015, +0.070] |
-| **all six, pooled** | 0.564 | 0.578 | 0.586 | **+0.022 [+0.005, +0.041]** |
+| gpt-6-sol | 0.577 | 0.612 | 0.621 | +0.044 [−0.000, +0.093] |
+| gpt-6.1-sol | 0.656 | 0.644 | 0.676 | +0.020 [−0.020, +0.060] |
+| gpt-6.1-terra | 0.614 | 0.623 | 0.651 | +0.037 [−0.000, +0.075] |
+| gpt-5.6-terra | 0.602 | 0.600 | 0.631 | +0.030 [−0.011, +0.071] |
+| gpt-5.6-luna | 0.616 | 0.670 | 0.672 | **+0.056 [+0.019, +0.094]** |
+| **five gpt, pooled** | 0.613 | 0.630 | 0.650 | **+0.037 [+0.019, +0.056]** |
 
-On the reference controls and confounds alone the pooled gain is +0.056 [+0.023, +0.089]. The same claims under
-SciFy's prompt verbatim, with the card passed as Current Evidence, gave +0.008 [−0.016, +0.032] for the three
-gpt-6 proposers; under that prompt gpt-6.1-sol spent about one experiment per proposal on card items as "evidence pieces" and covered fewer of the claim's subclaims. gpt-5.6-terra is the one
-proposer the card hurts: it gains most on confounds (+0.145) and loses on headline and apparatus experiments,
-which it still runs but narrows. The 34-claim sets behind the result below were removed from the tree on
-2026-10-30 and live in git history at `592db40`.
+The card beats retrieval too, +0.021 [+0.002, +0.040] pooled, and every proposer gains. Each reference experiment
+carries one type, labelled by gpt-6-luna (`build/types.json`): headline, threat (controls, confounds, measurement and
+robustness checks), analysis, or setup. On threats alone the pooled gain is **+0.054 [+0.018, +0.090]**; on headline
+experiments it is +0.003. Qwen3.8-27B (open weights) is being rerun under this setup; under the earlier one (first
+Field Norms prompt, budget 9) it gave +0.042 [−0.005, +0.089]. That earlier setup gave +0.022 [+0.005, +0.041] pooled
+over six proposers. The 34-claim sets behind the result below were removed from the tree on 2026-10-30 and live in
+git history at `592db40`.
 
 **Previous result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 

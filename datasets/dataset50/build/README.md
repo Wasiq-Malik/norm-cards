@@ -15,8 +15,11 @@
 | 8. Dataset files | claims file and per-claim references from the drafts | `scripts/make_dataset.py` |
 | 9. Cards | `norm_cards.subfield_gather` (luna queries + relevance screen, full text only), source papers removed, `build_cards --format 2` on luna | `scripts/build_cards.sh`, `scripts/leakage.py` |
 | 10. Run | bootstrap, assemble, propose (sharded), judge (sharded) | `scripts/run_eval.sh`, `scripts/report_data.py` |
-| 11. Field Norms run | the reported result: proposers get the card or passages under a Field Norms key (`propose --prompt fieldnorms`); single-pass screen, then `evaluate --add-passes` to three passes; Qwen3.8-27B and gpt-5.6-terra/-luna added | `scripts/run_fieldnorms_full.sh`, `scripts/run_k3_and_luna.sh`, `scripts/judge_fn_add.sh`, `subset30.txt` |
+| 11. Field Norms run | the previous result: proposers get the card or passages under a Field Norms key (`propose --prompt fieldnorms`); single-pass screen, then `evaluate --add-passes` to three passes; Qwen3.8-27B and gpt-5.6-terra/-luna added | `scripts/run_fieldnorms_full.sh`, `scripts/run_k3_and_luna.sh`, `scripts/judge_fn_add.sh`, `subset30.txt` |
 | 12. Checks | old vs new prompt on the same claims; Decisions API (gpt-6-luna, no text) as a second judge | `scripts/compare_prompts.py`, `scripts/decisions_judge.py`, `scripts/compare_decisions.py` |
+| 13. Types | one type per reference experiment by main purpose (setup / headline / threat / analysis / other), gpt-6-luna, 3 samples per claim, majority; Claude Opus 5.5's hand labels as the check (95% agree) | `scripts/label_types.py` -> `types.json`, `types_opus.json` |
+| 14. Current setup | `propose --prompt fieldnorms2` (card as Field Norms, passages as Relevant Literature, empty fields say None) at budget 5; tried on subset30, then all 100 claims at budget 9 and 5 | `scripts/run_fn2_subset30.sh`, `scripts/run_fn2_full.sh`, `scripts/run_fn2_b5_subset30.sh`, `scripts/run_fn2_b5_full.sh`, `scripts/run_fn2_b5_qwen.sh`, `scripts/compare_fn2.py` |
+| 15. Report | per-proposer, per-type data for the report page, and the page update | `scripts/report_data.py`, `scripts/build_report.py` |
 
 Steps 1-3 and 5-6 were run once from `results/dataset50/` and are kept as a record: they read
 inputs not stored here (the 3,465-row candidate pool) or edit `norm_cards/data/taxonomy.json` in

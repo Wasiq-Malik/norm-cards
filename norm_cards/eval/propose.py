@@ -25,9 +25,8 @@ comma-separated subset of the six keys), which turns "what should we keep in the
 card?" into a measurement: run an arm per subset and read off which sections carry
 the effect. Such arms are named "<model>+card:<label>".
 
-`--budget` varies SciFy's own "propose up to 3 experiments" cap. Leave it at 3 for
-any headline number — 3 is what SciFy runs — and vary it only as a labelled
-diagnostic, to check how much of a null result is the cap rather than the card.
+`--budget` is SciFy's "propose up to N experiments" cap. SciFy runs 3; our default is
+5 (RUN_BUDGET): on dataset50, 5 lost no recall against 9 and the card's gain held.
 
 Every run is stamped `ablation: true`, and evaluate.py reads that stamp and hides the
 evidence from the judge — showing the judge the treatment would hand the carded arm
@@ -73,16 +72,19 @@ def build_conditions(names, card: dict, bundle: dict, sections: tuple,
                      prompt: str = None) -> dict:
     """condition name -> the `current_evidence` dict that defines it. Under the fieldnorms
     prompt the card (its titled text sections) or the rag passages ride in FIELD_NORMS_KEY, which the prompt
-    renders as its own Field Norms block, and Current Evidence is empty in every condition."""
+    renders as its own Field Norms block, and Current Evidence is empty in every condition. Under
+    fieldnorms2 the rag passages ride in LITERATURE_KEY instead (a Relevant Literature block)."""
+    prompt = prompt or scify_proposer.PROPOSER_PROMPT
     out = build_conditions_scify(names, card, bundle, sections, label, claim, cache_dir)
-    if (prompt or scify_proposer.PROPOSER_PROMPT) == "scify":
+    if prompt == "scify":
         return out
     fn = {}
     for c, ev in out.items():
         if c.startswith("card"):
             fn[c] = {scify_proposer.FIELD_NORMS_KEY: scify_proposer.norm_card_text(card, sections)}
         elif c in ("rag", "retrieval"):
-            fn[c] = {scify_proposer.FIELD_NORMS_KEY: "\n\n".join(ev.values())}
+            key = scify_proposer.LITERATURE_KEY if prompt == "fieldnorms2" else scify_proposer.FIELD_NORMS_KEY
+            fn[c] = {key: "\n\n".join(ev.values())}
         else:
             fn[c] = {}
     return fn
@@ -129,7 +131,7 @@ def build_conditions_scify(names, card: dict, bundle: dict, sections: tuple,
 
 
 def propose_all(problem: dict, models, subclaims: list, conditions: dict,
-                workers: int = 3, budget: int = scify_proposer.DEFAULT_BUDGET,
+                workers: int = 3, budget: int = scify_proposer.RUN_BUDGET,
                 repeats: int = 1, prompt: str = None) -> dict:
     """One proposer call per (model, condition, repeat), on identical inputs.
 
@@ -184,8 +186,10 @@ def _main():
                     help="comma-separated proposer models")
     ap.add_argument("--problems", default="all",
                     help="comma-separated problem ids, or 'all'")
-    ap.add_argument("--prompt", default=scify_proposer.PROPOSER_PROMPT, choices=["fieldnorms", "scify"],
-                    help="fieldnorms: card/passages under their own Field Norms key (default); "
+    ap.add_argument("--prompt", default=scify_proposer.PROPOSER_PROMPT, choices=["fieldnorms", "fieldnorms2", "scify"],
+                    help="fieldnorms2 (default): card as Field Norms, passages as Relevant Literature, "
+                         "empty fields say None, each arm's system prompt explains only its own key; "
+                         "fieldnorms: card or passages under one shared Field Norms key; "
                          "scify: SciFy's prompt verbatim, everything in Current Evidence")
     ap.add_argument("--decomposer", default="gpt-6-luna",
                     help="model that produces the subclaims shared by every arm")
@@ -207,9 +211,8 @@ def _main():
     ap.add_argument("--card_label", default="",
                     help="name the card arm 'card:<label>' — for a second set of cards, "
                          "beside the default card arm")
-    ap.add_argument("--budget", type=int, default=scify_proposer.DEFAULT_BUDGET,
-                    help="SciFy's 'propose up to N experiments' cap (default 3, "
-                         "which is what SciFy runs; vary only as a diagnostic)")
+    ap.add_argument("--budget", type=int, default=scify_proposer.RUN_BUDGET,
+                    help="'propose up to N experiments' cap (default 5; SciFy itself runs 3)")
     ap.add_argument("--cache_dir", default=".pdfcache",
                     help="PDF cache the rag arm reads full text from")
     ap.add_argument("--out", default=os.path.join("results", "proposals"))

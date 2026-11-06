@@ -17,9 +17,9 @@ which resolved three drifts that had accumulated in the earlier hand-copy:
 The ONE deliberate divergence from upstream is the resource-constraint block
 (CPU/GPU/runtime), removed per the experiment design: we are asking whether the
 norm card helps design the *ideal* experiment set, not one fitted to an 8GB,
-30-minute budget. `experiment_budget` is parameterized so the upstream cap of 3
-can be varied as a diagnostic — see propose.py --budget — but 3 is the default
-because 3 is what SciFy actually runs.
+30-minute budget. `experiment_budget` is parameterized: the upstream cap of 3 is
+DEFAULT_BUDGET here, for rendering SciFy as it runs; our runs use RUN_BUDGET (5), see
+propose.py --budget.
 """
 
 import json
@@ -65,8 +65,9 @@ Current Evidence:
 # So Current Evidence stays empty (we gather no claim evidence), and the card (its titled
 # sections, as norm_card_text renders them) or the rag passages arrive under their own FIELD NORMS key, with one system line
 # saying what they are. The system prompt is the same in every condition. "scify" is the
-# upstream prompt verbatim, as every run through dataset50's first run used it.
-PROPOSER_PROMPT = "fieldnorms"
+# upstream prompt verbatim, as every run through dataset50's first run used it. The default is
+# "fieldnorms2", below.
+PROPOSER_PROMPT = "fieldnorms2"
 FIELD_NORMS_KEY = "__field_norms__"          # current_evidence key carrying the field-norms text
 
 SYSTEM_PROPOSER_TEMPLATE_FN = SYSTEM_PROPOSER_TEMPLATE.replace(
@@ -83,7 +84,67 @@ Field Norms:
   {{ field_norms | indent(2) }}
 {% endif %}"""
 
-DEFAULT_BUDGET = 3       # SciFy's own cap; vary only as a labelled diagnostic
+# "fieldnorms2" (2026-11-05; the default since 2026-11-06). Some proposers still wrote experiments
+# about the norms rather than the claim. Here an empty field says "None" instead of leaving a bare header,
+# the rag passages get their own Relevant Literature key instead of sharing Field Norms with the
+# card, and each arm's system prompt explains only the key that arm carries (no card: none).
+LITERATURE_KEY = "__relevant_literature__"   # current_evidence key carrying the rag passages
+
+SYSTEM_LINE_FIELD_NORMS = (
+    "If provided, the Field Norms are a norm card for the scientific field(s) this claim belongs to. "
+    "A norm card describes how that field designs and evaluates experiments: the control conditions "
+    "and rival explanations referees expect, what counts as evidence that a difference is real, what "
+    "a fair baseline comparison holds equal, and the metrics and datasets the field uses. Use them to "
+    "design better experiments for the claim; they are not evidence about the claim itself.")
+SYSTEM_LINE_LITERATURE = (
+    "If provided, the Relevant Literature is a set of passages from published papers in the claim's "
+    "field. Use it to design better experiments grounded in existing work (its methods, baselines, "
+    "datasets and metrics); it is background, not evidence about the claim itself.")
+_SYSTEM_ANCHOR = "begin with 'To address subclaim X...' or 'With respect to evidence piece Y...'.\n"
+assert _SYSTEM_ANCHOR in SYSTEM_PROPOSER_TEMPLATE
+
+INSTANCE_PROPOSER_TEMPLATE_FN2 = """\
+Claim:
+  {{ claim }}
+
+{% if subclaims %}
+Subclaims:
+{% for subclaim in subclaims %}
+  {{ subclaim }}
+{% endfor %}
+{% else %}
+Subclaims: None
+{% endif %}
+
+{% if current_evidence %}
+Current Evidence:
+{% for evidence_key in current_evidence %}
+  {{ evidence_key }}:
+    {{ current_evidence[evidence_key] | indent(4) }}
+{% endfor %}
+{% else %}
+Current Evidence: None
+{% endif %}
+{% if field_norms %}
+
+Field Norms:
+  {{ field_norms | indent(2) }}
+{% endif %}
+{% if literature %}
+
+Relevant Literature:
+  {{ literature | indent(2) }}
+{% endif %}"""
+
+
+def system_template_fn2(field_norms: bool, literature: bool) -> str:
+    """The base system prompt plus a line for each key this arm actually carries."""
+    lines = ([SYSTEM_LINE_FIELD_NORMS] if field_norms else []) + ([SYSTEM_LINE_LITERATURE] if literature else [])
+    return SYSTEM_PROPOSER_TEMPLATE.replace(_SYSTEM_ANCHOR, _SYSTEM_ANCHOR + "".join(l + "\n" for l in lines))
+
+
+DEFAULT_BUDGET = 3       # SciFy's own cap, for rendering its prompt as upstream runs it
+RUN_BUDGET = 5           # our runs: on dataset50, 5 lost no recall against 9 and the card's gain held
 
 MENU_KEYS = ("datasets", "models", "metrics", "protocols")
 
@@ -466,19 +527,25 @@ def fulltext_retrieval_evidence(bundle: dict, claim: str, cache_dir: str = ".pdf
 def render_prompts(claim: str, subclaims: list, current_evidence: dict,
                    budget: int = DEFAULT_BUDGET, prompt: str = None) -> tuple:
     """(system, instance). prompt="scify" renders exactly as dryrun/proposer.py does;
-    "fieldnorms" moves FIELD_NORMS_KEY out of Current Evidence into its own block."""
+    "fieldnorms" moves FIELD_NORMS_KEY out of Current Evidence into its own block;
+    "fieldnorms2" also gives LITERATURE_KEY its own block and explains only the keys present."""
     prompt = prompt or PROPOSER_PROMPT
     ev = dict(current_evidence or {})
     norms = ev.pop(FIELD_NORMS_KEY, "")
+    lit = ev.pop(LITERATURE_KEY, "")
+    if lit and prompt != "fieldnorms2":
+        raise ValueError("relevant literature needs prompt='fieldnorms2'")
     if prompt == "scify":
         if norms:
             raise ValueError("field norms need prompt='fieldnorms'")
         sys_t, inst_t = SYSTEM_PROPOSER_TEMPLATE, INSTANCE_PROPOSER_TEMPLATE
+    elif prompt == "fieldnorms2":
+        sys_t, inst_t = system_template_fn2(bool(norms), bool(lit)), INSTANCE_PROPOSER_TEMPLATE_FN2
     else:
         sys_t, inst_t = SYSTEM_PROPOSER_TEMPLATE_FN, INSTANCE_PROPOSER_TEMPLATE_FN
     system = Template(sys_t, trim_blocks=True, lstrip_blocks=True).render(budget=budget).strip()
     instance = Template(inst_t, trim_blocks=True, lstrip_blocks=True).render(
-        claim=claim, subclaims=subclaims, current_evidence=ev, field_norms=norms).strip()
+        claim=claim, subclaims=subclaims, current_evidence=ev, field_norms=norms, literature=lit).strip()
     return system, instance
 
 
