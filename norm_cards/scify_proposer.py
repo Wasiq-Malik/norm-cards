@@ -24,6 +24,7 @@ propose.py --budget.
 
 import json
 import os
+import time
 
 from jinja2 import Template
 
@@ -576,8 +577,7 @@ def _complete_json_strict(system: str, instance: str, model: str) -> dict:
                            f"{om['key_env']} set in .env")
     route = ({"model": om["model"], "api_base": os.environ[om["base_env"]],
               "api_key": os.environ.get(om["key_env"], "")} if om else {"model": model})
-    resp = litellm.completion(
-        timeout=900 if om else llm.TIMEOUT,     # a shared open-model server queues
+    kwargs = dict(
         **route,
         messages=[
             {"role": "system", "content": system},
@@ -589,7 +589,24 @@ def _complete_json_strict(system: str, instance: str, model: str) -> dict:
                      1 if llm.wants_default_temperature(model) else 0.1),
         response_format={"type": "json_object"},
     )
-    return json.loads(resp.choices[0].message.content)
+    if not om:
+        resp = litellm.completion(timeout=llm.TIMEOUT, **kwargs)
+        return json.loads(resp.choices[0].message.content)
+    # An open model reasons for minutes before it answers (Qwen3.8-27B: ~9k tokens at budget
+    # 5). Unstreamed, the connection sits silent that long and the endpoint's gateway drops
+    # it ("Connection error"); streamed, tokens keep it open. Dropped connections are retried.
+    for attempt in range(3):
+        try:
+            # streamed, the timeout bounds the wait for the next chunk, so a stalled stream
+            # fails in minutes instead of holding a worker for half an hour
+            chunks = litellm.completion(timeout=300, stream=True, **kwargs)
+            text = "".join((c.choices[0].delta.content or "") for c in chunks if c.choices)
+            return json.loads(text)
+        except Exception as e:
+            if attempt == 2 or not any(s in type(e).__name__ for s in
+                                       ("Connection", "InternalServer", "Timeout", "ServiceUnavailable")):
+                raise
+            time.sleep(30 * (attempt + 1))
 
 
 def run_ablation(card_path: str, model: str = "gpt-5.5", subclaims: list = None,

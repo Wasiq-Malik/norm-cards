@@ -1,7 +1,8 @@
 cd "$(git rev-parse --show-toplevel)"
 # Qwen3.8-27B at the current default (fieldnorms2, budget 5) on all 100 claims (2026-11-06), after its
-# server came back. Same run directory, subclaims and judge as run_fn2_b5_full.sh. Concurrency is kept
-# low (4 shards x 2 workers): 18 requests in flight wedged the server on 2026-11-05.
+# server came back. Same run directory, subclaims and judge as run_fn2_b5_full.sh. 6 shards x 2 workers:
+# at budget 5 a Qwen proposal reasons ~9k tokens (3 min alone); with 24 in flight each took 25-30 min and
+# the gateway cut those past ~30 min (Connection error). The server is unresponsive when another job shares it.
 # --merge and --add-passes make it safe to rerun after an interruption. Subclaims seeded from dataset50run.
 R=results/dataset50run_fn2_b5
 export PYTHONPATH=. NORM_CARDS_EVAL_ROOT=$R/eval NORM_CARDS_CLAIMS=norm_cards/data/dataset50-claims-v1.jsonl
@@ -40,7 +41,7 @@ judge() {  # judge <models> <shards> <source>
   done
   wait
 }
-propose qwen3.8-27b 4 2 qwen $R/proposals_qwen
+propose qwen3.8-27b 6 2 qwen $R/proposals_qwen
 echo "[$(date +%H:%M)] qwen proposals done"
 judge qwen3.8-27b 10 $R/proposals_qwen
 echo "[$(date +%H:%M)] qwen judged: $(ls $R/eval/judgments/problem_*/qwen3.8-27b+*.json | grep -v trace | wc -l | tr -d ' ') judgments"

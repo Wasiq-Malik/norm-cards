@@ -132,8 +132,9 @@ def build_conditions_scify(names, card: dict, bundle: dict, sections: tuple,
 
 def propose_all(problem: dict, models, subclaims: list, conditions: dict,
                 workers: int = 3, budget: int = scify_proposer.RUN_BUDGET,
-                repeats: int = 1, prompt: str = None) -> dict:
-    """One proposer call per (model, condition, repeat), on identical inputs.
+                repeats: int = 1, prompt: str = None, skip: set = frozenset()) -> dict:
+    """One proposer call per (model, condition, repeat), on identical inputs, except the
+    arms in `skip` (a merge's arms that already have experiments).
 
     `repeats` > 1 draws the same arm several times. The proposer runs at
     temperature 1 for the gpt-5 family, so a single draw per arm leaves proposer
@@ -146,6 +147,7 @@ def propose_all(problem: dict, models, subclaims: list, conditions: dict,
     jobs = [(f"{m}+{cond}" + (f"#{r}" if r else ""), m, ev)
             for m in models for cond, ev in conditions.items()
             for r in range(repeats)]
+    jobs = [j for j in jobs if j[0] not in skip]
 
     def one(job):
         arm, model, ev = job
@@ -247,7 +249,9 @@ def _main():
         if os.path.exists(out_path) and args.merge and not args.force:
             with open(out_path, encoding="utf-8") as f:
                 existing = json.load(f)
-            have = set(existing.get("arms") or {})
+            # an arm the provider failed or refused (no experiments) counts as missing, so
+            # rerunning with --merge retries exactly those arms and keeps every good one
+            have = {a for a, v in (existing.get("arms") or {}).items() if v.get("experiments")}
             # arm keys are "<model>+<condition>"; a model is done only when every
             # condition asked for is there, so new conditions can be added to a run
             # whose models already have other arms.
@@ -299,7 +303,8 @@ def _main():
               f"budget {args.budget}")
         arms = propose_all(problem, models_here, subclaims, conditions,
                            workers=args.workers, budget=args.budget,
-                           repeats=args.repeats, prompt=args.prompt)
+                           repeats=args.repeats, prompt=args.prompt,
+                           skip=have if existing else set())
         if existing:
             merged = dict(existing.get("arms") or {})
             merged.update(arms)

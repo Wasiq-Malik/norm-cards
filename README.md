@@ -9,7 +9,7 @@ controls and confounds*. We build one card per subfield, hand it to an experimen
 proposer along with a scientific claim, and measure whether the proposals it
 designs would have recovered what the claim's source paper actually did.
 
-**Current result** (dataset50 · 100 claims × 5 gpt proposers · November 2026). [`datasets/dataset50`](datasets/dataset50),
+**Current result** (dataset50 · 100 claims × 6 proposers · November 2026). [`datasets/dataset50`](datasets/dataset50),
 built as described in [`build/README.md`](datasets/dataset50/build/README.md): 50 papers in five fields, 100 claims,
 20 format-2 cards built by gpt-6-luna. Proposers get the claim and its subclaims, with Current Evidence reading "None";
 the card arrives as a **Field Norms** block and the retrieved passages as a **Relevant Literature** block, each with
@@ -22,17 +22,18 @@ bootstrap over claims:
 | gpt-6-sol | 0.577 | 0.612 | 0.621 | +0.044 [−0.000, +0.093] |
 | gpt-6.1-sol | 0.656 | 0.644 | 0.676 | +0.020 [−0.020, +0.060] |
 | gpt-6.1-terra | 0.614 | 0.623 | 0.651 | +0.037 [−0.000, +0.075] |
+| Qwen3.8-27B (open weights) | 0.432 | 0.464 | 0.492 | **+0.060 [+0.013, +0.108]** |
 | gpt-5.6-terra | 0.602 | 0.600 | 0.631 | +0.030 [−0.011, +0.071] |
 | gpt-5.6-luna | 0.616 | 0.670 | 0.672 | **+0.056 [+0.019, +0.094]** |
-| **five gpt, pooled** | 0.613 | 0.630 | 0.650 | **+0.037 [+0.019, +0.056]** |
+| **all six, pooled** | 0.583 | 0.602 | 0.624 | **+0.041 [+0.024, +0.058]** |
 
-The card beats retrieval too, +0.021 [+0.002, +0.040] pooled, and every proposer gains. Each reference experiment
+The card beats retrieval too, +0.022 [+0.005, +0.040] pooled, and every proposer gains. Each reference experiment
 carries one type, labelled by gpt-6-luna (`build/types.json`): headline, threat (controls, confounds, measurement and
-robustness checks), analysis, or setup. On threats alone the pooled gain is **+0.054 [+0.018, +0.090]**; on headline
-experiments it is +0.003. Qwen3.8-27B (open weights) is being rerun under this setup; under the earlier one (first
-Field Norms prompt, budget 9) it gave +0.042 [−0.005, +0.089]. That earlier setup gave +0.022 [+0.005, +0.041] pooled
-over six proposers. The 34-claim sets behind the result below were removed from the tree on 2026-10-30 and live in
-git history at `592db40`.
+robustness checks), analysis, or setup. On threats alone the pooled gain is **+0.063 [+0.029, +0.097]** (Qwen
++0.107); on headline experiments it is +0.009. The earlier setup (first Field Norms prompt, budget 9) gave +0.022
+[+0.005, +0.041] pooled over the same six proposers. Qwen reasons for about 9k tokens per proposal, so its
+responses are streamed; its endpoint's gateway drops silent connections. The 34-claim sets behind the result below
+were removed from the tree on 2026-10-30 and live in git history at `592db40`.
 
 **Previous result** ([full report](docs/RESULTS.md) · 34 claims × 5 proposer models, October 2026):
 

@@ -2,8 +2,7 @@
 quotes ([data-v] fields) and the per-proposer summary. Rerun after report_data.py whenever a run
 changes; the page's prose and charts are edited in the HTML itself.
 
-    D50_RUN=results/dataset50run_fn2_b5 D50_PROPOSALS=proposals,proposals_g56 \
-    D50_EXTRA="results/dataset50run_fn:qwen3.8-27b:proposals_qwen" \
+    D50_RUN=results/dataset50run_fn2_b5 D50_PROPOSALS=proposals,proposals_g56,proposals_qwen \
       python datasets/dataset50/build/scripts/report_data.py /tmp/d50_views.json
     python datasets/dataset50/build/scripts/build_report.py /tmp/d50_views.json
 """
@@ -30,7 +29,7 @@ def earlier(m): return m in R["extra"]
 
 def nm(k):
     if k == "all":
-        return f"{len(POOL)} gpt proposers, pooled"
+        return f"all {len(POOL)} proposers, pooled"
     return NAME[k] + (", earlier run" if earlier(k) else "")
 
 
@@ -40,8 +39,9 @@ gainers = [NAME[m] for m in POOL if sig(pd[m]) and pd[m]["d"] > 0]
 A0 = R["views"]["all"]["summary"]["full"]["deltas"]
 COMMON = {   # the same in every view
     "bprange": f"{fp(lo['d'])} &hellip; {fp(hi['d'])}",
-    "bptext": f"Card &minus; no card ranges from {fp(lo['d'])} to {fp(hi['d'])} across the {len(POOL)} gpt proposers; "
-              + (", ".join(gainers) if gainers else "none") + (" clears" if len(gainers) == 1 else " clear") + " zero.",
+    "bptext": f"Card &minus; no card ranges from {fp(lo['d'])} to {fp(hi['d'])} across the {len(POOL)} proposers; "
+              + (" and ".join([", ".join(gainers[:-1]), gainers[-1]] if len(gainers) > 1 else gainers) or "none")
+              + (" clears" if len(gainers) == 1 else " clear") + " zero.",
     "a0rag": ci(A0["rag_vs_nocard"]), "a0card": b(A0["card_vs_nocard"]), "a0cr": b(A0["card_vs_rag"]),
     "a0n": str(A0["card_vs_nocard"]["n"]),
 }
@@ -76,7 +76,7 @@ for k in ["all"] + MODELS:
         "pctop": f"<b>{pc[0]['name']}</b> ({fp(pc[0]['mean'])}, {pc[0]['n']} claims) and "
                  f"<b>{pc[1]['name']}</b> ({fp(pc[1]['mean'])}, {pc[1]['n']} claims)",
         "pcbot": f"{pc[-1]['name']} ({fp(pc[-1]['mean'])}, {pc[-1]['n']} claims)",
-        "dotsub": "mean over " + (f"the {len(POOL)} gpt proposers" if k == "all"
+        "dotsub": "mean over " + (f"the {len(POOL)} proposers" if k == "all"
                                   else NAME[k] + "&rsquo;s single proposal per condition"),
         "budget": str(budget),
         "fieldrows": "".join(f'<tr><td class="l">{lab}</td><td>{v["by_field"][f]["n"]}</td>'

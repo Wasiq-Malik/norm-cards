@@ -1,7 +1,6 @@
 """Results data for the report's ACT 4, from the dataset50 judgments.
 
-    D50_RUN=results/dataset50run_fn2_b5 D50_PROPOSALS=proposals,proposals_g56 \
-    D50_EXTRA="results/dataset50run_fn:qwen3.8-27b:proposals_qwen" \
+    D50_RUN=results/dataset50run_fn2_b5 D50_PROPOSALS=proposals,proposals_g56,proposals_qwen \
         python datasets/dataset50/build/scripts/report_data.py <out.json>
 
 One VIEW per proposer plus "all" (pooled), so every per-claim, per-card, per-field and per-type
